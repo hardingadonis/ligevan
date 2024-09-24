@@ -1,6 +1,6 @@
 # bookish
 
-[![All Contributors](https://img.shields.io/github/all-contributors/hardingadonis/bookish?color=ee8449)](#contributors)
+![GitHub contributors](https://img.shields.io/github/contributors/hardingadonis/bookish)
 ![GitHub top language](https://img.shields.io/github/languages/top/hardingadonis/bookish)
 ![GitHub repo size](https://img.shields.io/github/repo-size/hardingadonis/bookish)
 ![GitHub License](https://img.shields.io/github/license/hardingadonis/bookish)

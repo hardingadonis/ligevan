@@ -1,29 +1,34 @@
 {
-  "name": "bookish",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
-  },
-  "devDependencies": {
-    "@eslint/js": "^9.9.0",
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
-    "@vitejs/plugin-react-swc": "^3.5.0",
-    "eslint": "^9.9.0",
-    "eslint-plugin-react-hooks": "^5.1.0-rc.0",
-    "eslint-plugin-react-refresh": "^0.4.9",
-    "globals": "^15.9.0",
-    "typescript": "^5.5.3",
-    "typescript-eslint": "^8.0.1",
-    "vite": "^5.4.1"
-  }
+	"name": "bookish-frontend",
+	"private": true,
+	"version": "0.1.0",
+	"description": "A library management web tool for efficient organization",
+	"repository": "https://github.com/hardingadonis/bookish.git",
+	"author": "Minh Vương",
+	"license": "GPL-3.0 license",
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"build": "tsc -b && vite build",
+		"lint": "eslint .",
+		"preview": "vite preview"
+	},
+	"dependencies": {
+		"react": "18.3.1",
+		"react-dom": "18.3.1"
+	},
+	"devDependencies": {
+		"@eslint/js": "9.9.1",
+		"@types/react": "18.3.3",
+		"@types/react-dom": "18.3.0",
+		"@vitejs/plugin-react-swc": "3.5.0",
+		"eslint": "9.9.1",
+		"eslint-plugin-react-hooks": "5.1.0-rc.0",
+		"eslint-plugin-react-refresh": "0.4.12",
+		"globals": "15.9.0",
+		"typescript": "5.5.4",
+		"typescript-eslint": "8.0.1",
+		"vite": "5.4.7",
+		"vite-tsconfig-paths": "5.0.1"
+	}
 }
