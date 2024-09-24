@@ -1,0 +1,20 @@
+{
+	"name": "bookish",
+	"version": "0.1.0",
+	"description": "A library management web tool for efficient organization",
+	"repository": "https://github.com/hardingadonis/bookish.git",
+	"author": "Minh Vương",
+	"license": "GPL-3.0 license",
+	"private": true,
+	"scripts": {
+		"postinstall": "husky",
+		"lint-staged": "lint-staged"
+	},
+	"devDependencies": {
+		"@commitlint/cli": "19.5.0",
+		"@commitlint/config-conventional": "19.5.0",
+		"husky": "9.1.6",
+		"lint-staged": "15.2.10",
+		"prettier": "3.3.3"
+	}
+}
