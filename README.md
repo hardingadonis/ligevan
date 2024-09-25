@@ -20,6 +20,29 @@
   </a>
 </div>
 
+## Development
+
+- Step 1: Clone the repository
+
+  ```bash
+  git clone https://github.com/hardingadonis/bookish.git
+  ```
+
+- Step 2: Install dependencies
+
+  ```bash
+  cd bookish
+  yarn
+  ```
+
+## Source code
+
+| #   | Directory            | Description                            | Technologies |
+| --- | -------------------- | -------------------------------------- | ------------ |
+| 1   | [backend](backend)   | Backend service                        | NestJS       |
+| 2   | [frontend](frontend) | Frontend service                       | ReactJS      |
+| 3   | [database](database) | Database (json files for dumping data) | MongoDB      |
+
 ## Licenses
 
 - [bookish](https://github.com/hardingadonis/bookish) is licensed under the [GPL-3.0 license](LICENSE)
