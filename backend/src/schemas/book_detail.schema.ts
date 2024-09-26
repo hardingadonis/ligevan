@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Category } from './category.schema';
+import mongoose from 'mongoose';
 
 @Schema()
 export class BookDetail {
@@ -24,7 +25,11 @@ export class BookDetail {
 	@Prop({ required: false })
 	coverBook: string;
 
-	@Prop({ required: true })
+	@Prop({
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Category',
+		required: true,
+	})
 	categories: Category[];
 }
 

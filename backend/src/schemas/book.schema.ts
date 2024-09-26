@@ -1,9 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { BookDetail } from './book_detail.schema';
+import mongoose from 'mongoose';
 
 @Schema()
 export class Book {
-	@Prop({ required: true })
+	@Prop({ type: mongoose.Types.ObjectId, ref: 'BookDetail', required: true })
 	bookDetail: BookDetail;
 
 	@Prop({ required: true })
