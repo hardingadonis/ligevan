@@ -1,0 +1,31 @@
+name: PR validation
+
+on:
+  pull_request_target:
+    types:
+      - opened
+      - reopened
+    branches:
+      - main
+
+jobs:
+  if_new_pr:
+    name: PR validation
+    if: ${{ github.head_ref != 'dev' && !startsWith(github.head_ref, 'imgbot/') }}
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: write
+
+    steps:
+      - name: Comment on PR
+        uses: peter-evans/create-or-update-comment@v4.0.0
+        with:
+          issue-number: ${{ github.event.number }}
+          body: |
+            Hi! You've opened a PR to the `main` branch.
+            Please target the `dev` branch for future PRs.
+            Thanks! @${{ github.actor }}
+          reactions: confused
