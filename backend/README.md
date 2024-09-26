@@ -8,6 +8,17 @@
 
 > A library management web tool for efficient organization
 
+## Configuration
+
+Create a `.env` file there and add the following environment variables:
+
+| #   | Variable Name | Description                          | Example                 |
+| --- | ------------- | ------------------------------------ | ----------------------- |
+| 1   | BACKEND_PORT  | The port number to run the server on | 3000                    |
+| 2   | DATABASE_URL  | The URL to the MongoDB database      | localhost:27017/bookish |
+| 3   | JWT_SECRET    | The secret key for JWT               | secret-key              |
+| 4   | JWT_EXPIRES   | The expiration time for JWT          | 1h                      |
+
 ## Development
 
 - Step 1: Install dependencies
