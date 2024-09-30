@@ -1,0 +1,90 @@
+[{
+  "_id": {
+    "$oid": "66fa094d4e027e7bc18cfc64"
+  },
+  "name": "Fiction",
+  "description": "Books that contain stories created from the imagination of the author, not based on real events.",
+  "createdAt": "2024-09-23T14:00:01.119+00:00",
+  "updatedAt": "2024-09-23T14:00:01.119+00:00"
+},
+{
+  "_id": {
+    "$oid": "66fa094d4e027e7bc18cfc65"
+  },
+  "name": "Non-Fiction",
+  "description": "Books that are based on factual information, including biographies, history, and self-help books.",
+  "createdAt": "2024-09-23T14:00:01.119+00:00",
+  "updatedAt": "2024-09-23T14:00:01.119+00:00"
+},
+{
+  "_id": {
+    "$oid": "66fa094d4e027e7bc18cfc66"
+  },
+  "name": "Science Fiction",
+  "description": "Books based on futuristic concepts such as advanced science, space exploration, time travel, and extraterrestrial life.",
+  "createdAt": "2024-09-23T14:00:01.119+00:00",
+  "updatedAt": "2024-09-23T14:00:01.119+00:00"
+},
+{
+  "_id": {
+    "$oid": "66fa094d4e027e7bc18cfc67"
+  },
+  "name": "Fantasy",
+  "description": "Books that contain magical elements, mythical creatures, and fantastical worlds beyond reality.",
+  "createdAt": "2024-09-23T14:00:01.119+00:00",
+  "updatedAt": "2024-09-23T14:00:01.119+00:00"
+},
+{
+  "_id": {
+    "$oid": "66fa094d4e027e7bc18cfc68"
+  },
+  "name": "Mystery",
+  "description": "Books that involve solving a crime, puzzle, or some form of mystery, often with suspenseful plots.",
+  "createdAt": "2024-09-23T14:00:01.119+00:00",
+  "updatedAt": "2024-09-23T14:00:01.119+00:00"
+},
+{
+  "_id": {
+    "$oid": "66fa094d4e027e7bc18cfc69"
+  },
+  "name": "Romance",
+  "description": "Books that focus on romantic relationships between characters, often with an emotionally satisfying ending.",
+  "createdAt": "2024-09-23T14:00:01.119+00:00",
+  "updatedAt": "2024-09-23T14:00:01.119+00:00"
+},
+{
+  "_id": {
+    "$oid": "66fa094d4e027e7bc18cfc6a"
+  },
+  "name": "Thriller",
+  "description": "Books that are characterized by fast pacing, tension, and high stakes, often involving danger or espionage.",
+  "createdAt": "2024-09-23T14:00:01.119+00:00",
+  "updatedAt": "2024-09-23T14:00:01.119+00:00"
+},
+{
+  "_id": {
+    "$oid": "66fa094d4e027e7bc18cfc6b"
+  },
+  "name": "Biography",
+  "description": "Books that detail the life of a person, written by another person or by the subject themselves.",
+  "createdAt": "2024-09-23T14:00:01.119+00:00",
+  "updatedAt": "2024-09-23T14:00:01.119+00:00"
+},
+{
+  "_id": {
+    "$oid": "66fa094d4e027e7bc18cfc6c"
+  },
+  "name": "Self-Help",
+  "description": "Books designed to help readers improve aspects of their lives, such as mental well-being, financial success, or personal relationships.",
+  "createdAt": "2024-09-23T14:00:01.119+00:00",
+  "updatedAt": "2024-09-23T14:00:01.119+00:00"
+},
+{
+  "_id": {
+    "$oid": "66fa094d4e027e7bc18cfc6d"
+  },
+  "name": "Historical Fiction",
+  "description": "Books that are set in a historical period, often blending real historical events with fictional characters and stories.",
+  "createdAt": "2024-09-23T14:00:01.119+00:00",
+  "updatedAt": "2024-09-23T14:00:01.119+00:00"
+}]
