@@ -1,0 +1,193 @@
+[{
+  "_id": {
+    "$oid": "66fa11154e027e7bc18cfca9"
+  },
+  "title": "Stephie Maypes",
+  "isbn": "482277615-8",
+  "author": "Rafaela Arnet",
+  "publishedYear": 1992,
+  "coverBook": "http://dummyimage.com/122x100.png/dddddd/000000",
+  "publisher": "Publisher A",
+  "edition": "First",
+  "categories": [
+    {
+      "$oid": "66fa094d4e027e7bc18cfc64"
+    },
+    {
+      "$oid": "66fa094d4e027e7bc18cfc65"
+    }
+  ],
+  "createdAt": "2024-09-23T14:00:01.119+00:00",
+  "updatedAt": "2024-09-23T14:00:01.119+00:00"
+},
+{
+  "_id": {
+    "$oid": "66fa11154e027e7bc18cfcaa"
+  },
+  "title": "King Gresswood",
+  "isbn": "260154943-2",
+  "author": "Shela Yakunkin",
+  "publishedYear": 2001,
+  "coverBook": "http://dummyimage.com/210x100.png/cc0000/ffffff",
+  "publisher": "Publisher B",
+  "edition": "Second",
+  "categories": [
+    {
+      "$oid": "66fa094d4e027e7bc18cfc66"
+    }
+  ],
+  "createdAt": "2024-09-23T14:00:01.119+00:00",
+  "updatedAt": "2024-09-23T14:00:01.119+00:00"
+},
+{
+  "_id": {
+    "$oid": "66fa11154e027e7bc18cfcab"
+  },
+  "title": "Jacquelyn Ibbs",
+  "isbn": "043506486-X",
+  "author": "Wilma Heritege",
+  "publishedYear": 2007,
+  "coverBook": "http://dummyimage.com/183x100.png/dddddd/000000",
+  "publisher": "Publisher C",
+  "edition": "First",
+  "categories": [
+    {
+      "$oid": "66fa094d4e027e7bc18cfc67"
+    }
+  ],
+  "createdAt": "2024-09-23T14:00:01.119+00:00",
+  "updatedAt": "2024-09-23T14:00:01.119+00:00"
+},
+{
+  "_id": {
+    "$oid": "66fa11154e027e7bc18cfcac"
+  },
+  "title": "Helen-elizabeth Kamall",
+  "isbn": "860615036-3",
+  "author": "Lilian Le Lievre",
+  "publishedYear": 2008,
+  "coverBook": "http://dummyimage.com/166x100.png/ff4444/ffffff",
+  "publisher": "Publisher D",
+  "edition": "Second",
+  "categories": [
+    {
+      "$oid": "66fa094d4e027e7bc18cfc68"
+    }
+  ],
+  "createdAt": "2024-09-23T14:00:01.119+00:00",
+  "updatedAt": "2024-09-23T14:00:01.119+00:00"
+},
+{
+  "_id": {
+    "$oid": "66fa11154e027e7bc18cfcad"
+  },
+  "title": "Monroe Harriman",
+  "isbn": "459808765-X",
+  "author": "Devan Frain",
+  "publishedYear": 1992,
+  "coverBook": "http://dummyimage.com/207x100.png/cc0000/ffffff",
+  "publisher": "Publisher A",
+  "edition": "First",
+  "categories": [
+    {
+      "$oid": "66fa094d4e027e7bc18cfc64"
+    }
+  ],
+  "createdAt": "2024-09-23T14:00:01.119+00:00",
+  "updatedAt": "2024-09-23T14:00:01.119+00:00"
+},
+{
+  "_id": {
+    "$oid": "66fa11154e027e7bc18cfcae"
+  },
+  "title": "Murdock Bradburne",
+  "isbn": "239615086-3",
+  "author": "Levin Hagart",
+  "publishedYear": 2002,
+  "coverBook": "http://dummyimage.com/204x100.png/dddddd/000000",
+  "publisher": "Publisher E",
+  "edition": "Third",
+  "categories": [
+    {
+      "$oid": "66fa094d4e027e7bc18cfc69"
+    }
+  ],
+  "createdAt": "2024-09-23T14:00:01.119+00:00",
+  "updatedAt": "2024-09-23T14:00:01.119+00:00"
+},
+{
+  "_id": {
+    "$oid": "66fa11154e027e7bc18cfcaf"
+  },
+  "title": "Carolann Ortelt",
+  "isbn": "644661593-0",
+  "author": "Duke Schwartz",
+  "publishedYear": 1997,
+  "coverBook": "http://dummyimage.com/237x100.png/dddddd/000000",
+  "publisher": "Publisher F",
+  "edition": "First",
+  "categories": [
+    {
+      "$oid": "66fa094d4e027e7bc18cfc65"
+    }
+  ],
+  "createdAt": "2024-09-23T14:00:01.119+00:00",
+  "updatedAt": "2024-09-23T14:00:01.119+00:00"
+},
+{
+  "_id": {
+    "$oid": "66fa11154e027e7bc18cfcb0"
+  },
+  "title": "Myrtice Garham",
+  "isbn": "876603660-7",
+  "author": "Emanuele Kaysor",
+  "publishedYear": 1984,
+  "coverBook": "http://dummyimage.com/109x100.png/5fa2dd/ffffff",
+  "publisher": "Publisher G",
+  "edition": "First",
+  "categories": [
+    {
+      "$oid": "66fa094d4e027e7bc18cfc64"
+    }
+  ],
+  "createdAt": "2024-09-23T14:00:01.119+00:00",
+  "updatedAt": "2024-09-23T14:00:01.119+00:00"
+},
+{
+  "_id": {
+    "$oid": "66fa11154e027e7bc18cfcb1"
+  },
+  "title": "Pamelina Gandar",
+  "isbn": "544487210-2",
+  "author": "Trish Surman",
+  "publishedYear": 1995,
+  "coverBook": "http://dummyimage.com/167x100.png/5fa2dd/ffffff",
+  "publisher": "Publisher H",
+  "edition": "Second",
+  "categories": [
+    {
+      "$oid": "66fa094d4e027e7bc18cfc69"
+    }
+  ],
+  "createdAt": "2024-09-23T14:00:01.119+00:00",
+  "updatedAt": "2024-09-23T14:00:01.119+00:00"
+},
+{
+  "_id": {
+    "$oid": "66fa11154e027e7bc18cfcb2"
+  },
+  "title": "Ofella Van Velde",
+  "isbn": "234826906-6",
+  "author": "Audi Hallad",
+  "publishedYear": 1994,
+  "coverBook": "http://dummyimage.com/175x100.png/dddddd/000000",
+  "publisher": "Publisher I",
+  "edition": "First",
+  "categories": [
+    {
+      "$oid": "66fa094d4e027e7bc18cfc64"
+    }
+  ],
+  "createdAt": "2024-09-23T14:00:01.119+00:00",
+  "updatedAt": "2024-09-23T14:00:01.119+00:00"
+}]
