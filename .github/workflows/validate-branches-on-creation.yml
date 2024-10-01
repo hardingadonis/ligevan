@@ -1,0 +1,22 @@
+name: Validate branches on creation
+
+on:
+  create:
+    branches-ignore:
+      - main
+      - dev
+      - imgbot/*
+
+jobs:
+  validate:
+    name: Validate branch name
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate branch name
+        run: |
+          chmod +x ./scripts/validate-branches-on-creation.sh
+          ./scripts/validate-branches-on-creation.sh ${{ github.ref }}
