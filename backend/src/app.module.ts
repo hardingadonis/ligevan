@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { VouchersController } from './vouchers/vouchers.controller';
+import { VouchersModule } from './vouchers/vouchers.module';
 
 @Module({
 	imports: [
@@ -12,8 +14,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 			}),
 			inject: [ConfigService],
 		}),
+		VouchersModule,
 	],
-	controllers: [],
+	controllers: [VouchersController],
 	providers: [],
 })
 export class AppModule {}
