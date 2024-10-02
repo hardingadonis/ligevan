@@ -1,6 +1,9 @@
 import { IsDateString, IsNotEmpty, IsNumber } from 'class-validator';
 
-export class createVoucherDto {
+export class CreateVoucherDto {
+	@IsNotEmpty()
+	code: string;
+
 	@IsNotEmpty()
 	title: string;
 
@@ -12,10 +15,18 @@ export class createVoucherDto {
 
 	@IsNotEmpty()
 	@IsDateString()
-	due: Date;
+	start: Date;
+
+	@IsNotEmpty()
+	@IsDateString()
+	end: Date;
+
+	isDelete?: boolean;
 }
 
-export class updateVoucherDto {
+export class UpdateVoucherDto {
+	code?: string;
+
 	title?: string;
 
 	description?: string;
@@ -23,4 +34,6 @@ export class updateVoucherDto {
 	value?: number;
 
 	due?: Date;
+
+	isDelete?: boolean;
 }

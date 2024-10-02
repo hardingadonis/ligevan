@@ -1,7 +1,10 @@
-import { Prop, Schema } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 @Schema()
 export class Voucher {
+	@Prop({ required: true, unique: true })
+	code: string;
+
 	@Prop({ required: true })
 	title: string;
 
@@ -12,5 +15,13 @@ export class Voucher {
 	value: number;
 
 	@Prop({ required: true })
-	due: Date;
+	start: Date;
+
+	@Prop({ required: true })
+	end: Date;
+
+	@Prop({ default: false })
+	isDelete: boolean;
 }
+
+export const VoucherSchema = SchemaFactory.createForClass(Voucher);

@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { VouchersController } from './vouchers/vouchers.controller';
 import { VouchersModule } from './vouchers/vouchers.module';
 
 @Module({
@@ -16,7 +15,5 @@ import { VouchersModule } from './vouchers/vouchers.module';
 		}),
 		VouchersModule,
 	],
-	controllers: [VouchersController],
-	providers: [],
 })
 export class AppModule {}
