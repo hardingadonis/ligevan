@@ -1,8 +1,8 @@
 {
-	"name": "bookish-backend",
+	"name": "ligevan-backend",
 	"version": "1.0.0",
-	"description": "A library management web tool for efficient organization",
-	"repository": "https://github.com/hardingadonis/bookish.git",
+	"description": "Learn, Practice, Succeed",
+	"repository": "https://github.com/hardingadonis/ligevan.git",
 	"author": "Minh Vương",
 	"license": "GPL-3.0 license",
 	"private": true,

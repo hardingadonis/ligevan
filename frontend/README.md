@@ -6,7 +6,7 @@
 ![GitHub License](https://img.shields.io/github/license/hardingadonis/bookish)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=hardingadonis_bookish&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=hardingadonis_bookish)
 
-> A library management web tool for efficient organization
+> Learn, Practice, Succeed
 
 ## Configuration
 

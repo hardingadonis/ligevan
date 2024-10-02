@@ -1,8 +1,8 @@
-# bookish's Development Guidelines
+# ligevan's Development Guidelines
 
 ## Table of Contents
 
-- [bookish's Development Guidelines](#bookishs-development-guidelines)
+- [ligevan's Development Guidelines](#ligevans-development-guidelines)
   - [Table of Contents](#table-of-contents)
   - [Requirements](#requirements)
     - [Tools](#tools)
