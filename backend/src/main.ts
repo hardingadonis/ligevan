@@ -1,7 +1,10 @@
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+require('module-alias/register');
+
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
-import { setupSwagger } from './swagger/setup';
+import { AppModule } from '@/app.module';
+import { setupSwagger } from '@/swagger/setup';
 
 const bootstrap = async () => {
 	const app = await NestFactory.create(AppModule);
