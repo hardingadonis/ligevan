@@ -26,7 +26,7 @@ export class VouchersService {
 			}
 
 			return new this.voucherService(createVoucherDto).save();
-		} catch (error: Error | any) {
+		} catch (error: any) {
 			throw new InternalServerErrorException(
 				'Failed to create voucher!',
 				error,
@@ -37,7 +37,7 @@ export class VouchersService {
 	async getAllVouchers(): Promise<Voucher[]> {
 		try {
 			return this.voucherService.find({ isDelete: false }).exec();
-		} catch (error: Error | any) {
+		} catch (error: any) {
 			throw new InternalServerErrorException(
 				'Failed to retrieve vouchers',
 				error,
@@ -48,7 +48,7 @@ export class VouchersService {
 	async getVoucherByCode(code: string): Promise<Voucher> {
 		try {
 			return this.voucherService.findOne({ code, isDelete: false }).exec();
-		} catch (error: Error | any) {
+		} catch (error: any) {
 			throw new NotFoundException('Voucher not found', error);
 		}
 	}
@@ -68,7 +68,7 @@ export class VouchersService {
 			return this.voucherService
 				.findByIdAndUpdate(id, updateVoucherDto, { new: true, isDelete: false })
 				.exec();
-		} catch (error: Error | any) {
+		} catch (error: any) {
 			throw new InternalServerErrorException('Failed to update voucher', error);
 		}
 	}
@@ -85,7 +85,7 @@ export class VouchersService {
 			return this.voucherService
 				.findByIdAndUpdate(id, { isDelete: true })
 				.exec();
-		} catch (error: Error | any) {
+		} catch (error: any) {
 			throw new InternalServerErrorException('Failed to delete voucher', error);
 		}
 	}
