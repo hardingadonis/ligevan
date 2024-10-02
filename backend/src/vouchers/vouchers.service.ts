@@ -6,8 +6,8 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Voucher } from 'src/schemas/voucher.schema';
-import { CreateVoucherDto, UpdateVoucherDto } from './dto/voucher.dto';
+import { Voucher } from '@/schemas/voucher.schema';
+import { CreateVoucherDto, UpdateVoucherDto } from '@/vouchers/dto/voucher.dto';
 
 @Injectable()
 export class VouchersService {

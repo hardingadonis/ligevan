@@ -7,8 +7,8 @@ import {
 	Post,
 	Put,
 } from '@nestjs/common';
-import { VouchersService } from './vouchers.service';
-import { CreateVoucherDto, UpdateVoucherDto } from './dto/voucher.dto';
+import { VouchersService } from '@/vouchers/vouchers.service';
+import { CreateVoucherDto, UpdateVoucherDto } from '@/vouchers/dto/voucher.dto';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Vouchers')

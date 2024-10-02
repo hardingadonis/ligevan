@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { VouchersModule } from './vouchers/vouchers.module';
+import { VouchersModule } from '@/vouchers/vouchers.module';
 
 @Module({
 	imports: [
