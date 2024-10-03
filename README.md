@@ -6,7 +6,7 @@
 ![GitHub License](https://img.shields.io/github/license/hardingadonis/ligevan)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=hardingadonis_ligevan&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=hardingadonis_ligevan)
 
-> Learn, Practice, Succeed
+> 「学び、練習し、成功する」
 
 ## Contributing
 

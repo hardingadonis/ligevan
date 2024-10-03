@@ -1,12 +1,12 @@
-# bookish's frontend
+# ligevan's frontend
 
-![GitHub contributors](https://img.shields.io/github/contributors/hardingadonis/bookish)
-![GitHub top language](https://img.shields.io/github/languages/top/hardingadonis/bookish)
-![GitHub repo size](https://img.shields.io/github/repo-size/hardingadonis/bookish)
-![GitHub License](https://img.shields.io/github/license/hardingadonis/bookish)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=hardingadonis_bookish&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=hardingadonis_bookish)
+![GitHub contributors](https://img.shields.io/github/contributors/hardingadonis/ligevan)
+![GitHub top language](https://img.shields.io/github/languages/top/hardingadonis/ligevan)
+![GitHub repo size](https://img.shields.io/github/repo-size/hardingadonis/ligevan)
+![GitHub License](https://img.shields.io/github/license/hardingadonis/ligevan)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=hardingadonis_ligevan&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=hardingadonis_ligevan)
 
-> Learn, Practice, Succeed
+> 「学び、練習し、成功する」
 
 ## Configuration
 

@@ -3,12 +3,12 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 export const setupSwagger = (app: INestApplication<any>) => {
 	const config = new DocumentBuilder()
-		.setTitle('bookish API doumentation')
-		.setDescription('A library management web tool for efficient organization')
+		.setTitle('ligevan API doumentation')
+		.setDescription('「学び、練習し、成功する」')
 		.setVersion('1.0.0')
 		.setLicense(
 			'GPL-3.0 license',
-			'https://github.com/hardingadonis/bookish/blob/main/LICENSE',
+			'https://github.com/hardingadonis/ligevan/blob/main/LICENSE',
 		)
 		.build();
 
