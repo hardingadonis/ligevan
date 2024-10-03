@@ -3,18 +3,27 @@ require('module-alias/register');
 
 import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
+import { Logger } from '@nestjs/common';
 import { AppModule } from '@/app.module';
 import { setupSwagger } from '@/swagger/setup';
 
 const bootstrap = async () => {
+	const logger = new Logger();
+
 	const app = await NestFactory.create(AppModule);
+	// app.useLogger(app.get(Logger));
 	app.setGlobalPrefix('api');
 
 	const configService = app.get(ConfigService);
 
+	// Setup Swagger
 	setupSwagger(app);
 
-	await app.listen(configService.get('BACKEND_PORT'));
+	// Start the application
+	const port = configService.get('BACKEND_PORT');
+	await app.listen(port);
+
+	logger.log(`Server running on ${await app.getUrl()}`);
 };
 
 bootstrap();
