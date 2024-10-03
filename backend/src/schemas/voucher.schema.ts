@@ -21,7 +21,7 @@ export class Voucher {
 	end: Date;
 
 	@Prop({ default: false })
-	isDelete: boolean;
+	isDeleted: boolean;
 }
 
 export const VoucherSchema = SchemaFactory.createForClass(Voucher);

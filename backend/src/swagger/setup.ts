@@ -13,5 +13,12 @@ export const setupSwagger = (app: INestApplication<any>) => {
 		.build();
 
 	const document = SwaggerModule.createDocument(app, config);
-	SwaggerModule.setup('api-docs', app, document);
+	SwaggerModule.setup('api-docs', app, document, {
+		swaggerOptions: {
+			tagsSorter: 'alpha',
+			operationsSorter: 'method',
+			syntaxHighlight: true,
+			displayRequestDuration: true,
+		},
+	});
 };

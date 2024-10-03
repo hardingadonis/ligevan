@@ -25,7 +25,8 @@ export class VouchersService {
 				throw new ConflictException('Voucher code already exists!');
 			}
 
-			return new this.voucherService(createVoucherDto).save();
+			const newVoucher = new this.voucherService(createVoucherDto);
+			return await newVoucher.save();
 		} catch (error: any) {
 			throw new InternalServerErrorException(
 				'Failed to create voucher!',
@@ -36,7 +37,7 @@ export class VouchersService {
 
 	async getAllVouchers(): Promise<Voucher[]> {
 		try {
-			return this.voucherService.find({ isDelete: false }).exec();
+			return await this.voucherService.find({ isDeleted: false }).exec();
 		} catch (error: any) {
 			throw new InternalServerErrorException(
 				'Failed to retrieve vouchers',
@@ -46,11 +47,15 @@ export class VouchersService {
 	}
 
 	async getVoucherByCode(code: string): Promise<Voucher> {
-		try {
-			return this.voucherService.findOne({ code, isDelete: false }).exec();
-		} catch (error: any) {
-			throw new NotFoundException('Voucher not found', error);
+		const voucher = await this.voucherService
+			.findOne({ code: code, isDeleted: false })
+			.exec();
+
+		if (!voucher) {
+			throw new NotFoundException('Voucher not found');
 		}
+
+		return voucher;
 	}
 
 	async updateVoucher(
@@ -65,7 +70,7 @@ export class VouchersService {
 				throw new NotFoundException('Voucher not found');
 			}
 
-			return this.voucherService
+			return await this.voucherService
 				.findByIdAndUpdate(id, updateVoucherDto, { new: true, isDelete: false })
 				.exec();
 		} catch (error: any) {
@@ -82,8 +87,8 @@ export class VouchersService {
 				throw new NotFoundException('Voucher not found');
 			}
 
-			return this.voucherService
-				.findByIdAndUpdate(id, { isDelete: true })
+			return await this.voucherService
+				.findByIdAndUpdate(id, { isDeleted: true })
 				.exec();
 		} catch (error: any) {
 			throw new InternalServerErrorException('Failed to delete voucher', error);

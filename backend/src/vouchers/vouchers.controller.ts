@@ -17,30 +17,30 @@ export class VouchersController {
 	constructor(private readonly vouchersService: VouchersService) {}
 
 	@Post()
-	createVoucher(@Body() createVoucherDto: CreateVoucherDto) {
-		return this.vouchersService.createVoucher(createVoucherDto);
+	async createVoucher(@Body() createVoucherDto: CreateVoucherDto) {
+		return await this.vouchersService.createVoucher(createVoucherDto);
 	}
 
 	@Get()
-	getAllVouchers() {
-		return this.vouchersService.getAllVouchers();
+	async getAllVouchers() {
+		return await this.vouchersService.getAllVouchers();
 	}
 
 	@Get(':code')
-	getVoucherByCode(@Param('code') code: string) {
-		return this.vouchersService.getVoucherByCode(code);
+	async getVoucherByCode(@Param('code') code: string) {
+		return await this.vouchersService.getVoucherByCode(code);
 	}
 
 	@Put(':id')
-	updateVoucher(
+	async updateVoucher(
 		@Param('id') id: string,
 		@Body() updateVoucherDto: UpdateVoucherDto,
 	) {
-		return this.vouchersService.updateVoucher(id, updateVoucherDto);
+		return await this.vouchersService.updateVoucher(id, updateVoucherDto);
 	}
 
 	@Delete(':id')
-	deleteVoucher(@Param('id') id: string) {
-		return this.vouchersService.deleteVoucher(id);
+	async deleteVoucher(@Param('id') id: string) {
+		return await this.vouchersService.deleteVoucher(id);
 	}
 }
