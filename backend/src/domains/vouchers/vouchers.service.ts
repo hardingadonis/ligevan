@@ -18,12 +18,12 @@ export class VouchersService {
 	private readonly logger = new Logger(VouchersService.name);
 
 	constructor(
-		@InjectModel(Voucher.name) private readonly voucherService: Model<Voucher>,
+		@InjectModel(Voucher.name) private readonly voucherModel: Model<Voucher>,
 	) {}
 
 	async createVoucher(createVoucherDto: CreateVoucherDto): Promise<Voucher> {
 		try {
-			const checkVoucherExist = await this.voucherService
+			const checkVoucherExist = await this.voucherModel
 				.findOne({ code: createVoucherDto.code })
 				.exec();
 
@@ -35,7 +35,7 @@ export class VouchersService {
 				throw new ConflictException('Voucher code already exists!');
 			}
 
-			const newVoucher = new this.voucherService(createVoucherDto);
+			const newVoucher = new this.voucherModel(createVoucherDto);
 
 			this.logger.debug('Created new voucher', newVoucher);
 
@@ -54,7 +54,7 @@ export class VouchersService {
 		try {
 			this.logger.log('Retrieving all vouchers');
 
-			return await this.voucherService.find({ isDeleted: false }).exec();
+			return await this.voucherModel.find({ isDeleted: false }).exec();
 		} catch (error: any) {
 			this.logger.error('Failed to retrieve vouchers', error);
 
@@ -66,7 +66,7 @@ export class VouchersService {
 	}
 
 	async getVoucherByCode(code: string): Promise<Voucher> {
-		const voucher = await this.voucherService
+		const voucher = await this.voucherModel
 			.findOne({ code: code, isDeleted: false })
 			.exec();
 
@@ -88,7 +88,7 @@ export class VouchersService {
 		updateVoucherDto: UpdateVoucherDto,
 	): Promise<Voucher> {
 		try {
-			const checkVoucherExist = await this.voucherService
+			const checkVoucherExist = await this.voucherModel
 				.findOne({ _id: id })
 				.exec();
 
@@ -102,7 +102,7 @@ export class VouchersService {
 
 			this.logger.log('Updating voucher');
 
-			return await this.voucherService
+			return await this.voucherModel
 				.findByIdAndUpdate(id, updateVoucherDto, { new: true, isDelete: false })
 				.exec();
 		} catch (error: any) {
@@ -114,7 +114,7 @@ export class VouchersService {
 
 	async deleteVoucher(id: string): Promise<Voucher> {
 		try {
-			const checkVoucherExist = await this.voucherService
+			const checkVoucherExist = await this.voucherModel
 				.findOne({ _id: id })
 				.exec();
 
@@ -128,7 +128,7 @@ export class VouchersService {
 
 			this.logger.log('Deleting voucher');
 
-			return await this.voucherService
+			return await this.voucherModel
 				.findByIdAndUpdate(id, { isDeleted: true })
 				.exec();
 		} catch (error: any) {
