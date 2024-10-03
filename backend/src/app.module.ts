@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { VouchersModule } from '@/vouchers/vouchers.module';
+import { DomainsModule } from '@/domains/domains.module';
 
 @Module({
 	imports: [
@@ -13,7 +13,7 @@ import { VouchersModule } from '@/vouchers/vouchers.module';
 			}),
 			inject: [ConfigService],
 		}),
-		VouchersModule,
+		DomainsModule,
 	],
 })
 export class AppModule {}
