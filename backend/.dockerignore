@@ -1,5 +1,20 @@
+# Folders
+
 coverage/
 dist/
 node_modules/
 out/
 test/
+
+# Files
+
+.dockerignore
+.env
+.eslintrc.js
+.gitignore
+.prettier
+Dockerfile
+nest-cli.json
+README.md
+tsconfig.build.json
+tsconfig.json
