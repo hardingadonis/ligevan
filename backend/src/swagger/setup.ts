@@ -10,6 +10,7 @@ export const setupSwagger = (app: INestApplication<any>) => {
 			'GPL-3.0 license',
 			'https://github.com/hardingadonis/ligevan/blob/main/LICENSE',
 		)
+		.addBearerAuth()
 		.build();
 
 	const document = SwaggerModule.createDocument(app, config);
