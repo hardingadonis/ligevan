@@ -1,5 +1,4 @@
 FROM node:20.17.0-alpine AS build
-ARG NODE_ENV=production
 WORKDIR /app
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
