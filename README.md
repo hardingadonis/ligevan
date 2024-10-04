@@ -1,12 +1,12 @@
-# bookish
+# ligevan
 
-![GitHub contributors](https://img.shields.io/github/contributors/hardingadonis/bookish)
-![GitHub top language](https://img.shields.io/github/languages/top/hardingadonis/bookish)
-![GitHub repo size](https://img.shields.io/github/repo-size/hardingadonis/bookish)
-![GitHub License](https://img.shields.io/github/license/hardingadonis/bookish)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=hardingadonis_bookish&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=hardingadonis_bookish)
+![GitHub contributors](https://img.shields.io/github/contributors/hardingadonis/ligevan)
+![GitHub top language](https://img.shields.io/github/languages/top/hardingadonis/ligevan)
+![GitHub repo size](https://img.shields.io/github/repo-size/hardingadonis/ligevan)
+![GitHub License](https://img.shields.io/github/license/hardingadonis/ligevan)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=hardingadonis_ligevan&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=hardingadonis_ligevan)
 
-> A library management web tool for efficient organization
+> 「学び、練習し、成功する」
 
 ## Contributing
 
@@ -15,8 +15,8 @@
 ## Contributors
 
 <div align="center">
-  <a href="https://github.com/hardingadonis/bookish/graphs/contributors">
-    <img src="https://contrib.rocks/image?repo=hardingadonis/bookish" />
+  <a href="https://github.com/hardingadonis/ligevan/graphs/contributors">
+    <img src="https://contrib.rocks/image?repo=hardingadonis/ligevan" />
   </a>
 </div>
 
@@ -25,13 +25,13 @@
 - Step 1: Clone the repository
 
   ```bash
-  git clone https://github.com/hardingadonis/bookish.git
+  git clone https://github.com/hardingadonis/ligevan.git
   ```
 
 - Step 2: Install dependencies
 
   ```bash
-  cd bookish
+  cd ligevan
   yarn
   ```
 
@@ -45,4 +45,4 @@
 
 ## Licenses
 
-- [bookish](https://github.com/hardingadonis/bookish) is licensed under the [GPL-3.0 license](LICENSE)
+- [ligevan](https://github.com/hardingadonis/ligevan) is licensed under the [GPL-3.0 license](LICENSE)
