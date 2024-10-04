@@ -15,8 +15,8 @@ export class AuthAdminService {
 	private readonly logger = new Logger(AuthAdminService.name);
 
 	constructor(
-		private adminService: AdminsService,
-		private jwtService: JwtService,
+		private readonly adminService: AdminsService,
+		private readonly jwtService: JwtService,
 	) {}
 
 	async signIn(
