@@ -16,5 +16,3 @@ test/
 Dockerfile
 nest-cli.json
 README.md
-tsconfig.build.json
-tsconfig.json
