@@ -1,8 +1,25 @@
-FROM node:20.17.0-alpine
+FROM node:20.17.0-alpine AS base
+USER hardingadonis
 WORKDIR /app
-ENV NODE_ENV production
-COPY --chown=node:node package.json yarn.lock ./
-RUN yarn install --frozen-lockfile --production
-COPY --chown=node:node . .
+EXPOSE 3000
+
+#--------------------------------------------------
+
+FROM base AS build
+WORKDIR /app
+COPY ["package.json", "./"]
+COPY ["yarn.lock", "./"]
+RUN yarn install --frozen-lockfile
+COPY . .
 RUN yarn build
-CMD [ "yarn", "start:prod" ]
+
+#--------------------------------------------------
+
+FROM base AS production
+ARG NODE_ENV=production
+WORKDIR /app
+COPY ["package.json", "./"]
+COPY ["yarn.lock", "./"]
+RUN yarn install --frozen-lockfile --production
+COPY --from=build /app/dist .
+ENTRYPOINT ["node", "main.js"]
