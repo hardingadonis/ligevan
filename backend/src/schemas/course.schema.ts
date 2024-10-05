@@ -17,8 +17,8 @@ export class Course {
 	@Prop({ required: true })
 	price: number;
 
-	@Prop({ default: true })
-	isActive: boolean;
+	@Prop({ default: false })
+	isDeleted: boolean;
 }
 
 export const CourseSchema = SchemaFactory.createForClass(Course);
