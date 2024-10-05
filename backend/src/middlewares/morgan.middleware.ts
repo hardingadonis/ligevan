@@ -1,5 +1,5 @@
 import { Injectable, Logger, NestMiddleware } from '@nestjs/common';
-import { Request, Response, NextFunction } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import morgan from 'morgan';
 
 @Injectable()

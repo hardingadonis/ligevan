@@ -8,11 +8,12 @@ import {
 	Put,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { VouchersService } from '@/domains/vouchers/vouchers.service';
+
 import {
 	CreateVoucherDto,
 	UpdateVoucherDto,
 } from '@/domains/vouchers/dto/voucher.dto';
+import { VouchersService } from '@/domains/vouchers/vouchers.service';
 
 @ApiTags('Vouchers')
 @Controller('vouchers')
