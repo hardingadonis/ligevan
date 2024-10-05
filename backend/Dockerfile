@@ -1,4 +1,5 @@
 FROM node:20.17.0-alpine AS base
+RUN addgroup -S backend && adduser -S backend -G backend
 USER backend
 WORKDIR /app
 EXPOSE 3000
