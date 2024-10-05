@@ -118,25 +118,29 @@ export class VouchersService {
 		}
 	}
 
-	async delete(id: string): Promise<Voucher> {
+	async delete(id: string) {
 		try {
-			const checkVoucherExist = await this.voucherModel
-				.findOne({ _id: id })
+			const voucher = await this.voucherModel
+				.findOneAndUpdate(
+					{ _id: id, isDeleted: false },
+					{ isDeleted: true },
+					{ new: true },
+				)
+				.select('-__v')
 				.exec();
 
-			this.logger.debug('Voucher found', checkVoucherExist);
+			this.logger.debug('Deleted center', voucher);
 
-			if (!checkVoucherExist) {
-				this.logger.error('Voucher not found');
+			if (!voucher) {
+				this.logger.error('Center not found!');
 
-				throw new NotFoundException('Voucher not found');
+				throw new NotFoundException('Center not found!');
 			}
 
-			this.logger.log('Deleting voucher');
-
-			return await this.voucherModel
-				.findByIdAndUpdate(id, { isDeleted: true })
-				.exec();
+			return {
+				statusCode: 200,
+				message: 'Center deleted successfully',
+			};
 		} catch (error: any) {
 			this.logger.error('Failed to delete voucher', error);
 

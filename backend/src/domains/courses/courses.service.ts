@@ -19,12 +19,12 @@ export class CoursesService {
 	private readonly logger = new Logger(CoursesService.name);
 
 	constructor(
-		@InjectModel(Course.name) private readonly voucherModel: Model<Course>,
+		@InjectModel(Course.name) private readonly courseModel: Model<Course>,
 	) {}
 
 	async create(createCourseDto: CreateCourseDto): Promise<Course> {
 		try {
-			const checkCourseExist = await this.voucherModel
+			const checkCourseExist = await this.courseModel
 				.findOne({ code: createCourseDto.code })
 				.exec();
 
@@ -36,7 +36,7 @@ export class CoursesService {
 				throw new ConflictException('Course code already exists!');
 			}
 
-			const newCourse = new this.voucherModel(createCourseDto);
+			const newCourse = new this.courseModel(createCourseDto);
 
 			this.logger.debug('Created new course', newCourse);
 
@@ -50,7 +50,7 @@ export class CoursesService {
 
 	async getAll(): Promise<Course[]> {
 		try {
-			const courses = await this.voucherModel
+			const courses = await this.courseModel
 				.find({ isDeleted: false })
 				.select('-__v')
 				.exec();
@@ -70,7 +70,7 @@ export class CoursesService {
 
 	async getCourseByCode(code: string): Promise<Course> {
 		try {
-			const course = await this.voucherModel
+			const course = await this.courseModel
 				.findOne({ code, isDeleted: false })
 				.select('-__v')
 				.exec();
@@ -98,7 +98,7 @@ export class CoursesService {
 
 	async update(id: string, updateCourseDto: UpdateCourseDto): Promise<Course> {
 		try {
-			const course = await this.voucherModel
+			const course = await this.courseModel
 				.findOne({ _id: id, isDeleted: false })
 				.exec();
 
@@ -112,7 +112,7 @@ export class CoursesService {
 
 			this.logger.debug('Found course', course);
 
-			return await this.voucherModel
+			return await this.courseModel
 				.findByIdAndUpdate(id, updateCourseDto, { new: true, isDelete: false })
 				.select('-__v')
 				.exec();
@@ -123,26 +123,29 @@ export class CoursesService {
 		}
 	}
 
-	async delete(id: string): Promise<Course> {
+	async delete(id: string) {
 		try {
-			const course = await this.voucherModel
-				.findOne({ _id: id, isDeleted: false })
-				.exec();
-
-			this.logger.debug('Retrieved course', course);
-
-			if (!course) {
-				this.logger.error(`Course with code ${id} not found!`);
-
-				throw new NotFoundException(`Course with code ${id} not found!`);
-			}
-
-			this.logger.debug('Deleting course', course);
-
-			return await this.voucherModel
-				.findByIdAndUpdate(id, { isDeleted: true }, { new: true })
+			const course = await this.courseModel
+				.findOneAndUpdate(
+					{ _id: id, isDeleted: false },
+					{ isDeleted: true },
+					{ new: true },
+				)
 				.select('-__v')
 				.exec();
+
+			this.logger.debug('Deleted center', course);
+
+			if (!course) {
+				this.logger.error('Center not found!');
+
+				throw new NotFoundException('Center not found!');
+			}
+
+			return {
+				statusCode: 200,
+				message: 'Center deleted successfully',
+			};
 		} catch (error: any) {
 			this.logger.error('Failed to delete course!', error);
 
