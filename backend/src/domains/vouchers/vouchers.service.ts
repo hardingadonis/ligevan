@@ -54,7 +54,10 @@ export class VouchersService {
 		try {
 			this.logger.log('Retrieving all vouchers');
 
-			return await this.voucherModel.find({ isDeleted: false }).exec();
+			return await this.voucherModel
+				.find({ isDeleted: false })
+				.select('-__v')
+				.exec();
 		} catch (error: any) {
 			this.logger.error('Failed to retrieve vouchers', error);
 
@@ -68,6 +71,7 @@ export class VouchersService {
 	async getVoucherByCode(code: string): Promise<Voucher> {
 		const voucher = await this.voucherModel
 			.findOne({ code: code, isDeleted: false })
+			.select('-__v')
 			.exec();
 
 		this.logger.debug('Retrieved voucher', voucher);
