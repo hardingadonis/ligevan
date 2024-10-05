@@ -1,0 +1,12 @@
+# Folders
+
+dist/
+node_modules/
+
+# Files
+
+.dockerignore
+.env
+.gitignore
+eslint.config.js
+README.md
