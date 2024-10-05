@@ -5,7 +5,7 @@ WORKDIR /app
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile --ignore-scripts
 COPY ./src ./src
-COPY tsconfig.app.json tsconfig.json tsconfig.build.json ./
+COPY tsconfig.app.json tsconfig.json tsconfig.node.json ./
 RUN yarn build
 
 #--------------------------------------------------
