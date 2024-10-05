@@ -5,7 +5,7 @@ WORKDIR /app
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile --ignore-scripts
 COPY ./src ./src
-COPY tsconfig.app.json tsconfig.json tsconfig.node.json vite.config.ts ./
+COPY index.html tsconfig.app.json tsconfig.json tsconfig.node.json vite.config.ts ./
 RUN yarn build
 
 #--------------------------------------------------
