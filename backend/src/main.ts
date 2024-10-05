@@ -1,10 +1,11 @@
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-require('module-alias/register');
-
-import { NestFactory } from '@nestjs/core';
 import { Logger, ValidationPipe } from '@nestjs/common';
+import { NestFactory } from '@nestjs/core';
+
 import { AppModule } from '@/app.module';
 import { setupSwagger } from '@/swagger/setup';
+
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+require('module-alias/register');
 
 const bootstrap = async () => {
 	const logger = new Logger();

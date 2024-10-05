@@ -1,5 +1,3 @@
-import { Model } from 'mongoose';
-import { Course } from '@/schemas/course.schema';
 import {
 	ConflictException,
 	Injectable,
@@ -8,10 +6,13 @@ import {
 	NotFoundException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+
 import {
 	CreateCourseDto,
 	UpdateCourseDto,
 } from '@/domains/courses/dto/course.dto';
+import { Course } from '@/schemas/course.schema';
 
 @Injectable()
 export class CoursesService {

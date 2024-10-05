@@ -8,6 +8,7 @@ import {
 	Put,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+
 import { CoursesService } from '@/domains/courses/courses.service';
 import {
 	CreateCourseDto,

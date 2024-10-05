@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
+
 import { AdminsModule } from '@/domains/admins/admins.module';
 import { AuthAdminController } from '@/domains/auth/admin/auth.admin.controller';
 import { AuthAdminService } from '@/domains/auth/admin/auth.admin.service';

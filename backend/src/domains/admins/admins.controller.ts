@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+
 import { AdminsService } from '@/domains/admins/admins.service';
 import { CreateAdminDto, UpdateAdminDto } from '@/domains/admins/dto/admin.dto';
 
