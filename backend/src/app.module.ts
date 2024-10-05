@@ -3,6 +3,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { DomainsModule } from '@/domains/domains.module';
 import { MorganMiddleware } from '@/middlewares/morgan.middleware';
+import { CoursesController } from './domains/courses/courses.controller';
+import { CoursesModule } from './domains/courses/courses.module';
 
 @Module({
 	imports: [
@@ -15,7 +17,9 @@ import { MorganMiddleware } from '@/middlewares/morgan.middleware';
 			inject: [ConfigService],
 		}),
 		DomainsModule,
+		CoursesModule,
 	],
+	controllers: [CoursesController],
 })
 export class AppModule implements NestModule {
 	configure(consumer: MiddlewareConsumer) {
