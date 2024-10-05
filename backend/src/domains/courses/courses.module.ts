@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
 import { CoursesService } from '@/domains/courses/courses.service';
 import { CoursesController } from '@/domains/courses/courses.controller';
-import { MongooseModule } from '@nestjs/mongoose';
 import { CourseSchema } from '@/schemas/course.schema';
 
 @Module({
