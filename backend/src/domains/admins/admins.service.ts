@@ -28,7 +28,10 @@ export class AdminsService {
 	}
 
 	async getByUsernameWithPassword(username: string) {
-		const admin = await this.adminModel.findOne({ username: username }).exec();
+		const admin = await this.adminModel
+			.findOne({ username: username })
+			.select('-__v')
+			.exec();
 
 		this.logger.debug(`Admin with username ${username} found: ${admin}`);
 

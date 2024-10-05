@@ -21,7 +21,7 @@ export class VouchersService {
 		@InjectModel(Voucher.name) private readonly voucherModel: Model<Voucher>,
 	) {}
 
-	async createVoucher(createVoucherDto: CreateVoucherDto): Promise<Voucher> {
+	async create(createVoucherDto: CreateVoucherDto): Promise<Voucher> {
 		try {
 			const checkVoucherExist = await this.voucherModel
 				.findOne({ code: createVoucherDto.code })
@@ -50,11 +50,14 @@ export class VouchersService {
 		}
 	}
 
-	async getAllVouchers(): Promise<Voucher[]> {
+	async getAll(): Promise<Voucher[]> {
 		try {
 			this.logger.log('Retrieving all vouchers');
 
-			return await this.voucherModel.find({ isDeleted: false }).exec();
+			return await this.voucherModel
+				.find({ isDeleted: false })
+				.select('-__v')
+				.exec();
 		} catch (error: any) {
 			this.logger.error('Failed to retrieve vouchers', error);
 
@@ -68,6 +71,7 @@ export class VouchersService {
 	async getVoucherByCode(code: string): Promise<Voucher> {
 		const voucher = await this.voucherModel
 			.findOne({ code: code, isDeleted: false })
+			.select('-__v')
 			.exec();
 
 		this.logger.debug('Retrieved voucher', voucher);
@@ -83,13 +87,13 @@ export class VouchersService {
 		return voucher;
 	}
 
-	async updateVoucher(
+	async update(
 		id: string,
 		updateVoucherDto: UpdateVoucherDto,
 	): Promise<Voucher> {
 		try {
 			const checkVoucherExist = await this.voucherModel
-				.findOne({ _id: id })
+				.findOne({ _id: id, isDeleted: false })
 				.exec();
 
 			this.logger.debug('Voucher found', checkVoucherExist);
@@ -104,6 +108,7 @@ export class VouchersService {
 
 			return await this.voucherModel
 				.findByIdAndUpdate(id, updateVoucherDto, { new: true, isDelete: false })
+				.select('-__v')
 				.exec();
 		} catch (error: any) {
 			this.logger.error('Failed to update voucher', error);
@@ -112,7 +117,7 @@ export class VouchersService {
 		}
 	}
 
-	async deleteVoucher(id: string): Promise<Voucher> {
+	async delete(id: string): Promise<Voucher> {
 		try {
 			const checkVoucherExist = await this.voucherModel
 				.findOne({ _id: id })
