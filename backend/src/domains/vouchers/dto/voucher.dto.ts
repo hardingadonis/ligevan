@@ -1,16 +1,19 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsDateString, IsNotEmpty, IsNumber } from 'class-validator';
+import { IsDateString, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class CreateVoucherDto {
 	@ApiProperty({ description: 'Voucher code' })
+	@IsString()
 	@IsNotEmpty()
 	code: string;
 
 	@ApiProperty({ description: 'Voucher title' })
+	@IsString()
 	@IsNotEmpty()
 	title: string;
 
 	@ApiProperty({ description: 'Voucher description' })
+	@IsString()
 	description?: string;
 
 	@ApiProperty({ description: 'Monetary discount amount of the voucher (%)' })
