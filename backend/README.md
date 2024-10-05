@@ -12,12 +12,11 @@
 
 Create a `.env` file there and add the following environment variables:
 
-| #   | Variable Name | Description                          | Example                 |
-| --- | ------------- | ------------------------------------ | ----------------------- |
-| 1   | BACKEND_PORT  | The port number to run the server on | 3000                    |
-| 2   | DATABASE_URL  | The URL to the MongoDB database      | localhost:27017/ligevan |
-| 3   | JWT_SECRET    | The secret key for JWT               | secret-key              |
-| 4   | JWT_EXPIRES   | The expiration time for JWT          | 1h                      |
+| #   | Variable Name | Description                     | Example                 |
+| --- | ------------- | ------------------------------- | ----------------------- |
+| 1   | DATABASE_URL  | The URL to the MongoDB database | localhost:27017/ligevan |
+| 2   | JWT_SECRET    | The secret key for JWT          | secret-key              |
+| 3   | JWT_EXPIRES   | The expiration time for JWT     | 1h                      |
 
 ## Development
 
