@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsDateString, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateTeacherDto {
 	@ApiProperty({ description: 'Teacher full name' })
@@ -15,7 +15,7 @@ export class CreateTeacherDto {
 	@ApiProperty({ description: 'Teacher password' })
 	@IsString()
 	@IsNotEmpty()
-	hashedPassword: string;
+	password: string;
 
 	@ApiProperty({ description: 'Teacher phone' })
 	@IsString()
@@ -27,8 +27,7 @@ export class CreateTeacherDto {
 	@IsNotEmpty()
 	address: string;
 
-	@ApiProperty({ description: 'Teacher avatar' })
-	@IsString()
+	@ApiPropertyOptional({ description: 'Teacher avatar' })
 	avatar?: string;
 
 	@ApiProperty({ description: 'Teacher gender' })
@@ -37,13 +36,8 @@ export class CreateTeacherDto {
 	gender: string;
 
 	@ApiProperty({ description: 'Teacher date of birth' })
-	@IsDateString()
 	@IsNotEmpty()
 	dob: Date;
-
-	@ApiProperty({ description: 'Teacher salary' })
-	@IsNumber()
-	salary?: number;
 
 	@ApiProperty({ description: 'The center is where teachers teach' })
 	@IsString()
@@ -56,7 +50,7 @@ export class UpdateTeacherDto {
 	fullName?: string;
 
 	@ApiPropertyOptional({ description: 'Teacher password' })
-	hashedPassword?: string;
+	password?: string;
 
 	@ApiPropertyOptional({ description: 'Teacher phone' })
 	phone?: string;
