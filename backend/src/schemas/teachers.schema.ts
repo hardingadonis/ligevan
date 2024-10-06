@@ -32,6 +32,9 @@ export class Teacher {
 
 	@Prop({ type: Types.ObjectId, ref: 'Center', required: true })
 	center: Types.ObjectId;
+
+	@Prop({ default: false })
+	isDeleted: boolean;
 }
 
 export const TeacherSchema = SchemaFactory.createForClass(Teacher);
