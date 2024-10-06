@@ -18,7 +18,7 @@ export class Teacher {
 	@Prop({ required: true })
 	address: string;
 
-	@Prop({ required: true })
+	@Prop({ default: 'https://teacher_avatar.png' })
 	avatar: string;
 
 	@Prop({ required: true })
@@ -27,7 +27,7 @@ export class Teacher {
 	@Prop({ required: true })
 	dob: Date;
 
-	@Prop()
+	@Prop({ default: 0 })
 	salary: number;
 
 	@Prop({ type: Types.ObjectId, ref: 'Center', required: true })
