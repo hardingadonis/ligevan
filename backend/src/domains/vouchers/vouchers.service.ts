@@ -7,11 +7,12 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Voucher } from '@/schemas/voucher.schema';
+
 import {
 	CreateVoucherDto,
 	UpdateVoucherDto,
 } from '@/domains/vouchers/dto/voucher.dto';
+import { Voucher } from '@/schemas/voucher.schema';
 
 @Injectable()
 export class VouchersService {
@@ -21,7 +22,7 @@ export class VouchersService {
 		@InjectModel(Voucher.name) private readonly voucherModel: Model<Voucher>,
 	) {}
 
-	async createVoucher(createVoucherDto: CreateVoucherDto): Promise<Voucher> {
+	async create(createVoucherDto: CreateVoucherDto): Promise<Voucher> {
 		try {
 			const checkVoucherExist = await this.voucherModel
 				.findOne({ code: createVoucherDto.code })
@@ -50,11 +51,14 @@ export class VouchersService {
 		}
 	}
 
-	async getAllVouchers(): Promise<Voucher[]> {
+	async getAll(): Promise<Voucher[]> {
 		try {
 			this.logger.log('Retrieving all vouchers');
 
-			return await this.voucherModel.find({ isDeleted: false }).exec();
+			return await this.voucherModel
+				.find({ isDeleted: false })
+				.select('-__v')
+				.exec();
 		} catch (error: any) {
 			this.logger.error('Failed to retrieve vouchers', error);
 
@@ -68,6 +72,7 @@ export class VouchersService {
 	async getVoucherByCode(code: string): Promise<Voucher> {
 		const voucher = await this.voucherModel
 			.findOne({ code: code, isDeleted: false })
+			.select('-__v')
 			.exec();
 
 		this.logger.debug('Retrieved voucher', voucher);
@@ -83,13 +88,13 @@ export class VouchersService {
 		return voucher;
 	}
 
-	async updateVoucher(
+	async update(
 		id: string,
 		updateVoucherDto: UpdateVoucherDto,
 	): Promise<Voucher> {
 		try {
 			const checkVoucherExist = await this.voucherModel
-				.findOne({ _id: id })
+				.findOne({ _id: id, isDeleted: false })
 				.exec();
 
 			this.logger.debug('Voucher found', checkVoucherExist);
@@ -104,6 +109,7 @@ export class VouchersService {
 
 			return await this.voucherModel
 				.findByIdAndUpdate(id, updateVoucherDto, { new: true, isDelete: false })
+				.select('-__v')
 				.exec();
 		} catch (error: any) {
 			this.logger.error('Failed to update voucher', error);
@@ -112,25 +118,29 @@ export class VouchersService {
 		}
 	}
 
-	async deleteVoucher(id: string): Promise<Voucher> {
+	async delete(id: string) {
 		try {
-			const checkVoucherExist = await this.voucherModel
-				.findOne({ _id: id })
+			const voucher = await this.voucherModel
+				.findOneAndUpdate(
+					{ _id: id, isDeleted: false },
+					{ isDeleted: true },
+					{ new: true },
+				)
+				.select('-__v')
 				.exec();
 
-			this.logger.debug('Voucher found', checkVoucherExist);
+			this.logger.debug('Deleted center', voucher);
 
-			if (!checkVoucherExist) {
-				this.logger.error('Voucher not found');
+			if (!voucher) {
+				this.logger.error('Center not found!');
 
-				throw new NotFoundException('Voucher not found');
+				throw new NotFoundException('Center not found!');
 			}
 
-			this.logger.log('Deleting voucher');
-
-			return await this.voucherModel
-				.findByIdAndUpdate(id, { isDeleted: true })
-				.exec();
+			return {
+				statusCode: 200,
+				message: 'Center deleted successfully',
+			};
 		} catch (error: any) {
 			this.logger.error('Failed to delete voucher', error);
 

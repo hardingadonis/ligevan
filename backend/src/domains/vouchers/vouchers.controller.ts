@@ -7,12 +7,13 @@ import {
 	Post,
 	Put,
 } from '@nestjs/common';
-import { VouchersService } from '@/domains/vouchers/vouchers.service';
+import { ApiTags } from '@nestjs/swagger';
+
 import {
 	CreateVoucherDto,
 	UpdateVoucherDto,
 } from '@/domains/vouchers/dto/voucher.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { VouchersService } from '@/domains/vouchers/vouchers.service';
 
 @ApiTags('Vouchers')
 @Controller('vouchers')
@@ -20,13 +21,13 @@ export class VouchersController {
 	constructor(private readonly vouchersService: VouchersService) {}
 
 	@Post()
-	async createVoucher(@Body() createVoucherDto: CreateVoucherDto) {
-		return await this.vouchersService.createVoucher(createVoucherDto);
+	async create(@Body() createVoucherDto: CreateVoucherDto) {
+		return await this.vouchersService.create(createVoucherDto);
 	}
 
 	@Get()
-	async getAllVouchers() {
-		return await this.vouchersService.getAllVouchers();
+	async getAll() {
+		return await this.vouchersService.getAll();
 	}
 
 	@Get(':code')
@@ -35,15 +36,15 @@ export class VouchersController {
 	}
 
 	@Put(':id')
-	async updateVoucher(
+	async update(
 		@Param('id') id: string,
 		@Body() updateVoucherDto: UpdateVoucherDto,
 	) {
-		return await this.vouchersService.updateVoucher(id, updateVoucherDto);
+		return await this.vouchersService.update(id, updateVoucherDto);
 	}
 
 	@Delete(':id')
-	async deleteVoucher(@Param('id') id: string) {
-		return await this.vouchersService.deleteVoucher(id);
+	async delete(@Param('id') id: string) {
+		return await this.vouchersService.delete(id);
 	}
 }

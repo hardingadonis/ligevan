@@ -1,4 +1,3 @@
-import { Admin } from '@/schemas/admin.schema';
 import {
 	ConflictException,
 	Injectable,
@@ -7,7 +6,9 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+
 import { CreateAdminDto, UpdateAdminDto } from '@/domains/admins/dto/admin.dto';
+import { Admin } from '@/schemas/admin.schema';
 import { hash } from '@/utils/hash.util';
 
 @Injectable()
@@ -28,7 +29,10 @@ export class AdminsService {
 	}
 
 	async getByUsernameWithPassword(username: string) {
-		const admin = await this.adminModel.findOne({ username: username }).exec();
+		const admin = await this.adminModel
+			.findOne({ username: username })
+			.select('-__v')
+			.exec();
 
 		this.logger.debug(`Admin with username ${username} found: ${admin}`);
 

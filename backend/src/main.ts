@@ -1,11 +1,11 @@
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-require('module-alias/register');
-
-import { NestFactory } from '@nestjs/core';
-import { ConfigService } from '@nestjs/config';
 import { Logger, ValidationPipe } from '@nestjs/common';
+import { NestFactory } from '@nestjs/core';
+
 import { AppModule } from '@/app.module';
 import { setupSwagger } from '@/swagger/setup';
+
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+require('module-alias/register');
 
 const bootstrap = async () => {
 	const logger = new Logger();
@@ -14,14 +14,11 @@ const bootstrap = async () => {
 	app.useGlobalPipes(new ValidationPipe());
 	app.setGlobalPrefix('api');
 
-	const configService = app.get(ConfigService);
-
 	// Setup Swagger
 	setupSwagger(app);
 
 	// Start the application
-	const port = configService.get('BACKEND_PORT');
-	await app.listen(port);
+	await app.listen(3000);
 
 	logger.log(`Server running on ${await app.getUrl()}`);
 };
