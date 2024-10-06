@@ -22,13 +22,10 @@ export class Teacher {
 	avatar: string;
 
 	@Prop({ required: true })
-	gender: string;
+	gender: 'male' | 'female';
 
 	@Prop({ required: true })
 	dob: Date;
-
-	@Prop({ default: 0 })
-	salary: number;
 
 	@Prop({ type: Types.ObjectId, ref: 'Center', required: true })
 	center: Types.ObjectId;
