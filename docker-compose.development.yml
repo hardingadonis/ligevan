@@ -1,0 +1,11 @@
+services:
+  ligevan-backend:
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=mongodb://ligevan-database:27017/ligevan
+      - JWT_SECRET=your-secret
+      - JWT_EXPIRES=2h
+
+  ligevan-frontend:
+    environment:
+      - VITE_BACKEND_URL=http://ligevan-backend:3000
