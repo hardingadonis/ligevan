@@ -1,0 +1,49 @@
+services:
+  ligevan-database:
+    image: mongo:7.0.14
+    container_name: ligevan-database
+    restart: always
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - ligevan-network
+
+  ligevan-backend:
+    image: ghcr.io/hardingadonis/ligevan-backend:latest
+    container_name: ligevan-backend
+    ports:
+      - '3000:3000'
+    networks:
+      - ligevan-network
+    depends_on:
+      - ligevan-database
+
+  ligevan-frontend:
+    image: ghcr.io/hardingadonis/ligevan-frontend:latest
+    container_name: ligevan-frontend
+    ports:
+      - '8080:80'
+    networks:
+      - ligevan-network
+
+  portainer:
+    image: portainer/portainer-ce:2.22.0-alpine
+    container_name: portainer
+    restart: always
+    ports:
+      - '9000:9000'
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    networks:
+      - ligevan-network
+
+volumes:
+  mongo_data:
+  portainer_data:
+
+networks:
+  ligevan-network:
+    driver: bridge
