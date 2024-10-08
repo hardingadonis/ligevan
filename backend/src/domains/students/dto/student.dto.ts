@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsArray, IsIn, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateStudentDto {
 	@ApiProperty({ description: 'Student full name' })
@@ -28,7 +28,7 @@ export class CreateStudentDto {
 	address: string;
 
 	@ApiProperty({ description: 'Student gender' })
-	@IsString()
+	@IsIn(['male', 'female'])
 	@IsNotEmpty()
 	gender: string;
 
@@ -37,7 +37,7 @@ export class CreateStudentDto {
 	dob: Date;
 
 	@ApiProperty({ description: 'List of classes the student is enrolled in' })
-	@IsString()
+	@IsArray()
 	@IsNotEmpty()
 	classes: string[];
 
@@ -45,7 +45,7 @@ export class CreateStudentDto {
 	// 	description:
 	// 		'List of payment methods or transactions associated with the student',
 	// })
-	// @IsString()
+	// @IsArray()
 	// @IsNotEmpty()
 	// payments: string[];
 }
