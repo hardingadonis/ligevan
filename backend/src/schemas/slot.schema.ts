@@ -22,7 +22,7 @@ export class Slot {
 	})
 	attendances: Types.ObjectId[];
 
-	@Prop({ required: true, default: false })
+	@Prop({ default: false })
 	isDone: boolean;
 }
 

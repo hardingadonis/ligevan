@@ -5,6 +5,7 @@ import { AuthModule } from '@/domains/auth/auth.module';
 import { CentersModule } from '@/domains/centers/centers.module';
 import { ClassesModule } from '@/domains/classes/classes.module';
 import { CoursesModule } from '@/domains/courses/courses.module';
+import { SlotsModule } from '@/domains/slots/slots.module';
 import { TeachersModule } from '@/domains/teachers/teachers.module';
 import { VouchersModule } from '@/domains/vouchers/vouchers.module';
 
@@ -17,6 +18,7 @@ import { VouchersModule } from '@/domains/vouchers/vouchers.module';
 		CentersModule,
 		TeachersModule,
 		ClassesModule,
+		SlotsModule,
 	],
 })
 export class DomainsModule {}
