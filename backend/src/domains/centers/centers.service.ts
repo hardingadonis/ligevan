@@ -62,6 +62,16 @@ export class CentersService {
 					path: 'vouchers',
 					model: 'Voucher',
 				})
+				.populate({
+					select: '-__v -hashedPassword',
+					path: 'teachers',
+					model: 'Teacher',
+				})
+				.populate({
+					select: '-__v',
+					path: 'classes',
+					model: 'Class',
+				})
 				.select('-__v')
 				.exec();
 
@@ -88,6 +98,16 @@ export class CentersService {
 					select: '-__v',
 					path: 'vouchers',
 					model: 'Voucher',
+				})
+				.populate({
+					select: '-__v -hashedPassword',
+					path: 'teachers',
+					model: 'Teacher',
+				})
+				.populate({
+					select: '-__v',
+					path: 'classes',
+					model: 'Class',
 				})
 				.select('-__v')
 				.exec();
