@@ -38,6 +38,16 @@ export class CreateCenterDto {
 	@IsArray()
 	@IsOptional()
 	vouchers: string[];
+
+	@ApiProperty({ description: 'Teachers offered by the center' })
+	@IsArray()
+	@IsOptional()
+	teachers: string[];
+
+	@ApiProperty({ description: 'Classes offered by the center' })
+	@IsArray()
+	@IsOptional()
+	classes: string[];
 }
 
 export class UpdateCenterDto {
@@ -58,4 +68,10 @@ export class UpdateCenterDto {
 
 	@ApiPropertyOptional({ description: 'Vouchers offered by the center' })
 	vouchers?: string[];
+
+	@ApiPropertyOptional({ description: 'Teachers offered by the center' })
+	teachers?: string[];
+
+	@ApiPropertyOptional({ description: 'Classes offered by the center' })
+	classes?: string[];
 }
