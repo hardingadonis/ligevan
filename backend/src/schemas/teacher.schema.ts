@@ -18,7 +18,7 @@ export class Teacher {
 	@Prop({ required: true })
 	address: string;
 
-	@Prop({ default: 'https://teacher_avatar.png' })
+	@Prop({ required: true, default: 'https://teacher_avatar.png' })
 	avatar: string;
 
 	@Prop({ required: true })
@@ -29,6 +29,9 @@ export class Teacher {
 
 	@Prop({ type: Types.ObjectId, ref: 'Center', required: true })
 	center: Types.ObjectId;
+
+	@Prop({ type: Types.Array<Types.ObjectId>, ref: 'Salary', required: false })
+	salaries: Types.ObjectId[];
 
 	@Prop({ default: false })
 	isDeleted: boolean;

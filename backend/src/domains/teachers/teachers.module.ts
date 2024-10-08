@@ -3,7 +3,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 import { TeachersController } from '@/domains/teachers/teachers.controller';
 import { TeachersService } from '@/domains/teachers/teachers.service';
-import { TeacherSchema } from '@/schemas/teachers.schema';
+import { TeacherSchema } from '@/schemas/teacher.schema';
 
 @Module({
 	imports: [

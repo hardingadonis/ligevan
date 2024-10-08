@@ -11,7 +11,7 @@ import {
 	CreateTeacherDto,
 	UpdateTeacherDto,
 } from '@/domains/teachers/dto/teacher.dto';
-import { Teacher } from '@/schemas/teachers.schema';
+import { Teacher } from '@/schemas/teacher.schema';
 import { hash } from '@/utils/hash.util';
 
 @Injectable()
