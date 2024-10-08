@@ -3,6 +3,7 @@ import {
 	Injectable,
 	InternalServerErrorException,
 	Logger,
+	NotFoundException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -80,6 +81,12 @@ export class StudentsService {
 
 			this.logger.debug('Found students', students);
 
+			if (!students) {
+				this.logger.error('No students found!');
+
+				throw new NotFoundException('No students found!');
+			}
+
 			return students;
 		} catch (error: any) {
 			this.logger.error('Failed to get all students!', error);
@@ -118,7 +125,7 @@ export class StudentsService {
 			if (!student) {
 				this.logger.error(`Student with id ${id} not found!`);
 
-				throw new ConflictException(`Student with id ${id} not found!`);
+				throw new NotFoundException(`Student with id ${id} not found!`);
 			}
 
 			this.logger.debug('Found student', student);
@@ -138,12 +145,13 @@ export class StudentsService {
 		try {
 			const student = await this.studentModel
 				.findOne({ _id: id, isDeleted: false })
+				.select('-__v -hashedPassword')
 				.exec();
 
 			if (!student) {
 				this.logger.error('Student not found!');
 
-				throw new ConflictException('Student not found!');
+				throw new NotFoundException('Student not found!');
 			}
 
 			this.logger.debug('Found student', student);
@@ -185,6 +193,7 @@ export class StudentsService {
 					{ isDeleted: true },
 					{ new: true },
 				)
+				.select('-__v -hashedPassword')
 				.exec();
 
 			if (!student) {
