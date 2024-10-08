@@ -19,15 +19,15 @@ export class CreateClassDto {
 	@IsNotEmpty()
 	teacher: string;
 
-	@ApiProperty({ description: 'The students are in the class' })
-	@IsString()
-	@IsNotEmpty()
-	students: string[];
+	// @ApiProperty({ description: 'The students are in the class' })
+	// @IsString()
+	// @IsNotEmpty()
+	// students: string[];
 
-	@ApiProperty({ description: 'The slots are in the class' })
-	@IsString()
-	@IsNotEmpty()
-	slots: string[];
+	// @ApiProperty({ description: 'The slots are in the class' })
+	// @IsString()
+	// @IsNotEmpty()
+	// slots: string[];
 }
 
 export class UpdateClassDto {
@@ -44,9 +44,9 @@ export class UpdateClassDto {
 	})
 	teacher?: string;
 
-	@ApiPropertyOptional({ description: 'The students are in the class' })
-	students?: string[];
+	// @ApiPropertyOptional({ description: 'The students are in the class' })
+	// students?: string[];
 
-	@ApiPropertyOptional({ description: 'The slots are in the class' })
-	slots?: string[];
+	// @ApiPropertyOptional({ description: 'The slots are in the class' })
+	// slots?: string[];
 }
