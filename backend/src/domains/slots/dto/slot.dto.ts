@@ -41,4 +41,7 @@ export class UpdateSlotDto {
 
 	@ApiPropertyOptional({ description: 'Attendances of slot' })
 	attendances: string[];
+
+	@ApiPropertyOptional({ description: 'Confirm teacher have taught this slot' })
+	isDone: boolean;
 }
