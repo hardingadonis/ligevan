@@ -30,7 +30,7 @@ export class Student {
 	@Prop({ type: Types.Array<Types.ObjectId>, ref: 'Payment', required: false })
 	payments: Types.ObjectId[];
 
-	@Prop({ required: false })
+	@Prop({ default: false })
 	isDeleted: boolean;
 }
 
