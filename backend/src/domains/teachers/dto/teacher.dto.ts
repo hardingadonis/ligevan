@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsIn, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateTeacherDto {
 	@ApiProperty({ description: 'Teacher full name' })
@@ -31,7 +31,7 @@ export class CreateTeacherDto {
 	avatar?: string;
 
 	@ApiProperty({ description: 'Teacher gender' })
-	@IsString()
+	@IsIn(['male', 'female'])
 	@IsNotEmpty()
 	gender: string;
 
