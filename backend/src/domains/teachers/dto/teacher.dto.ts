@@ -1,7 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
+	IsDateString,
 	IsEmail,
-	IsISO8601,
 	IsIn,
 	IsNotEmpty,
 	IsOptional,
@@ -45,7 +45,7 @@ export class CreateTeacherDto {
 	gender: string;
 
 	@ApiProperty({ description: 'Teacher date of birth' })
-	@IsISO8601()
+	@IsDateString()
 	@IsNotEmpty()
 	dob: Date;
 
