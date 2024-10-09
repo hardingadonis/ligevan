@@ -58,5 +58,6 @@ export class UpdatePaymentDto {
 	finalPrice: number;
 
 	@ApiPropertyOptional({ description: 'Method of Payment' })
+	@IsIn(['vn-pay', 'momo', 'zalo-pay'])
 	method: string;
 }
