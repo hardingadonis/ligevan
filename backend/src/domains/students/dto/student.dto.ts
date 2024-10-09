@@ -1,8 +1,8 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
 	IsArray,
+	IsDateString,
 	IsEmail,
-	IsISO8601,
 	IsIn,
 	IsNotEmpty,
 	IsPhoneNumber,
@@ -41,7 +41,7 @@ export class CreateStudentDto {
 	gender: string;
 
 	@ApiProperty({ description: 'Student date of birth' })
-	@IsISO8601()
+	@IsDateString()
 	@IsNotEmpty()
 	dob: Date;
 
