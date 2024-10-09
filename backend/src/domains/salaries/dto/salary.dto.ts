@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsISO8601, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsDateString, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class CreateSalaryDto {
 	@ApiProperty({ description: 'Teacher offered by the Salary' })
@@ -8,12 +8,12 @@ export class CreateSalaryDto {
 	teacher: string;
 
 	@ApiProperty({ description: 'Start date to calculate salary' })
-	@IsISO8601()
+	@IsDateString()
 	@IsNotEmpty()
 	start: Date;
 
 	@ApiProperty({ description: 'End date to calculate salary' })
-	@IsISO8601()
+	@IsDateString()
 	@IsNotEmpty()
 	end: Date;
 
