@@ -1,5 +1,13 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsIn, IsNotEmpty, IsString } from 'class-validator';
+import {
+	IsEmail,
+	IsISO8601,
+	IsIn,
+	IsNotEmpty,
+	IsOptional,
+	IsPhoneNumber,
+	IsString,
+} from 'class-validator';
 
 export class CreateTeacherDto {
 	@ApiProperty({ description: 'Teacher full name' })
@@ -8,7 +16,7 @@ export class CreateTeacherDto {
 	fullName: string;
 
 	@ApiProperty({ description: 'Teacher email' })
-	@IsString()
+	@IsEmail()
 	@IsNotEmpty()
 	email: string;
 
@@ -18,7 +26,7 @@ export class CreateTeacherDto {
 	password: string;
 
 	@ApiProperty({ description: 'Teacher phone' })
-	@IsString()
+	@IsPhoneNumber('VN')
 	@IsNotEmpty()
 	phone: string;
 
@@ -27,7 +35,8 @@ export class CreateTeacherDto {
 	@IsNotEmpty()
 	address: string;
 
-	@ApiPropertyOptional({ description: 'Teacher avatar' })
+	@ApiProperty({ description: 'Teacher avatar' })
+	@IsOptional()
 	avatar?: string;
 
 	@ApiProperty({ description: 'Teacher gender' })
@@ -36,10 +45,11 @@ export class CreateTeacherDto {
 	gender: string;
 
 	@ApiProperty({ description: 'Teacher date of birth' })
+	@IsISO8601()
 	@IsNotEmpty()
 	dob: Date;
 
-	@ApiProperty({ description: 'The center is where teachers teach' })
+	@ApiProperty({ description: 'Center offered by the Teacher ' })
 	@IsString()
 	@IsNotEmpty()
 	center: string;
@@ -66,4 +76,7 @@ export class UpdateTeacherDto {
 
 	@ApiPropertyOptional({ description: 'Teacher date of birth' })
 	dob?: Date;
+
+	@ApiPropertyOptional({ description: 'Center offered by the Teacher ' })
+	center?: string;
 }
