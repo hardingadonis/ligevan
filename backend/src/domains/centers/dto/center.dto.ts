@@ -4,6 +4,7 @@ import {
 	IsEmail,
 	IsNotEmpty,
 	IsOptional,
+	IsPhoneNumber,
 	IsString,
 } from 'class-validator';
 
@@ -19,19 +20,18 @@ export class CreateCenterDto {
 	address: string;
 
 	@ApiProperty({ description: 'Center phone number' })
-	@IsString()
+	@IsPhoneNumber('VN')
 	@IsNotEmpty()
 	phone: string;
 
 	@ApiProperty({ description: 'Center email' })
-	@IsString()
 	@IsEmail()
 	@IsNotEmpty()
 	email: string;
 
 	@ApiProperty({ description: 'Courses offered by the center' })
 	@IsArray()
-	@IsOptional()
+	@IsNotEmpty()
 	courses: string[];
 
 	@ApiProperty({ description: 'Vouchers offered by the center' })
@@ -41,12 +41,12 @@ export class CreateCenterDto {
 
 	@ApiProperty({ description: 'Teachers offered by the center' })
 	@IsArray()
-	@IsOptional()
+	@IsNotEmpty()
 	teachers: string[];
 
 	@ApiProperty({ description: 'Classes offered by the center' })
 	@IsArray()
-	@IsOptional()
+	@IsNotEmpty()
 	classes: string[];
 }
 
