@@ -11,11 +11,6 @@ export class CreateAttendanceDto {
 	@IsString()
 	@IsNotEmpty()
 	slot: string;
-
-	@ApiProperty({ description: 'Attendance status' })
-	@IsIn(['attended', 'absent', 'not-yet'])
-	@IsNotEmpty()
-	status: string;
 }
 
 export class UpdateAttendanceDto {
@@ -26,5 +21,6 @@ export class UpdateAttendanceDto {
 	slot: string;
 
 	@ApiPropertyOptional({ description: 'Attendance status' })
+	@IsIn(['present', 'absent'])
 	status: string;
 }
