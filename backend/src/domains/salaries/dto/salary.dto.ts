@@ -2,7 +2,7 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsISO8601, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class CreateSalaryDto {
-	@ApiProperty({ description: 'Salary of Teacher' })
+	@ApiProperty({ description: 'Teacher offered by the Salary' })
 	@IsString()
 	@IsNotEmpty()
 	teacher: string;
@@ -23,7 +23,7 @@ export class CreateSalaryDto {
 	finalSalary: number;
 }
 export class UpdateSalaryDto {
-	@ApiPropertyOptional({ description: 'Salary of Teacher' })
+	@ApiPropertyOptional({ description: 'Teacher offered by the Salary' })
 	teacher: string;
 
 	@ApiPropertyOptional({ description: 'Start date to calculate salary' })
