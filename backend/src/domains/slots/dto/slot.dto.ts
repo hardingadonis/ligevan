@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsArray, IsISO8601, IsNotEmpty, IsString } from 'class-validator';
+import { IsArray, IsDateString, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateSlotDto {
 	@ApiProperty({ description: 'Class offered by the Slot' })
@@ -13,12 +13,12 @@ export class CreateSlotDto {
 	room: string;
 
 	@ApiProperty({ description: 'Start time of Slot' })
-	@IsISO8601()
+	@IsDateString()
 	@IsNotEmpty()
 	start: Date;
 
 	@ApiProperty({ description: 'End time of Slot' })
-	@IsISO8601()
+	@IsDateString()
 	@IsNotEmpty()
 	end: Date;
 
