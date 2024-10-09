@@ -1,45 +1,47 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsArray, IsNotEmpty, IsString } from 'class-validator';
+import { IsArray, IsISO8601, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateSlotDto {
-	@ApiProperty({ description: 'Class have slot' })
+	@ApiProperty({ description: 'Class offered by the Slot' })
 	@IsString()
 	@IsNotEmpty()
 	class: string;
 
-	@ApiProperty({ description: 'Room of slot' })
+	@ApiProperty({ description: 'Room of Slot' })
 	@IsString()
 	@IsNotEmpty()
 	room: string;
 
-	@ApiProperty({ description: 'Start time of slot' })
+	@ApiProperty({ description: 'Start time of Slot' })
+	@IsISO8601()
 	@IsNotEmpty()
 	start: Date;
 
-	@ApiProperty({ description: 'End time of slot' })
+	@ApiProperty({ description: 'End time of Slot' })
+	@IsISO8601()
 	@IsNotEmpty()
 	end: Date;
 
-	@ApiProperty({ description: 'Attendances of slot' })
+	@ApiProperty({ description: 'Attendances offered by the Slot' })
 	@IsArray()
 	@IsNotEmpty()
 	attendances: string[];
 }
 
 export class UpdateSlotDto {
-	@ApiPropertyOptional({ description: 'Class have slot' })
+	@ApiPropertyOptional({ description: 'Class offered by the Slot' })
 	class: string;
 
-	@ApiPropertyOptional({ description: 'Room of slot' })
+	@ApiPropertyOptional({ description: 'Room of Slot' })
 	room: string;
 
-	@ApiPropertyOptional({ description: 'Start time of slot' })
+	@ApiPropertyOptional({ description: 'Start time of Slot' })
 	start: Date;
 
-	@ApiPropertyOptional({ description: 'End time of slot' })
+	@ApiPropertyOptional({ description: 'End time of Slot' })
 	end: Date;
 
-	@ApiPropertyOptional({ description: 'Attendances of slot' })
+	@ApiPropertyOptional({ description: 'Attendances offered by the Slot' })
 	attendances: string[];
 
 	@ApiPropertyOptional({ description: 'Confirm teacher have taught this slot' })
