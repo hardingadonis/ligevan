@@ -24,13 +24,11 @@ export class CoursesService {
 
 	async create(createCourseDto: CreateCourseDto): Promise<Course> {
 		try {
-			const checkCourseExist = await this.courseModel
+			const existingCourse = await this.courseModel
 				.findOne({ code: createCourseDto.code })
 				.exec();
 
-			this.logger.debug('Course found', checkCourseExist);
-
-			if (checkCourseExist) {
+			if (existingCourse) {
 				this.logger.error('Course code already exists!');
 
 				throw new ConflictException('Course code already exists!');
@@ -38,13 +36,18 @@ export class CoursesService {
 
 			const newCourse = new this.courseModel(createCourseDto);
 
-			this.logger.debug('Created new course', newCourse);
+			this.logger.debug('Creating new course');
 
-			return await newCourse.save();
+			await newCourse.save();
+
+			this.logger.debug('Course created', newCourse);
+			this.logger.log('Course created');
+
+			return newCourse;
 		} catch (error: any) {
 			this.logger.error('Failed to create course!', error);
 
-			throw new InternalServerErrorException('Failed to create course!', error);
+			throw new InternalServerErrorException('Failed to create course!');
 		}
 	}
 
@@ -57,99 +60,109 @@ export class CoursesService {
 
 			this.logger.debug('Found courses', courses);
 
+			if (!courses) {
+				this.logger.error('Courses not found!');
+
+				throw new NotFoundException('Courses not found!');
+			}
+
+			this.logger.log('Retrieved courses');
+
 			return courses;
 		} catch (error: any) {
 			this.logger.error('Failed to get all courses!', error);
 
-			throw new InternalServerErrorException(
-				'Failed to get all courses!',
-				error,
-			);
+			throw new InternalServerErrorException('Failed to get all courses!');
 		}
 	}
 
-	async getCourseByCode(code: string): Promise<Course> {
+	async getById(id: string): Promise<Course> {
 		try {
 			const course = await this.courseModel
-				.findOne({ code, isDeleted: false })
+				.findOne({ _id: id, isDeleted: false })
 				.select('-__v')
 				.exec();
 
-			this.logger.debug('Retrieved course', course);
+			this.logger.debug('Found course', course);
 
 			if (!course) {
-				this.logger.error(`Course with code ${code} not found!`);
+				this.logger.error(`Course not found!`);
 
-				throw new NotFoundException(`Course with code ${code} not found!`);
+				throw new NotFoundException(`Course not found!`);
 			}
 
-			this.logger.debug('Found course', course);
+			this.logger.log('Retrieved course');
 
 			return course;
 		} catch (error: any) {
-			this.logger.error('Failed to get course by code!', error);
+			this.logger.error('Failed to get course!', error);
 
-			throw new InternalServerErrorException(
-				'Failed to get course by code!',
-				error,
-			);
+			throw new InternalServerErrorException('Failed to get course!');
 		}
 	}
 
 	async update(id: string, updateCourseDto: UpdateCourseDto): Promise<Course> {
 		try {
-			const course = await this.courseModel
+			const existingCourse = await this.courseModel
 				.findOne({ _id: id, isDeleted: false })
 				.exec();
 
-			this.logger.debug('Retrieved course', course);
+			this.logger.debug('Found course', existingCourse);
 
-			if (!course) {
-				this.logger.error(`Course with code ${id} not found!`);
+			if (!existingCourse) {
+				this.logger.error(`Course with id ${id} not found!`);
 
-				throw new NotFoundException(`Course with code ${id} not found!`);
+				throw new NotFoundException(`Course with id ${id} not found!`);
 			}
 
-			this.logger.debug('Found course', course);
+			this.logger.debug('Updating course');
 
-			return await this.courseModel
-				.findByIdAndUpdate(id, updateCourseDto, { new: true, isDelete: false })
-				.select('-__v')
-				.exec();
+			existingCourse.set(updateCourseDto);
+
+			const updatedCourse = await existingCourse.save();
+
+			this.logger.debug('Updated course', updatedCourse);
+			this.logger.log('Course updated');
+
+			return updatedCourse;
 		} catch (error: any) {
 			this.logger.error('Failed to update course!', error);
 
-			throw new InternalServerErrorException('Failed to update course!', error);
+			throw new InternalServerErrorException('Failed to update course!');
 		}
 	}
 
 	async delete(id: string) {
 		try {
-			const course = await this.courseModel
-				.findOneAndUpdate(
-					{ _id: id, isDeleted: false },
-					{ isDeleted: true },
-					{ new: true },
-				)
-				.select('-__v')
+			const existingCourse = await this.courseModel
+				.findOne({ _id: id, isDeleted: false })
 				.exec();
 
-			this.logger.debug('Deleted center', course);
+			this.logger.debug('Course found', existingCourse);
 
-			if (!course) {
-				this.logger.error('Center not found!');
+			if (!existingCourse) {
+				this.logger.error('Course not found!');
 
-				throw new NotFoundException('Center not found!');
+				throw new NotFoundException('Course not found!');
 			}
+
+			this.logger.debug('Deleting course');
+
+			existingCourse.set({ isDeleted: true });
+
+			const deletedCourse = await existingCourse.save();
+
+			this.logger.debug('Deleted course', deletedCourse);
+			this.logger.log('Course deleted');
 
 			return {
 				statusCode: 200,
-				message: 'Center deleted successfully',
+				message: 'Course deleted successfully',
 			};
 		} catch (error: any) {
 			this.logger.error('Failed to delete course!', error);
 
-			throw new InternalServerErrorException('Failed to delete course!', error);
+			throw new InternalServerErrorException('Failed to delete course!');
 		}
 	}
 }
