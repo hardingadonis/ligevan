@@ -1,4 +1,5 @@
 import {
+	ConflictException,
 	Injectable,
 	InternalServerErrorException,
 	Logger,
@@ -21,24 +22,26 @@ export class AttendancesService {
 
 	async create(createAttendanceDto: CreateAttendanceDto) {
 		try {
-			const attendanceIsExist = await this.attendanceModel.findOne({
+			const existingAttendance = await this.attendanceModel.findOne({
 				student: createAttendanceDto.student,
 				slot: createAttendanceDto.slot,
 			});
 
-			this.logger.debug('Attendance found', attendanceIsExist);
-
-			if (attendanceIsExist) {
+			if (existingAttendance) {
 				this.logger.error('Attendance already exists!');
 
-				throw new NotFoundException('Attendance already exists!');
+				throw new ConflictException('Attendance already exists!');
 			}
 
 			const attendance = new this.attendanceModel(createAttendanceDto);
 
-			this.logger.debug('Created new attendance', attendance);
+			this.logger.debug('Creating new attendance', attendance);
 
-			return await attendance.save();
+			await attendance.save();
+
+			this.logger.log('Attendance created');
+
+			return attendance;
 		} catch (error: any) {
 			this.logger.error('Failed to create attendance!', error);
 
@@ -63,6 +66,14 @@ export class AttendancesService {
 				.select('-__v');
 
 			this.logger.debug('Attendances found', attendances);
+
+			if (!attendances) {
+				this.logger.error('Attendances not found!');
+
+				throw new NotFoundException('Attendances not found!');
+			}
+
+			this.logger.log('Retrieved attendances');
 
 			return attendances;
 		} catch (error: any) {
@@ -89,38 +100,36 @@ export class AttendancesService {
 				.select('-__v')
 				.exec();
 
+			this.logger.debug('Found attendance', attendance);
+
 			if (!attendance) {
 				this.logger.error('Attendance not found!');
 
 				throw new NotFoundException('Attendance not found!');
 			}
-			this.logger.debug('Found attendance', attendance);
+			this.logger.log('Retrieved attendance');
 
 			return attendance;
 		} catch (error: any) {
 			this.logger.error('Failed to get attendance!', error);
 
-			throw new InternalServerErrorException(
-				'Failed to get attendance!',
-				error,
-			);
+			throw new InternalServerErrorException('Failed to get attendance!');
 		}
 	}
 
 	async update(id: string, updateAttendanceDto: CreateAttendanceDto) {
 		try {
-			const attendance = await this.attendanceModel
+			const existingAttendance = await this.attendanceModel
 				.findOne({ _id: id })
-				.select('-__v')
 				.exec();
 
-			this.logger.debug('Found attendance', attendance);
-
-			if (!attendance) {
+			if (!existingAttendance) {
 				this.logger.error('Attendance not found!');
 
 				throw new NotFoundException('Attendance not found!');
 			}
+
+			this.logger.debug('Updating attendance');
 
 			const updatedAttendance = await this.attendanceModel
 				.findOneAndUpdate(
@@ -131,7 +140,8 @@ export class AttendancesService {
 				.select('-__v')
 				.exec();
 
-			this.logger.debug('Updated attendance', updatedAttendance);
+			this.logger.debug('Attendance updated ', updatedAttendance);
+			this.logger.log('Attendance updated ');
 
 			return updatedAttendance;
 		} catch (error: any) {
