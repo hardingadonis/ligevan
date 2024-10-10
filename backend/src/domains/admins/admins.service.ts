@@ -123,7 +123,10 @@ export class AdminsService {
 			this.logger.debug('Admin updated', updatedAdmin);
 			this.logger.log('Admin updated');
 
-			return existingAdmin;
+			const adminObject = updatedAdmin.toObject();
+			delete adminObject.hashedPassword;
+
+			return adminObject;
 		} catch (error: any) {
 			this.logger.error('Failed to update admin!', error);
 
