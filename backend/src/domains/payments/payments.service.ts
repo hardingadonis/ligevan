@@ -23,7 +23,7 @@ export class PaymentsService {
 
 	async create(createPaymentDto: CreatePaymentDto) {
 		try {
-			const paymentIsExist = await this.salaryModel
+			const existingPayment = await this.salaryModel
 				.findOne({
 					student: createPaymentDto.student,
 					course: createPaymentDto.course,
@@ -35,19 +35,22 @@ export class PaymentsService {
 				})
 				.exec();
 
-			this.logger.debug('Payment found', paymentIsExist);
-
-			if (paymentIsExist) {
+			if (existingPayment) {
 				this.logger.error('Payment already exists!');
 
 				throw new ConflictException('Payment already exists!');
 			}
 
-			const payment = new this.salaryModel(createPaymentDto);
+			const newPayment = new this.salaryModel(createPaymentDto);
 
-			this.logger.debug('Created new payment', payment);
+			this.logger.debug('Creating new payment');
 
-			return await payment.save();
+			await newPayment.save();
+
+			this.logger.debug('Payment created', newPayment);
+			this.logger.log('Payment created');
+
+			return newPayment;
 		} catch (error: any) {
 			this.logger.error('Failed to create payment!', error);
 
@@ -84,6 +87,14 @@ export class PaymentsService {
 
 			this.logger.debug('Found all payments', payments);
 
+			if (!payments) {
+				this.logger.error('Payments not found!');
+
+				throw new ConflictException('Payments not found!');
+			}
+
+			this.logger.log('Retrieved payments');
+
 			return payments;
 		} catch (error: any) {
 			this.logger.error('Failed to get all payments!', error);
@@ -119,13 +130,15 @@ export class PaymentsService {
 				.select('-__v')
 				.exec();
 
+			this.logger.debug('Found payment', payment);
+
 			if (!payment) {
 				this.logger.error('Payment not found!');
 
 				throw new ConflictException('Payment not found!');
 			}
 
-			this.logger.debug('Found payment', payment);
+			this.logger.log('Retrieved payment');
 
 			return payment;
 		} catch (error: any) {
@@ -137,28 +150,26 @@ export class PaymentsService {
 
 	async update(id: string, updatePaymentDto: UpdatePaymentDto) {
 		try {
-			const payment = await this.salaryModel
+			const existingPayment = await this.salaryModel
 				.findOne({ _id: id })
-				.select('-__v')
 				.exec();
 
-			this.logger.debug('Found payment', payment);
+			this.logger.debug('Found payment', existingPayment);
 
-			if (!payment) {
+			if (!existingPayment) {
 				this.logger.error('Payment not found!');
 
 				throw new ConflictException('Payment not found!');
 			}
 
-			const updatedPayment = await this.salaryModel
-				.findOneAndUpdate(
-					{ _id: id },
-					{ $set: updatePaymentDto },
-					{ new: true },
-				)
-				.exec();
+			existingPayment.set(updatePaymentDto);
+
+			this.logger.debug('Updating payment');
+
+			const updatedPayment = await existingPayment.save();
 
 			this.logger.debug('Updated payment', updatedPayment);
+			this.logger.log('Payment updated');
 
 			return updatedPayment;
 		} catch (error: any) {
