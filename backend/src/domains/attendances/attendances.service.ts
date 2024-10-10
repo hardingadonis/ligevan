@@ -131,19 +131,14 @@ export class AttendancesService {
 
 			this.logger.debug('Updating attendance');
 
-			const updatedAttendance = await this.attendanceModel
-				.findOneAndUpdate(
-					{ _id: id },
-					{ ...updateAttendanceDto },
-					{ new: true },
-				)
-				.select('-__v')
-				.exec();
+			existingAttendance.set(updateAttendanceDto);
 
-			this.logger.debug('Attendance updated ', updatedAttendance);
+			const attendance = await existingAttendance.save();
+
+			this.logger.debug('Attendance updated ', attendance);
 			this.logger.log('Attendance updated ');
 
-			return updatedAttendance;
+			return attendance;
 		} catch (error: any) {
 			this.logger.error('Failed to update attendance!', error);
 
