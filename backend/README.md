@@ -12,11 +12,15 @@
 
 Create a `.env` file there and add the following environment variables:
 
-| #   | Variable Name | Description                     | Example                 |
-| --- | ------------- | ------------------------------- | ----------------------- |
-| 1   | DATABASE_URL  | The URL to the MongoDB database | localhost:27017/ligevan |
-| 2   | JWT_SECRET    | The secret key for JWT          | secret-key              |
-| 3   | JWT_EXPIRES   | The expiration time for JWT     | 1h                      |
+| #   | Variable Name                 | Description                     | Example                                         |
+| --- | ----------------------------- | ------------------------------- | ----------------------------------------------- |
+| 1   | DATABASE_URL                  | The URL to the MongoDB database | localhost:27017/ligevan                         |
+| 2   | JWT_SECRET                    | The secret key for JWT          | secret-key                                      |
+| 3   | JWT_EXPIRES                   | The expiration time for JWT     | 1h                                              |
+| 4   | GOOGLE_OAUTH2_CLIENT_ID       | The Google client ID            | abcxyz                                          |
+| 5   | GOOGLE_OAUTH2_CLIENT_SECRET   | The Google client secret        | secret-key                                      |
+| 6   | GOOGLE_OAUTH2_CLIENT_CALLBACK | The Google client callback URL  | http://localhost:3000/api/auth/student/callback |
+|     |
 
 ## Development
 
