@@ -33,3 +33,21 @@ Create a `.env` file there and add the following environment variables:
   ```
 
 - Step 3: Open the browser and navigate to [http://localhost:3000](http://localhost:3000)
+
+## Docker
+
+- Step 1: Create a `.env` file and add the environment variables
+
+- Step 2: Pull the image from ghcr.io
+
+  ```bash
+  docker pull ghcr.io/hardingadonis/ligevan-backend:latest
+  ```
+
+- Step 3: Run the image
+
+  ```bash
+  docker run -d -p 3000:3000 --env-file .env ghcr.io/hardingadonis/ligevan-backend:latest
+  ```
+
+- Step 4: Open the browser and navigate to [http://localhost:3000](http://localhost:3000)

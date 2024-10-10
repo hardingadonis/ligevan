@@ -35,6 +35,10 @@
   yarn
   ```
 
+## Usage
+
+- See [USAGE.md](docs/USAGE.md) for more informations.
+
 ## Source code
 
 | #   | Directory            | Description                            | Technologies |
