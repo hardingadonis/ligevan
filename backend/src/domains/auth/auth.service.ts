@@ -12,9 +12,9 @@ import { verify } from '@/utils/hash.util';
 @Injectable()
 export class AuthService {
 	constructor(
-		private adminsService: AdminsService,
-		private teachersService: TeachersService,
-		private jwtService: JwtService,
+		private readonly adminsService: AdminsService,
+		private readonly teachersService: TeachersService,
+		private readonly jwtService: JwtService,
 	) {}
 
 	async validateAdmin(username: string, password: string) {

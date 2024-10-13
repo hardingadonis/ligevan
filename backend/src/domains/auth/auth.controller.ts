@@ -17,7 +17,7 @@ import { TeacherAuthGuard } from '@/domains/auth/guards/teacher.guard';
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
-	constructor(private authService: AuthService) {}
+	constructor(private readonly authService: AuthService) {}
 
 	@UseGuards(AdminAuthGuard)
 	@HttpCode(HttpStatus.OK)
