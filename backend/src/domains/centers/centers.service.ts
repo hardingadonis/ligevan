@@ -24,27 +24,29 @@ export class CentersService {
 
 	async create(createCenterDto: CreateCenterDto) {
 		try {
-			const checkCenterExist = await this.centerModel
+			const existingCenter = await this.centerModel
 				.findOne({ email: createCenterDto.email })
 				.exec();
 
-			this.logger.debug('Center found', checkCenterExist);
-
-			if (checkCenterExist) {
+			if (existingCenter) {
 				this.logger.error('Center already exists!');
 
 				throw new ConflictException('Center already exists!');
 			}
 
-			const newCenter = new this.centerModel(createCenterDto);
+			const center = new this.centerModel(createCenterDto);
 
-			this.logger.debug('Created new center', newCenter);
+			this.logger.debug('Created new center', center);
 
-			return await newCenter.save();
+			await center.save();
+
+			this.logger.log('Center created');
+
+			return center;
 		} catch (error: any) {
 			this.logger.error('Failed to create center!', error);
 
-			throw new InternalServerErrorException('Failed to create center!', error);
+			throw new InternalServerErrorException('Failed to create center!');
 		}
 	}
 
@@ -75,17 +77,25 @@ export class CentersService {
 				.select('-__v')
 				.exec();
 
+			if (!centers) {
+				this.logger.error('Centers not found!');
+
+				throw new NotFoundException('Centers not found!');
+			}
+
 			this.logger.debug('Found centers', centers);
+
+			this.logger.log('Retrieved centers');
 
 			return centers;
 		} catch (error: any) {
 			this.logger.error('Failed to get centers!', error);
 
-			throw new InternalServerErrorException('Failed to get centers!', error);
+			throw new InternalServerErrorException('Failed to get centers!');
 		}
 	}
 
-	async getCenterById(id: string) {
+	async getById(id: string) {
 		try {
 			const center = await this.centerModel
 				.findOne({ _id: id, isDeleted: false })
@@ -112,73 +122,77 @@ export class CentersService {
 				.select('-__v')
 				.exec();
 
-			this.logger.debug('Found center', center);
-
 			if (!center) {
 				this.logger.error('Center not found!');
 
 				throw new NotFoundException('Center not found!');
 			}
+
+			this.logger.debug('Found center', center);
+
+			this.logger.log('Retrieved center');
 
 			return center;
 		} catch (error: any) {
 			this.logger.error('Failed to get center!', error);
 
-			throw new InternalServerErrorException('Failed to get center!', error);
+			throw new InternalServerErrorException('Failed to get center!');
 		}
 	}
 
 	async update(id: string, updateCenterDto: UpdateCenterDto) {
 		try {
-			const checkCenterExist = await this.centerModel
-				.findOne({ name: updateCenterDto.name, isDeleted: false })
+			const existingCenter = await this.centerModel
+				.findOne({ _id: id, isDeleted: false })
 				.exec();
 
-			this.logger.debug('Center found', checkCenterExist);
+			if (!existingCenter) {
+				this.logger.error('Center not found!');
 
-			if (checkCenterExist) {
-				this.logger.error('Center already exists!');
-
-				throw new ConflictException('Center already exists!');
+				throw new NotFoundException('Center not found!');
 			}
 
-			const center = await this.centerModel
-				.findOneAndUpdate(
-					{ _id: id, isDeleted: false },
-					{ ...updateCenterDto },
-					{ new: true },
-				)
-				.select('-__v')
-				.exec();
+			this.logger.debug('Found center', existingCenter);
 
-			this.logger.debug('Updated center', center);
+			this.logger.debug('Updating center');
+
+			existingCenter.set(updateCenterDto);
+
+			const center = await existingCenter.save();
+
+			this.logger.debug('Center updated ', center);
+			this.logger.log('Center updated');
 
 			return center;
 		} catch (error: any) {
 			this.logger.error('Failed to update center!', error);
 
-			throw new InternalServerErrorException('Failed to update center!', error);
+			throw new InternalServerErrorException('Failed to update center!');
 		}
 	}
 
 	async delete(id: string) {
 		try {
-			const center = await this.centerModel
-				.findOneAndUpdate(
-					{ _id: id, isDeleted: false },
-					{ isDeleted: true },
-					{ new: true },
-				)
-				.select('-__v')
+			const existingCenter = await this.centerModel
+				.findOne({ _id: id, isDeleted: false })
 				.exec();
 
-			this.logger.debug('Deleted center', center);
-
-			if (!center) {
+			if (!existingCenter) {
 				this.logger.error('Center not found!');
 
 				throw new NotFoundException('Center not found!');
 			}
+
+			this.logger.debug('Found center', existingCenter);
+
+			this.logger.debug('Deleting center');
+
+			existingCenter.set({ isDeleted: true });
+
+			await existingCenter.save();
+
+			this.logger.debug('Center deleted ', existingCenter);
+			this.logger.log('Center deleted');
 
 			return {
 				statusCode: 200,
@@ -187,7 +201,7 @@ export class CentersService {
 		} catch (error: any) {
 			this.logger.error('Failed to delete center!', error);
 
-			throw new InternalServerErrorException('Failed to delete center!', error);
+			throw new InternalServerErrorException('Failed to delete center!');
 		}
 	}
 }
