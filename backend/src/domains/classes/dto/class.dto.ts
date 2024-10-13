@@ -1,6 +1,6 @@
 import { Schema } from '@nestjs/mongoose';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsArray, IsNotEmpty, IsString } from 'class-validator';
 
 @Schema({ timestamps: true })
 export class CreateClassDto {
@@ -9,25 +9,25 @@ export class CreateClassDto {
 	@IsNotEmpty()
 	name: string;
 
-	@ApiProperty({ description: 'The center is where classes take place' })
+	@ApiProperty({ description: 'Center offered by the Class' })
 	@IsString()
 	@IsNotEmpty()
 	center: string;
 
-	@ApiProperty({ description: 'The teacher is responsible for the class' })
+	@ApiProperty({ description: 'Teachers offered by the Class' })
 	@IsString()
 	@IsNotEmpty()
 	teacher: string;
 
-	// @ApiProperty({ description: 'The students are in the class' })
-	// @IsString()
-	// @IsNotEmpty()
-	// students: string[];
+	@ApiProperty({ description: 'Students offered by the Class' })
+	@IsArray()
+	@IsNotEmpty()
+	students: string[];
 
-	// @ApiProperty({ description: 'The slots are in the class' })
-	// @IsString()
-	// @IsNotEmpty()
-	// slots: string[];
+	@ApiProperty({ description: 'Slot offered by the Class' })
+	@IsArray()
+	@IsNotEmpty()
+	slots: string[];
 }
 
 export class UpdateClassDto {
@@ -35,18 +35,18 @@ export class UpdateClassDto {
 	name?: string;
 
 	@ApiPropertyOptional({
-		description: 'The center is where classes take place',
+		description: 'Center offered by the Class ',
 	})
 	center?: string;
 
 	@ApiPropertyOptional({
-		description: 'The teacher is responsible for the class',
+		description: 'Teachers offered by the Class',
 	})
 	teacher?: string;
 
-	// @ApiPropertyOptional({ description: 'The students are in the class' })
-	// students?: string[];
+	@ApiPropertyOptional({ description: 'Students offered by the Class' })
+	students?: string[];
 
-	// @ApiPropertyOptional({ description: 'The slots are in the class' })
-	// slots?: string[];
+	@ApiPropertyOptional({ description: 'Slot offered by the Class ' })
+	slots?: string[];
 }

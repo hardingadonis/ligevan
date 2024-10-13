@@ -30,9 +30,9 @@ export class VouchersController {
 		return await this.vouchersService.getAll();
 	}
 
-	@Get(':code')
-	async getVoucherByCode(@Param('code') code: string) {
-		return await this.vouchersService.getVoucherByCode(code);
+	@Get(':id')
+	async getById(@Param('id') id: string) {
+		return await this.vouchersService.getById(id);
 	}
 
 	@Put(':id')

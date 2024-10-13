@@ -3,6 +3,7 @@ import {
 	Injectable,
 	InternalServerErrorException,
 	Logger,
+	NotFoundException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -23,13 +24,11 @@ export class ClassesService {
 
 	async create(createClassDto: CreateClassDto) {
 		try {
-			const checkClassExist = await this.classModel
+			const existingClass = await this.classModel
 				.findOne({ name: CreateClassDto.name })
 				.exec();
 
-			this.logger.debug('Class found', checkClassExist);
-
-			if (checkClassExist) {
+			if (existingClass) {
 				this.logger.error('Class already exists!');
 
 				throw new ConflictException('Class already exists!');
@@ -37,13 +36,18 @@ export class ClassesService {
 
 			const newClass = new this.classModel(createClassDto);
 
-			this.logger.debug('Created new class', newClass);
+			this.logger.debug('Creating new class');
 
-			return await newClass.save();
+			await newClass.save();
+
+			this.logger.debug('Class created', newClass);
+			this.logger.log('Class created');
+
+			return newClass;
 		} catch (error: any) {
 			this.logger.error('Failed to create class!', error);
 
-			throw new InternalServerErrorException('Failed to create class!', error);
+			throw new InternalServerErrorException('Failed to create class!');
 		}
 	}
 
@@ -63,13 +67,22 @@ export class ClassesService {
 				})
 				.select('-__v')
 				.exec();
+
+			if (!classes) {
+				this.logger.error('Classes not found!');
+
+				throw new NotFoundException('Classes not found!');
+			}
+
 			this.logger.debug('Found centers', classes);
+
+			this.logger.log('Retrieved classes');
 
 			return classes;
 		} catch (error: any) {
 			this.logger.error('Failed to get classes!', error);
 
-			throw new InternalServerErrorException('Failed to get classes!', error);
+			throw new InternalServerErrorException('Failed to get classes!');
 		}
 	}
 
@@ -95,63 +108,71 @@ export class ClassesService {
 
 				throw new ConflictException('Class not found!');
 			}
+
 			this.logger.debug('Found centers', getClass);
+
+			this.logger.log('Retrieved class');
 
 			return getClass;
 		} catch (error: any) {
 			this.logger.error('Failed to get classes!', error);
 
-			throw new InternalServerErrorException('Failed to get classes!', error);
+			throw new InternalServerErrorException('Failed to get classes!');
 		}
 	}
 
 	async update(id: string, updateClassDto: UpdateClassDto) {
 		try {
-			const checkClassExist = await this.classModel
+			const existingClass = await this.classModel
 				.findOne({ _id: id, isDeleted: false })
 				.exec();
 
-			this.logger.debug('Class found', checkClassExist);
-
-			if (!checkClassExist) {
+			if (!existingClass) {
 				this.logger.error('Class not found!');
 
 				throw new ConflictException('Class not found!');
 			}
 
-			const updatedClass = await this.classModel
-				.findOneAndUpdate({ _id: id }, { $set: updateClassDto }, { new: true })
-				.exec();
+			this.logger.debug('Class found', existingClass);
+
+			this.logger.debug('Updating class');
+
+			existingClass.set(updateClassDto);
+
+			const updatedClass = await existingClass.save();
 
 			this.logger.debug('Updated class', updatedClass);
+			this.logger.log('Class updated');
 
 			return updatedClass;
 		} catch (error: any) {
 			this.logger.error('Failed to update class!', error);
 
-			throw new InternalServerErrorException('Failed to update class!', error);
+			throw new InternalServerErrorException('Failed to update class!');
 		}
 	}
 
 	async delete(id: string) {
 		try {
-			const checkClassExist = await this.classModel
-				.findOneAndUpdate(
-					{ _id: id, isDeleted: false },
-					{ $set: { isDeleted: true } },
-					{ new: true },
-				)
+			const existingClass = await this.classModel
+				.findOne({ _id: id, isDeleted: false })
 				.exec();
 
-			this.logger.debug('Class found', checkClassExist);
-
-			if (!checkClassExist) {
+			if (!existingClass) {
 				this.logger.error('Class not found!');
 
 				throw new ConflictException('Class not found!');
 			}
 
-			this.logger.debug('Deleted class', checkClassExist);
+			this.logger.debug('Class found', existingClass);
+
+			this.logger.debug('Deleting class');
+
+			existingClass.set({ isDeleted: true });
+
+			const deletedClass = await existingClass.save();
+
+			this.logger.debug('Deleted class', deletedClass);
 
 			return {
 				statusCode: 200,
@@ -160,7 +181,7 @@ export class ClassesService {
 		} catch (error: any) {
 			this.logger.error('Failed to delete class!', error);
 
-			throw new InternalServerErrorException('Failed to delete class!', error);
+			throw new InternalServerErrorException('Failed to delete class!');
 		}
 	}
 }

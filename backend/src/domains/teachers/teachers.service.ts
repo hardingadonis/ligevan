@@ -22,20 +22,16 @@ export class TeachersService {
 		@InjectModel(Teacher.name) private readonly teacherModel: Model<Teacher>,
 	) {}
 
-	async create(createTeacherDto: CreateTeacherDto) {
+	async create(createTeacherDto: CreateTeacherDto): Promise<Teacher> {
 		try {
 			const existingTeacher = await this.teacherModel
 				.findOne({ email: createTeacherDto.email })
 				.exec();
 
 			if (existingTeacher) {
-				this.logger.error(
-					`Teacher with email: ${createTeacherDto.email} already exists!`,
-				);
+				this.logger.error(`Teacher already exists!`);
 
-				throw new ConflictException(
-					`Teacher with email: ${createTeacherDto.email} already exists!`,
-				);
+				throw new ConflictException(`Teacher already exists!`);
 			}
 
 			const createTeacher = new this.teacherModel({
@@ -43,9 +39,10 @@ export class TeachersService {
 				hashedPassword: await hash(createTeacherDto.password),
 			});
 
-			this.logger.debug('Creating new teacher', createTeacher);
+			this.logger.debug('Creating new teacher');
 
 			await createTeacher.save();
+
 			this.logger.log('Teacher created successfully!');
 
 			const teacherObject = createTeacher.toObject();
@@ -55,14 +52,11 @@ export class TeachersService {
 		} catch (error: any) {
 			this.logger.error('Failed to create teacher!', error);
 
-			throw new InternalServerErrorException(
-				'Failed to create teacher!',
-				error,
-			);
+			throw new InternalServerErrorException('Failed to create teacher!');
 		}
 	}
 
-	async getAll() {
+	async getAll(): Promise<Teacher[]> {
 		try {
 			const teachers = await this.teacherModel
 				.find({ isDeleted: false })
@@ -70,16 +64,21 @@ export class TeachersService {
 				.select('-hashedPassword')
 				.exec();
 
-			this.logger.debug('Found teachers', teachers);
+			if (!teachers) {
+				this.logger.error('No teachers found!');
+
+				throw new ConflictException('No teachers found!');
+			}
+
+			this.logger.debug('Found all teachers', teachers);
+
+			this.logger.log('Retrieved teachers');
 
 			return teachers;
 		} catch (error: any) {
 			this.logger.error('Failed to get all teachers!', error);
 
-			throw new InternalServerErrorException(
-				'Failed to get all teachers!',
-				error,
-			);
+			throw new InternalServerErrorException('Failed to get all teachers!');
 		}
 	}
 
@@ -94,10 +93,7 @@ export class TeachersService {
 		} catch (error: any) {
 			this.logger.error('Failed to get teacher by id!', error);
 
-			throw new InternalServerErrorException(
-				'Failed to get teacher by id!',
-				error,
-			);
+			throw new InternalServerErrorException('Failed to get teacher by id!');
 		}
 	}
 
@@ -108,8 +104,6 @@ export class TeachersService {
 				.select('-__v')
 				.exec();
 
-			this.logger.debug('Retrieved teacher', teacher);
-
 			if (!teacher) {
 				this.logger.error(`Teacher with id ${id} not found!`);
 
@@ -117,70 +111,76 @@ export class TeachersService {
 			}
 
 			this.logger.debug('Found teacher', teacher);
+
+			this.logger.debug('Retrieved teacher', teacher);
 
 			return teacher;
 		} catch (error: any) {
 			this.logger.error('Failed to get teacher by id!', error);
 
-			throw new InternalServerErrorException(
-				'Failed to get teacher by id!',
-				error,
-			);
+			throw new InternalServerErrorException('Failed to get teacher by id!');
 		}
 	}
 
-	async update(id: string, updateTeacherDto: UpdateTeacherDto) {
+	async update(
+		id: string,
+		updateTeacherDto: UpdateTeacherDto,
+	): Promise<Teacher> {
 		try {
-			const teacher = await this.teacherModel
+			const existingTeacher = await this.teacherModel
 				.findOne({ _id: id, isDeleted: false })
+				.select('-__v -hashedPassword')
 				.exec();
 
-			this.logger.debug('Retrieved teacher', teacher);
+			if (!existingTeacher) {
+				this.logger.error(`Teacher not found!`);
 
-			if (!teacher) {
-				this.logger.error(`Teacher with id ${id} not found!`);
-
-				throw new ConflictException(`Teacher with id ${id} not found!`);
+				throw new ConflictException(`Teacher not found!`);
 			}
 
-			this.logger.debug('Found teacher', teacher);
+			this.logger.debug('Found teacher', existingTeacher);
 
-			return await this.teacherModel
-				.findByIdAndUpdate(id, updateTeacherDto, {
-					new: true,
-					isDelete: false,
-				})
-				.select('-__v')
-				.exec();
+			existingTeacher.set(updateTeacherDto);
+
+			this.logger.debug('Updating teacher');
+
+			const updatedTeacher = await existingTeacher.save();
+
+			this.logger.debug('Teacher updated', updatedTeacher);
+			this.logger.log('Teacher updated');
+
+			const teacherObject = updatedTeacher.toObject();
+			delete teacherObject.hashedPassword;
+
+			return teacherObject;
 		} catch (error: any) {
 			this.logger.error('Failed to update teacher!', error);
 
-			throw new InternalServerErrorException(
-				'Failed to update teacher!',
-				error,
-			);
+			throw new InternalServerErrorException('Failed to update teacher!');
 		}
 	}
 
 	async delete(id: string) {
 		try {
-			const teacher = await this.teacherModel
-				.findOneAndUpdate(
-					{ _id: id, isDeleted: false },
-					{ isDeleted: true },
-					{ new: true },
-				)
+			const existingStudent = await this.teacherModel
+				.findOneAndUpdate({ _id: id, isDeleted: false })
+				.select('-__v, -hashedPassword')
 				.exec();
 
-			this.logger.debug('Retrieved teacher', teacher);
+			if (!existingStudent) {
+				this.logger.error(`Teacher not found!`);
 
-			if (!teacher) {
-				this.logger.error(`Teacher with id ${id} not found!`);
-
-				throw new ConflictException(`Teacher with id ${id} not found!`);
+				throw new ConflictException(`Teacher not found!`);
 			}
 
-			this.logger.debug('Found teacher', teacher);
+			this.logger.debug('Deleting teacher');
+
+			existingStudent.set({ isDeleted: true });
+
+			await existingStudent.save();
+
+			this.logger.debug('Teacher deleted', existingStudent);
+			this.logger.log('Teacher deleted');
 
 			return {
 				statusCode: 200,
@@ -189,10 +189,7 @@ export class TeachersService {
 		} catch (error: any) {
 			this.logger.error('Failed to delete teacher!', error);
 
-			throw new InternalServerErrorException(
-				'Failed to delete teacher!',
-				error,
-			);
+			throw new InternalServerErrorException('Failed to delete teacher!');
 		}
 	}
 }
