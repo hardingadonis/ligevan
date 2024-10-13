@@ -3,6 +3,7 @@ import {
 	NotFoundException,
 	UnauthorizedException,
 } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 
 import { AdminsService } from '@/domains/admins/admins.service';
 import { TeachersService } from '@/domains/teachers/teachers.service';
@@ -13,6 +14,7 @@ export class AuthService {
 	constructor(
 		private adminsService: AdminsService,
 		private teachersService: TeachersService,
+		private jwtService: JwtService,
 	) {}
 
 	async validateAdmin(username: string, password: string) {
@@ -45,5 +47,13 @@ export class AuthService {
 		}
 
 		return { email: teacher.email };
+	}
+
+	async login(payload: unknown) {
+		if (typeof payload != 'object' || payload == null) {
+			throw new UnauthorizedException('Invalid payload!');
+		}
+
+		return await this.jwtService.signAsync(payload);
 	}
 }
