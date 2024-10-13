@@ -59,12 +59,18 @@ export class AdminsService {
 	}
 
 	async getByUsername(username: string) {
-		const admin = await this.getByUsernameWithPassword(username);
+		try {
+			const admin = await this.getByUsernameWithPassword(username);
 
-		const adminObject = admin.toObject();
-		delete adminObject.hashedPassword;
+			const adminObject = admin.toObject();
+			delete adminObject.hashedPassword;
 
-		return adminObject;
+			return adminObject;
+		} catch (error: any) {
+			this.logger.error('Failed to get admin!', error);
+
+			throw new InternalServerErrorException('Failed to get admin!');
+		}
 	}
 
 	async getByUsernameWithPassword(username: string) {

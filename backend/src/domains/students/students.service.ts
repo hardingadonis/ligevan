@@ -32,13 +32,9 @@ export class StudentsService {
 				.exec();
 
 			if (existingStudent) {
-				this.logger.error(
-					`Teacher with email: ${existingStudent.email} already exists!`,
-				);
+				this.logger.error('Student already exists!');
 
-				throw new ConflictException(
-					`Teacher with email: ${existingStudent.email} already exists!`,
-				);
+				throw new ConflictException('Student already exists!');
 			}
 
 			const createStudent = new this.studentModel({
@@ -46,7 +42,7 @@ export class StudentsService {
 				hashedPassword: await hash(createStudentDto.password),
 			});
 
-			this.logger.debug('Creating new student', createStudent);
+			this.logger.debug('Creating new student');
 
 			await createStudent.save();
 
@@ -59,10 +55,7 @@ export class StudentsService {
 		} catch (error: any) {
 			this.logger.error('Failed to create student!', error);
 
-			throw new InternalServerErrorException(
-				'Failed to create student!',
-				error,
-			);
+			throw new InternalServerErrorException('Failed to create student!');
 		}
 	}
 
@@ -79,7 +72,7 @@ export class StudentsService {
 				})
 				.exec();
 
-			this.logger.debug('Found students', students);
+			this.logger.debug('Found all students', students);
 
 			if (!students) {
 				this.logger.error('No students found!');
@@ -87,14 +80,13 @@ export class StudentsService {
 				throw new NotFoundException('No students found!');
 			}
 
+			this.logger.log('Retrieved students');
+
 			return students;
 		} catch (error: any) {
 			this.logger.error('Failed to get all students!', error);
 
-			throw new InternalServerErrorException(
-				'Failed to get all students!',
-				error,
-			);
+			throw new InternalServerErrorException('Failed to get all students!');
 		}
 	}
 
@@ -120,7 +112,7 @@ export class StudentsService {
 				.select('-__v')
 				.exec();
 
-			this.logger.debug('Retrieved student', student);
+			this.logger.debug('Found student', student);
 
 			if (!student) {
 				this.logger.error(`Student with id ${id} not found!`);
@@ -128,48 +120,37 @@ export class StudentsService {
 				throw new NotFoundException(`Student with id ${id} not found!`);
 			}
 
-			this.logger.debug('Found student', student);
+			this.logger.debug('Retrieved student', student);
 
 			return student;
 		} catch (error: any) {
 			this.logger.error('Failed to get student by id!', error);
 
-			throw new InternalServerErrorException(
-				'Failed to get student by id!',
-				error,
-			);
+			throw new InternalServerErrorException('Failed to get student by id!');
 		}
 	}
 
 	async update(id: string, updateStudentDto: UpdateStudentDto) {
 		try {
-			const student = await this.studentModel
+			const existingStudent = await this.studentModel
 				.findOne({ _id: id, isDeleted: false })
 				.select('-__v -hashedPassword')
 				.exec();
 
-			if (!student) {
+			if (!existingStudent) {
 				this.logger.error('Student not found!');
 
 				throw new NotFoundException('Student not found!');
 			}
 
-			this.logger.debug('Found student', student);
+			existingStudent.set(updateStudentDto);
 
-			const { classes, ...otherFields } = updateStudentDto;
+			this.logger.debug('Updating student');
 
-			const updatedStudent = await this.studentModel
-				.findOneAndUpdate(
-					{ _id: id, isDeleted: false },
-					{
-						...otherFields,
-						$addToSet: { classes: { $each: classes } },
-					},
-					{ new: true },
-				)
-				.exec();
+			const updatedStudent = await existingStudent.save();
 
-			this.logger.debug('Updated student', updatedStudent);
+			this.logger.debug('Student updated', updatedStudent);
+			this.logger.log('Student updated');
 
 			const studentObject = updatedStudent.toObject();
 			delete studentObject.hashedPassword;
@@ -178,31 +159,31 @@ export class StudentsService {
 		} catch (error: any) {
 			this.logger.error('Failed to update student!', error);
 
-			throw new InternalServerErrorException(
-				'Failed to update student!',
-				error,
-			);
+			throw new InternalServerErrorException('Failed to update student!');
 		}
 	}
 
 	async delete(id: string) {
 		try {
-			const student = await this.studentModel
-				.findOneAndUpdate(
-					{ _id: id, isDeleted: false },
-					{ isDeleted: true },
-					{ new: true },
-				)
-				.select('-__v -hashedPassword')
+			const existingStudent = await this.studentModel
+				.findOne({ _id: id, isDeleted: false })
+				.select('-__v, -hashedPassword')
 				.exec();
 
-			if (!student) {
+			if (!existingStudent) {
 				this.logger.error('Student not found!');
 
 				throw new ConflictException('Student not found!');
 			}
 
-			this.logger.debug('Deleted student', student);
+			this.logger.debug('Deleting student');
+
+			existingStudent.set({ isDeleted: true });
+
+			await existingStudent.save();
+
+			this.logger.debug('Student deleted', existingStudent);
+			this.logger.log('Student deleted');
 
 			return {
 				statusCode: 200,
@@ -211,10 +192,7 @@ export class StudentsService {
 		} catch (error: any) {
 			this.logger.error('Failed to delete student!', error);
 
-			throw new InternalServerErrorException(
-				'Failed to delete student!',
-				error,
-			);
+			throw new InternalServerErrorException('Failed to delete student!');
 		}
 	}
 }
