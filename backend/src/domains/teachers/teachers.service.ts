@@ -187,12 +187,12 @@ export class TeachersService {
 
 	async delete(id: string) {
 		try {
-			const existingStudent = await this.teacherModel
+			const existingTeacher = await this.teacherModel
 				.findOneAndUpdate({ _id: id, isDeleted: false })
 				.select('-__v, -hashedPassword')
 				.exec();
 
-			if (!existingStudent) {
+			if (!existingTeacher) {
 				this.logger.error(`Teacher not found!`);
 
 				throw new ConflictException(`Teacher not found!`);
@@ -200,11 +200,11 @@ export class TeachersService {
 
 			this.logger.debug('Deleting teacher');
 
-			existingStudent.set({ isDeleted: true });
+			existingTeacher.set({ isDeleted: true });
 
-			await existingStudent.save();
+			await existingTeacher.save();
 
-			this.logger.debug('Teacher deleted', existingStudent);
+			this.logger.debug('Teacher deleted', existingTeacher);
 			this.logger.log('Teacher deleted');
 
 			return {
