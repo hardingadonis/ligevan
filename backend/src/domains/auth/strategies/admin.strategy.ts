@@ -1,0 +1,16 @@
+import { Injectable } from '@nestjs/common';
+import { PassportStrategy } from '@nestjs/passport';
+import { Strategy } from 'passport-local';
+
+import { AuthService } from '@/domains/auth/auth.service';
+
+@Injectable()
+export class AdminStrategy extends PassportStrategy(Strategy, 'admin') {
+	constructor(private authService: AuthService) {
+		super({ usernameField: 'username', passwordField: 'password' });
+	}
+
+	async validate(username: string, password: string) {
+		return this.authService.validateAdmin(username, password);
+	}
+}
