@@ -85,13 +85,13 @@ export class PaymentsService {
 				.select('-__v')
 				.exec();
 
-			this.logger.debug('Found all payments', payments);
-
 			if (!payments) {
 				this.logger.error('Payments not found!');
 
 				throw new ConflictException('Payments not found!');
 			}
+
+			this.logger.debug('Found all payments', payments);
 
 			this.logger.log('Retrieved payments');
 
@@ -130,13 +130,13 @@ export class PaymentsService {
 				.select('-__v')
 				.exec();
 
-			this.logger.debug('Found payment', payment);
-
 			if (!payment) {
 				this.logger.error('Payment not found!');
 
 				throw new ConflictException('Payment not found!');
 			}
+
+			this.logger.debug('Found payment', payment);
 
 			this.logger.log('Retrieved payment');
 
@@ -154,13 +154,13 @@ export class PaymentsService {
 				.findOne({ _id: id })
 				.exec();
 
-			this.logger.debug('Found payment', existingPayment);
-
 			if (!existingPayment) {
 				this.logger.error('Payment not found!');
 
 				throw new ConflictException('Payment not found!');
 			}
+
+			this.logger.debug('Found payment', existingPayment);
 
 			existingPayment.set(updatePaymentDto);
 

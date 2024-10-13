@@ -22,7 +22,7 @@ export class TeachersService {
 		@InjectModel(Teacher.name) private readonly teacherModel: Model<Teacher>,
 	) {}
 
-	async create(createTeacherDto: CreateTeacherDto) {
+	async create(createTeacherDto: CreateTeacherDto): Promise<Teacher> {
 		try {
 			const existingTeacher = await this.teacherModel
 				.findOne({ email: createTeacherDto.email })
@@ -56,7 +56,7 @@ export class TeachersService {
 		}
 	}
 
-	async getAll() {
+	async getAll(): Promise<Teacher[]> {
 		try {
 			const teachers = await this.teacherModel
 				.find({ isDeleted: false })
@@ -64,13 +64,13 @@ export class TeachersService {
 				.select('-hashedPassword')
 				.exec();
 
-			this.logger.debug('Found all teachers', teachers);
-
 			if (!teachers) {
 				this.logger.error('No teachers found!');
 
 				throw new ConflictException('No teachers found!');
 			}
+
+			this.logger.debug('Found all teachers', teachers);
 
 			this.logger.log('Retrieved teachers');
 
@@ -104,13 +104,13 @@ export class TeachersService {
 				.select('-__v')
 				.exec();
 
-			this.logger.debug('Found teacher', teacher);
-
 			if (!teacher) {
 				this.logger.error(`Teacher with id ${id} not found!`);
 
 				throw new ConflictException(`Teacher with id ${id} not found!`);
 			}
+
+			this.logger.debug('Found teacher', teacher);
 
 			this.logger.debug('Retrieved teacher', teacher);
 
@@ -122,7 +122,10 @@ export class TeachersService {
 		}
 	}
 
-	async update(id: string, updateTeacherDto: UpdateTeacherDto) {
+	async update(
+		id: string,
+		updateTeacherDto: UpdateTeacherDto,
+	): Promise<Teacher> {
 		try {
 			const existingTeacher = await this.teacherModel
 				.findOne({ _id: id, isDeleted: false })
@@ -134,6 +137,8 @@ export class TeachersService {
 
 				throw new ConflictException(`Teacher not found!`);
 			}
+
+			this.logger.debug('Found teacher', existingTeacher);
 
 			existingTeacher.set(updateTeacherDto);
 

@@ -61,13 +61,13 @@ export class SlotsService {
 				.populate({ select: '-__v', path: 'class', model: 'Class' })
 				.exec();
 
-			this.logger.debug('Found all slots', slots);
-
 			if (!slots) {
 				this.logger.error('No slots found!');
 
 				throw new NotFoundException('No slots found!');
 			}
+
+			this.logger.debug('Found all slots', slots);
 
 			this.logger.log('Retrieved slots');
 
@@ -87,13 +87,13 @@ export class SlotsService {
 				.populate({ select: '-__v', path: 'class', model: 'Class' })
 				.exec();
 
-			this.logger.debug('Found slot', slot);
-
 			if (!slot) {
 				this.logger.error(`Slot with id ${id} not found!`);
 
 				throw new NotFoundException(`Slot with id ${id} not found!`);
 			}
+
+			this.logger.debug('Found slot', slot);
 
 			this.logger.log('Retrieved slot');
 
@@ -109,13 +109,13 @@ export class SlotsService {
 		try {
 			const existingSlot = await this.slotModel.findById(id).exec();
 
-			this.logger.debug('Found slot', existingSlot);
-
 			if (!existingSlot) {
 				this.logger.error(`Slot with id ${id} not found!`);
 
 				throw new NotFoundException(`Slot with id ${id} not found!`);
 			}
+
+			this.logger.debug('Found slot', existingSlot);
 
 			existingSlot.set(updateSlotDto);
 

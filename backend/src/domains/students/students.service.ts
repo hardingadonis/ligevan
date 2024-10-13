@@ -72,13 +72,13 @@ export class StudentsService {
 				})
 				.exec();
 
-			this.logger.debug('Found all students', students);
-
 			if (!students) {
 				this.logger.error('No students found!');
 
 				throw new NotFoundException('No students found!');
 			}
+
+			this.logger.debug('Found all students', students);
 
 			this.logger.log('Retrieved students');
 
@@ -112,13 +112,13 @@ export class StudentsService {
 				.select('-__v')
 				.exec();
 
-			this.logger.debug('Found student', student);
-
 			if (!student) {
 				this.logger.error(`Student with id ${id} not found!`);
 
 				throw new NotFoundException(`Student with id ${id} not found!`);
 			}
+
+			this.logger.debug('Found student', student);
 
 			this.logger.debug('Retrieved student', student);
 
@@ -142,6 +142,8 @@ export class StudentsService {
 
 				throw new NotFoundException('Student not found!');
 			}
+
+			this.logger.debug('Found student', existingStudent);
 
 			existingStudent.set(updateStudentDto);
 

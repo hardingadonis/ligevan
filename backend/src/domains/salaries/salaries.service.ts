@@ -65,13 +65,13 @@ export class SalariesService {
 				.select('-__v')
 				.exec();
 
-			this.logger.debug('Found all salaries', salaries);
-
 			if (!salaries) {
 				this.logger.error('Salaries not found!');
 
 				throw new NotFoundException('Salaries not found!');
 			}
+
+			this.logger.debug('Found all salaries', salaries);
 
 			this.logger.log('Retrieved salaries');
 
@@ -95,13 +95,13 @@ export class SalariesService {
 				.select('-__v')
 				.exec();
 
-			this.logger.debug('Found salary', salary);
-
 			if (!salary) {
 				this.logger.error('Salary not found!');
 
 				throw new NotFoundException('Salary not found!');
 			}
+
+			this.logger.debug('Found salary', salary);
 
 			this.logger.log('Retrieved salary');
 
@@ -117,13 +117,13 @@ export class SalariesService {
 		try {
 			const existingSalary = await this.salaryModel.findOne({ _id: id }).exec();
 
-			this.logger.debug('Found salary', existingSalary);
-
 			if (!existingSalary) {
 				this.logger.error('Salary not found!');
 
 				throw new NotFoundException('Salary not found!');
 			}
+
+			this.logger.debug('Found salary', existingSalary);
 
 			existingSalary.set(updateSalaryDto);
 

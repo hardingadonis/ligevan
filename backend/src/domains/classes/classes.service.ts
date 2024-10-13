@@ -68,13 +68,13 @@ export class ClassesService {
 				.select('-__v')
 				.exec();
 
-			this.logger.debug('Found centers', classes);
-
 			if (!classes) {
 				this.logger.error('Classes not found!');
 
 				throw new NotFoundException('Classes not found!');
 			}
+
+			this.logger.debug('Found centers', classes);
 
 			this.logger.log('Retrieved classes');
 
@@ -103,13 +103,13 @@ export class ClassesService {
 				.select('-__v')
 				.exec();
 
-			this.logger.debug('Found centers', getClass);
-
 			if (!getClass) {
 				this.logger.error('Class not found!');
 
 				throw new ConflictException('Class not found!');
 			}
+
+			this.logger.debug('Found centers', getClass);
 
 			this.logger.log('Retrieved class');
 
@@ -127,13 +127,13 @@ export class ClassesService {
 				.findOne({ _id: id, isDeleted: false })
 				.exec();
 
-			this.logger.debug('Class found', existingClass);
-
 			if (!existingClass) {
 				this.logger.error('Class not found!');
 
 				throw new ConflictException('Class not found!');
 			}
+
+			this.logger.debug('Class found', existingClass);
 
 			this.logger.debug('Updating class');
 
@@ -158,13 +158,13 @@ export class ClassesService {
 				.findOne({ _id: id, isDeleted: false })
 				.exec();
 
-			this.logger.debug('Class found', existingClass);
-
 			if (!existingClass) {
 				this.logger.error('Class not found!');
 
 				throw new ConflictException('Class not found!');
 			}
+
+			this.logger.debug('Class found', existingClass);
 
 			this.logger.debug('Deleting class');
 

@@ -58,13 +58,13 @@ export class VouchersService {
 				.select('-__v')
 				.exec();
 
-			this.logger.debug('Found vouchers', vouchers);
-
 			if (!vouchers) {
 				this.logger.error('Vouchers not found!');
 
 				throw new NotFoundException('Vouchers not found!');
 			}
+
+			this.logger.debug('Found vouchers', vouchers);
 
 			this.logger.log('Retrieved vouchers');
 
@@ -83,13 +83,13 @@ export class VouchersService {
 				.select('-__v')
 				.exec();
 
-			this.logger.debug('Found voucher', voucher);
-
 			if (!voucher) {
 				this.logger.error('Voucher not found');
 
 				throw new NotFoundException('Voucher not found');
 			}
+
+			this.logger.debug('Found voucher', voucher);
 
 			this.logger.log('Retrieved voucher');
 
@@ -110,13 +110,13 @@ export class VouchersService {
 				.findOne({ _id: id, isDeleted: false })
 				.exec();
 
-			this.logger.debug('Voucher found', existingVoucher);
-
 			if (!existingVoucher) {
 				this.logger.error('Voucher not found');
 
 				throw new NotFoundException('Voucher not found');
 			}
+
+			this.logger.debug('Voucher found', existingVoucher);
 
 			this.logger.log('Updating voucher');
 
@@ -141,8 +141,6 @@ export class VouchersService {
 				.findOne({ _id: id, isDeleted: false })
 				.select('-__v')
 				.exec();
-
-			this.logger.debug('Found Voucher', existingVoucher);
 
 			if (!existingVoucher) {
 				this.logger.error('Voucher not found!');

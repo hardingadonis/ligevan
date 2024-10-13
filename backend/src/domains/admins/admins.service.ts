@@ -80,8 +80,6 @@ export class AdminsService {
 				.select('-__v')
 				.exec();
 
-			this.logger.debug(`Admin with username ${username} found: ${admin}`);
-
 			if (!admin) {
 				this.logger.error(`Admin with username ${username} not found!`);
 
@@ -89,6 +87,8 @@ export class AdminsService {
 					`Admin with username ${username} not found!`,
 				);
 			}
+
+			this.logger.debug(`Admin with username ${username} found: ${admin}`);
 
 			this.logger.log('Retrieved admin');
 
@@ -113,6 +113,8 @@ export class AdminsService {
 					`Admin with username ${username} not found!`,
 				);
 			}
+
+			this.logger.debug('Admin found', existingAdmin);
 
 			this.logger.debug('Updating admin');
 

@@ -77,13 +77,13 @@ export class CentersService {
 				.select('-__v')
 				.exec();
 
-			this.logger.debug('Found centers', centers);
-
 			if (!centers) {
 				this.logger.error('Centers not found!');
 
 				throw new NotFoundException('Centers not found!');
 			}
+
+			this.logger.debug('Found centers', centers);
 
 			this.logger.log('Retrieved centers');
 
@@ -122,13 +122,13 @@ export class CentersService {
 				.select('-__v')
 				.exec();
 
-			this.logger.debug('Found center', center);
-
 			if (!center) {
 				this.logger.error('Center not found!');
 
 				throw new NotFoundException('Center not found!');
 			}
+
+			this.logger.debug('Found center', center);
 
 			this.logger.log('Retrieved center');
 
@@ -151,6 +151,8 @@ export class CentersService {
 
 				throw new NotFoundException('Center not found!');
 			}
+
+			this.logger.debug('Found center', existingCenter);
 
 			this.logger.debug('Updating center');
 
@@ -180,6 +182,8 @@ export class CentersService {
 
 				throw new NotFoundException('Center not found!');
 			}
+
+			this.logger.debug('Found center', existingCenter);
 
 			this.logger.debug('Deleting center');
 

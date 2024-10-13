@@ -58,13 +58,13 @@ export class CoursesService {
 				.select('-__v')
 				.exec();
 
-			this.logger.debug('Found courses', courses);
-
 			if (!courses) {
 				this.logger.error('Courses not found!');
 
 				throw new NotFoundException('Courses not found!');
 			}
+
+			this.logger.debug('Found courses', courses);
 
 			this.logger.log('Retrieved courses');
 
@@ -83,13 +83,13 @@ export class CoursesService {
 				.select('-__v')
 				.exec();
 
-			this.logger.debug('Found course', course);
-
 			if (!course) {
 				this.logger.error(`Course not found!`);
 
 				throw new NotFoundException(`Course not found!`);
 			}
+
+			this.logger.debug('Found course', course);
 
 			this.logger.log('Retrieved course');
 
@@ -107,13 +107,13 @@ export class CoursesService {
 				.findOne({ _id: id, isDeleted: false })
 				.exec();
 
-			this.logger.debug('Found course', existingCourse);
-
 			if (!existingCourse) {
 				this.logger.error(`Course with id ${id} not found!`);
 
 				throw new NotFoundException(`Course with id ${id} not found!`);
 			}
+
+			this.logger.debug('Found course', existingCourse);
 
 			this.logger.debug('Updating course');
 
@@ -138,13 +138,13 @@ export class CoursesService {
 				.findOne({ _id: id, isDeleted: false })
 				.exec();
 
-			this.logger.debug('Course found', existingCourse);
-
 			if (!existingCourse) {
 				this.logger.error('Course not found!');
 
 				throw new NotFoundException('Course not found!');
 			}
+
+			this.logger.debug('Course found', existingCourse);
 
 			this.logger.debug('Deleting course');
 

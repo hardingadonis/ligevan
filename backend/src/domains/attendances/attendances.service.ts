@@ -65,13 +65,13 @@ export class AttendancesService {
 				})
 				.select('-__v');
 
-			this.logger.debug('Attendances found', attendances);
-
 			if (!attendances) {
 				this.logger.error('Attendances not found!');
 
 				throw new NotFoundException('Attendances not found!');
 			}
+
+			this.logger.debug('Found attendances', attendances);
 
 			this.logger.log('Retrieved attendances');
 
@@ -100,13 +100,14 @@ export class AttendancesService {
 				.select('-__v')
 				.exec();
 
-			this.logger.debug('Found attendance', attendance);
-
 			if (!attendance) {
 				this.logger.error('Attendance not found!');
 
 				throw new NotFoundException('Attendance not found!');
 			}
+
+			this.logger.debug('Found attendance', attendance);
+
 			this.logger.log('Retrieved attendance');
 
 			return attendance;
@@ -128,6 +129,8 @@ export class AttendancesService {
 
 				throw new NotFoundException('Attendance not found!');
 			}
+
+			this.logger.debug('Found attendance', existingAttendance);
 
 			this.logger.debug('Updating attendance');
 
