@@ -31,8 +31,8 @@ export class CentersController {
 	}
 
 	@Get(':id')
-	async getCenterById(@Param('id') id: string) {
-		return await this.centersService.getCenterById(id);
+	async getById(@Param('id') id: string) {
+		return await this.centersService.getById(id);
 	}
 
 	@Put(':id')
