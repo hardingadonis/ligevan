@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
 
-import { AuthAdminModule } from '@/domains/auth/admin/auth.admin.module';
-import googleOauth2Config from '@/domains/auth/config/google-oauth2.config';
+import { AuthController } from '@/domains/auth/auth.controller';
+import { AuthService } from '@/domains/auth/auth.service';
 
 @Module({
-	imports: [ConfigModule.forFeature(googleOauth2Config), AuthAdminModule],
+	controllers: [AuthController],
+	providers: [AuthService],
 })
 export class AuthModule {}
