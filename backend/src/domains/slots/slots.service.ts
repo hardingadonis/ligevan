@@ -21,7 +21,7 @@ export class SlotsService {
 
 	async create(createSlotDto: CreateSlotDto): Promise<Slot> {
 		try {
-			const checkSlotExist = await this.slotModel
+			const existingSlot = await this.slotModel
 				.findOne({
 					class: createSlotDto.class,
 					room: createSlotDto.room,
@@ -30,9 +30,7 @@ export class SlotsService {
 				})
 				.exec();
 
-			this.logger.debug('Slot found', checkSlotExist);
-
-			if (checkSlotExist) {
+			if (existingSlot) {
 				this.logger.error('Slot already exists!');
 
 				throw new ConflictException('Slot already exists!');
@@ -40,9 +38,14 @@ export class SlotsService {
 
 			const newSlot = new this.slotModel(createSlotDto);
 
-			this.logger.debug('Created new slot', newSlot);
+			this.logger.debug('Creating new slot');
 
-			return await newSlot.save();
+			await newSlot.save();
+
+			this.logger.debug('Slot created', newSlot);
+			this.logger.log('Slot created');
+
+			return newSlot;
 		} catch (error: any) {
 			this.logger.error('Failed to create slot!', error);
 
@@ -58,7 +61,15 @@ export class SlotsService {
 				.populate({ select: '-__v', path: 'class', model: 'Class' })
 				.exec();
 
-			this.logger.debug('Found slots', slots);
+			this.logger.debug('Found all slots', slots);
+
+			if (!slots) {
+				this.logger.error('No slots found!');
+
+				throw new NotFoundException('No slots found!');
+			}
+
+			this.logger.log('Retrieved slots');
 
 			return slots;
 		} catch (error: any) {
@@ -84,6 +95,8 @@ export class SlotsService {
 				throw new NotFoundException(`Slot with id ${id} not found!`);
 			}
 
+			this.logger.log('Retrieved slot');
+
 			return slot;
 		} catch (error: any) {
 			this.logger.error('Failed to get slot!', error);
@@ -94,21 +107,26 @@ export class SlotsService {
 
 	async update(id: string, updateSlotDto: UpdateSlotDto) {
 		try {
-			const slot = await this.slotModel.findById(id).select('-__v').exec();
+			const existingSlot = await this.slotModel.findById(id).exec();
 
-			this.logger.debug('Found slot', slot);
+			this.logger.debug('Found slot', existingSlot);
 
-			if (!slot) {
+			if (!existingSlot) {
 				this.logger.error(`Slot with id ${id} not found!`);
 
 				throw new NotFoundException(`Slot with id ${id} not found!`);
 			}
 
-			slot.set(updateSlotDto);
+			existingSlot.set(updateSlotDto);
 
-			this.logger.debug('Updated slot', slot);
+			this.logger.debug('Updating slot');
 
-			return await slot.save();
+			const updateSlot = await existingSlot.save();
+
+			this.logger.debug('Updated slot', updateSlot);
+			this.logger.log('Slot updated');
+
+			return updateSlot;
 		} catch (error: any) {
 			this.logger.error('Failed to update slot!', error);
 
