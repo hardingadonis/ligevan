@@ -122,6 +122,31 @@ export class TeachersService {
 		}
 	}
 
+	async getByEmailWithPassword(email: string) {
+		try {
+			const teacher = await this.teacherModel
+				.findOne({ email: email, isDeleted: false })
+				.select('-__v')
+				.exec();
+
+			if (!teacher) {
+				this.logger.error(`Teacher with email ${email} not found!`);
+
+				throw new ConflictException(`Teacher with email ${email} not found!`);
+			}
+
+			this.logger.debug('Found teacher', teacher);
+
+			this.logger.debug('Retrieved teacher', teacher);
+
+			return teacher;
+		} catch (error: any) {
+			this.logger.error('Failed to get teacher by email!', error);
+
+			throw new InternalServerErrorException('Failed to get teacher by email!');
+		}
+	}
+
 	async update(
 		id: string,
 		updateTeacherDto: UpdateTeacherDto,
