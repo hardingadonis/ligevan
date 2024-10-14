@@ -1,5 +1,13 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsArray, IsIn, IsNotEmpty, IsString } from 'class-validator';
+import {
+	IsArray,
+	IsDateString,
+	IsEmail,
+	IsIn,
+	IsNotEmpty,
+	IsPhoneNumber,
+	IsString,
+} from 'class-validator';
 
 export class CreateStudentDto {
 	@ApiProperty({ description: 'Student full name' })
@@ -8,7 +16,7 @@ export class CreateStudentDto {
 	fullName: string;
 
 	@ApiProperty({ description: 'Student email' })
-	@IsString()
+	@IsEmail()
 	@IsNotEmpty()
 	email: string;
 
@@ -18,7 +26,7 @@ export class CreateStudentDto {
 	password: string;
 
 	@ApiProperty({ description: 'Student phone' })
-	@IsString()
+	@IsPhoneNumber('VN')
 	@IsNotEmpty()
 	phone: string;
 
@@ -33,21 +41,19 @@ export class CreateStudentDto {
 	gender: string;
 
 	@ApiProperty({ description: 'Student date of birth' })
+	@IsDateString()
 	@IsNotEmpty()
 	dob: Date;
 
-	@ApiProperty({ description: 'List of classes the student is enrolled in' })
+	@ApiProperty({ description: 'Classes offered by the Student' })
 	@IsArray()
 	@IsNotEmpty()
 	classes: string[];
 
-	// @ApiProperty({
-	// 	description:
-	// 		'List of payment methods or transactions associated with the student',
-	// })
-	// @IsArray()
-	// @IsNotEmpty()
-	// payments: string[];
+	@ApiProperty({ description: 'Payments offered by the Student' })
+	@IsArray()
+	@IsNotEmpty()
+	payments: string[];
 }
 
 export class UpdateStudentDto {
@@ -69,14 +75,9 @@ export class UpdateStudentDto {
 	@ApiPropertyOptional({ description: 'Student date of birth' })
 	dob?: Date;
 
-	@ApiPropertyOptional({
-		description: 'List of classes the student is enrolled in',
-	})
+	@ApiPropertyOptional({ description: 'Classes offered by the Student' })
 	classes?: string[];
 
-	// @ApiPropertyOptional({
-	// 	description:
-	// 		'List of payment methods or transactions associated with the student',
-	// })
-	// payments?: string[];
+	@ApiPropertyOptional({ description: 'Payments offered by the Student' })
+	payments?: string[];
 }

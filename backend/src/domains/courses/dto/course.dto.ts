@@ -29,9 +29,6 @@ export class CreateCourseDto {
 }
 
 export class UpdateCourseDto {
-	@ApiPropertyOptional({ description: 'Course code' })
-	code?: string;
-
 	@ApiPropertyOptional({ description: 'Course title' })
 	title?: string;
 

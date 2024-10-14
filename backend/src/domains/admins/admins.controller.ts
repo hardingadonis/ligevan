@@ -9,14 +9,14 @@ import { CreateAdminDto, UpdateAdminDto } from '@/domains/admins/dto/admin.dto';
 export class AdminsController {
 	constructor(private readonly adminsService: AdminsService) {}
 
-	@Get(':username')
-	async getByUsername(@Param('username') username: string) {
-		return await this.adminsService.getByUsername(username);
-	}
-
 	@Post()
 	async create(@Body() createAdminDto: CreateAdminDto) {
 		return await this.adminsService.create(createAdminDto);
+	}
+
+	@Get(':username')
+	async getByUsername(@Param('username') username: string) {
+		return await this.adminsService.getByUsername(username);
 	}
 
 	@Put(':username')
