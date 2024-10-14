@@ -1,8 +1,7 @@
 const App = () => {
 	return (
-		<div>
-			<h1>ligevan</h1>
-			<p>ligevan is running!</p>
+		<div className="container">
+			<h1 className="text-center">Welcome to ligevan</h1>
 		</div>
 	);
 };
