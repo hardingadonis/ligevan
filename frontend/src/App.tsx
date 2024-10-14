@@ -1,5 +1,3 @@
-import '@/styles/global.css';
-
 const App = () => {
 	return (
 		<div className="container">
