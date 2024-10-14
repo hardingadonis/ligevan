@@ -9,6 +9,9 @@ export class Class {
 	@Prop({ type: Types.ObjectId, ref: 'Center', required: true })
 	center: Types.ObjectId;
 
+	@Prop({ type: Types.ObjectId, ref: 'Course', required: true })
+	course: Types.ObjectId;
+
 	@Prop({ type: Types.ObjectId, ref: 'Teacher', required: true })
 	teacher: Types.ObjectId;
 

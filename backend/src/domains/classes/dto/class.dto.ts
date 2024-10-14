@@ -14,6 +14,11 @@ export class CreateClassDto {
 	@IsNotEmpty()
 	center: string;
 
+	@ApiProperty({ description: 'Course offered by the Class' })
+	@IsString()
+	@IsNotEmpty()
+	course: string;
+
 	@ApiProperty({ description: 'Teachers offered by the Class' })
 	@IsString()
 	@IsNotEmpty()
@@ -33,11 +38,6 @@ export class CreateClassDto {
 export class UpdateClassDto {
 	@ApiPropertyOptional({ description: 'Class name' })
 	name?: string;
-
-	@ApiPropertyOptional({
-		description: 'Center offered by the Class ',
-	})
-	center?: string;
 
 	@ApiPropertyOptional({
 		description: 'Teachers offered by the Class',
