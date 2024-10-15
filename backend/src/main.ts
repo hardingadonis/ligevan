@@ -13,10 +13,12 @@ const bootstrap = async () => {
 
 	const app = await NestFactory.create(AppModule);
 	const configService = app.get<ConfigService>(ConfigService);
-	const isProduction = configService.get('NODE_ENV') == 'production';
+	const corsConfig = configService.get('cors');
+	const isProduction = configService.get('NODE_ENV') == 'production' || false;
 
 	app.useGlobalPipes(new ValidationPipe());
 	app.setGlobalPrefix('api');
+	app.enableCors(isProduction ? corsConfig : { origin: '*' });
 	app.useLogger(
 		isProduction
 			? ['fatal', 'error', 'warn', 'log']
