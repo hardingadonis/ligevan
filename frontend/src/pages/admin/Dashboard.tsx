@@ -33,7 +33,7 @@ const AdminDashboard: React.FC = () => {
         setCentersData(centersData);
         setCoursesData(coursesData);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Lỗi khi lấy dữ liệu:', error);
       }
     };
 
@@ -44,8 +44,8 @@ const AdminDashboard: React.FC = () => {
   const totalCourses = coursesData.length;
 
   const chartData = [
-    { type: 'Centers', count: totalCenters },
-    { type: 'Courses', count: totalCourses },
+    { type: 'Trung tâm', count: totalCenters },
+    { type: 'Khóa học', count: totalCourses },
   ];
 
   const config = {
@@ -66,18 +66,18 @@ const AdminDashboard: React.FC = () => {
       },
     },
     meta: {
-      type: { alias: 'Type' },
-      count: { alias: 'Count' },
+      type: { alias: 'Loại' },
+      count: { alias: 'Số lượng' },
     },
     color: ({ type }: { type: string }) => {
-      if (type === 'Centers') {
+      if (type === 'Trung tâm') {
         return '#3f8600';
       }
       return '#cf1322';
     },
-    columnWidthRatio: 0.01,  
+    columnWidthRatio: 0.01,
     columnStyle: {
-      radius: [20, 20, 0, 0],  
+      radius: [20, 20, 0, 0],
     },
     interactions: [{ type: 'element-active' }],
   };
@@ -88,20 +88,20 @@ const AdminDashboard: React.FC = () => {
         <div className="logo" style={{ display: 'none' }} />
         <Menu theme="light" mode="inline" defaultSelectedKeys={['1']}>
           <Menu.Item key="1" icon={<DashboardOutlined />}>
-            Dashboard
+            Bảng điều khiển
           </Menu.Item>
           <Menu.Item key="2" icon={<BankOutlined />}>
-            Centers
+            Trung tâm
           </Menu.Item>
           <Menu.Item key="3" icon={<BookOutlined />}>
-            Courses
+            Khóa học
           </Menu.Item>
         </Menu>
       </Sider>
       <Layout>
         <Header style={{ background: '#fff', padding: 0, paddingLeft: '16px' }}>
           <Title level={3} style={{ color: '#1890ff', fontSize: '24px', margin: 0 }}>
-            Admin Dashboard
+            Bảng điều khiển
           </Title>
         </Header>
         <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}>
@@ -109,7 +109,7 @@ const AdminDashboard: React.FC = () => {
             <Col span={12}>
               <Card>
                 <Statistic
-                  title="Total Centers"
+                  title="Tổng số Trung tâm"
                   value={totalCenters}
                   valueStyle={{ color: '#3f8600' }}
                 />
@@ -118,7 +118,7 @@ const AdminDashboard: React.FC = () => {
             <Col span={12}>
               <Card>
                 <Statistic
-                  title="Total Courses"
+                  title="Tổng số Khóa học"
                   value={totalCourses}
                   valueStyle={{ color: '#cf1322' }}
                 />
@@ -127,7 +127,7 @@ const AdminDashboard: React.FC = () => {
           </Row>
           <Row gutter={16} style={{ marginTop: '24px' }}>
             <Col span={24}>
-              <Card title="Centers and Courses Comparison">
+              <Card title="Số lượng Trung tâm và Khóa học">
                 <Column {...config} />
               </Card>
             </Col>
