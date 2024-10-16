@@ -5,7 +5,6 @@ import {
 	IsEmail,
 	IsIn,
 	IsNotEmpty,
-	IsPhoneNumber,
 	IsString,
 } from 'class-validator';
 
@@ -21,7 +20,6 @@ export class CreateStudentDto {
 	email: string;
 
 	@ApiProperty({ description: 'Student phone' })
-	@IsPhoneNumber('VN')
 	@IsNotEmpty()
 	phone: string;
 

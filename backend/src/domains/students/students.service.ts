@@ -85,16 +85,28 @@ export class StudentsService {
 	}
 
 	async getById(id: string) {
+		return await this.getStudent({ _id: id });
+	}
+
+	async getByEmail(email: string) {
+		return await this.getStudent({ email: email });
+	}
+
+	async getStudent(conditions: object) {
 		try {
 			const student = await this.studentModel
-				.findOne({ _id: id, isDeleted: false })
+				.findOne({ ...conditions, isDeleted: false })
 				.select('-__v')
 				.exec();
 
 			if (!student) {
-				this.logger.error(`Student with id ${id} not found!`);
+				this.logger.error(
+					`Student not found with conditions: ${JSON.stringify(conditions)}`,
+				);
 
-				throw new NotFoundException(`Student with id ${id} not found!`);
+				throw new NotFoundException(
+					'Student not found with provided conditions!',
+				);
 			}
 
 			this.logger.debug('Found student', student);
@@ -103,9 +115,9 @@ export class StudentsService {
 
 			return student;
 		} catch (error: any) {
-			this.logger.error('Failed to get student by id!', error);
+			this.logger.error('Failed to get student!', error);
 
-			throw new InternalServerErrorException('Failed to get student by id!');
+			throw new InternalServerErrorException('Failed to get student!');
 		}
 	}
 
