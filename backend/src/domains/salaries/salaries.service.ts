@@ -1,7 +1,6 @@
 import {
 	ConflictException,
 	Injectable,
-	InternalServerErrorException,
 	Logger,
 	NotFoundException,
 } from '@nestjs/common';
@@ -20,125 +19,101 @@ export class SalariesService {
 	) {}
 
 	async create(createSalaryDto: CreateSalaryDto) {
-		try {
-			const existingSalary = await this.salaryModel
-				.findOne({
-					teacher: createSalaryDto.teacher,
-					start: createSalaryDto.start,
-					end: createSalaryDto.end,
-					finalSalary: createSalaryDto.finalSalary,
-				})
-				.exec();
+		const existingSalary = await this.salaryModel
+			.findOne({
+				teacher: createSalaryDto.teacher,
+				start: createSalaryDto.start,
+				end: createSalaryDto.end,
+				finalSalary: createSalaryDto.finalSalary,
+			})
+			.exec();
 
-			if (existingSalary) {
-				this.logger.error('Salary already exists!');
+		if (existingSalary) {
+			this.logger.error('Salary already exists!');
 
-				throw new ConflictException('Salary already exists!');
-			}
-
-			const newSalary = new this.salaryModel(createSalaryDto);
-
-			this.logger.debug('Creating new salary');
-
-			await newSalary.save();
-
-			this.logger.debug('Salary created', newSalary);
-			this.logger.log('Salary created');
-
-			return newSalary;
-		} catch (error: any) {
-			this.logger.error('Failed to create salary!', error);
-
-			throw new InternalServerErrorException('Failed to create salary!');
+			throw new ConflictException('Salary already exists!');
 		}
+
+		const newSalary = new this.salaryModel(createSalaryDto);
+
+		this.logger.debug('Creating new salary');
+
+		await newSalary.save();
+
+		this.logger.debug('Salary created', newSalary);
+		this.logger.log('Salary created');
+
+		return newSalary;
 	}
 
 	async getAll() {
-		try {
-			const salaries = await this.salaryModel
-				.find()
-				.populate({
-					select: '-__v -hashedPassword',
-					path: 'teacher',
-					model: 'Teacher',
-				})
-				.select('-__v')
-				.exec();
+		const salaries = await this.salaryModel
+			.find()
+			.populate({
+				select: '-__v -hashedPassword',
+				path: 'teacher',
+				model: 'Teacher',
+			})
+			.select('-__v')
+			.exec();
 
-			if (!salaries) {
-				this.logger.error('Salaries not found!');
+		if (!salaries) {
+			this.logger.error('Salaries not found!');
 
-				throw new NotFoundException('Salaries not found!');
-			}
-
-			this.logger.debug('Found all salaries', salaries);
-
-			this.logger.log('Retrieved salaries');
-
-			return salaries;
-		} catch (error: any) {
-			this.logger.error('Failed to get salaries!', error);
-
-			throw new InternalServerErrorException('Failed to get salaries!');
+			throw new NotFoundException('Salaries not found!');
 		}
+
+		this.logger.debug('Found all salaries', salaries);
+
+		this.logger.log('Retrieved salaries');
+
+		return salaries;
 	}
 
 	async getById(id: string) {
-		try {
-			const salary = await this.salaryModel
-				.findOne({ _id: id })
-				.populate({
-					select: '-__v -hashedPassword',
-					path: 'teacher',
-					model: 'Teacher',
-				})
-				.select('-__v')
-				.exec();
+		const salary = await this.salaryModel
+			.findOne({ _id: id })
+			.populate({
+				select: '-__v -hashedPassword',
+				path: 'teacher',
+				model: 'Teacher',
+			})
+			.select('-__v')
+			.exec();
 
-			if (!salary) {
-				this.logger.error('Salary not found!');
+		if (!salary) {
+			this.logger.error('Salary not found!');
 
-				throw new NotFoundException('Salary not found!');
-			}
-
-			this.logger.debug('Found salary', salary);
-
-			this.logger.log('Retrieved salary');
-
-			return salary;
-		} catch (error: any) {
-			this.logger.error('Failed to get salary!', error);
-
-			throw new InternalServerErrorException('Failed to get salary!');
+			throw new NotFoundException('Salary not found!');
 		}
+
+		this.logger.debug('Found salary', salary);
+
+		this.logger.log('Retrieved salary');
+
+		return salary;
 	}
 
 	async update(id: string, updateSalaryDto: CreateSalaryDto) {
-		try {
-			const existingSalary = await this.salaryModel.findOne({ _id: id }).exec();
+		const existingSalary = await this.salaryModel.findOne({ _id: id }).exec();
 
-			if (!existingSalary) {
-				this.logger.error('Salary not found!');
+		if (!existingSalary) {
+			this.logger.error('Salary not found!');
 
-				throw new NotFoundException('Salary not found!');
-			}
-
-			this.logger.debug('Found salary', existingSalary);
-
-			existingSalary.set(updateSalaryDto);
-
-			this.logger.debug('Updating salary');
-
-			const updatedSalary = await existingSalary.save();
-
-			this.logger.debug('Salary updated', existingSalary);
-			this.logger.log('Salary updated');
-
-			return updatedSalary;
-		} catch (error: any) {
-			this.logger.error('Failed to update salary!', error);
-
-			throw new InternalServerErrorException('Failed to update salary!');
+			throw new NotFoundException('Salary not found!');
 		}
+
+		this.logger.debug('Found salary', existingSalary);
+
+		existingSalary.set(updateSalaryDto);
+
+		this.logger.debug('Updating salary');
+
+		const updatedSalary = await existingSalary.save();
+
+		this.logger.debug('Salary updated', existingSalary);
+		this.logger.log('Salary updated');
+
+		return updatedSalary;
 	}
 }

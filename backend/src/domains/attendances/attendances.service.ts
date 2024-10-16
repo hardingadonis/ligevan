@@ -1,7 +1,6 @@
 import {
 	ConflictException,
 	Injectable,
-	InternalServerErrorException,
 	Logger,
 	NotFoundException,
 } from '@nestjs/common';
@@ -21,131 +20,107 @@ export class AttendancesService {
 	) {}
 
 	async create(createAttendanceDto: CreateAttendanceDto) {
-		try {
-			const existingAttendance = await this.attendanceModel.findOne({
-				student: createAttendanceDto.student,
-				slot: createAttendanceDto.slot,
-			});
+		const existingAttendance = await this.attendanceModel.findOne({
+			student: createAttendanceDto.student,
+			slot: createAttendanceDto.slot,
+		});
 
-			if (existingAttendance) {
-				this.logger.error('Attendance already exists!');
+		if (existingAttendance) {
+			this.logger.error('Attendance already exists!');
 
-				throw new ConflictException('Attendance already exists!');
-			}
-
-			const attendance = new this.attendanceModel(createAttendanceDto);
-
-			this.logger.debug('Creating new attendance', attendance);
-
-			await attendance.save();
-
-			this.logger.log('Attendance created');
-
-			return attendance;
-		} catch (error: any) {
-			this.logger.error('Failed to create attendance!', error);
-
-			throw new InternalServerErrorException('Failed to create attendance!');
+			throw new ConflictException('Attendance already exists!');
 		}
+
+		const attendance = new this.attendanceModel(createAttendanceDto);
+
+		this.logger.debug('Creating new attendance', attendance);
+
+		await attendance.save();
+
+		this.logger.log('Attendance created');
+
+		return attendance;
 	}
 
 	async getAll() {
-		try {
-			const attendances = await this.attendanceModel
-				.find()
-				.populate({
-					select: '-__v -hashedPassword',
-					path: 'student',
-					model: 'Student',
-				})
-				.populate({
-					select: '-__v',
-					path: 'slot',
-					model: 'Slot',
-				})
-				.select('-__v');
+		const attendances = await this.attendanceModel
+			.find()
+			.populate({
+				select: '-__v -hashedPassword',
+				path: 'student',
+				model: 'Student',
+			})
+			.populate({
+				select: '-__v',
+				path: 'slot',
+				model: 'Slot',
+			})
+			.select('-__v');
 
-			if (!attendances) {
-				this.logger.error('Attendances not found!');
+		if (!attendances) {
+			this.logger.error('Attendances not found!');
 
-				throw new NotFoundException('Attendances not found!');
-			}
-
-			this.logger.debug('Found attendances', attendances);
-
-			this.logger.log('Retrieved attendances');
-
-			return attendances;
-		} catch (error: any) {
-			this.logger.error('Failed to get attendances!', error);
-
-			throw new InternalServerErrorException('Failed to get attendances!');
+			throw new NotFoundException('Attendances not found!');
 		}
+
+		this.logger.debug('Found attendances', attendances);
+
+		this.logger.log('Retrieved attendances');
+
+		return attendances;
 	}
 
 	async getById(id: string) {
-		try {
-			const attendance = await this.attendanceModel
-				.findById(id)
-				.populate({
-					select: '-__v -hashedPassword',
-					path: 'student',
-					model: 'Student',
-				})
-				.populate({
-					select: '-__v',
-					path: 'slot',
-					model: 'Slot',
-				})
-				.select('-__v')
-				.exec();
+		const attendance = await this.attendanceModel
+			.findById(id)
+			.populate({
+				select: '-__v -hashedPassword',
+				path: 'student',
+				model: 'Student',
+			})
+			.populate({
+				select: '-__v',
+				path: 'slot',
+				model: 'Slot',
+			})
+			.select('-__v')
+			.exec();
 
-			if (!attendance) {
-				this.logger.error('Attendance not found!');
+		if (!attendance) {
+			this.logger.error('Attendance not found!');
 
-				throw new NotFoundException('Attendance not found!');
-			}
-
-			this.logger.debug('Found attendance', attendance);
-
-			this.logger.log('Retrieved attendance');
-
-			return attendance;
-		} catch (error: any) {
-			this.logger.error('Failed to get attendance!', error);
-
-			throw new InternalServerErrorException('Failed to get attendance!');
+			throw new NotFoundException('Attendance not found!');
 		}
+
+		this.logger.debug('Found attendance', attendance);
+
+		this.logger.log('Retrieved attendance');
+
+		return attendance;
 	}
 
 	async update(id: string, updateAttendanceDto: CreateAttendanceDto) {
-		try {
-			const existingAttendance = await this.attendanceModel
-				.findOne({ _id: id })
-				.exec();
+		const existingAttendance = await this.attendanceModel
+			.findOne({ _id: id })
+			.exec();
 
-			if (!existingAttendance) {
-				this.logger.error('Attendance not found!');
+		if (!existingAttendance) {
+			this.logger.error('Attendance not found!');
 
-				throw new NotFoundException('Attendance not found!');
-			}
-
-			this.logger.debug('Found attendance', existingAttendance);
-
-			this.logger.debug('Updating attendance');
-
-			existingAttendance.set(updateAttendanceDto);
-
-			const attendance = await existingAttendance.save();
-
-			this.logger.debug('Attendance updated ', attendance);
-			this.logger.log('Attendance updated ');
-
-			return attendance;
-		} catch (error: any) {
-			this.logger.error('Failed to update attendance!', error);
-
-			throw new InternalServerErrorException('Failed to update attendance!');
+			throw new NotFoundException('Attendance not found!');
 		}
+
+		this.logger.debug('Found attendance', existingAttendance);
+
+		this.logger.debug('Updating attendance');
+
+		existingAttendance.set(updateAttendanceDto);
+
+		const attendance = await existingAttendance.save();
+
+		this.logger.debug('Attendance updated ', attendance);
+		this.logger.log('Attendance updated ');
+
+		return attendance;
 	}
 }
