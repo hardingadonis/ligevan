@@ -1,7 +1,7 @@
 import { Center } from '@/schemas/center.schema';
 import { Salary } from '@/schemas/salary.schema';
 
-export interface Teacher{
+export interface Teacher {
 	_id: string;
 	fullName: string;
 	email: string;
