@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Spin } from 'antd';
 
 const HomepageStudent = lazy(() => import('@/pages/student/Homepage'));
-// const AminDashboard = lazy(() => import('@/pages/admin/Dashboard'));
+// const AdminDashboard = lazy(() => import('@/pages/admin/Dashboard'));
 
 const App: React.FC = () => {
 	return (
