@@ -50,7 +50,9 @@ export class AuthController {
 
 	@UseGuards(StudentAuthGuard)
 	@Get('student/login')
-	async studentLogin() {}
+	async studentLogin() {
+		// The authentication is handled by StudentAuthGuard; no additional implementation needed here.
+	}
 
 	@UseGuards(StudentAuthGuard)
 	@Get('student/callback')
