@@ -1,0 +1,19 @@
+.search-container {
+	display: flex;
+	justify-content: flex-end;
+	margin-bottom: 16px;
+}
+
+.search-input {
+	width: 200px;
+}
+
+@media (max-width: 768px) {
+	.search-container {
+		justify-content: center;
+	}
+
+	.search-input {
+		width: 100%;
+	}
+}
