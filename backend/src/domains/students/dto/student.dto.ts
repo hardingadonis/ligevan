@@ -5,6 +5,7 @@ import {
 	IsEmail,
 	IsIn,
 	IsNotEmpty,
+	IsOptional,
 	IsString,
 } from 'class-validator';
 
@@ -27,6 +28,10 @@ export class CreateStudentDto {
 	@IsString()
 	@IsNotEmpty()
 	address: string;
+
+	@ApiProperty({ description: 'Student avatar' })
+	@IsOptional()
+	avatar?: string;
 
 	@ApiProperty({ description: 'Student gender' })
 	@IsIn(['male', 'female'])
@@ -58,6 +63,9 @@ export class UpdateStudentDto {
 
 	@ApiPropertyOptional({ description: 'Student address' })
 	address?: string;
+
+	@ApiPropertyOptional({ description: 'Student avatar' })
+	avatar?: string;
 
 	@ApiPropertyOptional({ description: 'Student gender' })
 	gender?: string;

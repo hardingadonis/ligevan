@@ -15,6 +15,9 @@ export class Student {
 	@Prop({ required: true })
 	address: string;
 
+	@Prop({ required: true, default: 'https://student_avatar.png' })
+	avatar: string;
+
 	@Prop({ required: true })
 	gender: 'male' | 'female';
 
