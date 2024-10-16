@@ -24,7 +24,10 @@ export class AuthController {
 	@Post('admin/login')
 	@ApiBody({ type: AdminLoginDto })
 	async adminLogin(@Request() req) {
-		const token = await this.authService.login({ sub: req.user.username });
+		const token = await this.authService.login({
+			sub: req.user.username,
+			role: req.user.role,
+		});
 
 		return { access_token: token };
 	}
@@ -34,7 +37,10 @@ export class AuthController {
 	@Post('teacher/login')
 	@ApiBody({ type: TeacherLoginDto })
 	async teacherLogin(@Request() req) {
-		const token = await this.authService.login({ sub: req.user.email });
+		const token = await this.authService.login({
+			sub: req.user.email,
+			role: req.user.role,
+		});
 
 		return { access_token: token };
 	}

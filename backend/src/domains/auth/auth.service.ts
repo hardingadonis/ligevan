@@ -6,6 +6,7 @@ import {
 import { JwtService } from '@nestjs/jwt';
 
 import { AdminsService } from '@/domains/admins/admins.service';
+import { Role } from '@/domains/auth/enums/role.enum';
 import { TeachersService } from '@/domains/teachers/teachers.service';
 import { verify } from '@/utils/hash.util';
 
@@ -30,7 +31,7 @@ export class AuthService {
 			throw new UnauthorizedException('Invalid password!');
 		}
 
-		return { username: admin.username };
+		return { username: admin.username, role: Role.ADMIN };
 	}
 
 	async validateTeacher(email: string, password: string) {
@@ -46,7 +47,50 @@ export class AuthService {
 			throw new UnauthorizedException('Invalid password!');
 		}
 
-		return { email: teacher.email };
+		return { email: teacher.email, role: Role.TEACHER };
+	}
+
+	async validateJWTUser(user: unknown) {
+		if (
+			typeof user !== 'object' ||
+			user === null ||
+			!('role' in user) ||
+			!('sub' in user)
+		) {
+			throw new UnauthorizedException('Invalid user!');
+		}
+
+		let userFromDb: any = null;
+
+		try {
+			switch (user.role) {
+				case Role.ADMIN:
+					userFromDb = await this.adminsService.getByUsername(
+						user.sub as string,
+					);
+					break;
+				case Role.TEACHER:
+					userFromDb = await this.teachersService.getByEmailWithPassword(
+						user.sub as string,
+					);
+					break;
+				default:
+					throw new UnauthorizedException('Invalid role!');
+			}
+		} catch (error) {
+			throw new UnauthorizedException(
+				'An error occurred while validating the user!',
+				error,
+			);
+		}
+
+		if (!userFromDb) {
+			throw new NotFoundException(
+				`User not found for ${user.role} with identifier ${user.sub}!`,
+			);
+		}
+
+		return user;
 	}
 
 	async login(payload: unknown) {
