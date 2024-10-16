@@ -1,7 +1,6 @@
 import {
 	ConflictException,
 	Injectable,
-	InternalServerErrorException,
 	Logger,
 	NotFoundException,
 } from '@nestjs/common';
@@ -21,124 +20,96 @@ export class AdminsService {
 	) {}
 
 	async create(createAdminDto: CreateAdminDto) {
-		try {
-			const existingAdmin = await this.adminModel
-				.findOne({ username: createAdminDto.username })
-				.exec();
+		const existingAdmin = await this.adminModel
+			.findOne({ username: createAdminDto.username })
+			.exec();
 
-			if (existingAdmin) {
-				this.logger.error(
-					`Admin with username ${createAdminDto.username} already exists!`,
-				);
+		if (existingAdmin) {
+			this.logger.error(
+				`Admin with username ${createAdminDto.username} already exists!`,
+			);
 
-				throw new ConflictException(
-					`Admin with username ${createAdminDto.username} already exists!`,
-				);
-			}
-
-			const createdAdmin = new this.adminModel({
-				...createAdminDto,
-				hashedPassword: await hash(createAdminDto.password),
-			});
-
-			this.logger.debug('Creating admin', createdAdmin);
-
-			await createdAdmin.save();
-
-			this.logger.log('Admin created');
-
-			const adminObject = createdAdmin.toObject();
-			delete adminObject.hashedPassword;
-
-			return adminObject;
-		} catch (error: any) {
-			this.logger.error('Failed to create admin!', error);
-
-			throw new InternalServerErrorException('Failed to create admin!');
+			throw new ConflictException(
+				`Admin with username ${createAdminDto.username} already exists!`,
+			);
 		}
+
+		const createdAdmin = new this.adminModel({
+			...createAdminDto,
+			hashedPassword: await hash(createAdminDto.password),
+		});
+
+		this.logger.debug('Creating admin', createdAdmin);
+
+		await createdAdmin.save();
+
+		this.logger.log('Admin created');
+
+		const adminObject = createdAdmin.toObject();
+		delete adminObject.hashedPassword;
+
+		return adminObject;
 	}
 
 	async getByUsername(username: string) {
-		try {
-			const admin = await this.getByUsernameWithPassword(username);
+		const admin = await this.getByUsernameWithPassword(username);
 
-			const adminObject = admin.toObject();
-			delete adminObject.hashedPassword;
+		const adminObject = admin.toObject();
+		delete adminObject.hashedPassword;
 
-			return adminObject;
-		} catch (error: any) {
-			this.logger.error('Failed to get admin!', error);
-
-			throw new InternalServerErrorException('Failed to get admin!');
-		}
+		return adminObject;
 	}
 
 	async getByUsernameWithPassword(username: string) {
-		try {
-			const admin = await this.adminModel
-				.findOne({ username: username })
-				.select('-__v')
-				.exec();
+		const admin = await this.adminModel
+			.findOne({ username: username })
+			.select('-__v')
+			.exec();
 
-			if (!admin) {
-				this.logger.error(`Admin with username ${username} not found!`);
+		if (!admin) {
+			this.logger.error(`Admin with username ${username} not found!`);
 
-				throw new NotFoundException(
-					`Admin with username ${username} not found!`,
-				);
-			}
-
-			this.logger.debug(`Admin with username ${username} found: ${admin}`);
-
-			this.logger.log('Retrieved admin');
-
-			return admin;
-		} catch (error: any) {
-			this.logger.error('Failed to get admin!', error);
-
-			throw new InternalServerErrorException('Failed to get admin!');
+			throw new NotFoundException(`Admin with username ${username} not found!`);
 		}
+
+		this.logger.debug(`Admin with username ${username} found: ${admin}`);
+
+		this.logger.log('Retrieved admin');
+
+		return admin;
 	}
 
 	async update(username: string, updateAdminDto: UpdateAdminDto) {
-		try {
-			const existingAdmin = await this.adminModel
-				.findOne({ username: username })
-				.exec();
+		const existingAdmin = await this.adminModel
+			.findOne({ username: username })
+			.exec();
 
-			if (!existingAdmin) {
-				this.logger.error(`Admin with username ${username} not found!`);
+		if (!existingAdmin) {
+			this.logger.error(`Admin with username ${username} not found!`);
 
-				throw new NotFoundException(
-					`Admin with username ${username} not found!`,
-				);
-			}
-
-			this.logger.debug('Admin found', existingAdmin);
-
-			this.logger.debug('Updating admin');
-
-			existingAdmin.set({
-				...existingAdmin,
-				fullName: updateAdminDto.fullName || existingAdmin.fullName,
-				hashedPassword: updateAdminDto.password
-					? await hash(updateAdminDto.password)
-					: existingAdmin.hashedPassword,
-			});
-
-			const updatedAdmin = await existingAdmin.save();
-
-			this.logger.debug('Admin updated', updatedAdmin);
-			this.logger.log('Admin updated');
-
-			const adminObject = updatedAdmin.toObject();
-			delete adminObject.hashedPassword;
-
-			return adminObject;
-		} catch (error: any) {
-			this.logger.error('Failed to update admin!', error);
-
-			throw new InternalServerErrorException('Failed to update admin!');
+			throw new NotFoundException(`Admin with username ${username} not found!`);
 		}
+
+		this.logger.debug('Admin found', existingAdmin);
+
+		this.logger.debug('Updating admin');
+
+		existingAdmin.set({
+			...existingAdmin,
+			fullName: updateAdminDto.fullName || existingAdmin.fullName,
+			hashedPassword: updateAdminDto.password
+				? await hash(updateAdminDto.password)
+				: existingAdmin.hashedPassword,
+		});
+
+		const updatedAdmin = await existingAdmin.save();
+
+		this.logger.debug('Admin updated', updatedAdmin);
+		this.logger.log('Admin updated');
+
+		const adminObject = updatedAdmin.toObject();
+		delete adminObject.hashedPassword;
+
+		return adminObject;
 	}
 }
