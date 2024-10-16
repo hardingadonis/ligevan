@@ -5,6 +5,7 @@ import {
 	HttpStatus,
 	Post,
 	Request,
+	Response,
 	UseGuards,
 } from '@nestjs/common';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
@@ -53,5 +54,12 @@ export class AuthController {
 
 	@UseGuards(StudentAuthGuard)
 	@Get('student/callback')
-	async studentCallback() {}
+	async studentCallback(@Request() req, @Response() res) {
+		const token = await this.authService.login({
+			sub: req.user.email,
+			role: req.user.role,
+		});
+
+		res.redirect(`${process.env.FRONTEND_URL}/student/login?token=${token}`);
+	}
 }

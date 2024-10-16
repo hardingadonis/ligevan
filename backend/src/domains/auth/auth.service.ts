@@ -58,11 +58,13 @@ export class AuthService {
 			const student = await this.studentsService.getByEmail(studentUser.email);
 
 			if (student) {
-				return student;
+				return { email: student.email, role: Role.STUDENT };
 			}
 		} catch (error: any) {
 			if (error instanceof NotFoundException) {
-				return await this.studentsService.create(studentUser);
+				const student = await this.studentsService.create(studentUser);
+
+				return { email: student.email, role: Role.STUDENT };
 			}
 
 			throw error;
