@@ -1,4 +1,4 @@
-import { Teacher } from "@/schemas/teacher.schema";
+import { Teacher } from '@/schemas/teacher.schema';
 
 export interface Salary {
 	_id: string;
@@ -7,5 +7,5 @@ export interface Salary {
 	end: Date;
 	finalSalary: number;
 	createdAt?: Date;
-  updatedAt?: Date;
+	updatedAt?: Date;
 }

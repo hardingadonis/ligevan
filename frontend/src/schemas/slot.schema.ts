@@ -1,5 +1,5 @@
-import { Class } from "@/schemas/class.schema";
-import { Attendance } from "@/schemas/attendance.schema";
+import { Attendance } from '@/schemas/attendance.schema';
+import { Class } from '@/schemas/class.schema';
 
 export interface Slot {
 	_id: string;
@@ -10,5 +10,5 @@ export interface Slot {
 	attendances?: Attendance[];
 	isDone: boolean;
 	createdAt?: Date;
-  updatedAt?: Date;
+	updatedAt?: Date;
 }

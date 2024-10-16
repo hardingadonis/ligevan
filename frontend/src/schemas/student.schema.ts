@@ -1,5 +1,5 @@
-import { Class } from "@/schemas/class.schema";
-import { Payment } from "@/schemas/payment.schema";
+import { Class } from '@/schemas/class.schema';
+import { Payment } from '@/schemas/payment.schema';
 
 export interface Student {
 	_id: string;
@@ -14,5 +14,5 @@ export interface Student {
 	payments?: Payment[];
 	isDeleted?: boolean;
 	createdAt?: Date;
-  updatedAt?: Date;
+	updatedAt?: Date;
 }

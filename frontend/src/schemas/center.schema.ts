@@ -1,10 +1,10 @@
-import { Course } from '@/schemas/course.schema';
-import { Voucher } from '@/schemas/voucher.schema';
-import { Teacher } from '@/schemas/teacher.schema';
 import { Class } from '@/schemas/class.schema';
+import { Course } from '@/schemas/course.schema';
+import { Teacher } from '@/schemas/teacher.schema';
+import { Voucher } from '@/schemas/voucher.schema';
 
 export interface Center {
-  _id: string;
+	_id: string;
 	name: string;
 	address: string;
 	phone: string;
@@ -15,5 +15,5 @@ export interface Center {
 	classes?: Class[];
 	isDeleted?: boolean;
 	createdAt?: Date;
-  updatedAt?: Date;
+	updatedAt?: Date;
 }
