@@ -8,6 +8,7 @@ export interface Student {
 	hashedPassword: string;
 	phone: string;
 	address: string;
+	avatar: string;
 	gender: 'male' | 'female';
 	dob: Date;
 	classes?: Class[];
