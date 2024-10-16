@@ -1,7 +1,6 @@
 import axios from 'axios';
-import { Center } from '@/models/center';
-
-const apiBaseUrl = import.meta.env.VITE_BACKEND_URL;
+import { Center } from '@/schemas/center.schema';
+import { apiBaseUrl } from '@/utils/apiBase';
 
 export const getAllCenter = async (): Promise<Center[]> => {
   try {

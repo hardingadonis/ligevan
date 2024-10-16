@@ -3,7 +3,7 @@ import { Layout, Button, Space, Row, Col, Grid, FloatButton } from 'antd';
 import HeaderStudentPage from '@/components/student/Header';
 import DropdownCenter from '@/components/student/DropdownCenter';
 import Footer from '@/components/commons/Footer';
-import { Center } from '@/models/center';
+import { Center } from '@/schemas/center.schema';
 
 const { Content } = Layout;
 const { useBreakpoint } = Grid;
