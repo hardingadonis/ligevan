@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { Course } from '@/schemas/course.schema';
-
-const apiBaseUrl = import.meta.env.VITE_BACKEND_URL;
+import { apiBaseUrl } from '@/utils/apiBase';
 
 export const getAllCourse = async (): Promise<Course[]> => {
   try {
