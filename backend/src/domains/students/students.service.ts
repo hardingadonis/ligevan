@@ -13,7 +13,6 @@ import {
 	UpdateStudentDto,
 } from '@/domains/students/dto/student.dto';
 import { Student } from '@/schemas/student.schema';
-import { hash } from '@/utils/hash.util';
 
 @Injectable()
 export class StudentsService {
@@ -39,7 +38,6 @@ export class StudentsService {
 
 			const createStudent = new this.studentModel({
 				...createStudentDto,
-				hashedPassword: await hash(createStudentDto.password),
 			});
 
 			this.logger.debug('Creating new student');
@@ -48,10 +46,7 @@ export class StudentsService {
 
 			this.logger.log('Student created successfully!');
 
-			const studentObject = createStudent.toObject();
-			delete studentObject.hashedPassword;
-
-			return studentObject;
+			return createStudent;
 		} catch (error: any) {
 			this.logger.error('Failed to create student!', error);
 
@@ -64,7 +59,6 @@ export class StudentsService {
 			const students = await this.studentModel
 				.find({ isDeleted: false })
 				.select('-__v')
-				.select('-hashedPassword')
 				.populate({
 					select: '-__v',
 					path: 'classes',
@@ -91,21 +85,6 @@ export class StudentsService {
 	}
 
 	async getById(id: string) {
-		try {
-			const student = await this.getByIdWithPassword(id);
-
-			const studentObject = student.toObject();
-			delete studentObject.hashedPassword;
-
-			return studentObject;
-		} catch (error: any) {
-			this.logger.error('Failed to get student by id!', error);
-
-			throw new InternalServerErrorException('Failed to get student by id!');
-		}
-	}
-
-	async getByIdWithPassword(id: string) {
 		try {
 			const student = await this.studentModel
 				.findOne({ _id: id, isDeleted: false })
@@ -134,7 +113,7 @@ export class StudentsService {
 		try {
 			const existingStudent = await this.studentModel
 				.findOne({ _id: id, isDeleted: false })
-				.select('-__v -hashedPassword')
+				.select('-__v')
 				.exec();
 
 			if (!existingStudent) {
@@ -154,10 +133,7 @@ export class StudentsService {
 			this.logger.debug('Student updated', updatedStudent);
 			this.logger.log('Student updated');
 
-			const studentObject = updatedStudent.toObject();
-			delete studentObject.hashedPassword;
-
-			return studentObject;
+			return updatedStudent;
 		} catch (error: any) {
 			this.logger.error('Failed to update student!', error);
 
@@ -169,7 +145,7 @@ export class StudentsService {
 		try {
 			const existingStudent = await this.studentModel
 				.findOne({ _id: id, isDeleted: false })
-				.select('-__v, -hashedPassword')
+				.select('-__v')
 				.exec();
 
 			if (!existingStudent) {

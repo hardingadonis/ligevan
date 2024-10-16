@@ -9,9 +9,6 @@ export class Student {
 	@Prop({ required: true, unique: true })
 	email: string;
 
-	@Prop({ required: true })
-	hashedPassword: string;
-
 	@Prop({ required: true, unique: true })
 	phone: string;
 

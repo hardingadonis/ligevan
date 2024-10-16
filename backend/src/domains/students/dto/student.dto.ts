@@ -20,11 +20,6 @@ export class CreateStudentDto {
 	@IsNotEmpty()
 	email: string;
 
-	@ApiProperty({ description: 'Student password' })
-	@IsString()
-	@IsNotEmpty()
-	password: string;
-
 	@ApiProperty({ description: 'Student phone' })
 	@IsPhoneNumber('VN')
 	@IsNotEmpty()
@@ -59,9 +54,6 @@ export class CreateStudentDto {
 export class UpdateStudentDto {
 	@ApiPropertyOptional({ description: 'Student full name' })
 	fullName?: string;
-
-	@ApiPropertyOptional({ description: 'Student password' })
-	password?: string;
 
 	@ApiPropertyOptional({ description: 'Student phone' })
 	phone?: string;
