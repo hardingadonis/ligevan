@@ -22,6 +22,7 @@ Create a `.env` file there and add the following environment variables:
 | 6   | GOOGLE_OAUTH2_CLIENT_CALLBACK | The Google client callback URL                      | http://localhost:3000/api/auth/student/callback |
 |     |
 | 7   | ALLOWED_ORIGINS               | The allowed origins for CORS (separated by commas ) | http://localhost:3000,https://localhost:3001    |
+| 8   | FRONTEND_URL                  | The URL to the frontend                             | http://localhost:5173                           |
 
 ## Development
 

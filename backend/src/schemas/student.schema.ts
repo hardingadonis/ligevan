@@ -9,14 +9,14 @@ export class Student {
 	@Prop({ required: true, unique: true })
 	email: string;
 
-	@Prop({ required: true })
-	hashedPassword: string;
-
 	@Prop({ required: true, unique: true })
 	phone: string;
 
 	@Prop({ required: true })
 	address: string;
+
+	@Prop({ required: true, default: 'https://student_avatar.png' })
+	avatar: string;
 
 	@Prop({ required: true })
 	gender: 'male' | 'female';
