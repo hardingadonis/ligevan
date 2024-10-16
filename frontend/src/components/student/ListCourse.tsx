@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col, Spin, Alert, Empty, Input, Pagination } from 'antd';
 import { getAllCourse } from '@/services/getAllCourse';
-import { Course } from '@/models/course';
+import { Course } from '@/schemas/course.schema';
 import CardCourse from '@/components/student/CardCourse';
-import { Center } from '@/models/center';
+import { Center } from '@/schemas/center.schema';
 import '@/assets/styles/listCourse.css';
 
 const { Search } = Input;

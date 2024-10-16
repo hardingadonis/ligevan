@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card } from 'antd';
-import { Course } from '@/models/course';
+import { Course } from '@/schemas/course.schema';
 
 const { Meta } = Card;
 

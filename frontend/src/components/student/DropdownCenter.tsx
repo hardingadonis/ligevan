@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Dropdown, Button, Space, Spin } from 'antd';
 import { DownOutlined, EnvironmentOutlined } from '@ant-design/icons';
 import { getAllCenter } from '@/services/getAllCenter';
-import { Center } from '@/models/center';
+import { Center } from '@/schemas/center.schema';
 
 interface DropdownCenterProps {
   onSelectCenter: (center: Center | null) => void;

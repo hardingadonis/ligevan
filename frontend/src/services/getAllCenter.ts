@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Center } from '@/models/center';
+import { Center } from '@/schemas/center.schema';
 
 const apiBaseUrl = import.meta.env.VITE_BACKEND_URL;
 
