@@ -11,6 +11,7 @@ import { AdminStrategy } from '@/domains/auth/strategies/admin.strategy';
 import { JWTStrategy } from '@/domains/auth/strategies/jwt.strategy';
 import { StudentStrategy } from '@/domains/auth/strategies/student.strategy';
 import { TeacherStrategy } from '@/domains/auth/strategies/teacher.strategy';
+import { StudentsModule } from '@/domains/students/students.module';
 import { TeachersModule } from '@/domains/teachers/teachers.module';
 
 @Module({
@@ -19,6 +20,7 @@ import { TeachersModule } from '@/domains/teachers/teachers.module';
 		ConfigModule.forFeature(googleOauth2Config),
 		JwtModule.registerAsync(jwtConfig.asProvider()),
 		AdminsModule,
+		StudentsModule,
 		TeachersModule,
 	],
 	controllers: [AuthController],

@@ -7,6 +7,8 @@ import { JwtService } from '@nestjs/jwt';
 
 import { AdminsService } from '@/domains/admins/admins.service';
 import { Role } from '@/domains/auth/enums/role.enum';
+import { CreateStudentDto } from '@/domains/students/dto/student.dto';
+import { StudentsService } from '@/domains/students/students.service';
 import { TeachersService } from '@/domains/teachers/teachers.service';
 import { verify } from '@/utils/hash.util';
 
@@ -14,6 +16,7 @@ import { verify } from '@/utils/hash.util';
 export class AuthService {
 	constructor(
 		private readonly adminsService: AdminsService,
+		private readonly studentsService: StudentsService,
 		private readonly teachersService: TeachersService,
 		private readonly jwtService: JwtService,
 	) {}
@@ -48,6 +51,24 @@ export class AuthService {
 		}
 
 		return { email: teacher.email, role: Role.TEACHER };
+	}
+
+	async validateStudent(studentUser: CreateStudentDto) {
+		try {
+			const student = await this.studentsService.getByEmail(studentUser.email);
+
+			if (student) {
+				return student;
+			}
+		} catch (error: any) {
+			if (error instanceof NotFoundException) {
+				return await this.studentsService.create(studentUser);
+			}
+
+			throw error;
+		}
+
+		return null;
 	}
 
 	async validateJWTUser(user: unknown) {
