@@ -1,5 +1,6 @@
 import {
 	Controller,
+	Get,
 	HttpCode,
 	HttpStatus,
 	Post,
@@ -12,6 +13,7 @@ import { AuthService } from '@/domains/auth/auth.service';
 import { AdminLoginDto } from '@/domains/auth/dto/auth.admin.dto';
 import { TeacherLoginDto } from '@/domains/auth/dto/auth.teacher.dto';
 import { AdminAuthGuard } from '@/domains/auth/guards/admin.guard';
+import { StudentAuthGuard } from '@/domains/auth/guards/student.guard';
 import { TeacherAuthGuard } from '@/domains/auth/guards/teacher.guard';
 
 @ApiTags('Auth')
@@ -44,4 +46,12 @@ export class AuthController {
 
 		return { access_token: token };
 	}
+
+	@UseGuards(StudentAuthGuard)
+	@Get('student/login')
+	async studentLogin() {}
+
+	@UseGuards(StudentAuthGuard)
+	@Get('student/callback')
+	async studentCallback() {}
 }

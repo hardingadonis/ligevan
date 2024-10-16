@@ -9,6 +9,7 @@ import googleOauth2Config from '@/domains/auth/config/google-oauth2.config';
 import jwtConfig from '@/domains/auth/config/jwt.config';
 import { AdminStrategy } from '@/domains/auth/strategies/admin.strategy';
 import { JWTStrategy } from '@/domains/auth/strategies/jwt.strategy';
+import { StudentStrategy } from '@/domains/auth/strategies/student.strategy';
 import { TeacherStrategy } from '@/domains/auth/strategies/teacher.strategy';
 import { TeachersModule } from '@/domains/teachers/teachers.module';
 
@@ -21,6 +22,12 @@ import { TeachersModule } from '@/domains/teachers/teachers.module';
 		TeachersModule,
 	],
 	controllers: [AuthController],
-	providers: [AuthService, AdminStrategy, JWTStrategy, TeacherStrategy],
+	providers: [
+		AuthService,
+		AdminStrategy,
+		JWTStrategy,
+		StudentStrategy,
+		TeacherStrategy,
+	],
 })
 export class AuthModule {}
