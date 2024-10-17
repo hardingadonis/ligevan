@@ -15,11 +15,17 @@ export class Center {
 	@Prop({ required: true, unique: true })
 	email: string;
 
-	@Prop({ type: Types.ObjectId, ref: 'Course', required: false })
+	@Prop({ type: Types.Array<Types.ObjectId>, ref: 'Course', required: false })
 	courses: Types.ObjectId[];
 
-	@Prop({ type: Types.ObjectId, ref: 'Voucher', required: false })
+	@Prop({ type: Types.Array<Types.ObjectId>, ref: 'Voucher', required: false })
 	vouchers: Types.ObjectId[];
+
+	@Prop({ type: Types.Array<Types.ObjectId>, ref: 'Teacher', required: false })
+	teachers: Types.ObjectId[];
+
+	@Prop({ type: Types.Array<Types.ObjectId>, ref: 'Class', required: false })
+	classes: Types.ObjectId[];
 
 	@Prop({ default: false })
 	isDeleted: boolean;

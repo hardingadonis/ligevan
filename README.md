@@ -35,6 +35,10 @@
   yarn
   ```
 
+## Usage
+
+- See [USAGE.md](docs/USAGE.md) for more informations.
+
 ## Source code
 
 | #   | Directory            | Description                            | Technologies |
@@ -46,3 +50,4 @@
 ## Licenses
 
 - [ligevan](https://github.com/hardingadonis/ligevan) is licensed under the [GPL-3.0 license](LICENSE)
+- [ligevan's icon](images/icon.svg) is licensed under the [CC Attribution License](https://www.svgrepo.com/svg/423844/whale-origami-paper)

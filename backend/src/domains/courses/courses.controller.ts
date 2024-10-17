@@ -30,9 +30,9 @@ export class CoursesController {
 		return await this.coursesService.getAll();
 	}
 
-	@Get(':code')
-	async getCourseByCode(@Param('code') code: string) {
-		return await this.coursesService.getCourseByCode(code);
+	@Get(':id')
+	async getById(@Param('id') id: string) {
+		return await this.coursesService.getById(id);
 	}
 
 	@Put(':id')

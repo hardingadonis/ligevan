@@ -12,11 +12,17 @@
 
 Create a `.env` file there and add the following environment variables:
 
-| #   | Variable Name | Description                     | Example                 |
-| --- | ------------- | ------------------------------- | ----------------------- |
-| 1   | DATABASE_URL  | The URL to the MongoDB database | localhost:27017/ligevan |
-| 2   | JWT_SECRET    | The secret key for JWT          | secret-key              |
-| 3   | JWT_EXPIRES   | The expiration time for JWT     | 1h                      |
+| #   | Variable Name                 | Description                                         | Example                                         |
+| --- | ----------------------------- | --------------------------------------------------- | ----------------------------------------------- |
+| 1   | DATABASE_URL                  | The URL to the MongoDB database                     | localhost:27017/ligevan                         |
+| 2   | JWT_SECRET                    | The secret key for JWT                              | secret-key                                      |
+| 3   | JWT_EXPIRES                   | The expiration time for JWT                         | 1h                                              |
+| 4   | GOOGLE_OAUTH2_CLIENT_ID       | The Google client ID                                | abcxyz                                          |
+| 5   | GOOGLE_OAUTH2_CLIENT_SECRET   | The Google client secret                            | secret-key                                      |
+| 6   | GOOGLE_OAUTH2_CLIENT_CALLBACK | The Google client callback URL                      | http://localhost:3000/api/auth/student/callback |
+|     |
+| 7   | ALLOWED_ORIGINS               | The allowed origins for CORS (separated by commas ) | http://localhost:3000,https://localhost:3001    |
+| 8   | FRONTEND_URL                  | The URL to the frontend                             | http://localhost:5173                           |
 
 ## Development
 
@@ -33,3 +39,21 @@ Create a `.env` file there and add the following environment variables:
   ```
 
 - Step 3: Open the browser and navigate to [http://localhost:3000](http://localhost:3000)
+
+## Docker
+
+- Step 1: Create a `.env` file and add the environment variables
+
+- Step 2: Pull the image from ghcr.io
+
+  ```bash
+  docker pull ghcr.io/hardingadonis/ligevan-backend:latest
+  ```
+
+- Step 3: Run the image
+
+  ```bash
+  docker run -d -p 3000:3000 --env-file .env ghcr.io/hardingadonis/ligevan-backend:latest
+  ```
+
+- Step 4: Open the browser and navigate to [http://localhost:3000](http://localhost:3000)

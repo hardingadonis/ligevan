@@ -1,7 +1,6 @@
 import {
 	ConflictException,
 	Injectable,
-	InternalServerErrorException,
 	Logger,
 	NotFoundException,
 } from '@nestjs/common';
@@ -23,59 +22,52 @@ export class VouchersService {
 	) {}
 
 	async create(createVoucherDto: CreateVoucherDto): Promise<Voucher> {
-		try {
-			const checkVoucherExist = await this.voucherModel
-				.findOne({ code: createVoucherDto.code })
-				.exec();
+		const existingVoucher = await this.voucherModel
+			.findOne({ code: createVoucherDto.code })
+			.exec();
 
-			this.logger.debug('Voucher found', checkVoucherExist);
+		if (existingVoucher) {
+			this.logger.error('Voucher already exists!');
 
-			if (checkVoucherExist) {
-				this.logger.error('Voucher code already exists!');
-
-				throw new ConflictException('Voucher code already exists!');
-			}
-
-			const newVoucher = new this.voucherModel(createVoucherDto);
-
-			this.logger.debug('Created new voucher', newVoucher);
-
-			return await newVoucher.save();
-		} catch (error: any) {
-			this.logger.error('Failed to create voucher!', error);
-
-			throw new InternalServerErrorException(
-				'Failed to create voucher!',
-				error,
-			);
+			throw new ConflictException('Voucher already exists!');
 		}
+
+		const newVoucher = new this.voucherModel(createVoucherDto);
+
+		this.logger.debug('Creating new voucher');
+
+		await newVoucher.save();
+
+		this.logger.debug('Voucher created', newVoucher);
+		this.logger.log('Voucher created');
+
+		return newVoucher;
 	}
 
 	async getAll(): Promise<Voucher[]> {
-		try {
-			this.logger.log('Retrieving all vouchers');
-
-			return await this.voucherModel
-				.find({ isDeleted: false })
-				.select('-__v')
-				.exec();
-		} catch (error: any) {
-			this.logger.error('Failed to retrieve vouchers', error);
-
-			throw new InternalServerErrorException(
-				'Failed to retrieve vouchers',
-				error,
-			);
-		}
-	}
-
-	async getVoucherByCode(code: string): Promise<Voucher> {
-		const voucher = await this.voucherModel
-			.findOne({ code: code, isDeleted: false })
+		const vouchers = await this.voucherModel
+			.find({ isDeleted: false })
 			.select('-__v')
 			.exec();
 
-		this.logger.debug('Retrieved voucher', voucher);
+		if (!vouchers) {
+			this.logger.error('Vouchers not found!');
+
+			throw new NotFoundException('Vouchers not found!');
+		}
+
+		this.logger.debug('Found vouchers', vouchers);
+
+		this.logger.log('Retrieved vouchers');
+
+		return vouchers;
+	}
+
+	async getById(id: string): Promise<Voucher> {
+		const voucher = await this.voucherModel
+			.findOne({ _id: id, isDeleted: false })
+			.select('-__v')
+			.exec();
 
 		if (!voucher) {
 			this.logger.error('Voucher not found');
@@ -83,7 +75,9 @@ export class VouchersService {
 			throw new NotFoundException('Voucher not found');
 		}
 
-		this.logger.log('Voucher found');
+		this.logger.debug('Found voucher', voucher);
+
+		this.logger.log('Retrieved voucher');
 
 		return voucher;
 	}
@@ -92,59 +86,53 @@ export class VouchersService {
 		id: string,
 		updateVoucherDto: UpdateVoucherDto,
 	): Promise<Voucher> {
-		try {
-			const checkVoucherExist = await this.voucherModel
-				.findOne({ _id: id, isDeleted: false })
-				.exec();
+		const existingVoucher = await this.voucherModel
+			.findOne({ _id: id, isDeleted: false })
+			.exec();
 
-			this.logger.debug('Voucher found', checkVoucherExist);
+		if (!existingVoucher) {
+			this.logger.error('Voucher not found');
 
-			if (!checkVoucherExist) {
-				this.logger.error('Voucher not found');
-
-				throw new NotFoundException('Voucher not found');
-			}
-
-			this.logger.log('Updating voucher');
-
-			return await this.voucherModel
-				.findByIdAndUpdate(id, updateVoucherDto, { new: true, isDelete: false })
-				.select('-__v')
-				.exec();
-		} catch (error: any) {
-			this.logger.error('Failed to update voucher', error);
-
-			throw new InternalServerErrorException('Failed to update voucher', error);
+			throw new NotFoundException('Voucher not found');
 		}
+
+		this.logger.debug('Voucher found', existingVoucher);
+
+		this.logger.log('Updating voucher');
+
+		existingVoucher.set(updateVoucherDto);
+
+		const updatedVoucher = await existingVoucher.save();
+
+		this.logger.debug('Voucher updated', updatedVoucher);
+		this.logger.log('Voucher updated');
+
+		return updatedVoucher;
 	}
 
 	async delete(id: string) {
-		try {
-			const voucher = await this.voucherModel
-				.findOneAndUpdate(
-					{ _id: id, isDeleted: false },
-					{ isDeleted: true },
-					{ new: true },
-				)
-				.select('-__v')
-				.exec();
+		const existingVoucher = await this.voucherModel
+			.findOne({ _id: id, isDeleted: false })
+			.select('-__v')
+			.exec();
 
-			this.logger.debug('Deleted center', voucher);
+		if (!existingVoucher) {
+			this.logger.error('Voucher not found!');
 
-			if (!voucher) {
-				this.logger.error('Center not found!');
-
-				throw new NotFoundException('Center not found!');
-			}
-
-			return {
-				statusCode: 200,
-				message: 'Center deleted successfully',
-			};
-		} catch (error: any) {
-			this.logger.error('Failed to delete voucher', error);
-
-			throw new InternalServerErrorException('Failed to delete voucher', error);
+			throw new NotFoundException('Voucher not found!');
 		}
+
+		this.logger.debug('Deleting Voucher');
+
+		existingVoucher.set({ isDeleted: true });
+
+		await existingVoucher.save();
+
+		this.logger.log('Voucher deleted');
+
+		return {
+			statusCode: 200,
+			message: 'Voucher deleted successfully',
+		};
 	}
 }

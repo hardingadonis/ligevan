@@ -17,25 +17,22 @@ export class CreateVoucherDto {
 	description?: string;
 
 	@ApiProperty({ description: 'Monetary discount amount of the voucher (%)' })
-	@IsNotEmpty()
 	@IsNumber()
+	@IsNotEmpty()
 	value: number;
 
 	@ApiProperty({ description: 'Voucher start date' })
-	@IsNotEmpty()
 	@IsDateString()
+	@IsNotEmpty()
 	start: Date;
 
 	@ApiProperty({ description: 'Voucher end date' })
-	@IsNotEmpty()
 	@IsDateString()
+	@IsNotEmpty()
 	end: Date;
 }
 
 export class UpdateVoucherDto {
-	@ApiPropertyOptional({ description: 'Voucher code' })
-	code?: string;
-
 	@ApiPropertyOptional({ description: 'Voucher title' })
 	title?: string;
 

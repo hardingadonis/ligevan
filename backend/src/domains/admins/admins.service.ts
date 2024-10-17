@@ -19,34 +19,6 @@ export class AdminsService {
 		@InjectModel(Admin.name) private readonly adminModel: Model<Admin>,
 	) {}
 
-	async getByUsername(username: string) {
-		const admin = await this.getByUsernameWithPassword(username);
-
-		const adminObject = admin.toObject();
-		delete adminObject.hashedPassword;
-
-		return adminObject;
-	}
-
-	async getByUsernameWithPassword(username: string) {
-		const admin = await this.adminModel
-			.findOne({ username: username })
-			.select('-__v')
-			.exec();
-
-		this.logger.debug(`Admin with username ${username} found: ${admin}`);
-
-		if (!admin) {
-			this.logger.error(`Admin with username ${username} not found!`);
-
-			throw new NotFoundException(`Admin with username ${username} not found!`);
-		}
-
-		this.logger.log('Retrieved admin');
-
-		return admin;
-	}
-
 	async create(createAdminDto: CreateAdminDto) {
 		const existingAdmin = await this.adminModel
 			.findOne({ username: createAdminDto.username })
@@ -79,6 +51,34 @@ export class AdminsService {
 		return adminObject;
 	}
 
+	async getByUsername(username: string) {
+		const admin = await this.getByUsernameWithPassword(username);
+
+		const adminObject = admin.toObject();
+		delete adminObject.hashedPassword;
+
+		return adminObject;
+	}
+
+	async getByUsernameWithPassword(username: string) {
+		const admin = await this.adminModel
+			.findOne({ username: username })
+			.select('-__v')
+			.exec();
+
+		if (!admin) {
+			this.logger.error(`Admin with username ${username} not found!`);
+
+			throw new NotFoundException(`Admin with username ${username} not found!`);
+		}
+
+		this.logger.debug(`Admin with username ${username} found: ${admin}`);
+
+		this.logger.log('Retrieved admin');
+
+		return admin;
+	}
+
 	async update(username: string, updateAdminDto: UpdateAdminDto) {
 		const existingAdmin = await this.adminModel
 			.findOne({ username: username })
@@ -89,6 +89,8 @@ export class AdminsService {
 
 			throw new NotFoundException(`Admin with username ${username} not found!`);
 		}
+
+		this.logger.debug('Admin found', existingAdmin);
 
 		this.logger.debug('Updating admin');
 
@@ -105,6 +107,9 @@ export class AdminsService {
 		this.logger.debug('Admin updated', updatedAdmin);
 		this.logger.log('Admin updated');
 
-		return existingAdmin;
+		const adminObject = updatedAdmin.toObject();
+		delete adminObject.hashedPassword;
+
+		return adminObject;
 	}
 }

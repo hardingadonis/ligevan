@@ -1,0 +1,14 @@
+import axios from 'axios';
+
+import { Student } from '@/schemas/student.schema';
+import { apiBaseUrl } from '@/utils/apiBase';
+
+export const getAllStudent = async (): Promise<Student[]> => {
+	try {
+		const response = await axios.get(`${apiBaseUrl}/api/students`);
+		return response.data;
+	} catch (error) {
+		console.error('Error fetching students:', error);
+		throw error;
+	}
+};
