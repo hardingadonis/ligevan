@@ -44,9 +44,8 @@ export class ClassesService {
 		return newClass;
 	}
 
-	async getAll() {
-		const classes = await this.classModel
-			.find({ isDeleted: false })
+	private async populateClass(query) {
+		return query
 			.populate({
 				select: '-__v',
 				path: 'center',
@@ -72,8 +71,13 @@ export class ClassesService {
 				path: 'slots',
 				model: 'Slot',
 			})
-			.select('-__v')
-			.exec();
+			.select('-__v');
+	}
+
+	async getAll() {
+		const classes = await this.populateClass(
+			this.classModel.find({ isDeleted: false }),
+		);
 
 		if (!classes) {
 			this.logger.error('Classes not found!');
@@ -89,35 +93,9 @@ export class ClassesService {
 	}
 
 	async getById(id: string) {
-		const getClass = await this.classModel
-			.findOne({ _id: id, isDeleted: false })
-			.populate({
-				select: '-__v',
-				path: 'center',
-				model: 'Center',
-			})
-			.populate({
-				select: '-__v',
-				path: 'course',
-				model: 'Course',
-			})
-			.populate({
-				select: '-__v -hashedPassword',
-				path: 'teacher',
-				model: 'Teacher',
-			})
-			.populate({
-				select: '-__v -hashedPassword',
-				path: 'students',
-				model: 'Student',
-			})
-			.populate({
-				select: '-__v',
-				path: 'slots',
-				model: 'Slot',
-			})
-			.select('-__v')
-			.exec();
+		const getClass = await this.populateClass(
+			this.classModel.findOne({ _id: id, isDeleted: false }),
+		);
 
 		if (!getClass) {
 			this.logger.error('Class not found!');
