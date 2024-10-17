@@ -51,6 +51,7 @@ export class SlotsService {
 			.find()
 			.select('-__v')
 			.populate({ select: '-__v', path: 'class', model: 'Class' })
+			.populate({ select: '-__v', path: 'attendances', model: 'Attendance' })
 			.exec();
 
 		if (!slots) {
@@ -71,6 +72,7 @@ export class SlotsService {
 			.findById(id)
 			.select('-__v')
 			.populate({ select: '-__v', path: 'class', model: 'Class' })
+			.populate({ select: '-__v', path: 'attendances', model: 'Attendance' })
 			.exec();
 
 		if (!slot) {
