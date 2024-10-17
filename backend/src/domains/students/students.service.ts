@@ -56,6 +56,11 @@ export class StudentsService {
 				path: 'classes',
 				model: 'Class',
 			})
+			.populate({
+				select: '-__v',
+				path: 'payments',
+				model: 'Payment',
+			})
 			.exec();
 
 		if (!students) {
