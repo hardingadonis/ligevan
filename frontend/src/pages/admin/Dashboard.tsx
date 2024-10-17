@@ -56,12 +56,9 @@ const Dashboard: React.FC = () => {
         colorField: 'type',
         radius: 0.9,
         autoFit: true,
-        label: {
-            type: 'outer',
-            content: '{name} ({percentage})',
-        },
-        interactions: [{ type: 'element-active' }],
+        interactions: [{ type: 'element-active' }],		
         legend: { position: 'bottom' },
+				tooltip: false,
     };
 
     const columnConfig = {
@@ -70,10 +67,6 @@ const Dashboard: React.FC = () => {
         yField: 'value',
         autoFit: true,
         width: 200, 
-        label: {
-            position: 'middle',
-            style: { fill: '#FFFFFF', opacity: 0.6 },
-        },
         meta: {
             type: { alias: 'Loại' },
             value: { alias: 'Số Lượng' },
