@@ -1,0 +1,150 @@
+[{
+  "_id": {
+    "$oid": "67113388e4e33964b8bd8bb0"
+  },
+  "student": "67113295e4e33964b8bd8ba3",
+  "slot": "6711218835be1dd9199b9d9d",
+  "status": "not-yet",
+  "createdAt": {
+    "$date": "2024-10-17T15:55:52.115Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-17T15:55:52.115Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67113484e4e33964b8bd8bc5"
+  },
+  "student": "67113295e4e33964b8bd8ba3",
+  "slot": "671121c335be1dd9199b9da0",
+  "status": "not-yet",
+  "createdAt": {
+    "$date": "2024-10-17T16:00:04.109Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-17T16:00:04.109Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6711348be4e33964b8bd8bc8"
+  },
+  "student": "67113295e4e33964b8bd8ba3",
+  "slot": "671121f435be1dd9199b9da3",
+  "status": "not-yet",
+  "createdAt": {
+    "$date": "2024-10-17T16:00:11.808Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-17T16:00:11.808Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67113495e4e33964b8bd8bcb"
+  },
+  "student": "67113295e4e33964b8bd8ba3",
+  "slot": "6711222835be1dd9199b9da6",
+  "status": "not-yet",
+  "createdAt": {
+    "$date": "2024-10-17T16:00:21.901Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-17T16:00:21.901Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6711349fe4e33964b8bd8bce"
+  },
+  "student": "67113295e4e33964b8bd8ba3",
+  "slot": "6711224c35be1dd9199b9da9",
+  "status": "not-yet",
+  "createdAt": {
+    "$date": "2024-10-17T16:00:31.708Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-17T16:00:31.708Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67113996172696da286ee69a"
+  },
+  "student": "671137df172696da286ee64d",
+  "slot": "6711229535be1dd9199b9dac",
+  "status": "not-yet",
+  "createdAt": {
+    "$date": "2024-10-17T16:21:42.338Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-17T16:21:42.338Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6711399f172696da286ee69d"
+  },
+  "student": "671137df172696da286ee64d",
+  "slot": "671122aa35be1dd9199b9daf",
+  "status": "not-yet",
+  "createdAt": {
+    "$date": "2024-10-17T16:21:51.806Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-17T16:21:51.806Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "671139a7172696da286ee6a0"
+  },
+  "student": "671137df172696da286ee64d",
+  "slot": "671122c835be1dd9199b9db2",
+  "status": "not-yet",
+  "createdAt": {
+    "$date": "2024-10-17T16:21:59.843Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-17T16:21:59.843Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "671139af172696da286ee6a3"
+  },
+  "student": "671137df172696da286ee64d",
+  "slot": "671122ea35be1dd9199b9db5",
+  "status": "not-yet",
+  "createdAt": {
+    "$date": "2024-10-17T16:22:07.586Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-17T16:22:07.586Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "671139b7172696da286ee6a6"
+  },
+  "student": "671137df172696da286ee64d",
+  "slot": "6711230135be1dd9199b9db8",
+  "status": "not-yet",
+  "createdAt": {
+    "$date": "2024-10-17T16:22:15.517Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-17T16:22:15.517Z"
+  },
+  "__v": 0
+}]

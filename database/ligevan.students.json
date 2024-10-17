@@ -1,0 +1,52 @@
+[{
+  "_id": {
+    "$oid": "67113295e4e33964b8bd8ba3"
+  },
+  "fullName": "Dinh Quoc Chuong (K17 QN)",
+  "email": "chuongdqqe170097@fpt.edu.vn",
+  "phone": "0845002665",
+  "address": "Quy Nhơn, Bình Định",
+  "avatar": "https://lh3.googleusercontent.com/a/ACg8ocK3Gwcxyc7ZJoMiGKAFlNCrVjk8MenF3kbzTGhZg88tnaAzB8lC=s96-c",
+  "gender": "male",
+  "dob": {
+    "$date": "2002-10-17T16:03:33.359Z"
+  },
+  "classes": [
+    "6711208035be1dd9199b9d93"
+  ],
+  "payments": [
+    "6711340be4e33964b8bd8bb6"
+  ],
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-10-17T15:51:49.605Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-17T16:05:24.581Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "671137df172696da286ee64d"
+  },
+  "fullName": "Le Minh Vuong (K17 QN)",
+  "email": "vuonglmqe170148@fpt.edu.vn",
+  "phone": "0000000000",
+  "address": "Viet Nam",
+  "avatar": "https://lh3.googleusercontent.com/a/ACg8ocI22IBikpHxmWMM6pT0rLxKarIJsbcDCpnE13xAi-ABpHGmZeAO=s96-c",
+  "gender": "male",
+  "dob": {
+    "$date": "2024-10-17T16:14:23.895Z"
+  },
+  "classes": [],
+  "payments": [],
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-10-17T16:14:23.916Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-17T16:14:23.916Z"
+  },
+  "__v": 0
+}]

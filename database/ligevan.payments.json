@@ -1,0 +1,38 @@
+[{
+  "_id": {
+    "$oid": "6711340be4e33964b8bd8bb6"
+  },
+  "student": "67113295e4e33964b8bd8ba3",
+  "course": "671115ee30c0819ba109d543",
+  "class": "6711208035be1dd9199b9d93",
+  "voucher": "671114c530c0819ba109d53d",
+  "originPrice": 5000000,
+  "finalPrice": 2500000,
+  "method": "momo",
+  "createdAt": {
+    "$date": "2024-10-17T15:58:03.548Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-17T15:58:03.548Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67113957172696da286ee697"
+  },
+  "student": "671137df172696da286ee64d",
+  "course": "6711163130c0819ba109d548",
+  "class": "671120b735be1dd9199b9d96",
+  "voucher": "6711152930c0819ba109d540",
+  "originPrice": 5500000,
+  "finalPrice": 3850000,
+  "method": "vn-pay",
+  "createdAt": {
+    "$date": "2024-10-17T16:20:39.792Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-17T16:20:39.792Z"
+  },
+  "__v": 0
+}]
