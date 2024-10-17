@@ -48,22 +48,22 @@ export class ClassesService {
 		const classes = await this.classModel
 			.find({ isDeleted: false })
 			.populate({
-				select: 'name',
+				select: '-__v',
 				path: 'center',
 				model: 'Center',
 			})
 			.populate({
-				select: 'title',
+				select: '-__v',
 				path: 'course',
 				model: 'Course',
 			})
 			.populate({
-				select: 'fullName',
+				select: '-__v -hashedPassword',
 				path: 'teacher',
 				model: 'Teacher',
 			})
 			.populate({
-				select: 'fullName',
+				select: '-__v -hashedPassword',
 				path: 'students',
 				model: 'Student',
 			})
@@ -92,22 +92,22 @@ export class ClassesService {
 		const getClass = await this.classModel
 			.findOne({ _id: id, isDeleted: false })
 			.populate({
-				select: 'name',
+				select: '-__v',
 				path: 'center',
 				model: 'Center',
 			})
 			.populate({
-				select: 'title',
+				select: '-__v',
 				path: 'course',
 				model: 'Course',
 			})
 			.populate({
-				select: 'fullName',
+				select: '-__v -hashedPassword',
 				path: 'teacher',
 				model: 'Teacher',
 			})
 			.populate({
-				select: 'fullName',
+				select: '-__v -hashedPassword',
 				path: 'students',
 				model: 'Student',
 			})

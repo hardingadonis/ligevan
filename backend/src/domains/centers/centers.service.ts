@@ -57,7 +57,7 @@ export class CentersService {
 				model: 'Voucher',
 			})
 			.populate({
-				select: 'fullName',
+				select: '-__v -hashedPassword',
 				path: 'teachers',
 				model: 'Teacher',
 			})
@@ -96,7 +96,7 @@ export class CentersService {
 				model: 'Voucher',
 			})
 			.populate({
-				select: 'fullName',
+				select: '-__v -hashedPassword',
 				path: 'teachers',
 				model: 'Teacher',
 			})

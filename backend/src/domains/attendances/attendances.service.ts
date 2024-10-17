@@ -46,7 +46,7 @@ export class AttendancesService {
 		const attendances = await this.attendanceModel
 			.find()
 			.populate({
-				select: 'fullName',
+				select: '-__v -hashedPassword',
 				path: 'student',
 				model: 'Student',
 			})
@@ -74,7 +74,7 @@ export class AttendancesService {
 		const attendance = await this.attendanceModel
 			.findById(id)
 			.populate({
-				select: 'fullName',
+				select: '-__v -hashedPassword',
 				path: 'student',
 				model: 'Student',
 			})
