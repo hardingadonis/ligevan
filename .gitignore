@@ -132,3 +132,6 @@ dist
 # Visual Studio Code & History extensions
 .vscode/
 .history/
+
+# ligevan
+ssl/
