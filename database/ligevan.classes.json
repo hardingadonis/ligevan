@@ -1,0 +1,50 @@
+[{
+  "_id": {
+    "$oid": "6711208035be1dd9199b9d93"
+  },
+  "name": "LIGEVAN QNN5",
+  "center": "671117a530c0819ba109d554",
+  "course": "671115ee30c0819ba109d543",
+  "teacher": "671118d830c0819ba109d55d",
+  "students": [],
+  "slots": [
+    "6711218835be1dd9199b9d9d",
+    "671121c335be1dd9199b9da0",
+    "671121f435be1dd9199b9da3",
+    "6711222835be1dd9199b9da6",
+    "6711224c35be1dd9199b9da9"
+  ],
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-10-17T14:34:40.975Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-17T14:50:28.969Z"
+  },
+  "__v": 1
+},
+{
+  "_id": {
+    "$oid": "671120b735be1dd9199b9d96"
+  },
+  "name": "LIGEVAN QNN4",
+  "center": "671117a530c0819ba109d554",
+  "course": "6711163130c0819ba109d548",
+  "teacher": "6711191630c0819ba109d560",
+  "students": [],
+  "slots": [
+    "6711229535be1dd9199b9dac",
+    "671122aa35be1dd9199b9daf",
+    "671122c835be1dd9199b9db2",
+    "671122ea35be1dd9199b9db5",
+    "6711230135be1dd9199b9db8"
+  ],
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-10-17T14:35:35.192Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-17T14:54:58.679Z"
+  },
+  "__v": 1
+}]

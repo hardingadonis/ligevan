@@ -1,0 +1,62 @@
+[{
+  "_id": {
+    "$oid": "671117a530c0819ba109d554"
+  },
+  "name": "LIGEVAN Quy Nhơn",
+  "address": "Khu đô thị mới An Phú Thịnh, Nhơn Bình, Quy Nhơn, Bình Định",
+  "phone": "0787911466",
+  "email": "ligevan.quynhon@gmail.com",
+  "courses": [
+    "6711165930c0819ba109d551",
+    "6711164930c0819ba109d54e",
+    "6711163e30c0819ba109d54b",
+    "6711163130c0819ba109d548",
+    "671115ee30c0819ba109d543"
+  ],
+  "vouchers": [
+    "671114c530c0819ba109d53d",
+    "6711152930c0819ba109d540"
+  ],
+  "teachers": [
+    "671118d830c0819ba109d55d",
+    "6711191630c0819ba109d560"
+  ],
+  "classes": [
+    "6711208035be1dd9199b9d93",
+    "671120b735be1dd9199b9d96"
+  ],
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-10-17T13:56:53.571Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-17T14:52:41.047Z"
+  },
+  "__v": 2
+},
+{
+  "_id": {
+    "$oid": "6711182330c0819ba109d557"
+  },
+  "name": "LIGEVAN An Nhơn",
+  "address": "Phường Bình Định, Tx An Nhơn, Bình Định",
+  "phone": "0845001655",
+  "email": "ligevan.annhon@gmail.com",
+  "courses": [
+    "6711163130c0819ba109d548",
+    "671115ee30c0819ba109d543"
+  ],
+  "vouchers": [
+    "671114c530c0819ba109d53d"
+  ],
+  "teachers": [],
+  "classes": [],
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-10-17T13:58:59.816Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-17T13:58:59.816Z"
+  },
+  "__v": 0
+}]

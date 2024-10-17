@@ -1,0 +1,48 @@
+[{
+  "_id": {
+    "$oid": "671118d830c0819ba109d55d"
+  },
+  "fullName": "Lê Minh Vương",
+  "email": "vuonglmqe170148@fpt.edu.vn",
+  "hashedPassword": "$argon2id$v=19$m=65536,t=3,p=4$1UJKIff5Uyq1RrguC9ah8A$IzgKC/k0YB9UFoYY/cOLLpb9uArOh69yFeK3Nh1E/6g",
+  "phone": "0886720575",
+  "address": "Quy Nhơn, Bình Định",
+  "avatar": "https://lh3.googleusercontent.com/a/ACg8ocI22IBikpHxmWMM6pT0rLxKarIJsbcDCpnE13xAi-ABpHGmZeAO=s96-c",
+  "gender": "male",
+  "dob": {
+    "$date": "2000-10-17T13:59:29.796Z"
+  },
+  "center": "671117a530c0819ba109d554",
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-10-17T14:02:00.458Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-17T14:02:00.458Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6711191630c0819ba109d560"
+  },
+  "fullName": "Đinh Quốc Chương",
+  "email": "chuongdqqe170097@fpt.edu.vn",
+  "hashedPassword": "$argon2id$v=19$m=65536,t=3,p=4$WqgBb9RggaCX4Zf22I30UQ$brskzYsACtDrQ9tckFfCsGeOiFcIyYtzwKKDTZzy7Wk",
+  "phone": "0886720585",
+  "address": "Quy Nhơn, Bình Định",
+  "avatar": "https://lh3.googleusercontent.com/a/ACg8ocI22IBikpHxmWMM6pT0rLxKarIJsbcDCpnE13xAi-ABpHGmZeAO=s96-c",
+  "gender": "male",
+  "dob": {
+    "$date": "2000-07-17T13:59:29.796Z"
+  },
+  "center": "671117a530c0819ba109d554",
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-10-17T14:03:02.190Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-17T14:03:02.190Z"
+  },
+  "__v": 0
+}]

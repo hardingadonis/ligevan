@@ -1,0 +1,90 @@
+[{
+  "_id": {
+    "$oid": "671115ee30c0819ba109d543"
+  },
+  "code": "LIGEVAN-JLPTN5",
+  "title": "Khóa luyện thi cấp tốc JLPT N5",
+  "description": "Luyện thi cấp tốc, đạt chứng chỉ cấp quốc gia!",
+  "thumbnail": "https://raw.githubusercontent.com/hardingadonis/hardingadonis/refs/heads/main/imgs/peaceful-banner.gif",
+  "price": 5000000,
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-10-17T13:49:34.357Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-17T13:50:13.715Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6711163130c0819ba109d548"
+  },
+  "code": "LIGEVAN-JLPTN4",
+  "title": "Khóa luyện thi cấp tốc JLPT N4",
+  "description": "Luyện thi cấp tốc, đạt chứng chỉ cấp quốc gia!",
+  "thumbnail": "https://raw.githubusercontent.com/hardingadonis/hardingadonis/refs/heads/main/imgs/peaceful-banner.gif",
+  "price": 5500000,
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-10-17T13:50:41.974Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-17T13:50:41.974Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6711163e30c0819ba109d54b"
+  },
+  "code": "LIGEVAN-JLPTN3",
+  "title": "Khóa luyện thi cấp tốc JLPT N3",
+  "description": "Luyện thi cấp tốc, đạt chứng chỉ cấp quốc gia!",
+  "thumbnail": "https://raw.githubusercontent.com/hardingadonis/hardingadonis/refs/heads/main/imgs/peaceful-banner.gif",
+  "price": 6500000,
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-10-17T13:50:54.143Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-17T13:50:54.143Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6711164930c0819ba109d54e"
+  },
+  "code": "LIGEVAN-JLPTN2",
+  "title": "Khóa luyện thi cấp tốc JLPT N2",
+  "description": "Luyện thi cấp tốc, đạt chứng chỉ cấp quốc gia!",
+  "thumbnail": "https://raw.githubusercontent.com/hardingadonis/hardingadonis/refs/heads/main/imgs/peaceful-banner.gif",
+  "price": 8000000,
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-10-17T13:51:05.479Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-17T13:51:05.479Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6711165930c0819ba109d551"
+  },
+  "code": "LIGEVAN-JLPTN1",
+  "title": "Khóa luyện thi cấp tốc JLPT N1",
+  "description": "Luyện thi cấp tốc, đạt chứng chỉ cấp quốc gia!",
+  "thumbnail": "https://raw.githubusercontent.com/hardingadonis/hardingadonis/refs/heads/main/imgs/peaceful-banner.gif",
+  "price": 18000000,
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-10-17T13:51:21.888Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-17T13:51:21.888Z"
+  },
+  "__v": 0
+}]
