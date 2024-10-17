@@ -42,9 +42,8 @@ export class AttendancesService {
 		return attendance;
 	}
 
-	async getAll() {
-		const attendances = await this.attendanceModel
-			.find()
+	private async populateAttendance(query) {
+		return query
 			.populate({
 				select: '-__v -hashedPassword',
 				path: 'student',
@@ -56,6 +55,12 @@ export class AttendancesService {
 				model: 'Slot',
 			})
 			.select('-__v');
+	}
+
+	async getAll() {
+		const attendances = await this.populateAttendance(
+			this.attendanceModel.find(),
+		);
 
 		if (!attendances) {
 			this.logger.error('Attendances not found!');
@@ -71,20 +76,9 @@ export class AttendancesService {
 	}
 
 	async getById(id: string) {
-		const attendance = await this.attendanceModel
-			.findById(id)
-			.populate({
-				select: '-__v -hashedPassword',
-				path: 'student',
-				model: 'Student',
-			})
-			.populate({
-				select: '-__v',
-				path: 'slot',
-				model: 'Slot',
-			})
-			.select('-__v')
-			.exec();
+		const attendance = await this.populateAttendance(
+			this.attendanceModel.findById(id),
+		);
 
 		if (!attendance) {
 			this.logger.error('Attendance not found!');
