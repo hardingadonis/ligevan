@@ -47,10 +47,8 @@ export class StudentsService {
 		return createStudent;
 	}
 
-	async getAll() {
-		const students = await this.studentModel
-			.find({ isDeleted: false })
-			.select('-__v')
+	private async populateStudent(query) {
+		return query
 			.populate({
 				select: '-__v',
 				path: 'classes',
@@ -61,7 +59,13 @@ export class StudentsService {
 				path: 'payments',
 				model: 'Payment',
 			})
-			.exec();
+			.select('-__v');
+	}
+
+	async getAll() {
+		const students = await this.populateStudent(
+			this.studentModel.find({ isDeleted: false }),
+		);
 
 		if (!students) {
 			this.logger.error('No students found!');
@@ -85,10 +89,9 @@ export class StudentsService {
 	}
 
 	async getStudent(conditions: object) {
-		const student = await this.studentModel
-			.findOne({ ...conditions, isDeleted: false })
-			.select('-__v')
-			.exec();
+		const student = await this.populateStudent(
+			this.studentModel.findOne({ ...conditions, isDeleted: false }),
+		);
 
 		if (!student) {
 			this.logger.error(
