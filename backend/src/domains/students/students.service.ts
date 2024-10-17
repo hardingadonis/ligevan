@@ -59,7 +59,7 @@ export class StudentsService {
 				path: 'payments',
 				model: 'Payment',
 			})
-			.select('-__v');
+			.select('-__v -hashedPassword');
 	}
 
 	async getAll() {
