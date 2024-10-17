@@ -1,11 +1,28 @@
 services:
+  ligevan-database:
+    ports:
+      - '27017:27017'
+
   ligevan-backend:
     environment:
       - NODE_ENV=development
       - DATABASE_URL=mongodb://ligevan-database:27017/ligevan
       - JWT_SECRET=your-secret
       - JWT_EXPIRES=2h
+      - GOOGLE_OAUTH2_CLIENT_ID=abcxyz
+      - GOOGLE_OAUTH2_CLIENT_SECRET=secret-key
+      - GOOGLE_OAUTH2_CLIENT_CALLBACK=http://localhost:3000/api/auth/student/callback
+      - ALLOWED_ORIGINS=http://ligevan-frontend:8080,http://localhost:3000,https://localhost:3001
+      - FRONTEND_URL=http://ligevan-frontend:8080
+    ports:
+      - '3000:3000'
 
   ligevan-frontend:
     environment:
       - VITE_BACKEND_URL=http://ligevan-backend:3000
+    ports:
+      - '8080:80'
+
+  portainer:
+    ports:
+      - '9000:9000'
