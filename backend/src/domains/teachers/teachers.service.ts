@@ -48,8 +48,17 @@ export class TeachersService {
 	async getAll(): Promise<Teacher[]> {
 		const teachers = await this.teacherModel
 			.find({ isDeleted: false })
-			.select('-__v')
-			.select('-hashedPassword')
+			.select('-__v -hashedPassword')
+			.populate({
+				select: '-__v',
+				path: 'center',
+				model: 'Center',
+			})
+			.populate({
+				select: '-__v',
+				path: 'salaries',
+				model: 'Salary',
+			})
 			.exec();
 
 		if (!teachers) {
@@ -77,6 +86,16 @@ export class TeachersService {
 	async getByIdWithPassword(id: string) {
 		const teacher = await this.teacherModel
 			.findOne({ _id: id, isDeleted: false })
+			.populate({
+				select: '-__v',
+				path: 'center',
+				model: 'Center',
+			})
+			.populate({
+				select: '-__v',
+				path: 'salaries',
+				model: 'Salary',
+			})
 			.select('-__v')
 			.exec();
 
@@ -96,6 +115,16 @@ export class TeachersService {
 	async getByEmailWithPassword(email: string) {
 		const teacher = await this.teacherModel
 			.findOne({ email: email, isDeleted: false })
+			.populate({
+				select: '-__v',
+				path: 'center',
+				model: 'Center',
+			})
+			.populate({
+				select: '-__v',
+				path: 'salaries',
+				model: 'Salary',
+			})
 			.select('-__v')
 			.exec();
 
