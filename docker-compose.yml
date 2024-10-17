@@ -1,16 +1,43 @@
 services:
+  proxy:
+    image: nginx:1.27.2-alpine
+    container_name: ligevan-proxy
+    restart: always
+    volumes:
+      - ./proxy/nginx.conf:/etc/nginx/nginx.conf
+      - ./ssl:/etc/ssl
+    ports:
+      - '3000:3000'
+      - '8080:8080'
+      - '9000:9000'
+    networks:
+      - ligevan-network
+
   ligevan-database:
     image: mongo:7.0.14
     container_name: ligevan-database
     restart: always
     volumes:
       - mongo_data:/data/db
+    ports:
+      - '27017:27017'
     networks:
       - ligevan-network
 
   ligevan-backend:
     image: ghcr.io/hardingadonis/ligevan-backend:latest
     container_name: ligevan-backend
+    restart: always
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=mongodb://ligevan-database:27017/ligevan
+      - JWT_SECRET=your-secret
+      - JWT_EXPIRES=2h
+      - GOOGLE_OAUTH2_CLIENT_ID=your-client-id
+      - GOOGLE_OAUTH2_CLIENT_SECRET=your-secret-key
+      - GOOGLE_OAUTH2_CLIENT_CALLBACK=http://localhost:3000/api/auth/student/callback
+      - ALLOWED_ORIGINS=http://ligevan-frontend:8080,http://localhost:3000,https://localhost:3001
+      - FRONTEND_URL=http://ligevan-frontend:8080
     networks:
       - ligevan-network
     depends_on:
@@ -19,6 +46,9 @@ services:
   ligevan-frontend:
     image: ghcr.io/hardingadonis/ligevan-frontend:latest
     container_name: ligevan-frontend
+    restart: always
+    environment:
+      - VITE_BACKEND_URL=http://ligevan-backend:3000
     networks:
       - ligevan-network
 
