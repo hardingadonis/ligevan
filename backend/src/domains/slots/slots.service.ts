@@ -46,12 +46,15 @@ export class SlotsService {
 		return newSlot;
 	}
 
-	async getAll(): Promise<Slot[]> {
-		const slots = await this.slotModel
-			.find()
-			.select('-__v')
+	private async populateSlot(query) {
+		return query
 			.populate({ select: '-__v', path: 'class', model: 'Class' })
-			.exec();
+			.populate({ select: '-__v', path: 'attendances', model: 'Attendance' })
+			.select('-__v');
+	}
+
+	async getAll(): Promise<Slot[]> {
+		const slots = await this.populateSlot(this.slotModel.find());
 
 		if (!slots) {
 			this.logger.error('No slots found!');
@@ -67,11 +70,7 @@ export class SlotsService {
 	}
 
 	async getById(id: string): Promise<Slot> {
-		const slot = await this.slotModel
-			.findById(id)
-			.select('-__v')
-			.populate({ select: '-__v', path: 'class', model: 'Class' })
-			.exec();
+		const slot = await this.populateSlot(this.slotModel.findById(id));
 
 		if (!slot) {
 			this.logger.error(`Slot with id ${id} not found!`);

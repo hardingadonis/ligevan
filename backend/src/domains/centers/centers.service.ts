@@ -43,9 +43,8 @@ export class CentersService {
 		return center;
 	}
 
-	async getAll() {
-		const centers = await this.centerModel
-			.find({ isDeleted: false })
+	private async populateCenter(query) {
+		return query
 			.populate({
 				select: '-__v',
 				path: 'courses',
@@ -66,8 +65,13 @@ export class CentersService {
 				path: 'classes',
 				model: 'Class',
 			})
-			.select('-__v')
-			.exec();
+			.select('-__v');
+	}
+
+	async getAll() {
+		const centers = await this.populateCenter(
+			this.centerModel.find({ isDeleted: false }),
+		);
 
 		if (!centers) {
 			this.logger.error('Centers not found!');
@@ -83,30 +87,9 @@ export class CentersService {
 	}
 
 	async getById(id: string) {
-		const center = await this.centerModel
-			.findOne({ _id: id, isDeleted: false })
-			.populate({
-				select: '-__v',
-				path: 'courses',
-				model: 'Course',
-			})
-			.populate({
-				select: '-__v',
-				path: 'vouchers',
-				model: 'Voucher',
-			})
-			.populate({
-				select: '-__v -hashedPassword',
-				path: 'teachers',
-				model: 'Teacher',
-			})
-			.populate({
-				select: '-__v',
-				path: 'classes',
-				model: 'Class',
-			})
-			.select('-__v')
-			.exec();
+		const center = await this.populateCenter(
+			this.centerModel.findOne({ _id: id, isDeleted: false }),
+		);
 
 		if (!center) {
 			this.logger.error('Center not found!');
