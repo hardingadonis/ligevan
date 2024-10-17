@@ -47,9 +47,8 @@ export class PaymentsService {
 		return newPayment;
 	}
 
-	async getAll() {
-		const payments = await this.salaryModel
-			.find()
+	private async populatePayment(query) {
+		return query
 			.populate({
 				select: '-__v -hashedPassword',
 				path: 'student',
@@ -70,8 +69,11 @@ export class PaymentsService {
 				path: 'voucher',
 				model: 'Voucher',
 			})
-			.select('-__v')
-			.exec();
+			.select('-__v');
+	}
+
+	async getAll() {
+		const payments = await this.populatePayment(this.salaryModel.find());
 
 		if (!payments) {
 			this.logger.error('Payments not found!');
@@ -87,30 +89,9 @@ export class PaymentsService {
 	}
 
 	async getById(id: string) {
-		const payment = await this.salaryModel
-			.findOne({ _id: id })
-			.populate({
-				select: '-__v -hashedPassword',
-				path: 'student',
-				model: 'Student',
-			})
-			.populate({
-				select: '-__v',
-				path: 'course',
-				model: 'Course',
-			})
-			.populate({
-				select: '-__v',
-				path: 'class',
-				model: 'Class',
-			})
-			.populate({
-				select: '-__v',
-				path: 'voucher',
-				model: 'Voucher',
-			})
-			.select('-__v')
-			.exec();
+		const payment = await this.populatePayment(
+			this.salaryModel.findOne({ _id: id }),
+		);
 
 		if (!payment) {
 			this.logger.error('Payment not found!');
