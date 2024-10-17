@@ -14,7 +14,7 @@ COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile --ignore-scripts
 COPY ./src ./src
 COPY tsconfig.json tsconfig.build.json ./
-RUN yarn build
+RUN yarn build --webpack
 
 #--------------------------------------------------
 
