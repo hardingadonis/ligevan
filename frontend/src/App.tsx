@@ -1,17 +1,23 @@
-import React, { lazy, Suspense } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Spin } from 'antd';
+import React, { Suspense, lazy } from 'react';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
 const HomepageStudent = lazy(() => import('@/pages/student/Homepage'));
-// const AdminDashboard = lazy(() => import('@/pages/admin/Dashboard'));
+const AdminDashboard = lazy(() => import('@/pages/admin/Dashboard'));
 
 const App: React.FC = () => {
 	return (
 		<Router>
-			<Suspense fallback={<div><Spin size="large" /> Đang tải...</div>}>
+			<Suspense
+				fallback={
+					<div>
+						<Spin size="large" /> Đang tải...
+					</div>
+				}
+			>
 				<Routes>
 					<Route path="/student" element={<HomepageStudent />} />
-					{/* <Route path="/admin" element={<AdminDashboard  />} /> */}
+					<Route path="/admin/dashboard" element={<AdminDashboard />} />
 				</Routes>
 			</Suspense>
 		</Router>
