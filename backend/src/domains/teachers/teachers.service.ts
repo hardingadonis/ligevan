@@ -1,4 +1,9 @@
-import { ConflictException, Injectable, Logger } from '@nestjs/common';
+import {
+	ConflictException,
+	Injectable,
+	Logger,
+	NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
@@ -57,20 +62,18 @@ export class TeachersService {
 				path: 'salaries',
 				model: 'Salary',
 			})
-			.select('-__v');
+			.select('-__v -hashedPassword');
 	}
 
 	async getAll(): Promise<Teacher[]> {
 		const teachers = await this.populateTeacher(
-			this.teacherModel
-				.find({ isDeleted: false })
-				.select('-__v -hashedPassword'),
+			this.teacherModel.find({ isDeleted: false }),
 		);
 
 		if (!teachers) {
 			this.logger.error('No teachers found!');
 
-			throw new ConflictException('No teachers found!');
+			throw new NotFoundException('No teachers found!');
 		}
 
 		this.logger.debug('Found all teachers', teachers);
