@@ -46,16 +46,18 @@ export class SalariesService {
 		return newSalary;
 	}
 
-	async getAll() {
-		const salaries = await this.salaryModel
-			.find()
+	private async populateSalary(query) {
+		return query
 			.populate({
 				select: '-__v -hashedPassword',
 				path: 'teacher',
 				model: 'Teacher',
 			})
-			.select('-__v')
-			.exec();
+			.select('-__v');
+	}
+
+	async getAll() {
+		const salaries = await this.populateSalary(this.salaryModel.find());
 
 		if (!salaries) {
 			this.logger.error('Salaries not found!');
@@ -71,15 +73,9 @@ export class SalariesService {
 	}
 
 	async getById(id: string) {
-		const salary = await this.salaryModel
-			.findOne({ _id: id })
-			.populate({
-				select: '-__v -hashedPassword',
-				path: 'teacher',
-				model: 'Teacher',
-			})
-			.select('-__v')
-			.exec();
+		const salary = await this.populateSalary(
+			this.salaryModel.findOne({ _id: id }),
+		);
 
 		if (!salary) {
 			this.logger.error('Salary not found!');
