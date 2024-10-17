@@ -45,10 +45,8 @@ export class TeachersService {
 		return teacherObject;
 	}
 
-	async getAll(): Promise<Teacher[]> {
-		const teachers = await this.teacherModel
-			.find({ isDeleted: false })
-			.select('-__v -hashedPassword')
+	private async populateTeacher(query) {
+		return query
 			.populate({
 				select: '-__v',
 				path: 'center',
@@ -59,7 +57,15 @@ export class TeachersService {
 				path: 'salaries',
 				model: 'Salary',
 			})
-			.exec();
+			.select('-__v');
+	}
+
+	async getAll(): Promise<Teacher[]> {
+		const teachers = await this.populateTeacher(
+			this.teacherModel
+				.find({ isDeleted: false })
+				.select('-__v -hashedPassword'),
+		);
 
 		if (!teachers) {
 			this.logger.error('No teachers found!');
@@ -84,20 +90,9 @@ export class TeachersService {
 	}
 
 	async getByIdWithPassword(id: string) {
-		const teacher = await this.teacherModel
-			.findOne({ _id: id, isDeleted: false })
-			.populate({
-				select: '-__v',
-				path: 'center',
-				model: 'Center',
-			})
-			.populate({
-				select: '-__v',
-				path: 'salaries',
-				model: 'Salary',
-			})
-			.select('-__v')
-			.exec();
+		const teacher = await this.populateTeacher(
+			this.teacherModel.findOne({ _id: id, isDeleted: false }),
+		);
 
 		if (!teacher) {
 			this.logger.error(`Teacher with id ${id} not found!`);
@@ -113,20 +108,9 @@ export class TeachersService {
 	}
 
 	async getByEmailWithPassword(email: string) {
-		const teacher = await this.teacherModel
-			.findOne({ email: email, isDeleted: false })
-			.populate({
-				select: '-__v',
-				path: 'center',
-				model: 'Center',
-			})
-			.populate({
-				select: '-__v',
-				path: 'salaries',
-				model: 'Salary',
-			})
-			.select('-__v')
-			.exec();
+		const teacher = await this.populateTeacher(
+			this.teacherModel.findOne({ email: email, isDeleted: false }),
+		);
 
 		if (!teacher) {
 			this.logger.error(`Teacher with email ${email} not found!`);
