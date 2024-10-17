@@ -6,10 +6,6 @@ services:
     volumes:
       - ./proxy/nginx.conf:/etc/nginx/nginx.conf
       - ./ssl:/etc/nginx/ssl
-    command: >
-      sh -c "envsubst '\$SERVER_NAME' < /etc/nginx/nginx.conf > /etc/nginx/nginx.conf.tmp &&
-      mv /etc/nginx/nginx.conf.tmp /etc/nginx/nginx.conf &&
-      nginx -g 'daemon off;'"
     ports:
       - '3000:3000'
       - '8080:8080'
