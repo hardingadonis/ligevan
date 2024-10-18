@@ -1,13 +1,13 @@
-import { Button, Col, FloatButton, Grid, Layout, Row, Space } from 'antd';
+import { Col, FloatButton, Layout, Row } from 'antd';
 import React from 'react';
 
 import Footer from '@/components/commons/Footer';
 import DropdownCenter from '@/components/student/DropdownCenter';
 import HeaderStudentPage from '@/components/student/Header';
+import LoginButton from '@/components/student/LoginButton';
 import { Center } from '@/schemas/center.schema';
 
 const { Content } = Layout;
-const { useBreakpoint } = Grid;
 
 interface StudentLayoutProps {
 	children: React.ReactNode;
@@ -18,7 +18,6 @@ const StudentLayout: React.FC<StudentLayoutProps> = ({
 	children,
 	onSelectCenter,
 }) => {
-	const screens = useBreakpoint();
 	const handleSelectCenter = (center: Center | null) => {
 		if (onSelectCenter) {
 			onSelectCenter(center);
@@ -29,12 +28,7 @@ const StudentLayout: React.FC<StudentLayoutProps> = ({
 		<Layout style={{ minHeight: '100vh' }}>
 			<HeaderStudentPage
 				leftComponent={<DropdownCenter onSelectCenter={handleSelectCenter} />}
-				rightComponent={
-					<Space direction={screens.xs ? 'vertical' : 'horizontal'}>
-						<Button type="primary">Đăng ký</Button>
-						<Button>Đăng nhập</Button>
-					</Space>
-				}
+				rightComponent={<LoginButton />}
 			/>
 			<Content style={{ margin: '24px 16px 0' }}>
 				<Row justify="center">

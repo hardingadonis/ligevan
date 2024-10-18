@@ -17,6 +17,7 @@ const App: React.FC = () => {
 			>
 				<Routes>
 					<Route path="/student" element={<HomepageStudent />} />
+					<Route path="/student/login" element={<HomepageStudent />} />
 					<Route path="/admin/dashboard" element={<AdminDashboard />} />
 				</Routes>
 			</Suspense>
