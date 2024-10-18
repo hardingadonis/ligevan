@@ -2,6 +2,8 @@ import { Spin } from 'antd';
 import React, { Suspense, lazy } from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
+import '@/assets/styles/global.css';
+
 const HomepageStudent = lazy(() => import('@/pages/student/Homepage'));
 const AdminDashboard = lazy(() => import('@/pages/admin/Dashboard'));
 
