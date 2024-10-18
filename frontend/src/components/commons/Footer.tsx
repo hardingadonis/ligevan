@@ -19,6 +19,7 @@ const Footer: React.FC = () => {
 			</Title>
 			<a href="https://github.com/hardingadonis/ligevan" target="_blank">
 				<img
+					alt="contributors"
 					src="https://contrib.rocks/image?repo=hardingadonis/ligevan"
 					style={{ transform: 'scale(0.65)' }}
 				/>
