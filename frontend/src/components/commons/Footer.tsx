@@ -14,16 +14,16 @@ const Footer: React.FC = () => {
 				width: '100%',
 			}}
 		>
-			<Title level={5} style={{ margin: 0 }}>
+			<Title level={5} style={{ margin: '10px 0 0 0' }}>
 				Copyright © ligevan 2024
-				<a href="https://github.com/hardingadonis/ligevan" target="_blank">
-					<Image
-						className="img-fluid"
-						src="https://contrib.rocks/image?repo=hardingadonis/ligevan"
-						style={{ transform: 'scale(0.65)' }}
-					/>
-				</a>
 			</Title>
+			<a href="https://github.com/hardingadonis/ligevan" target="_blank">
+				<img
+					alt="contributors"
+					src="https://contrib.rocks/image?repo=hardingadonis/ligevan"
+					style={{ transform: 'scale(0.65)' }}
+				/>
+			</a>
 		</AntFooter>
 	);
 };
