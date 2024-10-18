@@ -13,17 +13,19 @@ const DropdownCenter: React.FC<DropdownCenterProps> = ({ onSelectCenter }) => {
 	const [centers, setCenters] = useState<Center[]>([]);
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
-	const [selectedCenter, setSelectedCenter] = useState<string>(
-		'Tất cả các trung tâm',
-	);
+	const [selectedCenter, setSelectedCenter] = useState<string>('');
 
 	useEffect(() => {
 		const fetchCenters = async () => {
 			try {
 				const data = await getAllCenter();
 				setCenters(data);
+				if (data.length > 0) {
+					setSelectedCenter(data[0].name);
+					onSelectCenter(data[0]);
+				}
 			} catch {
-				setError('Failed to fetch centers');
+				setError('Lỗi truy xuất dữ liệu các Trung tâm');
 			} finally {
 				setLoading(false);
 			}
@@ -33,29 +35,18 @@ const DropdownCenter: React.FC<DropdownCenterProps> = ({ onSelectCenter }) => {
 	}, []);
 
 	const handleMenuClick = (e: { key: string }) => {
-		if (e.key === 'all') {
-			setSelectedCenter('Tất cả các trung tâm');
-			onSelectCenter(null);
-		} else {
-			const selected = centers.find((center) => center._id === e.key);
-			if (selected) {
-				setSelectedCenter(selected.name);
-				onSelectCenter(selected);
-			}
+		const selected = centers.find((center) => center._id === e.key);
+		if (selected) {
+			setSelectedCenter(selected.name);
+			onSelectCenter(selected);
 		}
 	};
 
-	const items = [
-		{
-			label: 'Tất cả các trung tâm',
-			key: 'all',
-		},
-		...centers.map((center) => ({
-			label: center.name,
-			key: center._id,
-			icon: <EnvironmentOutlined />,
-		})),
-	];
+	const items = centers.map((center) => ({
+		label: center.name,
+		key: center._id,
+		icon: <EnvironmentOutlined />,
+	}));
 
 	const menuProps = {
 		items,
