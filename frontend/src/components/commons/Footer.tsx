@@ -1,4 +1,4 @@
-import { Image, Layout, Typography } from 'antd';
+import { Layout, Typography } from 'antd';
 import React from 'react';
 
 const { Footer: AntFooter } = Layout;
