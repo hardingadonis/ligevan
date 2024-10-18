@@ -59,13 +59,13 @@ const DropdownProfile: React.FC = () => {
 	const menu = (
 		<Menu onClick={handleMenuClick}>
 			<Menu.Item key="profile" icon={<UserOutlined />}>
-				Hồ sơ
+				Profile
 			</Menu.Item>
 			<Menu.Item key="schedule" icon={<ScheduleOutlined />}>
-				Lịch học
+				Schedule
 			</Menu.Item>
 			<Menu.Item key="logout" icon={<LogoutOutlined />}>
-				Đăng xuất
+				Logout
 			</Menu.Item>
 		</Menu>
 	);
@@ -77,7 +77,7 @@ const DropdownProfile: React.FC = () => {
 	return (
 		<Dropdown overlay={menu} trigger={['hover']}>
 			<div style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
-				<Text style={{ marginRight: 8, color: 'white' }}>
+				<Text style={{ marginRight: 8, color: 'white' }} className="user-name">
 					{student?.fullName}
 				</Text>
 				<Avatar

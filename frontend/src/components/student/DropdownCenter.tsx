@@ -67,7 +67,7 @@ const DropdownCenter: React.FC<DropdownCenterProps> = ({ onSelectCenter }) => {
 	}
 
 	return (
-		<Space wrap>
+		<Space wrap className="dropdown-center">
 			<Dropdown menu={menuProps}>
 				<Button>
 					<Space>
