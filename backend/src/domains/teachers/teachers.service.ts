@@ -105,15 +105,13 @@ export class TeachersService {
 
 		this.logger.debug('Found teacher', teacher);
 
-		this.logger.debug('Retrieved teacher', teacher);
-
 		return teacher;
 	}
 
 	async getByEmailWithPassword(email: string) {
-		const teacher = await this.populateTeacher(
-			this.teacherModel.findOne({ email: email, isDeleted: false }),
-		);
+		const teacher = await this.teacherModel
+			.findOne({ email: email, isDeleted: false })
+			.exec();
 
 		if (!teacher) {
 			this.logger.error(`Teacher with email ${email} not found!`);
@@ -122,8 +120,6 @@ export class TeachersService {
 		}
 
 		this.logger.debug('Found teacher', teacher);
-
-		this.logger.debug('Retrieved teacher', teacher);
 
 		return teacher;
 	}

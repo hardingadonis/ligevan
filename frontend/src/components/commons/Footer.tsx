@@ -11,8 +11,6 @@ const Footer: React.FC = () => {
 				textAlign: 'center',
 				padding: 0,
 				boxShadow: '0 -2px 8px rgba(0, 0, 0, 0.1)',
-				position: 'fixed',
-				bottom: 0,
 				width: '100%',
 			}}
 		>
@@ -20,10 +18,10 @@ const Footer: React.FC = () => {
 				Copyright © ligevan 2024
 			</Title>
 			<a href="https://github.com/hardingadonis/ligevan" target="_blank">
-				<Image
-					className="img-fluid"
+				<img
+					alt="contributors"
 					src="https://contrib.rocks/image?repo=hardingadonis/ligevan"
-					style={{ transform: 'scale(0.50)' }}
+					style={{ transform: 'scale(0.65)' }}
 				/>
 			</a>
 		</AntFooter>
