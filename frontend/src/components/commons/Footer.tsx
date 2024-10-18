@@ -11,21 +11,19 @@ const Footer: React.FC = () => {
 				textAlign: 'center',
 				padding: 0,
 				boxShadow: '0 -2px 8px rgba(0, 0, 0, 0.1)',
-				position: 'fixed',
-				bottom: 0,
 				width: '100%',
 			}}
 		>
-			<Title level={5} style={{ margin: '10px 0 0 0' }}>
+			<Title level={5} style={{ margin: 0 }}>
 				Copyright © ligevan 2024
+				<a href="https://github.com/hardingadonis/ligevan" target="_blank">
+					<Image
+						className="img-fluid"
+						src="https://contrib.rocks/image?repo=hardingadonis/ligevan"
+						style={{ transform: 'scale(0.65)' }}
+					/>
+				</a>
 			</Title>
-			<a href="https://github.com/hardingadonis/ligevan" target="_blank">
-				<Image
-					className="img-fluid"
-					src="https://contrib.rocks/image?repo=hardingadonis/ligevan"
-					style={{ transform: 'scale(0.50)' }}
-				/>
-			</a>
 		</AntFooter>
 	);
 };
