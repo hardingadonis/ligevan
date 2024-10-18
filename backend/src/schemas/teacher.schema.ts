@@ -30,6 +30,9 @@ export class Teacher {
 	@Prop({ type: Types.ObjectId, ref: 'Center', required: true })
 	center: Types.ObjectId;
 
+	@Prop({ type: Types.Array<Types.ObjectId>, ref: 'Class', required: false })
+	classes: Types.ObjectId[];
+
 	@Prop({ type: Types.Array<Types.ObjectId>, ref: 'Salary', required: false })
 	salaries: Types.ObjectId[];
 
