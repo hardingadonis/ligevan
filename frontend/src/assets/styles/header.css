@@ -1,1 +1,31 @@
+.site-layout-background {
+	padding: 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
 
+.left-component {
+	flex: 1;
+	display: flex;
+	justify-content: flex-start;
+	padding-left: 16px;
+}
+
+.center-title {
+	flex: 1;
+	text-align: center;
+}
+
+.title {
+	margin: 0;
+	font-family: cursive;
+	color: white;
+}
+
+.right-component {
+	flex: 1;
+	display: flex;
+	justify-content: flex-end;
+	padding-right: 16px;
+}
