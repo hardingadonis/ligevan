@@ -7,21 +7,25 @@ import { getAllCenter } from '@/services/api/center';
 
 interface DropdownCenterProps {
 	onSelectCenter: (center: Center | null) => void;
+	className?: string;
+	selectedCenter?: Center | null;
 }
 
-const DropdownCenter: React.FC<DropdownCenterProps> = ({ onSelectCenter }) => {
+const DropdownCenter: React.FC<DropdownCenterProps> = ({
+	onSelectCenter,
+	className,
+	selectedCenter,
+}) => {
 	const [centers, setCenters] = useState<Center[]>([]);
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
-	const [selectedCenter, setSelectedCenter] = useState<string>('');
 
 	useEffect(() => {
 		const fetchCenters = async () => {
 			try {
 				const data = await getAllCenter();
 				setCenters(data);
-				if (data.length > 0) {
-					setSelectedCenter(data[0].name);
+				if (data.length > 0 && !selectedCenter) {
 					onSelectCenter(data[0]);
 				}
 			} catch {
@@ -32,12 +36,11 @@ const DropdownCenter: React.FC<DropdownCenterProps> = ({ onSelectCenter }) => {
 		};
 
 		fetchCenters();
-	}, []);
+	}, [selectedCenter, onSelectCenter]);
 
 	const handleMenuClick = (e: { key: string }) => {
 		const selected = centers.find((center) => center._id === e.key);
 		if (selected) {
-			setSelectedCenter(selected.name);
 			onSelectCenter(selected);
 		}
 	};
@@ -67,11 +70,11 @@ const DropdownCenter: React.FC<DropdownCenterProps> = ({ onSelectCenter }) => {
 	}
 
 	return (
-		<Space wrap className="dropdown-center">
+		<Space wrap className={className}>
 			<Dropdown menu={menuProps}>
 				<Button>
 					<Space>
-						{selectedCenter}
+						{selectedCenter?.name}
 						<DownOutlined />
 					</Space>
 				</Button>
