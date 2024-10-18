@@ -20,7 +20,7 @@
 .title {
 	margin: 0;
 	font-family: cursive;
-	color: white;
+	color: white !important;
 }
 
 .right-component {
