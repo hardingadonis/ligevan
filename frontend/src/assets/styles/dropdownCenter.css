@@ -1,0 +1,15 @@
+/* styles.css */
+.dropdown-center-mobile {
+	display: none;
+}
+
+@media (max-width: 768px) {
+	.dropdown-center {
+		display: none;
+	}
+
+	.dropdown-center-mobile {
+		display: block;
+		width: 100%;
+	}
+}
