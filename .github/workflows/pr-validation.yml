@@ -11,7 +11,7 @@ on:
 jobs:
   if_new_pr:
     name: PR validation
-    if: ${{ github.head_ref != 'dev' && !startsWith(github.head_ref, 'imgbot/') }}
+    if: ${{ github.head_ref != 'dev' && !startsWith(github.head_ref, 'imgbot/') && !startsWith(github.head_ref, 'hotfix/') }}
     runs-on: ubuntu-latest
 
     permissions:

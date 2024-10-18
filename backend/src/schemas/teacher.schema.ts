@@ -12,7 +12,7 @@ export class Teacher {
 	@Prop({ required: true })
 	hashedPassword: string;
 
-	@Prop({ required: true, unique: true })
+	@Prop({ required: true })
 	phone: string;
 
 	@Prop({ required: true })
@@ -29,6 +29,9 @@ export class Teacher {
 
 	@Prop({ type: Types.ObjectId, ref: 'Center', required: true })
 	center: Types.ObjectId;
+
+	@Prop({ type: Types.Array<Types.ObjectId>, ref: 'Class', required: false })
+	classes: Types.ObjectId[];
 
 	@Prop({ type: Types.Array<Types.ObjectId>, ref: 'Salary', required: false })
 	salaries: Types.ObjectId[];
