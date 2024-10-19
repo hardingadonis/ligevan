@@ -30,7 +30,7 @@ const LoginButton: React.FC = () => {
 			onClick={handleLogin}
 			icon={isMobile ? <LoginOutlined /> : null}
 		>
-			{!isMobile && 'Đăng ký / Đăng nhập'}
+			{!isMobile && 'Đăng nhập'}
 		</Button>
 	);
 };
