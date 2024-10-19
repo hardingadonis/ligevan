@@ -3,6 +3,7 @@ import {
 	selectToken,
 	setAvatar,
 	setEmail,
+	setFullName,
 	setToken,
 } from '../../slices/teacher';
 import { Button, Col, Form, Input, Modal, Row, Typography } from 'antd';
@@ -50,14 +51,6 @@ const LoginTeacher: React.FC = () => {
 					password: values.password,
 				},
 			);
-
-			const responseAvatar = await axios.get(
-				apiBaseUrl + `/api/teachers/email/${values.email}`,
-			);
-
-			if (responseAvatar.data.avatar) {
-				dispatch(setAvatar(responseAvatar.data.avatar));
-			}
 
 			dispatch(setToken(response.data.access_token));
 			dispatch(setEmail(values.email));

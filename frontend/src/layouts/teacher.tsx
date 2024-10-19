@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import Footer from '@/components/commons/Footer';
 import Header from '@/components/commons/Header';
 import Sidebar from '@/components/teacher/Sidebar';
-import { selectAvatar } from '@/slices/teacher';
+import { selectAvatar, selectFullName } from '@/slices/teacher';
 
 const { Content } = Layout;
 
@@ -15,10 +15,11 @@ interface TeacherLayoutProps {
 
 const TeacherLayout: React.FC<TeacherLayoutProps> = ({ children }) => {
 	const avatar = useSelector(selectAvatar) ?? undefined;
+	const userFullName = useSelector(selectFullName) ?? undefined;
 
 	return (
 		<Layout style={{ minHeight: '100vh' }}>
-			<Header avatarUrl={avatar} />
+			<Header avatarUrl={avatar} userFullName={userFullName} />
 			<Layout>
 				<Sidebar />
 				<Layout style={{ marginLeft: 200 }}>
