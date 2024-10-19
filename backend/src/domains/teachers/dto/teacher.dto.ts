@@ -81,5 +81,5 @@ export class UpdateTeacherDto {
 	center?: string;
 
 	@ApiPropertyOptional({ description: 'Classes offered by the Teacher ' })
-	classes?: string;
+	classes?: string[];
 }
