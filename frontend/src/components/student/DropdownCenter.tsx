@@ -7,55 +7,49 @@ import { getAllCenter } from '@/services/api/center';
 
 interface DropdownCenterProps {
 	onSelectCenter: (center: Center | null) => void;
+	className?: string;
+	selectedCenter?: Center | null;
 }
 
-const DropdownCenter: React.FC<DropdownCenterProps> = ({ onSelectCenter }) => {
+const DropdownCenter: React.FC<DropdownCenterProps> = ({
+	onSelectCenter,
+	className,
+	selectedCenter,
+}) => {
 	const [centers, setCenters] = useState<Center[]>([]);
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
-	const [selectedCenter, setSelectedCenter] = useState<string>(
-		'Tất cả các trung tâm',
-	);
 
 	useEffect(() => {
 		const fetchCenters = async () => {
 			try {
 				const data = await getAllCenter();
 				setCenters(data);
+				if (data.length > 0 && !selectedCenter) {
+					onSelectCenter(data[0]);
+				}
 			} catch {
-				setError('Failed to fetch centers');
+				setError('Lỗi truy xuất dữ liệu các Trung tâm');
 			} finally {
 				setLoading(false);
 			}
 		};
 
 		fetchCenters();
-	}, []);
+	}, [selectedCenter, onSelectCenter]);
 
 	const handleMenuClick = (e: { key: string }) => {
-		if (e.key === 'all') {
-			setSelectedCenter('Tất cả các trung tâm');
-			onSelectCenter(null);
-		} else {
-			const selected = centers.find((center) => center._id === e.key);
-			if (selected) {
-				setSelectedCenter(selected.name);
-				onSelectCenter(selected);
-			}
+		const selected = centers.find((center) => center._id === e.key);
+		if (selected) {
+			onSelectCenter(selected);
 		}
 	};
 
-	const items = [
-		{
-			label: 'Tất cả các trung tâm',
-			key: 'all',
-		},
-		...centers.map((center) => ({
-			label: center.name,
-			key: center._id,
-			icon: <EnvironmentOutlined />,
-		})),
-	];
+	const items = centers.map((center) => ({
+		label: center.name,
+		key: center._id,
+		icon: <EnvironmentOutlined />,
+	}));
 
 	const menuProps = {
 		items,
@@ -76,11 +70,11 @@ const DropdownCenter: React.FC<DropdownCenterProps> = ({ onSelectCenter }) => {
 	}
 
 	return (
-		<Space wrap>
+		<Space wrap className={className}>
 			<Dropdown menu={menuProps}>
 				<Button>
 					<Space>
-						{selectedCenter}
+						{selectedCenter?.name}
 						<DownOutlined />
 					</Space>
 				</Button>
