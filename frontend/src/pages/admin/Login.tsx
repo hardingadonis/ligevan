@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import '@/assets/styles/global.css';
 import AdminLayout from '@/layouts/admin';
+import { getAdminByUsername } from '@/services/api/admin';
 import { fetchLogin } from '@/services/api/auth';
 
 interface LoginFormValues {
@@ -18,6 +19,8 @@ const AdminLogin: React.FC = () => {
 		try {
 			const { accessToken } = await fetchLogin(values);
 			localStorage.setItem('accessToken', accessToken);
+			const adminDetails = await getAdminByUsername(values.username);
+			localStorage.setItem('adminFullName', adminDetails.fullName);
 			navigate('/admin/dashboard');
 		} catch (error: unknown) {
 			let title = 'Lỗi Đăng Nhập';
