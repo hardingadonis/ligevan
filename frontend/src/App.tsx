@@ -1,6 +1,11 @@
 import { Spin } from 'antd';
 import React, { Suspense, lazy } from 'react';
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import {
+	Navigate,
+	Route,
+	BrowserRouter as Router,
+	Routes,
+} from 'react-router-dom';
 
 import '@/assets/styles/global.css';
 
@@ -21,6 +26,7 @@ const App: React.FC = () => {
 				}
 			>
 				<Routes>
+					<Route index element={<Navigate to="/student" replace />} />
 					<Route path="/student" element={<HomepageStudent />} />
 					<Route path="/teacher" element={<HomePageTeacher />} />
 					<Route path="/teacher/login" element={<LoginTeacher />} />
