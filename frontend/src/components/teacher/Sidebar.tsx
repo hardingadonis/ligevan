@@ -36,12 +36,12 @@ const TeacherSidebar: React.FC<{ defaultSelectedKey?: string }> = ({
 
 	const items: MenuItem[] = [
 		getItem(
-			'Lớp học',
+			'Danh sách lớp',
 			'classes',
 			<TeamOutlined style={{ fontSize: '18px' }} />,
 		),
 		getItem(
-			'Tiết học',
+			'Lịch dạy',
 			'slots',
 			<CalendarOutlined style={{ fontSize: '18px' }} />,
 		),
