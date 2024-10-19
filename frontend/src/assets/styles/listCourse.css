@@ -17,3 +17,32 @@
 		width: 100%;
 	}
 }
+
+/* .css cho CoursesManagement for admin */
+.list-courses-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%; 
+}
+
+.list-courses-header h1.courses-title {
+  margin-bottom: 16px;
+  text-align: left;
+  position: relative;
+  right: 500px; 
+}
+
+.list-courses-header {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 16px;
+}
+
+.table-wrapper {
+  flex: 1;
+  overflow-y: auto;
+  background-color: #fff;
+  padding: 24px;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+	margin-left: 20%;
+}
