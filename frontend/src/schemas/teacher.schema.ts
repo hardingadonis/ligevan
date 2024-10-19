@@ -1,6 +1,8 @@
 import { Center } from '@/schemas/center.schema';
 import { Salary } from '@/schemas/salary.schema';
 
+import { Class } from './class.schema';
+
 export interface Teacher {
 	_id: string;
 	fullName: string;
@@ -12,6 +14,7 @@ export interface Teacher {
 	dob: Date;
 	salaries?: Salary[];
 	center: Center;
+	classes?: Class[];
 	isDeleted?: boolean;
 	createAt?: Date;
 	updateAt?: Date;
