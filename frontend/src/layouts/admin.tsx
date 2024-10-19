@@ -4,7 +4,6 @@ import React, { ReactNode } from 'react';
 import Sidebar from '@/components/admin/Sidebar';
 import Footer from '@/components/commons/Footer';
 import Header from '@/components/commons/Header';
-import HeaderAdmin from '@/components/commons/HeaderAdmin';
 
 const { Content } = Layout;
 
@@ -14,7 +13,7 @@ interface AdminLayoutProps {
 
 const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => (
 	<Layout style={{ minHeight: '100vh' }}>
-		<HeaderAdmin />
+		<Header />
 		<Layout hasSider>
 			<Sidebar />
 			<Content

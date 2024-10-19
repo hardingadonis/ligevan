@@ -1,148 +1,180 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Table } from 'antd';
+import {
+	DeleteOutlined,
+	EditOutlined,
+	PlusOutlined,
+	SearchOutlined,
+} from '@ant-design/icons';
+import { Button, Input, Table } from 'antd';
 import type { TableColumnsType, TableProps } from 'antd';
-import { getAllCenter } from '@/services/api/center';
+import React, { useEffect, useState } from 'react';
+
+import '@/assets/styles/ListCenters.css';
 import { Center } from '@/schemas/center.schema';
-import '@/assets/styles/ListCenters.css'; // Import file CSS
+import { getAllCenter } from '@/services/api/center';
+
+const { Search } = Input;
 
 interface DataType {
-  key: string;
-  name: string;
-  address: string;
-  phone: string;
-  thaotac: JSX.Element;
+	key: string;
+	name: string;
+	address: string;
+	phone: string;
+	thaotac: JSX.Element;
 }
 
 const ListCenters: React.FC = () => {
-  const [data, setData] = useState<DataType[]>([]);
+	const [data, setData] = useState<DataType[]>([]);
+	const [searchText, setSearchText] = useState('');
 
-  // Extract fetchData function
-  const fetchData = async () => {
-    try {
-      const centers: Center[] = await getAllCenter();
-      const tableData = mapCentersToTableData(centers);
-      setData(tableData);
-    } catch (error) {
-      console.error('Lỗi khi lấy danh sách trung tâm:', error);
-    }
-  };
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const centers: Center[] = await getAllCenter();
+				const tableData = centers.map((center, index) => ({
+					key: (index + 1).toString(),
+					name: center.name,
+					address: center.address,
+					phone: center.phone,
+					thaotac: renderActions(center._id),
+				}));
+				setData(tableData);
+			} catch (error) {
+				console.error('Lỗi khi lấy danh sách trung tâm:', error);
+			}
+		};
 
-  // Map centers to table data
-  const mapCentersToTableData = (centers: Center[]): DataType[] => {
-    return centers.map((center, index) => ({
-      key: (index + 1).toString(),
-      name: center.name,
-      address: center.address,
-      phone: center.phone,
-      thaotac: renderActions(center._id),
-    }));
-  };
+		fetchData();
+	}, []);
 
-  // Extract action rendering logic
-  const renderActions = (id: string): JSX.Element => (
-    <>
-      <Button type="primary" onClick={() => handleEdit(id)} style={{ marginRight: 8 }}>
-        Chỉnh sửa
-      </Button>
-      <Button
-        type="primary"
-        danger
-        onClick={() => handleDelete(id)}
-        style={{ backgroundColor: 'red', borderColor: 'red' }}
-      >
-        Xóa
-      </Button>
-    </>
-  );
+	const renderActions = (id: string): JSX.Element => (
+		<>
+			<Button
+				type="primary"
+				icon={<EditOutlined />}
+				onClick={() => handleEdit(id)}
+				style={{ marginRight: 8 }}
+			>
+				Chỉnh sửa
+			</Button>
+			<Button
+				type="primary"
+				danger
+				icon={<DeleteOutlined />}
+				onClick={() => handleDelete(id)}
+				style={{ backgroundColor: 'red', borderColor: 'red' }}
+			>
+				Xóa
+			</Button>
+		</>
+	);
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+	const handleEdit = (id: string) => {
+		console.log(`Chỉnh sửa trung tâm có id: ${id}`);
+	};
 
-  // Handle edit action
-  const handleEdit = (id: string) => {
-    console.log(`Chỉnh sửa trung tâm có id: ${id}`);
-  };
+	const handleDelete = (id: string) => {
+		console.log(`Xóa trung tâm có id: ${id}`);
+	};
 
-  // Handle delete action
-  const handleDelete = (id: string) => {
-    console.log(`Xóa trung tâm có id: ${id}`);
-  };
+	const handleCreateNewCenter = () => {
+		console.log('Tạo trung tâm mới');
+	};
 
-  // Handle create new center
-  const handleCreateNewCenter = () => {
-    console.log('Tạo trung tâm mới');
-  };
+	const handleSearch = (value: string) => {
+		setSearchText(value);
+	};
 
-  const columns: TableColumnsType<DataType> = [
-    {
-      title: 'STT',
-      dataIndex: 'key',
-      sorter: {
-        compare: (a, b) => parseInt(a.key) - parseInt(b.key),
-        multiple: 4,
-      },
-    },
-    {
-      title: 'Tên',
-      dataIndex: 'name',
-      sorter: {
-        compare: (a, b) => a.name.localeCompare(b.name),
-        multiple: 3,
-      },
-    },
-    {
-      title: 'Địa chỉ',
-      dataIndex: 'address',
-      sorter: {
-        compare: (a, b) => a.address.localeCompare(b.address),
-        multiple: 2,
-      },
-    },
-    {
-      title: 'Số điện thoại',
-      dataIndex: 'phone',
-      sorter: {
-        compare: (a, b) => a.phone.localeCompare(b.phone),
-        multiple: 1,
-      },
-    },
-    {
-      title: 'Thao tác',
-      dataIndex: 'thaotac',
-    },
-  ];
+	const filteredData = data.filter((item) =>
+		item.name.toLowerCase().includes(searchText.toLowerCase()),
+	);
 
-  const onChange: TableProps<DataType>['onChange'] = (
-    pagination,
-    filters,
-    sorter,
-    extra
-  ) => {
-    console.log('params', pagination, filters, sorter, extra);
-  };
+	const columns: TableColumnsType<DataType> = [
+		{
+			title: <div style={{ textAlign: 'center' }}>STT</div>,
+			dataIndex: 'key',
+			width: '5%',
+			sorter: (a, b) => parseInt(a.key) - parseInt(b.key),
+		},
+		{
+			title: <div style={{ textAlign: 'center' }}>Tên</div>,
+			dataIndex: 'name',
+			width: '15%',
+			sorter: (a, b) => a.name.localeCompare(b.name),
+		},
+		{
+			title: <div style={{ textAlign: 'center' }}>Địa chỉ</div>,
+			dataIndex: 'address',
+			width: '37%',
+			sorter: (a, b) => a.address.localeCompare(b.address),
+		},
+		{
+			title: <div style={{ textAlign: 'center' }}>Số điện thoại</div>,
+			dataIndex: 'phone',
+			width: '19%',
+			sorter: (a, b) => a.phone.localeCompare(b.phone),
+		},
+		{
+			title: <div style={{ textAlign: 'center' }}>Thao tác</div>,
+			dataIndex: 'thaotac',
+			width: '24%',
+		},
+	];
 
-  return (
-    <div className="list-centers-container">
-      <div className="list-centers-header">
-        <h1 className="center-title">Tất cả các trung tâm</h1>
-      </div>
-      <div className="list-centers-header">
-        <Button type="primary" onClick={handleCreateNewCenter}>
-          Tạo trung tâm mới
-        </Button>
-      </div>
-      <div className="table-wrapper">
-        <Table<DataType>
-          columns={columns}
-          dataSource={data}
-          onChange={onChange}
-          pagination={{ pageSize: 10 }}
-          locale={{ emptyText: 'Không có dữ liệu phù hợp' }}
-        />
-      </div>
-    </div>
-  );
+	const onChange: TableProps<DataType>['onChange'] = (
+		pagination,
+		filters,
+		sorter,
+		extra,
+	) => {
+		console.log('params', pagination, filters, sorter, extra);
+	};
+
+	return (
+		<div style={{ padding: '65px 20px 0 270px', minHeight: '100vh' }}>
+			<div style={{ textAlign: 'center', marginBottom: 20 }}>
+				<h2>Tất cả các trung tâm</h2>
+			</div>
+
+			<div
+				style={{
+					display: 'flex',
+					justifyContent: 'space-between',
+					marginBottom: '20px',
+				}}
+			>
+				<Button
+					type="primary"
+					icon={<PlusOutlined />}
+					onClick={handleCreateNewCenter}
+				>
+					Tạo trung tâm mới
+				</Button>
+				<Search
+					placeholder="Tìm kiếm"
+					onSearch={handleSearch}
+					style={{ width: 200 }}
+					enterButton={<SearchOutlined />}
+				/>
+			</div>
+
+			<div style={{ overflow: 'auto', marginBottom: '60px' }}>
+				<Table<DataType>
+					columns={columns}
+					dataSource={filteredData}
+					onChange={onChange}
+					pagination={{ pageSize: 10 }}
+					rowClassName={(record, index) =>
+						index % 2 === 0 ? 'table-row-even' : 'table-row-odd'
+					}
+					scroll={{ x: true }}
+					style={{
+						backgroundColor: '#fff',
+						borderRadius: '10px',
+					}}
+				/>
+			</div>
+		</div>
+	);
 };
 
 export default ListCenters;

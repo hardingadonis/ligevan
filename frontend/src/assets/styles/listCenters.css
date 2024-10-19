@@ -1,27 +1,27 @@
 .list-centers-container {
   display: flex;
   flex-direction: column;
-  height: 100%; 
+  height: 100%;
 }
 
-.list-centers-header h1.center-title {
-  margin-bottom: 16px;
-  text-align: left;
-  position: relative;
-  right: 500px; 
-}
-
-.list-centers-header {
+.right-header {
+  flex-grow: 1;
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 16px;
 }
 
 .table-wrapper {
-  flex: 1;
-  overflow-y: auto;
-  background-color: #fff;
+  width: 80%;
   padding: 24px;
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
-	margin-left: 20%;
+  margin-left: 20%;
+  overflow-y: auto;
+}
+
+.table-row-even {
+	background-color: #fff; /* Màu nền cho hàng chẵn */
+}
+
+.table-row-odd {
+	background-color: #f6f2f2; /* Màu nền cho hàng lẻ */
 }
