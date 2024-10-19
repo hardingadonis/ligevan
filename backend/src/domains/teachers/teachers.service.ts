@@ -123,9 +123,10 @@ export class TeachersService {
 	}
 
 	async getByEmailWithPassword(email: string) {
-		const teacher = await this.populateTeacher(
-			this.teacherModel.findOne({ email: email, isDeleted: false }),
-		);
+		const teacher = await this.teacherModel
+			.findOne({ email: email, isDeleted: false })
+			.select('-__v')
+			.exec();
 
 		if (!teacher) {
 			this.logger.error(`Teacher with email ${email} not found!`);
