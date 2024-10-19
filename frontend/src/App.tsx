@@ -4,7 +4,9 @@ import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
 const HomepageStudent = lazy(() => import('@/pages/student/Homepage'));
 const AdminDashboard = lazy(() => import('@/pages/admin/Dashboard'));
-const AdminCoursesManagement = lazy(() => import('@/pages/admin/CoursesManagement'));
+const AdminCoursesManagement = lazy(
+	() => import('@/pages/admin/CoursesManagement'),
+);
 
 const App: React.FC = () => {
 	return (
