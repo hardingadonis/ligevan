@@ -1,9 +1,10 @@
+import { Button, Form, Input, Modal } from 'antd';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Form, Input, Button, Modal } from 'antd';
-import { fetchLogin } from '@/services/api/auth';
+
 import '@/assets/styles/global.css';
 import AdminLayout from '@/layouts/admin';
+import { fetchLogin } from '@/services/api/auth';
 
 interface LoginFormValues {
 	username: string;
@@ -23,7 +24,9 @@ const AdminLogin: React.FC = () => {
 			let content = 'Đã xảy ra lỗi không xác định. Vui lòng thử lại.';
 
 			if (typeof error === 'object' && error !== null && 'response' in error) {
-				const err = error as { response: { status: number; data?: { message?: string; } } };
+				const err = error as {
+					response: { status: number; data?: { message?: string } };
+				};
 				const { status, data } = err.response;
 				switch (status) {
 					case 404:
@@ -32,7 +35,9 @@ const AdminLogin: React.FC = () => {
 						break;
 					case 401:
 						title = 'Mật Khẩu Không Đúng';
-						content = data?.message || 'Mật khẩu bạn đã nhập không chính xác. Vui lòng kiểm tra và thử lại.';
+						content =
+							data?.message ??
+							'Mật khẩu bạn đã nhập không chính xác. Vui lòng kiểm tra và thử lại.';
 						break;
 					default:
 						content = data?.message ? `Lỗi: ${data.message}` : content;
@@ -42,14 +47,23 @@ const AdminLogin: React.FC = () => {
 
 			Modal.error({
 				title,
-				content
+				content,
 			});
 		}
 	};
 
 	return (
 		<AdminLayout showSidebar={false}>
-			<div style={{ padding: '60px 40px', maxWidth: '500px', margin: '50px auto', background: '#fff', boxShadow: '0 4px 8px rgba(0,0,0,0.1)', borderRadius: '10px' }}>
+			<div
+				style={{
+					padding: '60px 40px',
+					maxWidth: '500px',
+					margin: '50px auto',
+					background: '#fff',
+					boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+					borderRadius: '10px',
+				}}
+			>
 				<Form
 					onFinish={onFinish}
 					labelCol={{ span: 8 }}
@@ -59,7 +73,9 @@ const AdminLogin: React.FC = () => {
 					<Form.Item
 						label="Tên đăng nhập"
 						name="username"
-						rules={[{ required: true, message: 'Vui lòng nhập tên đăng nhập!' }]}
+						rules={[
+							{ required: true, message: 'Vui lòng nhập tên đăng nhập!' },
+						]}
 					>
 						<Input />
 					</Form.Item>
