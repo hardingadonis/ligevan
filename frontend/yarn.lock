@@ -2453,7 +2453,7 @@ json2mq@^0.2.0:
   dependencies:
     string-convert "^0.2.0"
 
-jwt-decode@^4.0.0:
+jwt-decode@4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/jwt-decode/-/jwt-decode-4.0.0.tgz#2270352425fd413785b2faf11f6e755c5151bd4b"
   integrity sha512-+KJGIyHgkGuIq3IEBNftfhW/LfWhXUIY6OmyVWjliu5KH1y0fw7VQ8YndE2O4qZdMSd9SqbnC8GOcZEy0Om7sA==
@@ -3142,7 +3142,7 @@ react-redux@9.1.2:
     "@types/use-sync-external-store" "^0.0.3"
     use-sync-external-store "^1.0.0"
 
-react-responsive@^10.0.0:
+react-responsive@10.0.0:
   version "10.0.0"
   resolved "https://registry.yarnpkg.com/react-responsive/-/react-responsive-10.0.0.tgz#657c7a90823cd565f43aa5918bd8eb0cd2c91c91"
   integrity sha512-N6/UiRLGQyGUqrarhBZmrSmHi2FXSD++N5VbSKsBBvWfG0ZV7asvUBluSv5lSzdMyEVjzZ6Y8DL4OHABiztDOg==
