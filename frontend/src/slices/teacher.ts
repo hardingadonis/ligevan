@@ -4,12 +4,14 @@ interface TeacherState {
 	token: string | null;
 	avatar: string | null;
 	email: string | null;
+	fullName: string | null;
 }
 
 const initialState: TeacherState = {
 	token: localStorage.getItem('teacherToken'),
-	avatar: null,
 	email: localStorage.getItem('teacherEmail'),
+	avatar: null,
+	fullName: null,
 };
 
 export const teacherSlice = createSlice({
@@ -32,10 +34,13 @@ export const teacherSlice = createSlice({
 		setAvatar: (state, action: PayloadAction<string>) => {
 			state.avatar = action.payload;
 		},
+		setFullName: (state, action: PayloadAction<string>) => {
+			state.fullName = action.payload;
+		},
 	},
 });
 
-export const { setToken, setEmail, setAvatar, clearInfo } =
+export const { setToken, setEmail, setAvatar, setFullName, clearInfo } =
 	teacherSlice.actions;
 
 export const selectToken = (state: { teachers: TeacherState }) =>
@@ -44,5 +49,7 @@ export const selectEmail = (state: { teachers: TeacherState }) =>
 	state.teachers.email;
 export const selectAvatar = (state: { teachers: TeacherState }) =>
 	state.teachers.avatar;
+export const selectFullName = (state: { teachers: TeacherState }) =>
+	state.teachers.fullName;
 
 export default teacherSlice.reducer;

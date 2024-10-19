@@ -1,4 +1,5 @@
 import { Affix, Avatar, Dropdown, Layout, Menu, Typography } from 'antd';
+import { Color } from 'antd/es/color-picker';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -12,12 +13,14 @@ interface HeaderProps {
 	leftComponent?: React.ReactNode;
 	rightComponent?: React.ReactNode;
 	avatarUrl?: string; // Thêm prop cho avatar
+	userFullName?: string;
 }
 
 const Header: React.FC<HeaderProps> = ({
 	leftComponent,
 	rightComponent,
 	avatarUrl,
+	userFullName,
 }) => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
@@ -72,6 +75,9 @@ const Header: React.FC<HeaderProps> = ({
 						paddingRight: '16px',
 					}}
 				>
+					<Title level={4} style={{ color: 'white', paddingRight: '5px' }}>
+						{userFullName}
+					</Title>
 					<Dropdown overlay={menu} trigger={['click']}>
 						<Avatar src={avatarUrl} style={{ cursor: 'pointer' }} />
 					</Dropdown>
