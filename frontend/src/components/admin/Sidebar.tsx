@@ -1,52 +1,81 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { BankOutlined, BookOutlined, DashboardOutlined } from '@ant-design/icons';
-import Sidebar, { MenuItem } from '@/components/commons/Sidebar'; 
+import {
+	BankOutlined,
+	BookOutlined,
+	DashboardOutlined,
+} from '@ant-design/icons';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-const AdminSidebar: React.FC<{ defaultSelectedKey?: string }> = ({ defaultSelectedKey = 'dashboard' }) => {
-  const navigate = useNavigate();
+import Sidebar, { MenuItem } from '@/components/commons/Sidebar';
 
-  const handleMenuClick = (key: string) => {
-    switch (key) {
-      case 'dashboard':
-        navigate('/admin/dashboard');
-        break;
-      case 'centers':
-        navigate('/admin/centers');
-        break;
-      case 'courses':
-        navigate('/admin/courses');
-        break;
-      default:
-        break;
-    }
-  };
+const AdminSidebar: React.FC = () => {
+	const navigate = useNavigate();
+	const location = useLocation();
+	const [selectedKey, setSelectedKey] = useState('dashboard');
 
-  const getItem = (
-    label: React.ReactNode,
-    key: React.Key,
-    icon?: React.ReactNode,
-  ): MenuItem => {
-    return {
-      key,
-      icon,
-      label,
-    } as MenuItem;
-  };
+	useEffect(() => {
+		if (location.pathname.includes('/admin/dashboard')) {
+			setSelectedKey('dashboard');
+		} else if (location.pathname.includes('/admin/centers')) {
+			setSelectedKey('centers');
+		} else if (location.pathname.includes('/admin/courses')) {
+			setSelectedKey('courses');
+		}
+	}, [location.pathname]);
 
-  const items: MenuItem[] = [
-    getItem('Bảng Điều Khiển', 'dashboard', <DashboardOutlined style={{ fontSize: '18px' }} />),
-    getItem('Trung Tâm', 'centers', <BankOutlined style={{ fontSize: '18px' }} />),
-    getItem('Khóa Học', 'courses', <BookOutlined style={{ fontSize: '18px' }} />),
-  ];
+	const handleMenuClick = (key: string) => {
+		switch (key) {
+			case 'dashboard':
+				navigate('/admin/dashboard');
+				break;
+			case 'centers':
+				navigate('/admin/centers');
+				break;
+			case 'courses':
+				navigate('/admin/courses');
+				break;
+			default:
+				break;
+		}
+	};
 
-  return (
-    <Sidebar
-      defaultSelectedKey={defaultSelectedKey}
-      items={items}
-      handleMenuClick={handleMenuClick}
-    />
-  );
+	const getItem = (
+		label: React.ReactNode,
+		key: React.Key,
+		icon?: React.ReactNode,
+	): MenuItem => {
+		return {
+			key,
+			icon,
+			label,
+		} as MenuItem;
+	};
+
+	const items: MenuItem[] = [
+		getItem(
+			'Bảng Điều Khiển',
+			'dashboard',
+			<DashboardOutlined style={{ fontSize: '18px' }} />,
+		),
+		getItem(
+			'Trung Tâm',
+			'centers',
+			<BankOutlined style={{ fontSize: '18px' }} />,
+		),
+		getItem(
+			'Khóa Học',
+			'courses',
+			<BookOutlined style={{ fontSize: '18px' }} />,
+		),
+	];
+
+	return (
+		<Sidebar
+			selectedKey={selectedKey}
+			items={items}
+			handleMenuClick={handleMenuClick}
+		/>
+	);
 };
 
 export default AdminSidebar;
