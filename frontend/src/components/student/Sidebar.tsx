@@ -1,11 +1,10 @@
 import { HistoryOutlined, TeamOutlined, UserOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
-import Sidebar, { MenuItem } from '@/components/commons/Sidebar';
+import Sidebar, { MenuItem, getItem } from '@/components/commons/SIdebar';
 
 const StudentSidebar: React.FC = () => {
-	const navigate = useNavigate();
 	const location = useLocation();
 	const [selectedKey, setSelectedKey] = useState('profile');
 
@@ -18,34 +17,6 @@ const StudentSidebar: React.FC = () => {
 			setSelectedKey('paymentHistory');
 		}
 	}, [location.pathname]);
-
-	const handleMenuClick = (key: string) => {
-		switch (key) {
-			case 'profile':
-				navigate('/student/profile');
-				break;
-			case 'classList':
-				navigate('/student/classes');
-				break;
-			case 'paymentHistory':
-				navigate('/student/payment-history');
-				break;
-			default:
-				break;
-		}
-	};
-
-	const getItem = (
-		label: React.ReactNode,
-		key: React.Key,
-		icon?: React.ReactNode,
-	): MenuItem => {
-		return {
-			key,
-			icon,
-			label,
-		} as MenuItem;
-	};
 
 	const items: MenuItem[] = [
 		getItem('Hồ sơ', 'profile', <UserOutlined style={{ fontSize: '18px' }} />),
@@ -61,12 +32,14 @@ const StudentSidebar: React.FC = () => {
 		),
 	];
 
+	const menuConfig = {
+		profile: '/student/profile',
+		classList: '/student/classes',
+		paymentHistory: '/student/payment-history',
+	};
+
 	return (
-		<Sidebar
-			selectedKey={selectedKey}
-			items={items}
-			handleMenuClick={handleMenuClick}
-		/>
+		<Sidebar selectedKey={selectedKey} items={items} menuConfig={menuConfig} />
 	);
 };
 
