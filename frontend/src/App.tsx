@@ -32,7 +32,7 @@ const App: React.FC = () => {
 					<Route
 						path="/student/profile"
 						element={
-							<ProtectedRoute redirectPath="/student/login" tokenName="token">
+							<ProtectedRoute redirectPath="/student" tokenName="token">
 								<StudentProfile />
 							</ProtectedRoute>
 						}
