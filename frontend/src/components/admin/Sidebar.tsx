@@ -3,43 +3,28 @@ import {
 	BookOutlined,
 	DashboardOutlined,
 } from '@ant-design/icons';
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
-import Sidebar, { MenuItem } from '@/components/commons/Sidebar';
+import Sidebar, { MenuItem, getItem } from '@/components/commons/Sidebar';
 
-const AdminSidebar: React.FC<{ defaultSelectedKey?: string }> = ({
-	defaultSelectedKey = 'dashboard',
-}) => {
-	const navigate = useNavigate();
+const AdminSidebar: React.FC = () => {
+	const location = useLocation();
+	const [selectedKey, setSelectedKey] = useState('dashboard');
 
-	const handleMenuClick = (key: string) => {
-		switch (key) {
-			case 'dashboard':
-				navigate('/admin/dashboard');
-				break;
-			case 'centers':
-				navigate('/admin/centers');
-				break;
-			case 'courses':
-				navigate('/admin/courses');
-				break;
-			default:
-				break;
-		}
+	const routeToKeyMap = {
+		'/admin/dashboard': 'dashboard',
+		'/admin/centers': 'centers',
+		'/admin/courses': 'courses',
 	};
 
-	const getItem = (
-		label: React.ReactNode,
-		key: React.Key,
-		icon?: React.ReactNode,
-	): MenuItem => {
-		return {
-			key,
-			icon,
-			label,
-		} as MenuItem;
-	};
+	useEffect(() => {
+		const activeKey =
+			Object.keys(routeToKeyMap).find((key) =>
+				location.pathname.startsWith(key),
+			) ?? 'dashboard';
+		setSelectedKey(routeToKeyMap[activeKey as keyof typeof routeToKeyMap]);
+	}, [location.pathname]);
 
 	const items: MenuItem[] = [
 		getItem(
@@ -59,12 +44,14 @@ const AdminSidebar: React.FC<{ defaultSelectedKey?: string }> = ({
 		),
 	];
 
+	const menuConfig = {
+		dashboard: '/admin/dashboard',
+		centers: '/admin/centers',
+		courses: '/admin/courses',
+	};
+
 	return (
-		<Sidebar
-			defaultSelectedKey={defaultSelectedKey}
-			items={items}
-			handleMenuClick={handleMenuClick}
-		/>
+		<Sidebar selectedKey={selectedKey} items={items} menuConfig={menuConfig} />
 	);
 };
 

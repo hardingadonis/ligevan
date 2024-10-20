@@ -8,6 +8,7 @@ import {
 } from 'react-router-dom';
 
 import '@/assets/styles/global.css';
+import ProtectedRoute from '@/components/admin/ProtectedRoute';
 
 import ProtectedRoute from './components/commons/ProtectedRoute';
 import StudentProfile from './pages/student/Profile';
@@ -19,6 +20,7 @@ const AdminCoursesManagement = lazy(
 	() => import('@/pages/admin/CoursesManagement'),
 );
 const LoginTeacher = lazy(() => import('@/pages/teacher/Login'));
+const AdminLogin = lazy(() => import('@/pages/admin/Login'));
 
 const AdminCentersManagement = lazy(
 	() => import('@/pages/admin/CentersManagement'),
@@ -51,6 +53,20 @@ const App: React.FC = () => {
 					<Route path="/admin/dashboard" element={<AdminDashboard />} />
 					<Route path="/admin/centers" element={<AdminCentersManagement />} />
 					<Route path="/admin/courses" element={<AdminCoursesManagement />} />
+					<Route path="/admin/login" element={<AdminLogin />} />
+					<Route
+						path="/admin"
+						element={<Navigate replace to="/admin/dashboard" />}
+					/>
+
+					<Route
+						path="/admin/dashboard"
+						element={
+							<ProtectedRoute>
+								<AdminDashboard />
+							</ProtectedRoute>
+						}
+					/>
 				</Routes>
 			</Suspense>
 		</Router>
