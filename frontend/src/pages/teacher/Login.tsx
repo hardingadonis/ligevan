@@ -37,7 +37,7 @@ const LoginTeacher: React.FC = () => {
 	useEffect(() => {
 		const token = localStorage.getItem('teacherToken');
 		if (token) {
-			navigate('/teacher');
+			navigate('/teacher/classes');
 		}
 	}, [navigate]);
 
@@ -57,7 +57,7 @@ const LoginTeacher: React.FC = () => {
 			localStorage.setItem('teacherToken', response.data.access_token);
 			localStorage.setItem('teacherEmail', values.email);
 
-			navigate('/teacher');
+			navigate('/teacher/classes');
 		} catch (error: any) {
 			setError('Đăng nhập thất bại. Vui lòng kiểm tra lại email và mật khẩu.');
 			console.error(

@@ -1,13 +1,18 @@
 import { Alert, Button, Card, Col, Input, Row, Spin, Table } from 'antd';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import TeacherLayout from '@/layouts/teacher';
 import { Class } from '@/schemas/class.schema';
 import { Teacher } from '@/schemas/teacher.schema';
-import { selectEmail, selectToken } from '@/slices/teacher';
+import {
+	selectEmail,
+	selectToken,
+	setAvatar,
+	setFullName,
+} from '@/slices/teacher';
 import { apiBaseUrl } from '@/utils/apiBase';
 
 const { Search } = Input;
@@ -15,14 +20,37 @@ const { Search } = Input;
 const ClassesPage: React.FC = () => {
 	const email = useSelector(selectEmail);
 	const token = useSelector(selectToken);
+	const [isMounted, setIsMounted] = useState(false);
+	const dispatch = useDispatch();
 
 	const navigate = useNavigate();
+
+	// useEffect(() => {
+	// 	if (!token) {
+	// 		navigate('../teacher/login');
+
+	// 	}
+	// 	setIsMounted(true);
+	// }, [token, navigate]);
 
 	useEffect(() => {
 		if (!token) {
 			navigate('../teacher/login');
 		}
-	}, [token, navigate]);
+
+		async function fetchMyAPI() {
+			const responseAvatar = await axios.get(
+				apiBaseUrl + `/api/teachers/email/${email}`,
+			);
+
+			if (responseAvatar.data.avatar && responseAvatar.data.fullName) {
+				dispatch(setAvatar(responseAvatar.data.avatar));
+				dispatch(setFullName(responseAvatar.data.fullName));
+			}
+		}
+		fetchMyAPI();
+		setIsMounted(true);
+	}, [token, email, dispatch, navigate]);
 
 	const [classes, setClasses] = useState<Class[]>([]);
 	const [loading, setLoading] = useState<boolean>(false);
@@ -112,44 +140,51 @@ const ClassesPage: React.FC = () => {
 	const filteredClasses = classes.filter((cls) =>
 		cls.name.toLowerCase().includes(searchValue.toLowerCase()),
 	);
-
-	return (
-		<TeacherLayout>
-			<Row justify="center" style={{ padding: '16px 0' }}>
-				<Col xs={24} lg={20}>
-					<Card
-						bordered={false}
-						style={{ boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)' }}
-					>
-						<h2 style={{ textAlign: 'center' }}>DANH SÁCH CÁC LỚP HỌC</h2>
-						<Row justify="end" style={{ marginBottom: 16 }}>
-							<Col>
-								<Search
-									placeholder="Tìm kiếm"
-									onSearch={(value) => setSearchValue(value)}
-									style={{ width: 200 }}
+	if (!isMounted) {
+		return null;
+	} else
+		return (
+			<TeacherLayout>
+				<Row justify="center" style={{ padding: '16px 0' }}>
+					<Col xs={24} lg={20}>
+						<Card
+							bordered={false}
+							style={{ boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)' }}
+						>
+							<h2 style={{ textAlign: 'center' }}>DANH SÁCH CÁC LỚP HỌC</h2>
+							<Row justify="end" style={{ marginBottom: 16 }}>
+								<Col>
+									<Search
+										placeholder="Tìm kiếm"
+										onSearch={(value) => setSearchValue(value)}
+										style={{ width: 200 }}
+									/>
+								</Col>
+							</Row>
+							{loading && <Spin size="large" />}
+							{error && (
+								<Alert
+									message="Lỗi"
+									description={error}
+									type="error"
+									showIcon
 								/>
-							</Col>
-						</Row>
-						{loading && <Spin size="large" />}
-						{error && (
-							<Alert message="Lỗi" description={error} type="error" showIcon />
-						)}
-						{!loading && !error && (
-							<Table
-								columns={columns}
-								dataSource={filteredClasses}
-								rowKey="_id"
-								pagination={{ pageSize: 10 }}
-								scroll={{ x: 'max-content' }}
-								style={{ whiteSpace: 'nowrap' }}
-							/>
-						)}
-					</Card>
-				</Col>
-			</Row>
-		</TeacherLayout>
-	);
+							)}
+							{!loading && !error && (
+								<Table
+									columns={columns}
+									dataSource={filteredClasses}
+									rowKey="_id"
+									pagination={{ pageSize: 10 }}
+									scroll={{ x: 'max-content' }}
+									style={{ whiteSpace: 'nowrap' }}
+								/>
+							)}
+						</Card>
+					</Col>
+				</Row>
+			</TeacherLayout>
+		);
 };
 
 export default ClassesPage;
