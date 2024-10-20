@@ -16,7 +16,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({
 	children,
 	showSidebar = true,
 }) => (
-	<Layout style={{ minHeight: '100vh' }}>
+	<Layout style={{ minHeight: '100vh', position: 'relative' }}>
 		<AdminHeader />
 		<Layout hasSider={showSidebar}>
 			{showSidebar && <Sidebar />}
