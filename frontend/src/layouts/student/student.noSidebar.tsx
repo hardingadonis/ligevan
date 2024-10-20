@@ -16,7 +16,7 @@ interface StudentLayoutProps {
 	onSelectCenter?: (center: Center | null) => void;
 }
 
-const StudentLayout: React.FC<StudentLayoutProps> = ({
+const StudentLayoutNoSidebar: React.FC<StudentLayoutProps> = ({
 	children,
 	onSelectCenter,
 }) => {
@@ -62,4 +62,4 @@ const StudentLayout: React.FC<StudentLayoutProps> = ({
 	);
 };
 
-export default StudentLayout;
+export default StudentLayoutNoSidebar;

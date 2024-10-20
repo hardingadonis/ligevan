@@ -9,6 +9,8 @@ import {
 
 import '@/assets/styles/global.css';
 
+import StudentProfile from './pages/student/Profile';
+
 const HomepageStudent = lazy(() => import('@/pages/student/Homepage'));
 const AdminDashboard = lazy(() => import('@/pages/admin/Dashboard'));
 
@@ -26,6 +28,7 @@ const App: React.FC = () => {
 					<Route index element={<Navigate to="/student" replace />} />
 					<Route path="/student" element={<HomepageStudent />} />
 					<Route path="/student/login" element={<HomepageStudent />} />
+					<Route path="/student/profile" element={<StudentProfile />} />
 					<Route path="/admin/dashboard" element={<AdminDashboard />} />
 				</Routes>
 			</Suspense>

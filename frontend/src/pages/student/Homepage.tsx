@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 
 import ListCourse from '@/components/student/ListCourse';
-import StudentLayout from '@/layouts/student';
+import StudentLayoutNoSidebar from '@/layouts/student/student.noSidebar';
 import { Center } from '@/schemas/center.schema';
 
 const HomepageStudent: React.FC = () => {
 	const [selectedCenter, setSelectedCenter] = useState<Center | null>(null);
 
 	return (
-		<StudentLayout onSelectCenter={setSelectedCenter}>
+		<StudentLayoutNoSidebar onSelectCenter={setSelectedCenter}>
 			<ListCourse selectedCenter={selectedCenter} />
-		</StudentLayout>
+		</StudentLayoutNoSidebar>
 	);
 };
 
