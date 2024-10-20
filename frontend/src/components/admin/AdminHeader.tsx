@@ -25,7 +25,7 @@ const HeaderAdmin: React.FC = () => {
 	);
 
 	const rightComponent = accessToken ? (
-		<>
+		<div>
 			<Dropdown overlay={menu} trigger={['click']}>
 				<div>
 					<Text style={{ color: 'white', paddingRight: '15px' }}>
@@ -38,7 +38,7 @@ const HeaderAdmin: React.FC = () => {
 					/>
 				</div>
 			</Dropdown>
-		</>
+		</div>
 	) : null;
 
 	return <Header rightComponent={rightComponent} />;
