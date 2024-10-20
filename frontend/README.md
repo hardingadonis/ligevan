@@ -48,4 +48,4 @@ Create a `.env` file there and add the following environment variables:
   docker run -d -p 8080:80 --env-file .env ghcr.io/hardingadonis/ligevan-frontend:latest
   ```
 
-- Step 4: Open the browser and navigate to [http://localhost:8080](http://localhost:8080)
+- Step 4: Open the browser and navigate to link [http://localhost:8080](http://localhost:8080)
