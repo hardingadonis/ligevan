@@ -1,9 +1,20 @@
 import { Spin } from 'antd';
 import React, { Suspense, lazy } from 'react';
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import {
+	Navigate,
+	Route,
+	BrowserRouter as Router,
+	Routes,
+} from 'react-router-dom';
+
+import '@/assets/styles/global.css';
 
 const HomepageStudent = lazy(() => import('@/pages/student/Homepage'));
 const AdminDashboard = lazy(() => import('@/pages/admin/Dashboard'));
+
+const AdminCentersManagement = lazy(
+	() => import('@/pages/admin/CentersManagement'),
+);
 
 const App: React.FC = () => {
 	return (
@@ -16,8 +27,12 @@ const App: React.FC = () => {
 				}
 			>
 				<Routes>
+					<Route index element={<Navigate to="/student" replace />} />
 					<Route path="/student" element={<HomepageStudent />} />
+					<Route path="/student/login" element={<HomepageStudent />} />
 					<Route path="/admin/dashboard" element={<AdminDashboard />} />
+
+					<Route path="/admin/centers" element={<AdminCentersManagement />} />
 				</Routes>
 			</Suspense>
 		</Router>
