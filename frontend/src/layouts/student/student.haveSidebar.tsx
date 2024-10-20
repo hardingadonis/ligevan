@@ -24,19 +24,19 @@ const StudentLayoutWithSidebar: React.FC<StudentLayoutProps> = ({
 			key: 'profile',
 			icon: <UserOutlined />,
 			label: 'Hồ sơ',
-			link: '/student/profile',
+			// link: '/student/profile',
 		},
 		{
 			key: 'classList',
 			icon: <TeamOutlined />,
 			label: 'Danh sách lớp',
-			link: '/student/classes',
+			// link: '/student/classes',
 		},
 		{
 			key: 'paymentHistory',
 			icon: <HistoryOutlined />,
 			label: 'Lịch sử thanh toán',
-			link: '/student/payment-history',
+			// link: '/student/payment-history',
 		},
 	];
 
