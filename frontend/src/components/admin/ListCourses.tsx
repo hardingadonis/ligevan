@@ -1,4 +1,10 @@
-import { Button, Table } from 'antd';
+import {
+	DeleteOutlined,
+	EditOutlined,
+	PlusOutlined,
+	SearchOutlined,
+} from '@ant-design/icons';
+import { Button, Input, Table } from 'antd';
 import type { TableColumnsType, TableProps } from 'antd';
 import React, { useEffect, useState } from 'react';
 
@@ -11,38 +17,38 @@ interface DataType {
 	code: string;
 	title: string;
 	price: number;
-	action: JSX.Element;
+	actions: JSX.Element;
 }
 
 const ListCourses: React.FC = () => {
 	const [data, setData] = useState<DataType[]>([]);
+	const [searchText, setSearchText] = useState('');
 
-	// Fetch courses data
-	const fetchData = async () => {
-		try {
-			const courses: Course[] = await getAllCourse();
-			const tableData = mapCoursesToTableData(courses);
-			setData(tableData);
-		} catch (error) {
-			console.error('Error fetching courses:', error);
-		}
-	};
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const courses: Course[] = await getAllCourse();
+				const tableData = courses.map((course, index) => ({
+					key: (index + 1).toString(),
+					code: course.code,
+					title: course.title,
+					price: course.price,
+					actions: renderActions(course._id),
+				}));
+				setData(tableData);
+			} catch (error) {
+				console.error('Lỗi khi lấy danh sách khóa học:', error);
+			}
+		};
 
-	const mapCoursesToTableData = (courses: Course[]): DataType[] => {
-		return courses.map((course, index) => ({
-			key: (index + 1).toString(),
-			code: course.code,
-			title: course.title,
-			price: course.price,
-			action: renderActions(course._id),
-		}));
-	};
+		fetchData();
+	}, []);
 
-	// Render action buttons for each course
 	const renderActions = (id: string): JSX.Element => (
 		<>
 			<Button
 				type="primary"
+				icon={<EditOutlined />}
 				onClick={() => handleEdit(id)}
 				style={{ marginRight: 8 }}
 			>
@@ -51,6 +57,7 @@ const ListCourses: React.FC = () => {
 			<Button
 				type="primary"
 				danger
+				icon={<DeleteOutlined />}
 				onClick={() => handleDelete(id)}
 				style={{ backgroundColor: 'red', borderColor: 'red' }}
 			>
@@ -59,61 +66,69 @@ const ListCourses: React.FC = () => {
 		</>
 	);
 
-	useEffect(() => {
-		fetchData();
-	}, []);
-
-	// Handle edit action
 	const handleEdit = (id: string) => {
-		console.log(`Chỉnh sửa khóa học với id: ${id}`);
+		console.log(`Chỉnh sửa khóa học có id: ${id}`);
 	};
 
-	// Handle delete action
 	const handleDelete = (id: string) => {
 		console.log(`Xóa khóa học có id: ${id}`);
 	};
 
-	// Handle creating new course
 	const handleCreateNewCourse = () => {
 		console.log('Tạo khóa học mới');
 	};
 
+	const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setSearchText(e.target.value);
+	};
+
+	// Hàm lọc dữ liệu theo nhiều trường
+	const filteredData = data.filter(
+		(item) =>
+			// Kiểm tra xem giá trị trong các trường STT, mã khóa học, tiêu đề, giá có khớp với từ khóa tìm kiếm không
+			item.key.toLowerCase().includes(searchText.toLowerCase()) ||
+			item.code.toLowerCase().includes(searchText.toLowerCase()) ||
+			item.title.toLowerCase().includes(searchText.toLowerCase()) ||
+			item.price.toString().toLowerCase().includes(searchText.toLowerCase()),
+	);
+
 	const columns: TableColumnsType<DataType> = [
 		{
-			title: 'STT',
+			title: <div style={{ textAlign: 'center' }}>STT</div>,
 			dataIndex: 'key',
-			sorter: {
-				compare: (a, b) => parseInt(a.key) - parseInt(b.key),
-				multiple: 4,
-			},
+			width: '5%',
+			sorter: (a, b) => parseInt(a.key) - parseInt(b.key),
 		},
 		{
-			title: 'Mã khóa học',
+			title: <div style={{ textAlign: 'center' }}>Mã khóa học</div>,
 			dataIndex: 'code',
-			sorter: {
-				compare: (a, b) => a.code.localeCompare(b.code),
-				multiple: 3,
-			},
+			width: '15%',
+			sorter: (a, b) => a.code.localeCompare(b.code),
 		},
 		{
-			title: 'Tiêu đề',
+			title: <div style={{ textAlign: 'center' }}>Tiêu đề</div>,
 			dataIndex: 'title',
-			sorter: {
-				compare: (a, b) => a.title.localeCompare(b.title),
-				multiple: 2,
-			},
+			width: '40%',
+			sorter: (a, b) => a.title.localeCompare(b.title),
 		},
 		{
-			title: 'Giá',
+			title: <div style={{ textAlign: 'center' }}>Giá</div>,
 			dataIndex: 'price',
-			sorter: {
-				compare: (a, b) => a.price - b.price,
-				multiple: 1,
-			},
+			width: '15%',
+			sorter: (a, b) => a.price - b.price,
+			render: (price) => (
+				<div style={{ textAlign: 'right' }}>
+					{new Intl.NumberFormat('vi-VN', {
+						style: 'currency',
+						currency: 'VND',
+					}).format(price)}
+				</div>
+			),
 		},
 		{
-			title: 'Thao tác',
-			dataIndex: 'action',
+			title: <div style={{ textAlign: 'center' }}>Thao tác</div>,
+			dataIndex: 'actions',
+			width: '25%',
 		},
 	];
 
@@ -127,22 +142,47 @@ const ListCourses: React.FC = () => {
 	};
 
 	return (
-		<div className="list-courses-container">
-			<div className="list-courses-header">
-				<h1 className="courses-title">Tất cả các khóa học</h1>
+		<div style={{ padding: '65px 20px 0 270px', minHeight: '100vh' }}>
+			<div style={{ textAlign: 'center', marginBottom: 20 }}>
+				<h2>Tất cả các khóa học</h2>
 			</div>
-			<div className="list-courses-header">
-				<Button type="primary" onClick={handleCreateNewCourse}>
+
+			<div
+				style={{
+					display: 'flex',
+					justifyContent: 'space-between',
+					marginBottom: '20px',
+				}}
+			>
+				<Button
+					type="primary"
+					icon={<PlusOutlined />}
+					onClick={handleCreateNewCourse}
+				>
 					Tạo khóa học mới
 				</Button>
+				<Input
+					placeholder="Tìm kiếm"
+					onChange={handleSearch}
+					style={{ width: 200 }}
+					prefix={<SearchOutlined />}
+				/>
 			</div>
-			<div className="table-wrapper">
+
+			<div style={{ overflow: 'auto', marginBottom: '60px' }}>
 				<Table<DataType>
 					columns={columns}
-					dataSource={data}
+					dataSource={filteredData}
 					onChange={onChange}
 					pagination={{ pageSize: 10 }}
-					locale={{ emptyText: 'Không có dữ liệu có sẵn' }}
+					rowClassName={(record, index) =>
+						index % 2 === 0 ? 'table-row-even' : 'table-row-odd'
+					}
+					scroll={{ x: true }}
+					style={{
+						backgroundColor: '#fff',
+						borderRadius: '10px',
+					}}
 				/>
 			</div>
 		</div>
