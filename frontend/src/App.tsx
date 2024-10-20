@@ -8,7 +8,6 @@ import {
 } from 'react-router-dom';
 
 import '@/assets/styles/global.css';
-
 import ProtectedRoute from '@/components/admin/ProtectedRoute';
 
 const HomepageStudent = lazy(() => import('@/pages/student/Homepage'));
@@ -29,7 +28,6 @@ const App: React.FC = () => {
 					<Route index element={<Navigate to="/student" replace />} />
 					<Route path="/student" element={<HomepageStudent />} />
 					<Route path="/student/login" element={<HomepageStudent />} />
-					<Route path="/admin/dashboard" element={<AdminDashboard />} />
 					<Route path="/admin/login" element={<AdminLogin />} />
 					<Route
 						path="/admin"

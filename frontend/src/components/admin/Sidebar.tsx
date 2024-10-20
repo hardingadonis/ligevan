@@ -4,52 +4,27 @@ import {
 	DashboardOutlined,
 } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
-import Sidebar, { MenuItem } from '@/components/commons/Sidebar';
+import Sidebar, { MenuItem, getItem } from '@/components/commons/Sidebar';
 
 const AdminSidebar: React.FC = () => {
-	const navigate = useNavigate();
 	const location = useLocation();
 	const [selectedKey, setSelectedKey] = useState('dashboard');
 
+	const routeToKeyMap = {
+		'/admin/dashboard': 'dashboard',
+		'/admin/centers': 'centers',
+		'/admin/courses': 'courses',
+	};
+
 	useEffect(() => {
-		if (location.pathname.includes('/admin/dashboard')) {
-			setSelectedKey('dashboard');
-		} else if (location.pathname.includes('/admin/centers')) {
-			setSelectedKey('centers');
-		} else if (location.pathname.includes('/admin/courses')) {
-			setSelectedKey('courses');
-		}
+		const activeKey =
+			Object.keys(routeToKeyMap).find((key) =>
+				location.pathname.startsWith(key),
+			) ?? 'dashboard';
+		setSelectedKey(routeToKeyMap[activeKey as keyof typeof routeToKeyMap]);
 	}, [location.pathname]);
-
-	const handleMenuClick = (key: string) => {
-		switch (key) {
-			case 'dashboard':
-				navigate('/admin/dashboard');
-				break;
-			case 'centers':
-				navigate('/admin/centers');
-				break;
-			case 'courses':
-				navigate('/admin/courses');
-				break;
-			default:
-				break;
-		}
-	};
-
-	const getItem = (
-		label: React.ReactNode,
-		key: React.Key,
-		icon?: React.ReactNode,
-	): MenuItem => {
-		return {
-			key,
-			icon,
-			label,
-		} as MenuItem;
-	};
 
 	const items: MenuItem[] = [
 		getItem(
@@ -69,12 +44,14 @@ const AdminSidebar: React.FC = () => {
 		),
 	];
 
+	const menuConfig = {
+		dashboard: '/admin/dashboard',
+		centers: '/admin/centers',
+		courses: '/admin/courses',
+	};
+
 	return (
-		<Sidebar
-			selectedKey={selectedKey}
-			items={items}
-			handleMenuClick={handleMenuClick}
-		/>
+		<Sidebar selectedKey={selectedKey} items={items} menuConfig={menuConfig} />
 	);
 };
 
