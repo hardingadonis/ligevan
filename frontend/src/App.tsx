@@ -10,8 +10,8 @@ import {
 import '@/assets/styles/global.css';
 import ProtectedRoute from '@/components/admin/ProtectedRoute';
 
-import ProtectedRoute from './components/commons/ProtectedRoute';
-import StudentProfile from './pages/student/Profile';
+import ProtectedRoute from '@/components/commons/ProtectedRoute';
+import StudentProfile from '@/pages/student/Profile';
 
 const HomepageStudent = lazy(() => import('@/pages/student/Homepage'));
 const ClassesPage = lazy(() => import('@/pages/teacher/Classes'));

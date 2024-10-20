@@ -1,7 +1,6 @@
 import { Center } from '@/schemas/center.schema';
+import { Class } from '@/schemas/class.schema';
 import { Salary } from '@/schemas/salary.schema';
-
-import { Class } from './class.schema';
 
 export interface Teacher {
 	_id: string;

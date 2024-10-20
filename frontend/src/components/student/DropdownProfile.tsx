@@ -3,7 +3,7 @@ import {
 	ScheduleOutlined,
 	UserOutlined,
 } from '@ant-design/icons';
-import { Avatar, Divider, Dropdown, Menu, Spin, Typography } from 'antd';
+import { Avatar, Dropdown, Menu, Spin, Typography } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 
