@@ -4,9 +4,8 @@ import React, { useEffect, useState } from 'react';
 
 import '@/assets/styles/detailStudent.css';
 import { Student } from '@/schemas/student.schema';
-import { getStudentByEmail } from '@/services/api/student';
+import { fetchStudentData } from '@/services/custom/getStudentbyToken';
 import { formatDateToVietnamTimezone } from '@/utils/dateFormat';
-import { decodeToken } from '@/utils/jwtDecode';
 
 const { Title } = Typography;
 
@@ -17,15 +16,7 @@ const DetailStudent: React.FC = () => {
 	useEffect(() => {
 		const fetchStudent = async () => {
 			try {
-				const token = localStorage.getItem('token');
-				if (!token) {
-					throw new Error('No token found');
-				}
-
-				const decoded = decodeToken(token);
-				const email = decoded.sub;
-
-				const studentData = await getStudentByEmail(email);
+				const studentData = await fetchStudentData();
 				setStudent(studentData);
 			} catch (error) {
 				console.error('Error fetching student:', error);
