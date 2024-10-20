@@ -1,11 +1,13 @@
-import { Button, Form, Input, Modal } from 'antd';
-import React from 'react';
+import { Button, Col, Form, Input, Modal, Row, Typography } from 'antd';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import '@/assets/styles/global.css';
 import AdminLayout from '@/layouts/admin';
 import { getAdminByUsername } from '@/services/api/admin';
 import { fetchLogin } from '@/services/api/auth';
+
+const { Title } = Typography;
 
 interface LoginFormValues {
 	username: string;
@@ -14,8 +16,11 @@ interface LoginFormValues {
 
 const AdminLogin: React.FC = () => {
 	const navigate = useNavigate();
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState<string | null>(null);
 
 	const onFinish = async (values: LoginFormValues) => {
+		setLoading(true);
 		try {
 			const { accessToken } = await fetchLogin(values);
 			localStorage.setItem('accessToken', accessToken);
@@ -23,8 +28,7 @@ const AdminLogin: React.FC = () => {
 			localStorage.setItem('adminFullName', adminDetails.fullName);
 			navigate('/admin/dashboard');
 		} catch (error: unknown) {
-			let title = 'Lỗi Đăng Nhập';
-			let content = 'Đã xảy ra lỗi không xác định. Vui lòng thử lại.';
+			let errorMessage = 'Đã xảy ra lỗi không xác định. Vui lòng thử lại.';
 
 			if (typeof error === 'object' && error !== null && 'response' in error) {
 				const err = error as {
@@ -33,71 +37,117 @@ const AdminLogin: React.FC = () => {
 				const { status, data } = err.response;
 				switch (status) {
 					case 404:
-						title = 'Tài Khoản Không Tồn Tại';
-						content = `Không tìm thấy tài khoản quản trị viên với tên đăng nhập "${values.username}".`;
+						errorMessage = `Không tìm thấy tài khoản quản trị viên "${values.username}".`;
 						break;
 					case 401:
-						title = 'Mật Khẩu Không Đúng';
-						content =
-							data?.message ??
-							'Mật khẩu bạn đã nhập không chính xác. Vui lòng kiểm tra và thử lại.';
+						errorMessage =
+							data?.message ?? 'Mật khẩu bạn đã nhập không chính xác.';
 						break;
 					default:
-						content = data?.message ? `Lỗi: ${data.message}` : content;
+						errorMessage = data?.message
+							? `Lỗi: ${data.message}`
+							: errorMessage;
 						break;
 				}
 			}
 
-			Modal.error({
-				title,
-				content,
-			});
+			setError(errorMessage);
+		} finally {
+			setLoading(false);
 		}
+	};
+
+	const handleCloseError = () => {
+		setError(null);
 	};
 
 	return (
 		<AdminLayout showSidebar={false}>
-			<div
-				style={{
-					padding: '60px 40px',
-					maxWidth: '500px',
-					margin: '50px auto',
-					background: '#fff',
-					boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
-					borderRadius: '10px',
-				}}
+			<Row
+				justify="center"
+				align="middle"
+				style={{ padding: '20px 0', minHeight: '60vh' }}
 			>
-				<Form
-					onFinish={onFinish}
-					labelCol={{ span: 8 }}
-					wrapperCol={{ span: 16 }}
-					colon={true}
-				>
-					<Form.Item
-						label="Tên đăng nhập"
-						name="username"
-						rules={[
-							{ required: true, message: 'Vui lòng nhập tên đăng nhập!' },
-						]}
+				{' '}
+				<Col xs={22} sm={18} md={12} lg={8}>
+					<div
+						style={{
+							backgroundColor: '#fff',
+							padding: '24px',
+							borderRadius: '8px',
+							boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
+						}}
 					>
-						<Input />
-					</Form.Item>
-
-					<Form.Item
-						label="Mật khẩu"
-						name="password"
-						rules={[{ required: true, message: 'Vui lòng nhập mật khẩu!' }]}
-					>
-						<Input.Password />
-					</Form.Item>
-
-					<Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-						<Button type="primary" htmlType="submit" style={{ width: '100%' }}>
+						<div style={{ textAlign: 'center', marginBottom: '8px' }}>
+							{' '}
+							<Title
+								level={3}
+								style={{
+									margin: '4px 0',
+									fontFamily: 'cursive',
+									color: 'black',
+									backgroundColor: '#fff',
+									padding: '2px 0',
+								}}
+							>
+								ligevan
+							</Title>
+						</div>
+						<Title
+							level={2}
+							style={{ textAlign: 'center', marginBottom: '8px' }}
+						>
+							{' '}
 							Đăng nhập
-						</Button>
-					</Form.Item>
-				</Form>
-			</div>
+						</Title>
+						<Form name="login" onFinish={onFinish} layout="vertical">
+							<Form.Item
+								name="username"
+								rules={[
+									{ required: true, message: 'Vui lòng nhập tên đăng nhập!' },
+								]}
+							>
+								<Input placeholder="Tên đăng nhập" />
+							</Form.Item>
+							<Form.Item
+								name="password"
+								rules={[{ required: true, message: 'Vui lòng nhập mật khẩu!' }]}
+							>
+								<Input.Password placeholder="Mật khẩu" />
+							</Form.Item>
+							<Form.Item>
+								<Button
+									type="primary"
+									htmlType="submit"
+									loading={loading}
+									block
+									style={{
+										marginTop: '8px',
+										backgroundColor: 'black',
+										borderColor: 'black',
+									}}
+								>
+									Đăng Nhập
+								</Button>
+							</Form.Item>
+						</Form>
+					</div>
+					{error && (
+						<Modal
+							title="Đăng nhập thất bại"
+							visible={!!error}
+							onCancel={handleCloseError}
+							footer={[
+								<Button key="ok" onClick={handleCloseError}>
+									OK
+								</Button>,
+							]}
+						>
+							<p>{error}</p>
+						</Modal>
+					)}
+				</Col>
+			</Row>
 		</AdminLayout>
 	);
 };
