@@ -9,8 +9,11 @@ import {
 
 import '@/assets/styles/global.css';
 
+import ProtectedRoute from '@/components/admin/ProtectedRoute';
+
 const HomepageStudent = lazy(() => import('@/pages/student/Homepage'));
 const AdminDashboard = lazy(() => import('@/pages/admin/Dashboard'));
+const AdminLogin = lazy(() => import('@/pages/admin/Login'));
 
 const App: React.FC = () => {
 	return (
@@ -27,6 +30,20 @@ const App: React.FC = () => {
 					<Route path="/student" element={<HomepageStudent />} />
 					<Route path="/student/login" element={<HomepageStudent />} />
 					<Route path="/admin/dashboard" element={<AdminDashboard />} />
+					<Route path="/admin/login" element={<AdminLogin />} />
+					<Route
+						path="/admin"
+						element={<Navigate replace to="/admin/dashboard" />}
+					/>
+
+					<Route
+						path="/admin/dashboard"
+						element={
+							<ProtectedRoute>
+								<AdminDashboard />
+							</ProtectedRoute>
+						}
+					/>
 				</Routes>
 			</Suspense>
 		</Router>
