@@ -4,7 +4,7 @@ import {
 	PlusOutlined,
 	SearchOutlined,
 } from '@ant-design/icons';
-import { Button, Input, Table } from 'antd';
+import { Button, Empty, Input, Table } from 'antd';
 import type { TableColumnsType, TableProps } from 'antd';
 import React, { useEffect, useState } from 'react';
 
@@ -85,7 +85,6 @@ const ListCourses: React.FC = () => {
 	// Hàm lọc dữ liệu theo nhiều trường
 	const filteredData = data.filter(
 		(item) =>
-			// Kiểm tra xem giá trị trong các trường STT, mã khóa học, tiêu đề, giá có khớp với từ khóa tìm kiếm không
 			item.key.toLowerCase().includes(searchText.toLowerCase()) ||
 			item.code.toLowerCase().includes(searchText.toLowerCase()) ||
 			item.title.toLowerCase().includes(searchText.toLowerCase()) ||
@@ -174,6 +173,17 @@ const ListCourses: React.FC = () => {
 					columns={columns}
 					dataSource={filteredData}
 					onChange={onChange}
+					locale={{
+						emptyText: (
+							<Empty
+								description={
+									searchText
+										? 'Không có khóa học nào khớp với tìm kiếm của bạn'
+										: 'Không có khóa học nào'
+								}
+							/>
+						),
+					}}
 					pagination={{ pageSize: 10 }}
 					rowClassName={(record, index) =>
 						index % 2 === 0 ? 'table-row-even' : 'table-row-odd'
