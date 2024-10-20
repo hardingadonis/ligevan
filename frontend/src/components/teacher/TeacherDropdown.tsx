@@ -35,14 +35,18 @@ const TeacherDropdown: React.FC<TeacherDropdownProps> = ({
 
 	return (
 		<div style={{ display: 'flex', alignItems: 'center' }}>
-			<Typography.Title
-				level={4}
-				style={{ color: 'white', paddingRight: '5px' }}
-			>
-				{userFullName}
-			</Typography.Title>
 			<Dropdown overlay={menu} trigger={['click']}>
-				<Avatar src={avatarUrl} style={{ cursor: 'pointer' }} />
+				<div
+					style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
+				>
+					<Typography.Title
+						level={4}
+						style={{ color: 'white', paddingRight: '5px' }}
+					>
+						{userFullName}
+					</Typography.Title>
+					<Avatar src={avatarUrl} style={{ cursor: 'pointer' }} />
+				</div>
 			</Dropdown>
 		</div>
 	);
