@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import Footer from '@/components/commons/Footer';
 import Header from '@/components/commons/Header';
 import Sidebar from '@/components/teacher/Sidebar';
+import TeacherDropdown from '@/components/teacher/TeacherDropdown';
 import { selectAvatar, selectFullName } from '@/slices/teacher';
 
 const { Content } = Layout;
@@ -19,7 +20,11 @@ const TeacherLayout: React.FC<TeacherLayoutProps> = ({ children }) => {
 
 	return (
 		<Layout style={{ minHeight: '100vh' }}>
-			<Header avatarUrl={avatar} userFullName={userFullName} />
+			<Header
+				rightComponent={
+					<TeacherDropdown avatarUrl={avatar} userFullName={userFullName} />
+				}
+			/>
 			<Layout>
 				<Sidebar />
 				<Layout style={{ marginLeft: 200 }}>

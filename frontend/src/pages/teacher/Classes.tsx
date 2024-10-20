@@ -15,23 +15,12 @@ import {
 } from '@/slices/teacher';
 import { apiBaseUrl } from '@/utils/apiBase';
 
-const { Search } = Input;
-
 const ClassesPage: React.FC = () => {
 	const email = useSelector(selectEmail);
 	const token = useSelector(selectToken);
 	const [isMounted, setIsMounted] = useState(false);
 	const dispatch = useDispatch();
-
 	const navigate = useNavigate();
-
-	// useEffect(() => {
-	// 	if (!token) {
-	// 		navigate('../teacher/login');
-
-	// 	}
-	// 	setIsMounted(true);
-	// }, [token, navigate]);
 
 	useEffect(() => {
 		if (!token) {
@@ -55,8 +44,10 @@ const ClassesPage: React.FC = () => {
 	const [classes, setClasses] = useState<Class[]>([]);
 	const [loading, setLoading] = useState<boolean>(false);
 	const [error, setError] = useState<string | null>(null);
-	const [searchValue, setSearchValue] = useState<string>('');
+	const [searchValue, setSearchValue] = useState<string>(''); // Giá trị tìm kiếm
+	const [filteredClasses, setFilteredClasses] = useState<Class[]>([]); // Lớp học đã lọc
 
+	// Lấy dữ liệu từ API
 	useEffect(() => {
 		const fetchClassesForTeacher = async () => {
 			setLoading(true);
@@ -76,6 +67,7 @@ const ClassesPage: React.FC = () => {
 
 				const fullClasses = classResponses.map((response) => response.data);
 				setClasses(fullClasses);
+				setFilteredClasses(fullClasses); // Đặt lớp học ban đầu là toàn bộ danh sách
 			} catch (err: any) {
 				setError('Không thể tải danh sách lớp học');
 			} finally {
@@ -85,6 +77,15 @@ const ClassesPage: React.FC = () => {
 
 		fetchClassesForTeacher();
 	}, [email]);
+
+	// Lọc dữ liệu khi giá trị tìm kiếm thay đổi
+	useEffect(() => {
+		// Chỉ lọc nếu có giá trị tìm kiếm, nếu không hiển thị tất cả lớp
+		const filtered = classes.filter((cls) =>
+			cls.name.toLowerCase().includes(searchValue.toLowerCase()),
+		);
+		setFilteredClasses(filtered);
+	}, [searchValue, classes]);
 
 	const columns = [
 		{
@@ -137,9 +138,6 @@ const ClassesPage: React.FC = () => {
 		},
 	];
 
-	const filteredClasses = classes.filter((cls) =>
-		cls.name.toLowerCase().includes(searchValue.toLowerCase()),
-	);
 	if (!isMounted) {
 		return null;
 	} else
@@ -154,9 +152,10 @@ const ClassesPage: React.FC = () => {
 							<h2 style={{ textAlign: 'center' }}>DANH SÁCH CÁC LỚP HỌC</h2>
 							<Row justify="end" style={{ marginBottom: 16 }}>
 								<Col>
-									<Search
+									<Input
 										placeholder="Tìm kiếm"
-										onSearch={(value) => setSearchValue(value)}
+										value={searchValue}
+										onChange={(e) => setSearchValue(e.target.value)} // Cập nhật giá trị tìm kiếm
 										style={{ width: 200 }}
 									/>
 								</Col>
@@ -173,7 +172,7 @@ const ClassesPage: React.FC = () => {
 							{!loading && !error && (
 								<Table
 									columns={columns}
-									dataSource={filteredClasses}
+									dataSource={filteredClasses} // Sử dụng dữ liệu đã lọc
 									rowKey="_id"
 									pagination={{ pageSize: 10 }}
 									scroll={{ x: 'max-content' }}
