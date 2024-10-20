@@ -1,9 +1,7 @@
 import {
 	selectEmail,
 	selectToken,
-	setAvatar,
 	setEmail,
-	setFullName,
 	setToken,
 } from '../../slices/teacher';
 import { Button, Col, Form, Input, Modal, Row, Typography } from 'antd';
