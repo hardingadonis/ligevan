@@ -12,9 +12,9 @@ const Footer: React.FC = () => {
 				padding: 0,
 				boxShadow: '0 -2px 8px rgba(0, 0, 0, 0.1)',
 				width: '100%',
-				position: 'absolute',
 				bottom: 0,
 				left: 0,
+				zIndex: 1,
 			}}
 		>
 			<Title level={5} style={{ margin: '10px 0 0 0' }}>
