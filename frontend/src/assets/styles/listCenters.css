@@ -19,9 +19,17 @@
 }
 
 .table-row-even {
-	background-color: #fff; /* Màu nền cho hàng chẵn */
+	background-color: #fff; 
 }
 
 .table-row-odd {
-	background-color: #f6f2f2; /* Màu nền cho hàng lẻ */
+	background-color: #f6f2f2; 
 }
+
+.ant-table-thead > tr > th {
+  background-color: #beb2b2 !important; 
+  color: #ffffff; 
+  text-align: center;
+}
+
+

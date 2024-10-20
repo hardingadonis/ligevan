@@ -5,7 +5,9 @@ import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 const HomepageStudent = lazy(() => import('@/pages/student/Homepage'));
 const AdminDashboard = lazy(() => import('@/pages/admin/Dashboard'));
 
-const AdminCentersManagement = lazy(() => import('@/pages/admin/CentersManagement'));
+const AdminCentersManagement = lazy(
+	() => import('@/pages/admin/CentersManagement'),
+);
 
 const App: React.FC = () => {
 	return (
