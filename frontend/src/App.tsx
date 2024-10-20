@@ -33,7 +33,7 @@ const App: React.FC = () => {
 					<Route path="/admin/login" element={<AdminLogin />} />
 					<Route
 						path="/admin"
-						element={<Navigate replace to="/admin/login" />}
+						element={<Navigate replace to="/admin/dashboard" />}
 					/>
 
 					<Route

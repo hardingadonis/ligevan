@@ -40,8 +40,7 @@ const AdminLogin: React.FC = () => {
 						errorMessage = `Không tìm thấy tài khoản quản trị viên "${values.username}".`;
 						break;
 					case 401:
-						errorMessage =
-							data?.message ?? 'Mật khẩu bạn đã nhập không chính xác.';
+						errorMessage = 'Mật khẩu bạn đã nhập không chính xác.';
 						break;
 					default:
 						errorMessage = data?.message
@@ -68,7 +67,6 @@ const AdminLogin: React.FC = () => {
 				align="middle"
 				style={{ padding: '20px 0', minHeight: '60vh' }}
 			>
-				{' '}
 				<Col xs={22} sm={18} md={12} lg={8}>
 					<div
 						style={{
@@ -79,7 +77,6 @@ const AdminLogin: React.FC = () => {
 						}}
 					>
 						<div style={{ textAlign: 'center', marginBottom: '8px' }}>
-							{' '}
 							<Title
 								level={3}
 								style={{
@@ -97,23 +94,24 @@ const AdminLogin: React.FC = () => {
 							level={2}
 							style={{ textAlign: 'center', marginBottom: '8px' }}
 						>
-							{' '}
 							Đăng nhập
 						</Title>
 						<Form name="login" onFinish={onFinish} layout="vertical">
 							<Form.Item
+								label="Tên đăng nhập"
 								name="username"
 								rules={[
 									{ required: true, message: 'Vui lòng nhập tên đăng nhập!' },
 								]}
 							>
-								<Input placeholder="Tên đăng nhập" />
+								<Input placeholder="Nhập email" />
 							</Form.Item>
 							<Form.Item
+								label="Mật khẩu"
 								name="password"
 								rules={[{ required: true, message: 'Vui lòng nhập mật khẩu!' }]}
 							>
-								<Input.Password placeholder="Mật khẩu" />
+								<Input.Password placeholder="Nhập mật khẩu" />
 							</Form.Item>
 							<Form.Item>
 								<Button
@@ -138,7 +136,15 @@ const AdminLogin: React.FC = () => {
 							visible={!!error}
 							onCancel={handleCloseError}
 							footer={[
-								<Button key="ok" onClick={handleCloseError}>
+								<Button
+									key="ok"
+									onClick={handleCloseError}
+									style={{
+										backgroundColor: 'black',
+										borderColor: 'black',
+										color: 'white',
+									}}
+								>
 									OK
 								</Button>,
 							]}
