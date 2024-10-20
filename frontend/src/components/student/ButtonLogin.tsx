@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { apiBaseUrl } from '@/utils/apiBase';
 
-const LoginButton: React.FC = () => {
+const ButtonLogin: React.FC = () => {
 	const navigate = useNavigate();
 	const isMobile = useMediaQuery({ maxWidth: 767 });
 
@@ -35,4 +35,4 @@ const LoginButton: React.FC = () => {
 	);
 };
 
-export default LoginButton;
+export default ButtonLogin;
