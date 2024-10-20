@@ -22,7 +22,7 @@ const AdminSidebar: React.FC = () => {
 		const activeKey =
 			Object.keys(routeToKeyMap).find((key) =>
 				location.pathname.startsWith(key),
-			) || 'dashboard';
+			) ?? 'dashboard';
 		setSelectedKey(routeToKeyMap[activeKey as keyof typeof routeToKeyMap]);
 	}, [location.pathname]);
 
