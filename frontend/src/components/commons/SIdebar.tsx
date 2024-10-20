@@ -1,20 +1,30 @@
 import { Menu } from 'antd';
 import type { MenuProps } from 'antd';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export type MenuItem = Required<MenuProps>['items'][number];
 
 interface SidebarProps {
 	selectedKey: string;
 	items: MenuItem[];
-	handleMenuClick: (key: string) => void;
+	menuConfig: { [key: string]: string };
 }
 
 const Sidebar: React.FC<SidebarProps> = ({
 	selectedKey,
 	items,
-	handleMenuClick,
+	menuConfig,
 }) => {
+	const navigate = useNavigate();
+
+	const handleMenuClick = (key: string) => {
+		const path = menuConfig[key];
+		if (path) {
+			navigate(path);
+		}
+	};
+
 	return (
 		<Menu
 			mode="vertical"
@@ -38,4 +48,17 @@ const Sidebar: React.FC<SidebarProps> = ({
 	);
 };
 
+const getItem = (
+	label: React.ReactNode,
+	key: React.Key,
+	icon?: React.ReactNode,
+): MenuItem => {
+	return {
+		key,
+		icon,
+		label,
+	} as MenuItem;
+};
+
 export default Sidebar;
+export { getItem };
