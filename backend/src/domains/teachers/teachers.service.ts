@@ -59,6 +59,11 @@ export class TeachersService {
 			})
 			.populate({
 				select: '-__v',
+				path: 'classes',
+				model: 'Class',
+			})
+			.populate({
+				select: '-__v',
 				path: 'salaries',
 				model: 'Salary',
 			})
@@ -92,6 +97,15 @@ export class TeachersService {
 		return teacherObject;
 	}
 
+	async getByEmail(email: string) {
+		const teacher = await this.getByEmailWithPassword(email);
+
+		const teacherObject = teacher.toObject();
+		delete teacherObject.hashedPassword;
+
+		return teacherObject;
+	}
+
 	async getByIdWithPassword(id: string) {
 		const teacher = await this.populateTeacher(
 			this.teacherModel.findOne({ _id: id, isDeleted: false }),
@@ -111,6 +125,7 @@ export class TeachersService {
 	async getByEmailWithPassword(email: string) {
 		const teacher = await this.teacherModel
 			.findOne({ email: email, isDeleted: false })
+			.select('-__v')
 			.exec();
 
 		if (!teacher) {
