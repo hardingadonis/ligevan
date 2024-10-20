@@ -4,23 +4,13 @@ import {
 	PlusOutlined,
 	SearchOutlined,
 } from '@ant-design/icons';
-import { Button, Input, Table } from 'antd';
+import { Button, Empty, Input, Table } from 'antd';
 import type { TableColumnsType, TableProps } from 'antd';
 import React, { useEffect, useState } from 'react';
 
 import '@/assets/styles/ListCenters.css';
 import { Center } from '@/schemas/center.schema';
 import { getAllCenter } from '@/services/api/center';
-
-const { Search } = Input;
-
-interface DataType {
-	key: string;
-	name: string;
-	address: string;
-	phone: string;
-	thaotac: JSX.Element;
-}
 
 const ListCenters: React.FC = () => {
 	const [data, setData] = useState<DataType[]>([]);
@@ -80,8 +70,8 @@ const ListCenters: React.FC = () => {
 		console.log('Tạo trung tâm mới');
 	};
 
-	const handleSearch = (value: string) => {
-		setSearchText(value);
+	const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setSearchText(e.target.value);
 	};
 
 	const filteredData = data.filter((item) =>
@@ -149,19 +139,28 @@ const ListCenters: React.FC = () => {
 				>
 					Tạo trung tâm mới
 				</Button>
-				<Search
+				{/* Updated Search Input */}
+				<Input
 					placeholder="Tìm kiếm"
-					onSearch={handleSearch}
+					onChange={handleSearch}
 					style={{ width: 200 }}
-					enterButton={<SearchOutlined />}
+					prefix={<SearchOutlined />}
 				/>
 			</div>
 
 			<div style={{ overflow: 'auto', marginBottom: '60px' }}>
 				<Table<DataType>
 					columns={columns}
-					dataSource={filteredData}
+					dataSource={filteredData.length ? filteredData : []}
 					onChange={onChange}
+					locale={{
+						emptyText: (
+							<Empty
+								description="Không có trung tâm khớp với bạn tìm kiếm"
+								imageStyle={{ height: 60 }}
+							/>
+						),
+					}}
 					pagination={{ pageSize: 10 }}
 					rowClassName={(record, index) =>
 						index % 2 === 0 ? 'table-row-even' : 'table-row-odd'
