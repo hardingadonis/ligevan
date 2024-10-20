@@ -9,6 +9,9 @@ import {
 
 import '@/assets/styles/global.css';
 
+import ProtectedRoute from './components/commons/ProtectedRoute';
+import StudentProfile from './pages/student/Profile';
+
 const HomepageStudent = lazy(() => import('@/pages/student/Homepage'));
 const AdminDashboard = lazy(() => import('@/pages/admin/Dashboard'));
 
@@ -26,6 +29,14 @@ const App: React.FC = () => {
 					<Route index element={<Navigate to="/student" replace />} />
 					<Route path="/student" element={<HomepageStudent />} />
 					<Route path="/student/login" element={<HomepageStudent />} />
+					<Route
+						path="/student/profile"
+						element={
+							<ProtectedRoute redirectPath="/student" tokenName="token">
+								<StudentProfile />
+							</ProtectedRoute>
+						}
+					/>
 					<Route path="/admin/dashboard" element={<AdminDashboard />} />
 				</Routes>
 			</Suspense>

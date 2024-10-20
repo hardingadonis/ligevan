@@ -4,9 +4,9 @@ import React, { useState } from 'react';
 import '@/assets/styles/dropdownCenter.css';
 import Footer from '@/components/commons/Footer';
 import Header from '@/components/commons/Header';
+import ButtonLogin from '@/components/student/ButtonLogin';
 import DropdownCenter from '@/components/student/DropdownCenter';
 import DropdownProfile from '@/components/student/DropdownProfile';
-import LoginButton from '@/components/student/LoginButton';
 import { Center } from '@/schemas/center.schema';
 
 const { Content } = Layout;
@@ -16,7 +16,7 @@ interface StudentLayoutProps {
 	onSelectCenter?: (center: Center | null) => void;
 }
 
-const StudentLayout: React.FC<StudentLayoutProps> = ({
+const StudentLayoutNoSidebar: React.FC<StudentLayoutProps> = ({
 	children,
 	onSelectCenter,
 }) => {
@@ -30,7 +30,7 @@ const StudentLayout: React.FC<StudentLayoutProps> = ({
 	};
 
 	const token = localStorage.getItem('token');
-	const rightComponent = token ? <DropdownProfile /> : <LoginButton />;
+	const rightComponent = token ? <DropdownProfile /> : <ButtonLogin />;
 
 	return (
 		<Layout style={{ minHeight: '100vh' }}>
@@ -62,4 +62,4 @@ const StudentLayout: React.FC<StudentLayoutProps> = ({
 	);
 };
 
-export default StudentLayout;
+export default StudentLayoutNoSidebar;
