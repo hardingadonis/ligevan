@@ -8,7 +8,7 @@ import Header from '@/components/commons/Header';
 import Sidebar, { MenuItem } from '@/components/commons/Sidebar';
 import DropdownProfile from '@/components/student/DropdownProfile';
 
-const { Content, Sider } = Layout;
+const { Content } = Layout;
 
 interface StudentLayoutProps {
 	children: React.ReactNode;
@@ -24,16 +24,19 @@ const StudentLayoutWithSidebar: React.FC<StudentLayoutProps> = ({
 			key: 'profile',
 			icon: <UserOutlined />,
 			label: 'Hồ sơ',
+			link: '/student/profile',
 		},
 		{
 			key: 'classList',
 			icon: <TeamOutlined />,
 			label: 'Danh sách lớp',
+			link: '/student/classes',
 		},
 		{
 			key: 'paymentHistory',
 			icon: <HistoryOutlined />,
 			label: 'Lịch sử thanh toán',
+			link: '/student/payment-history',
 		},
 	];
 
@@ -45,9 +48,7 @@ const StudentLayoutWithSidebar: React.FC<StudentLayoutProps> = ({
 		<Layout style={{ minHeight: '100vh', position: 'relative' }}>
 			<Header rightComponent={rightComponent} />
 			<Layout>
-				<Sider width={250}>
-					<Sidebar items={menuItems} handleMenuClick={handleMenuClick} />
-				</Sider>
+				<Sidebar items={menuItems} handleMenuClick={handleMenuClick} />
 				<Layout style={{ paddingLeft: 250 }}>
 					<Content style={{ margin: '24px 16px 0' }}>
 						<Row justify="center">
@@ -58,9 +59,7 @@ const StudentLayoutWithSidebar: React.FC<StudentLayoutProps> = ({
 					</Content>
 				</Layout>
 			</Layout>
-			<div style={{ position: 'absolute', bottom: 0, width: '100%' }}>
-				<Footer />
-			</div>
+			<Footer />
 			<FloatButton.BackTop />
 		</Layout>
 	);
