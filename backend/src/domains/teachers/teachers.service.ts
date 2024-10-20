@@ -97,15 +97,6 @@ export class TeachersService {
 		return teacherObject;
 	}
 
-	async getByEmail(email: string) {
-		const teacher = await this.getByEmailWithPassword(email);
-
-		const teacherObject = teacher.toObject();
-		delete teacherObject.hashedPassword;
-
-		return teacherObject;
-	}
-
 	async getByIdWithPassword(id: string) {
 		const teacher = await this.populateTeacher(
 			this.teacherModel.findOne({ _id: id, isDeleted: false }),

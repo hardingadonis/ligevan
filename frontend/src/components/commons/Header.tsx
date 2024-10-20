@@ -1,8 +1,6 @@
 import { Affix, Layout, Typography } from 'antd';
 import React from 'react';
 
-import '@/assets/styles/header.css';
-
 const { Header: AntHeader } = Layout;
 const { Title } = Typography;
 
@@ -14,14 +12,43 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ leftComponent, rightComponent }) => {
 	return (
 		<Affix offsetTop={0}>
-			<AntHeader className="site-layout-background">
-				<div className="left-component">{leftComponent}</div>
-				<div className="center-title">
-					<Title level={3} className="title">
+			<AntHeader
+				className="site-layout-background"
+				style={{
+					padding: 0,
+					display: 'flex',
+					justifyContent: 'space-between',
+					alignItems: 'center',
+				}}
+			>
+				<div
+					style={{
+						flex: 1,
+						display: 'flex',
+						justifyContent: 'flex-start',
+						paddingLeft: '16px',
+					}}
+				>
+					{leftComponent}
+				</div>
+				<div style={{ flex: 1, textAlign: 'center' }}>
+					<Title
+						level={3}
+						style={{ margin: 0, fontFamily: 'cursive', color: 'white' }}
+					>
 						ligevan
 					</Title>
 				</div>
-				<div className="right-component">{rightComponent}</div>
+				<div
+					style={{
+						flex: 1,
+						display: 'flex',
+						justifyContent: 'flex-end',
+						paddingRight: '16px',
+					}}
+				>
+					{rightComponent}
+				</div>
 			</AntHeader>
 		</Affix>
 	);

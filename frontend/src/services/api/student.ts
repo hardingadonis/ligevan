@@ -12,13 +12,3 @@ export const getAllStudent = async (): Promise<Student[]> => {
 		throw error;
 	}
 };
-
-export const getStudentByEmail = async (email: string): Promise<Student> => {
-	try {
-		const response = await axios.get(`${apiBaseUrl}/api/students/${email}`);
-		return response.data;
-	} catch (error) {
-		console.error('Error fetching student:', error);
-		throw error;
-	}
-};

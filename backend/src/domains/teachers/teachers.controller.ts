@@ -35,11 +35,6 @@ export class TeachersController {
 		return await this.teachersService.getById(id);
 	}
 
-	@Get('/email/:email')
-	async getByEmail(@Param('email') email: string) {
-		return await this.teachersService.getByEmail(email);
-	}
-
 	@Put(':id')
 	async update(
 		@Param('id') id: string,

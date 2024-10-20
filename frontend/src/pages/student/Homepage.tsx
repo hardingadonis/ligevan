@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 
+import '@/assets/styles/global.css';
 import ListCourse from '@/components/student/ListCourse';
-import StudentLayout from '@/layouts/student';
+import StudentLayout from '@/layouts/student/notLogin';
 import { Center } from '@/schemas/center.schema';
 
 const HomepageStudent: React.FC = () => {
