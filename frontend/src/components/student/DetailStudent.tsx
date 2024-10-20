@@ -48,9 +48,9 @@ const DetailStudent: React.FC = () => {
 	return (
 		<div
 			style={{
-				maxWidth: 600,
+				maxWidth: 900,
 				margin: '0 auto',
-				padding: '20px',
+				padding: '10px 100px',
 				boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
 				borderRadius: '8px',
 			}}
@@ -62,7 +62,7 @@ const DetailStudent: React.FC = () => {
 				layout="horizontal"
 				labelCol={{ span: 6 }}
 				wrapperCol={{ span: 18 }}
-				style={{ marginTop: '20px' }}
+				style={{ marginTop: '40px' }}
 				className="custom-form"
 			>
 				<Form.Item label="Tên" labelAlign="left">
