@@ -14,6 +14,9 @@ import StudentProfile from './pages/student/Profile';
 
 const HomepageStudent = lazy(() => import('@/pages/student/Homepage'));
 const AdminDashboard = lazy(() => import('@/pages/admin/Dashboard'));
+const AdminCoursesManagement = lazy(
+	() => import('@/pages/admin/CoursesManagement'),
+);
 
 const AdminCentersManagement = lazy(
 	() => import('@/pages/admin/CentersManagement'),
@@ -42,8 +45,8 @@ const App: React.FC = () => {
 						}
 					/>
 					<Route path="/admin/dashboard" element={<AdminDashboard />} />
-
 					<Route path="/admin/centers" element={<AdminCentersManagement />} />
+					<Route path="/admin/courses" element={<AdminCoursesManagement />} />
 				</Routes>
 			</Suspense>
 		</Router>
