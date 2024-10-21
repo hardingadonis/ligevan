@@ -39,8 +39,11 @@ export const validateVietnamesePhoneNumber = (phoneNumber: string): boolean => {
 };
 
 const isValidVietnameseAddress = (address: string): boolean => {
-	const addressRegex = /^[a-zA-Z0-9\s,.-]+$/;
-	return addressRegex.test(address);
+	const addressRegex =
+		/^[a-zA-Z0-9ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s,.-]+$/;
+	return (
+		addressRegex.test(address) && address.length >= 5 && address.length <= 100
+	);
 };
 
 export const validateVietnameseAddress = (address: string): boolean => {
