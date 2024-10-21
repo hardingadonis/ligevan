@@ -15,7 +15,9 @@ export const getAllStudent = async (): Promise<Student[]> => {
 
 export const getStudentByEmail = async (email: string): Promise<Student> => {
 	try {
-		const response = await axios.get(`${apiBaseUrl}/api/students/${email}`);
+		const response = await axios.get(
+			`${apiBaseUrl}/api/students/email/${email}`,
+		);
 		return response.data;
 	} catch (error) {
 		console.error('Error fetching student:', error);
