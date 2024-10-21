@@ -1,15 +1,11 @@
-import {
-	DeleteOutlined,
-	EditOutlined,
-	PlusOutlined,
-	SearchOutlined,
-} from '@ant-design/icons';
+import { SearchOutlined } from '@ant-design/icons';
 import { Alert, Button, Empty, Input, Spin, Table } from 'antd';
 import type { TableColumnsType, TableProps } from 'antd';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import '@/assets/styles/ListCenters.css';
 import { Class } from '@/schemas/class.schema';
 import { Teacher } from '@/schemas/teacher.schema';
 import { apiBaseUrl } from '@/utils/apiBase';
@@ -69,41 +65,24 @@ const ListClass: React.FC<ListClassProps> = ({ email }) => {
 		};
 
 		fetchClassesForTeacher();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [email]);
 
 	const renderActions = (id: string): JSX.Element => (
 		<>
 			<Button
+				color="default"
+				variant="solid"
 				type="primary"
-				icon={<EditOutlined />}
-				onClick={() => handleEdit(id)}
+				onClick={() => handleDetail(id)}
 				style={{ marginRight: 8 }}
 			>
-				Chỉnh sửa
-			</Button>
-			<Button
-				type="primary"
-				danger
-				icon={<DeleteOutlined />}
-				onClick={() => handleDelete(id)}
-				style={{ backgroundColor: 'red', borderColor: 'red' }}
-			>
-				Xóa
+				Xem chi tiết
 			</Button>
 		</>
 	);
 
-	const handleEdit = (id: string) => {
+	const handleDetail = (id: string) => {
 		navigate(`/teacher/classes/${id}`);
-	};
-
-	const handleDelete = (id: string) => {
-		console.log(`Xóa lớp có id: ${id}`);
-	};
-
-	const handleCreateNewClass = () => {
-		console.log('Tạo lớp mới');
 	};
 
 	const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -128,7 +107,7 @@ const ListClass: React.FC<ListClassProps> = ({ email }) => {
 		{
 			title: <div style={{ textAlign: 'center' }}>Tên Lớp</div>,
 			dataIndex: 'name',
-			width: '15%',
+			width: '25%',
 			sorter: (a, b) => a.name.localeCompare(b.name),
 		},
 		{
@@ -146,13 +125,13 @@ const ListClass: React.FC<ListClassProps> = ({ email }) => {
 		{
 			title: <div style={{ textAlign: 'center' }}>Khóa học</div>,
 			dataIndex: 'course',
-			width: '20%',
+			width: '30%',
 			sorter: (a, b) => a.course.localeCompare(b.course),
 		},
 		{
 			title: <div style={{ textAlign: 'center' }}>Thao tác</div>,
 			dataIndex: 'actions',
-			width: '30%',
+			width: '10%',
 		},
 	];
 
@@ -174,17 +153,10 @@ const ListClass: React.FC<ListClassProps> = ({ email }) => {
 			<div
 				style={{
 					display: 'flex',
-					justifyContent: 'space-between',
+					justifyContent: 'flex-end',
 					marginBottom: '20px',
 				}}
 			>
-				<Button
-					type="primary"
-					icon={<PlusOutlined />}
-					onClick={handleCreateNewClass}
-				>
-					Tạo lớp mới
-				</Button>
 				<Input
 					placeholder="Tìm kiếm"
 					onChange={handleSearch}
