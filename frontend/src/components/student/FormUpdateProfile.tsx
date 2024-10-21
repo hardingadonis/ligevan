@@ -160,7 +160,9 @@ const FormUpdate: React.FC = () => {
 									}
 									return validateName(value)
 										? Promise.resolve()
-										: Promise.reject('Tên không hợp lệ! Vui lòng nhập lại!');
+										: Promise.reject(
+												new Error('Tên không hợp lệ! Vui lòng nhập lại!'),
+											);
 								},
 							},
 						]}
@@ -186,11 +188,13 @@ const FormUpdate: React.FC = () => {
 										return Promise.resolve();
 									}
 									if (!validatePhoneNumber(value)) {
-										return Promise.reject('Số điện thoại không hợp lệ!');
+										return Promise.reject(
+											new Error('Số điện thoại không hợp lệ!'),
+										);
 									}
 									if (!validateVietnamesePhoneNumber(value)) {
 										return Promise.reject(
-											'Số điện thoại không phải của Việt Nam!',
+											new Error('Số điện thoại không phải của Việt Nam!'),
 										);
 									}
 									return Promise.resolve();
@@ -218,7 +222,7 @@ const FormUpdate: React.FC = () => {
 									return validateVietnameseAddress(value)
 										? Promise.resolve()
 										: Promise.reject(
-												'Địa chỉ không hợp lệ! Vui lòng nhập lại!',
+												new Error('Địa chỉ không hợp lệ! Vui lòng nhập lại!'),
 											);
 								},
 							},
@@ -257,7 +261,9 @@ const FormUpdate: React.FC = () => {
 									const threeYearsAgo = dayjs().subtract(3, 'year');
 									return value.isBefore(threeYearsAgo)
 										? Promise.resolve()
-										: Promise.reject('Ngày sinh phải cách đây ít nhất 3 năm!');
+										: Promise.reject(
+												new Error('Ngày sinh phải cách đây ít nhất 3 năm!'),
+											);
 								},
 							},
 						]}
