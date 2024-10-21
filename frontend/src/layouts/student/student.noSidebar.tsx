@@ -1,7 +1,6 @@
 import { Col, FloatButton, Layout, Row } from 'antd';
 import React, { useState } from 'react';
 
-import '@/assets/styles/dropdownCenter.css';
 import Footer from '@/components/commons/Footer';
 import Header from '@/components/commons/Header';
 import ButtonLogin from '@/components/student/ButtonLogin';

@@ -2,7 +2,6 @@ import { Column, Pie } from '@ant-design/plots';
 import { Card, Col, Row } from 'antd';
 import React, { useEffect, useState } from 'react';
 
-import '@/assets/styles/global.css';
 import AdminLayout from '@/layouts/admin';
 import { Center } from '@/schemas/center.schema';
 import { Course } from '@/schemas/course.schema';

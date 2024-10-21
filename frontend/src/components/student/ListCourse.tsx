@@ -1,7 +1,6 @@
 import { Alert, Col, Empty, Input, Pagination, Row, Spin } from 'antd';
 import React, { useEffect, useState } from 'react';
 
-import '@/assets/styles/listCourse.css';
 import CardCourse from '@/components/student/CardCourse';
 import { Center } from '@/schemas/center.schema';
 import { Course } from '@/schemas/course.schema';

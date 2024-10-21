@@ -1,6 +1,5 @@
 import React from 'react';
 
-import '@/assets/styles/global.css';
 import ListCourses from '@/components/admin/ListCourses';
 import AdminLayout from '@/layouts/admin';
 
