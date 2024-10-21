@@ -58,7 +58,7 @@ const ClassDetail: React.FC = () => {
 		return (
 			<TeacherLayout>
 				{/* Truyền classID vào component Detail nếu cần */}
-				<ListStudent classID={classID} />
+				<ListStudent classID={classID ?? ''} />
 			</TeacherLayout>
 		);
 	}
