@@ -36,10 +36,7 @@ const App: React.FC = () => {
 				<Routes>
 					<Route index element={<Navigate to="/student" replace />} />
 					<Route path="/student" element={<HomepageStudent />} />
-					<Route
-						path="/student/login"
-						element={<Navigate to="/student" replace />}
-					/>
+					<Route path="/student/login" element={<HomepageStudent />} />
 					<Route
 						path="/student/profile"
 						element={
