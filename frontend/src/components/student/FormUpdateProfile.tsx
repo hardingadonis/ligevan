@@ -6,19 +6,24 @@ import {
 	Form,
 	Input,
 	Select,
+	Spin,
 	Typography,
+	message,
 } from 'antd';
 import locale from 'antd/locale/vi_VN';
 import dayjs from 'dayjs';
 import 'dayjs/locale/vi';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
+import { useNavigate } from 'react-router-dom';
 
 import { Student } from '@/schemas/student.schema';
 import { fetchStudentData } from '@/services/custom/getStudentbyToken';
+import { setStudent, updateStudentData } from '@/slices/student';
+import store from '@/store';
+import { formatDateToUTC } from '@/utils/dateFormat';
 import {
-	validateBirthDate,
-	validateDateFormat,
 	validateName,
 	validatePhoneNumber,
 	validateVietnameseAddress,
@@ -31,45 +36,62 @@ const { Title } = Typography;
 const { Option } = Select;
 
 const FormUpdate: React.FC = () => {
-	const [student, setStudent] = useState<Student | null>(null);
-	const [loading, setLoading] = useState<boolean>(true);
+	const dispatch = useDispatch<typeof store.dispatch>();
+	const { student, loading } = useSelector(
+		(state: { students: { student: Student; loading: boolean } }) =>
+			state.students,
+	);
 	const isMobile = useMediaQuery({ maxWidth: 767 });
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		const fetchStudent = async () => {
 			try {
 				const studentData = await fetchStudentData();
-				setStudent(studentData);
+				dispatch(setStudent(studentData));
 			} catch (error) {
 				console.error('Error fetching student:', error);
-			} finally {
-				setLoading(false);
 			}
 		};
 
 		fetchStudent();
-	}, []);
+	}, [dispatch]);
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		if (student) {
-			setStudent({ ...student, [e.target.name]: e.target.value });
+			dispatch(setStudent({ ...student, [e.target.name]: e.target.value }));
 		}
 	};
 
 	const handleGenderChange = (value: 'male' | 'female') => {
 		if (student) {
-			setStudent({ ...student, gender: value });
+			dispatch(setStudent({ ...student, gender: value }));
 		}
 	};
 
 	const handleDateChange = (date: dayjs.Dayjs | null) => {
-		if (student) {
-			setStudent({ ...student, dob: date ? date.toDate() : null });
-		}
+		const formattedDate = date ? formatDateToUTC(date.toDate()) : null;
+		dispatch(setStudent({ ...student, dob: formattedDate }));
 	};
 
-	const onFinish = (values: unknown) => {
-		console.log('Success:', values);
+	const onFinish = async (values: Partial<Student>) => {
+		if (student) {
+			try {
+				await dispatch(updateStudentData({ id: student._id, values })).unwrap();
+				message.success('Cập nhật thông tin thành công');
+				navigate('/student/profile');
+			} catch (error: unknown) {
+				if (error instanceof Error) {
+					console.error('Lỗi cập nhật thông tin:', error.message);
+					message.error(
+						`Cập nhật thông tin học sinh thất bại: ${error.message}`,
+					);
+				} else {
+					console.error('Lỗi cập nhật thông tin:', error);
+					message.error('Cập nhật thông tin học sinh thất bại.');
+				}
+			}
+		}
 	};
 
 	const onFinishFailed = (errorInfo: unknown) => {
@@ -77,11 +99,22 @@ const FormUpdate: React.FC = () => {
 	};
 
 	if (loading) {
-		return <div>Đang tải...</div>;
+		return (
+			<div style={{ display: 'inline-flex', alignItems: 'center' }}>
+				<Spin />
+				<span style={{ marginLeft: 8, color: 'white' }}>Đang tải...</span>
+			</div>
+		);
 	}
 
 	if (!student) {
-		return <div>Không tìm thấy dữ liệu của học sinh.</div>;
+		return (
+			<div style={{ textAlign: 'center', padding: '20px' }}>
+				<Typography.Text type="danger" style={{ fontSize: '16px' }}>
+					Không tìm thấy dữ liệu của học sinh.
+				</Typography.Text>
+			</div>
+		);
 	}
 
 	return (
@@ -221,11 +254,10 @@ const FormUpdate: React.FC = () => {
 									if (!value) {
 										return Promise.resolve();
 									}
-									return validateDateFormat(value)
-										? validateBirthDate(value)
-											? Promise.resolve()
-											: Promise.reject('Ngày sinh không hợp lệ!')
-										: Promise.reject('Định dạng ngày không hợp lệ!');
+									const threeYearsAgo = dayjs().subtract(3, 'year');
+									return value.isBefore(threeYearsAgo)
+										? Promise.resolve()
+										: Promise.reject('Ngày sinh phải cách đây ít nhất 3 năm!');
 								},
 							},
 						]}
