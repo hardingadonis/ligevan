@@ -13,6 +13,7 @@ import StudentProfile from '@/pages/student/Profile';
 const HomepageStudent = lazy(() => import('@/pages/student/Homepage'));
 const ClassesPage = lazy(() => import('@/pages/teacher/Classes'));
 const ClassDetail = lazy(() => import('@/pages/teacher/ClassDetail'));
+
 const AdminDashboard = lazy(() => import('@/pages/admin/Dashboard'));
 const AdminCoursesManagement = lazy(
 	() => import('@/pages/admin/CoursesManagement'),
