@@ -16,6 +16,14 @@ import { useMediaQuery } from 'react-responsive';
 
 import { Student } from '@/schemas/student.schema';
 import { fetchStudentData } from '@/services/custom/getStudentbyToken';
+import {
+	validateBirthDate,
+	validateDateFormat,
+	validateName,
+	validatePhoneNumber,
+	validateVietnameseAddress,
+	validateVietnamesePhoneNumber,
+} from '@/utils/inputValidate';
 
 dayjs.locale('vi');
 
@@ -60,11 +68,11 @@ const FormUpdate: React.FC = () => {
 		}
 	};
 
-	const onFinish = (values: any) => {
+	const onFinish = (values: unknown) => {
 		console.log('Success:', values);
 	};
 
-	const onFinishFailed = (errorInfo: any) => {
+	const onFinishFailed = (errorInfo: unknown) => {
 		console.log('Failed:', errorInfo);
 	};
 
@@ -110,7 +118,19 @@ const FormUpdate: React.FC = () => {
 						label="Tên"
 						labelAlign="left"
 						name="fullName"
-						rules={[{ required: true, message: 'Vui lòng nhập tên của bạn!' }]}
+						rules={[
+							{ required: true, message: 'Vui lòng nhập tên của bạn!' },
+							{
+								validator: (_, value) => {
+									if (!value) {
+										return Promise.resolve();
+									}
+									return validateName(value)
+										? Promise.resolve()
+										: Promise.reject('Tên không hợp lệ! Vui lòng nhập lại!');
+								},
+							},
+						]}
 					>
 						<Input
 							name="fullName"
@@ -127,6 +147,22 @@ const FormUpdate: React.FC = () => {
 								required: true,
 								message: 'Vui lòng nhập số điện thoại của bạn!',
 							},
+							{
+								validator: (_, value) => {
+									if (!value) {
+										return Promise.resolve();
+									}
+									if (!validatePhoneNumber(value)) {
+										return Promise.reject('Số điện thoại không hợp lệ!');
+									}
+									if (!validateVietnamesePhoneNumber(value)) {
+										return Promise.reject(
+											'Số điện thoại không phải của Việt Nam!',
+										);
+									}
+									return Promise.resolve();
+								},
+							},
 						]}
 					>
 						<Input
@@ -141,6 +177,18 @@ const FormUpdate: React.FC = () => {
 						name="address"
 						rules={[
 							{ required: true, message: 'Vui lòng nhập địa chỉ của bạn!' },
+							{
+								validator: (_, value) => {
+									if (!value) {
+										return Promise.resolve();
+									}
+									return validateVietnameseAddress(value)
+										? Promise.resolve()
+										: Promise.reject(
+												'Địa chỉ không hợp lệ! Vui lòng nhập lại!',
+											);
+								},
+							},
 						]}
 					>
 						<Input
@@ -168,6 +216,18 @@ const FormUpdate: React.FC = () => {
 						name="dob"
 						rules={[
 							{ required: true, message: 'Vui lòng chọn ngày sinh của bạn!' },
+							{
+								validator: (_, value) => {
+									if (!value) {
+										return Promise.resolve();
+									}
+									return validateDateFormat(value)
+										? validateBirthDate(value)
+											? Promise.resolve()
+											: Promise.reject('Ngày sinh không hợp lệ!')
+										: Promise.reject('Định dạng ngày không hợp lệ!');
+								},
+							},
 						]}
 					>
 						<DatePicker
