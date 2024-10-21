@@ -131,7 +131,7 @@ const ListCenters: React.FC = () => {
 	};
 
 	return (
-		<div style={{ padding: '65px 20px 0 270px', minHeight: '100vh' }}>
+		<div style={{ padding: '65px 20px 0 270px' }}>
 			<div style={{ textAlign: 'center', marginBottom: 20 }}>
 				<h2>Tất cả các trung tâm</h2>
 			</div>
@@ -173,7 +173,7 @@ const ListCenters: React.FC = () => {
 						),
 					}}
 					pagination={{ pageSize: 10 }}
-					rowClassName={(record, index) =>
+					rowClassName={(_, index) =>
 						index % 2 === 0 ? 'table-row-even' : 'table-row-odd'
 					}
 					scroll={{ x: true }}
