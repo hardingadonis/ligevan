@@ -85,6 +85,10 @@ const DetailOfCenter: React.FC = () => {
 						type="primary"
 						block
 						onClick={() => navigate(`/admin/centers/${id}/courses`)}
+						style={{
+							backgroundColor: '#556359',
+							borderColor: '#556359',
+						}}
 					>
 						Chi tiết Khóa học
 					</Button>
@@ -94,8 +98,12 @@ const DetailOfCenter: React.FC = () => {
 						type="primary"
 						block
 						onClick={() => navigate(`/admin/centers/${id}/vouchers`)}
+						style={{
+							backgroundColor: '#556359',
+							borderColor: '#556359',
+						}}
 					>
-						Chi tiết Voucher
+						Chi tiết Mã giảm giá
 					</Button>
 				</Col>
 				<Col span={6}>
@@ -103,6 +111,10 @@ const DetailOfCenter: React.FC = () => {
 						type="primary"
 						block
 						onClick={() => navigate(`/admin/centers/${id}/classes`)}
+						style={{
+							backgroundColor: '#556359',
+							borderColor: '#556359',
+						}}
 					>
 						Chi tiết Lớp học
 					</Button>
@@ -112,6 +124,10 @@ const DetailOfCenter: React.FC = () => {
 						type="primary"
 						block
 						onClick={() => navigate(`/admin/centers/${id}/teachers`)}
+						style={{
+							backgroundColor: '#556359',
+							borderColor: '#556359',
+						}}
 					>
 						Chi tiết Giáo viên
 					</Button>
@@ -124,7 +140,11 @@ const DetailOfCenter: React.FC = () => {
 					type="primary"
 					icon={<EditOutlined />}
 					onClick={handleEdit}
-					style={{ marginRight: '10px' }}
+					style={{
+						marginRight: '10px',
+						backgroundColor: '#4CAF50', // Custom green color for edit
+						borderColor: '#4CAF50',
+					}}
 				>
 					Chỉnh sửa
 				</Button>
@@ -133,6 +153,10 @@ const DetailOfCenter: React.FC = () => {
 					danger
 					icon={<DeleteOutlined />}
 					onClick={handleDelete}
+					style={{
+						backgroundColor: '#f44336', // Custom red color for delete
+						borderColor: '#f44336',
+					}}
 				>
 					Xóa
 				</Button>

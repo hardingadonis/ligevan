@@ -48,7 +48,7 @@ const ListCenters: React.FC = () => {
 		<>
 			<Button
 				type="primary"
-				icon={<EyeOutlined />} // Use EyeOutlined for detail view
+				icon={<EyeOutlined />}
 				onClick={() => handleDetail(id)}
 				style={{
 					marginRight: 8,
@@ -76,8 +76,7 @@ const ListCenters: React.FC = () => {
 	const navigate = useNavigate();
 
 	const handleDetail = (id: string) => {
-		navigate(`/admin/centers/centerDetail?id=${id}`);
-		// navigate(`/admin/centers/${id}`);
+		navigate(`/admin/centers/centerDetail/${id}`);
 	};
 
 	const handleDelete = (id: string) => {
