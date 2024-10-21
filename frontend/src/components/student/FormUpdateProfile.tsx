@@ -60,6 +60,14 @@ const FormUpdate: React.FC = () => {
 		}
 	};
 
+	const onFinish = (values: any) => {
+		console.log('Success:', values);
+	};
+
+	const onFinishFailed = (errorInfo: any) => {
+		console.log('Failed:', errorInfo);
+	};
+
 	if (loading) {
 		return <div>Đang tải...</div>;
 	}
@@ -88,35 +96,80 @@ const FormUpdate: React.FC = () => {
 					wrapperCol={isMobile ? {} : { span: 19 }}
 					style={{ marginTop: '40px' }}
 					className="custom-form"
+					initialValues={{
+						fullName: student.fullName,
+						phone: student.phone,
+						address: student.address,
+						gender: student.gender,
+						dob: student.dob ? dayjs(student.dob) : null,
+					}}
+					onFinish={onFinish}
+					onFinishFailed={onFinishFailed}
 				>
-					<Form.Item label="Tên" labelAlign="left">
+					<Form.Item
+						label="Tên"
+						labelAlign="left"
+						name="fullName"
+						rules={[{ required: true, message: 'Vui lòng nhập tên của bạn!' }]}
+					>
 						<Input
 							name="fullName"
 							value={student.fullName}
 							onChange={handleInputChange}
 						/>
 					</Form.Item>
-					<Form.Item label="Số điện thoại" labelAlign="left">
+					<Form.Item
+						label="Số điện thoại"
+						labelAlign="left"
+						name="phone"
+						rules={[
+							{
+								required: true,
+								message: 'Vui lòng nhập số điện thoại của bạn!',
+							},
+						]}
+					>
 						<Input
 							name="phone"
 							value={student.phone}
 							onChange={handleInputChange}
 						/>
 					</Form.Item>
-					<Form.Item label="Địa chỉ" labelAlign="left">
+					<Form.Item
+						label="Địa chỉ"
+						labelAlign="left"
+						name="address"
+						rules={[
+							{ required: true, message: 'Vui lòng nhập địa chỉ của bạn!' },
+						]}
+					>
 						<Input
 							name="address"
 							value={student.address}
 							onChange={handleInputChange}
 						/>
 					</Form.Item>
-					<Form.Item label="Giới tính" labelAlign="left">
+					<Form.Item
+						label="Giới tính"
+						labelAlign="left"
+						name="gender"
+						rules={[
+							{ required: true, message: 'Vui lòng chọn giới tính của bạn!' },
+						]}
+					>
 						<Select value={student.gender} onChange={handleGenderChange}>
 							<Option value="male">Nam</Option>
 							<Option value="female">Nữ</Option>
 						</Select>
 					</Form.Item>
-					<Form.Item label="Ngày sinh" labelAlign="left">
+					<Form.Item
+						label="Ngày sinh"
+						labelAlign="left"
+						name="dob"
+						rules={[
+							{ required: true, message: 'Vui lòng chọn ngày sinh của bạn!' },
+						]}
+					>
 						<DatePicker
 							value={student.dob ? dayjs(student.dob) : null}
 							onChange={handleDateChange}
@@ -126,11 +179,7 @@ const FormUpdate: React.FC = () => {
 						/>
 					</Form.Item>
 					<Form.Item wrapperCol={{ span: 24 }} style={{ textAlign: 'center' }}>
-						<Button
-							type="primary"
-							icon={<SaveOutlined />}
-							href="/student/profile/edit"
-						>
+						<Button type="primary" icon={<SaveOutlined />} htmlType="submit">
 							Lưu Lại
 						</Button>
 					</Form.Item>
