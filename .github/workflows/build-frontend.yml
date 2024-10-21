@@ -24,7 +24,7 @@ jobs:
           cd frontend
           yarn
 
-      - name: Build backend
+      - name: Build frontend
         run: |
           cd frontend
           yarn build
