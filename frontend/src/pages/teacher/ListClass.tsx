@@ -68,17 +68,15 @@ const ListClass: React.FC<ListClassProps> = ({ email }) => {
 	}, [email]);
 
 	const renderActions = (id: string): JSX.Element => (
-		<>
-			<Button
-				color="default"
-				variant="solid"
-				type="primary"
-				onClick={() => handleDetail(id)}
-				style={{ marginRight: 8 }}
-			>
-				Xem chi tiết
-			</Button>
-		</>
+		<Button
+			color="default"
+			variant="solid"
+			type="primary"
+			onClick={() => handleDetail(id)}
+			style={{ marginRight: 8 }}
+		>
+			Xem chi tiết
+		</Button>
 	);
 
 	const handleDetail = (id: string) => {
