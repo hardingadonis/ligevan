@@ -24,3 +24,19 @@ export const getStudentByEmail = async (email: string): Promise<Student> => {
 		throw error;
 	}
 };
+
+export const updateStudent = async (
+	id: string,
+	updateData: Partial<Student>,
+): Promise<Student> => {
+	try {
+		const response = await axios.put(
+			`${apiBaseUrl}/api/students/${id}`,
+			updateData,
+		);
+		return response.data;
+	} catch (error) {
+		console.error('Error updating student:', error);
+		throw error;
+	}
+};

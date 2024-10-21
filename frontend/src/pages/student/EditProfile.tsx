@@ -1,10 +1,10 @@
 import { Col, Row } from 'antd';
 
 import ButtonGoBack from '@/components/commons/ButtonGoback';
-import DetailStudent from '@/components/student/DetailStudent';
+import FormUpdate from '@/components/student/FormUpdateProfile';
 import StudentLayoutWithSidebar from '@/layouts/student/student.haveSidebar';
 
-const StudentProfile: React.FC = () => {
+const EditProfileStudent: React.FC = () => {
 	return (
 		<StudentLayoutWithSidebar>
 			<Row>
@@ -12,11 +12,11 @@ const StudentProfile: React.FC = () => {
 					<ButtonGoBack />
 				</Col>
 				<Col span={22}>
-					<DetailStudent />
+					<FormUpdate />
 				</Col>
 			</Row>
 		</StudentLayoutWithSidebar>
 	);
 };
 
-export default StudentProfile;
+export default EditProfileStudent;
