@@ -48,7 +48,8 @@ const Sidebar: React.FC<SidebarProps> = ({
 	);
 };
 
-const getItem = (
+// eslint-disable-next-line react-refresh/only-export-components
+export const getItem = (
 	label: React.ReactNode,
 	key: React.Key,
 	icon?: React.ReactNode,
@@ -61,4 +62,3 @@ const getItem = (
 };
 
 export default Sidebar;
-export { getItem };

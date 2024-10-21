@@ -2,7 +2,7 @@ import { CalendarOutlined, TeamOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import Sidebar, { MenuItem, getItem } from '@/components/commons/Sidebar';
+import Sidebar, { MenuItem, getItem } from '@/components/commons/SIdesbar';
 
 const StudentSidebar: React.FC = () => {
 	const location = useLocation();
