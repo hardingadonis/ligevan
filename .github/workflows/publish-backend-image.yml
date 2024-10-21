@@ -1,7 +1,10 @@
 name: Publish backend image
 
 on:
-  push:
+  workflow_run:
+    workflows: [Build backend]
+    types:
+      - completed
     branches:
       - main
     paths:
@@ -11,6 +14,8 @@ jobs:
   publish:
     name: Publish backend image
     runs-on: ubuntu-latest
+
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
     permissions:
       contents: read
