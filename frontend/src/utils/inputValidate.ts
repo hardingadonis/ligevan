@@ -56,3 +56,13 @@ export const validateBirthDate = (date: string): boolean => {
 	const trimmedDate = trimInput(date);
 	return isValidDateFormat(trimmedDate) && isWithinLastThreeYears(trimmedDate);
 };
+
+const isValidVietnameseAddress = (address: string): boolean => {
+	const addressRegex = /^[a-zA-Z0-9\s,.-]+$/;
+	return addressRegex.test(address);
+};
+
+export const validateVietnameseAddress = (address: string): boolean => {
+	const trimmedAddress = trimInput(address);
+	return isValidVietnameseAddress(trimmedAddress);
+};
