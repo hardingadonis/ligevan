@@ -30,7 +30,12 @@ export class StudentsController {
 		return await this.studentsService.getAll();
 	}
 
-	@Get(':email')
+	@Get(':id')
+	async getById(@Param('id') id: string) {
+		return await this.studentsService.getById(id);
+	}
+
+	@Get('/email/:email')
 	async getByEmail(@Param('email') email: string) {
 		return await this.studentsService.getByEmail(email);
 	}
