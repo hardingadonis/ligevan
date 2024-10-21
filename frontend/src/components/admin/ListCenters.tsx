@@ -1,12 +1,13 @@
 import {
 	DeleteOutlined,
-	EditOutlined,
+	EyeOutlined,
 	PlusOutlined,
 	SearchOutlined,
 } from '@ant-design/icons';
 import { Button, Empty, Input, Table } from 'antd';
 import type { TableColumnsType, TableProps } from 'antd';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { Center } from '@/schemas/center.schema';
 import { getAllCenter } from '@/services/api/center';
@@ -47,26 +48,36 @@ const ListCenters: React.FC = () => {
 		<>
 			<Button
 				type="primary"
-				icon={<EditOutlined />}
-				onClick={() => handleEdit(id)}
-				style={{ marginRight: 8 }}
+				icon={<EyeOutlined />} // Use EyeOutlined for detail view
+				onClick={() => handleDetail(id)}
+				style={{
+					marginRight: 8,
+					backgroundColor: '#556359',
+					borderColor: '#556359',
+				}}
 			>
-				Chỉnh sửa
+				Chi tiết
 			</Button>
 			<Button
 				type="primary"
 				danger
 				icon={<DeleteOutlined />}
 				onClick={() => handleDelete(id)}
-				style={{ backgroundColor: 'red', borderColor: 'red' }}
+				style={{
+					backgroundColor: '#f44336',
+					borderColor: '#f44336',
+				}}
 			>
 				Xóa
 			</Button>
 		</>
 	);
 
-	const handleEdit = (id: string) => {
-		console.log(`Chỉnh sửa trung tâm có id: ${id}`);
+	const navigate = useNavigate();
+
+	const handleDetail = (id: string) => {
+		navigate(`/admin/centers/centerDetail?id=${id}`);
+		// navigate(`/admin/centers/${id}`);
 	};
 
 	const handleDelete = (id: string) => {
