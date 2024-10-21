@@ -1,28 +1,13 @@
-.search-container {
-	display: flex;
-	justify-content: flex-end;
-	margin-bottom: 16px;
-}
-
-.search-input {
-	width: 200px;
-}
-
-@media (max-width: 768px) {
-	.search-container {
-		justify-content: center;
-	}
-
-	.search-input {
-		width: 100%;
-	}
-}
-
-/* .css cho CoursesManagement for admin */
-.list-courses-container {
+.list-centers-container {
   display: flex;
   flex-direction: column;
   height: 100%;
+}
+
+.right-header {
+  flex-grow: 1;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .table-wrapper {
@@ -34,7 +19,7 @@
 }
 
 .table-row-even {
-	background-color: #fff;
+	background-color: #fff; 
 }
 
 .table-row-odd {
@@ -43,6 +28,8 @@
 
 .ant-table-thead > tr > th {
   background-color: #beb2b2 !important; 
-  color: #ffffff;
+  color: #ffffff; 
   text-align: center;
 }
+
+

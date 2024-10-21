@@ -1,4 +1,5 @@
 import { Center } from '@/schemas/center.schema';
+import { Class } from '@/schemas/class.schema';
 import { Salary } from '@/schemas/salary.schema';
 
 export interface Teacher {
@@ -12,6 +13,7 @@ export interface Teacher {
 	dob: Date;
 	salaries?: Salary[];
 	center: Center;
+	classes?: Class[];
 	isDeleted?: boolean;
 	createAt?: Date;
 	updateAt?: Date;
