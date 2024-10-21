@@ -10,7 +10,6 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import '@/assets/styles/ListCenters.css';
 import { Class } from '@/schemas/class.schema';
 import { Teacher } from '@/schemas/teacher.schema';
 import { apiBaseUrl } from '@/utils/apiBase';
@@ -70,6 +69,7 @@ const ListClass: React.FC<ListClassProps> = ({ email }) => {
 		};
 
 		fetchClassesForTeacher();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [email]);
 
 	const renderActions = (id: string): JSX.Element => (

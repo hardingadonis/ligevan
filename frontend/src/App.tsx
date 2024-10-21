@@ -7,7 +7,6 @@ import {
 	Routes,
 } from 'react-router-dom';
 
-import '@/assets/styles/global.css';
 import ProtectedRoute from '@/components/commons/ProtectedRoute';
 import StudentProfile from '@/pages/student/Profile';
 

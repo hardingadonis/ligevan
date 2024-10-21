@@ -8,7 +8,6 @@ import { Button, Empty, Input, Table } from 'antd';
 import type { TableColumnsType, TableProps } from 'antd';
 import React, { useEffect, useState } from 'react';
 
-import '@/assets/styles/ListCourse.css';
 import { Course } from '@/schemas/course.schema';
 import { getAllCourse } from '@/services/api/course';
 

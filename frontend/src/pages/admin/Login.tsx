@@ -2,7 +2,6 @@ import { Button, Col, Form, Input, Modal, Row, Typography } from 'antd';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import '@/assets/styles/global.css';
 import AdminLayout from '@/layouts/admin';
 import { getAdminByUsername } from '@/services/api/admin';
 import { fetchLogin } from '@/services/api/auth';

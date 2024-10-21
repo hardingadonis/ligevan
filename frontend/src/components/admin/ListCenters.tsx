@@ -8,7 +8,6 @@ import { Button, Empty, Input, Table } from 'antd';
 import type { TableColumnsType, TableProps } from 'antd';
 import React, { useEffect, useState } from 'react';
 
-import '@/assets/styles/ListCenters.css';
 import { Center } from '@/schemas/center.schema';
 import { getAllCenter } from '@/services/api/center';
 

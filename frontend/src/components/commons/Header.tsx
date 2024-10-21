@@ -1,8 +1,6 @@
 import { Affix, Layout, Typography } from 'antd';
 import React from 'react';
 
-import '@/assets/styles/header.css';
-
 const { Header: AntHeader } = Layout;
 const { Title } = Typography;
 
