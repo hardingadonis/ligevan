@@ -1,4 +1,4 @@
-import { Layout } from 'antd';
+import { FloatButton, Layout } from 'antd';
 import React, { ReactNode } from 'react';
 
 import AdminHeader from '@/components/admin/AdminHeader';
@@ -32,6 +32,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({
 			</Content>
 		</Layout>
 		<Footer />
+		<FloatButton.BackTop />
 	</Layout>
 );
 
