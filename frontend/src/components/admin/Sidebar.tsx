@@ -2,6 +2,7 @@ import {
 	BankOutlined,
 	BookOutlined,
 	DashboardOutlined,
+	TagsOutlined,
 } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
@@ -16,6 +17,7 @@ const AdminSidebar: React.FC = () => {
 		'/admin/dashboard': 'dashboard',
 		'/admin/centers': 'centers',
 		'/admin/courses': 'courses',
+		'/admin/vouchers': 'vouchers',
 	};
 
 	useEffect(() => {
@@ -42,12 +44,18 @@ const AdminSidebar: React.FC = () => {
 			'courses',
 			<BookOutlined style={{ fontSize: '18px' }} />,
 		),
+		getItem(
+			'Mã giảm giá',
+			'vouchers',
+			<TagsOutlined style={{ fontSize: '18px' }} />,
+		),
 	];
 
 	const menuConfig = {
 		dashboard: '/admin/dashboard',
 		centers: '/admin/centers',
 		courses: '/admin/courses',
+		vouchers: '/admin/vouchers',
 	};
 
 	return (
