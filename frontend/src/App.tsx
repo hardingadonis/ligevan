@@ -8,8 +8,6 @@ import {
 } from 'react-router-dom';
 
 import '@/assets/styles/global.css';
-import ProtectedRoute from '@/components/admin/ProtectedRoute';
-
 import ProtectedRoute from '@/components/commons/ProtectedRoute';
 import StudentProfile from '@/pages/student/Profile';
 
@@ -50,10 +48,30 @@ const App: React.FC = () => {
 					/>
 					<Route path="/teacher/login" element={<LoginTeacher />} />
 					<Route path="/teacher/classes" element={<ClassesPage />} />
-					<Route path="/admin/dashboard" element={<AdminDashboard />} />
-					<Route path="/admin/centers" element={<AdminCentersManagement />} />
-					<Route path="/admin/courses" element={<AdminCoursesManagement />} />
+					<Route path="/teacher" element={<ClassesPage />} />
 					<Route path="/admin/login" element={<AdminLogin />} />
+					<Route
+						path="/admin/centers"
+						element={
+							<ProtectedRoute
+								redirectPath="/admin/login"
+								tokenName="accessToken"
+							>
+								<AdminCentersManagement />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="/admin/courses"
+						element={
+							<ProtectedRoute
+								redirectPath="/admin/login"
+								tokenName="accessToken"
+							>
+								<AdminCoursesManagement />
+							</ProtectedRoute>
+						}
+					/>
 					<Route
 						path="/admin"
 						element={<Navigate replace to="/admin/dashboard" />}
@@ -62,7 +80,10 @@ const App: React.FC = () => {
 					<Route
 						path="/admin/dashboard"
 						element={
-							<ProtectedRoute>
+							<ProtectedRoute
+								redirectPath="/admin/login"
+								tokenName="accessToken"
+							>
 								<AdminDashboard />
 							</ProtectedRoute>
 						}
