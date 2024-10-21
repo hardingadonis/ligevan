@@ -53,8 +53,8 @@ const ListStudent: React.FC<ListStudentProps> = ({ classID }) => {
 				);
 				const classes = classResponse.data;
 				setClassName(classes.name);
-				setStudentsCount(classes.students?.length);
-				setSlotsCount(classes.slots?.length);
+				setStudentsCount(classes.students?.length ?? 0);
+				setSlotsCount(classes.slots?.length ?? 0);
 
 				const classStudent = classes.students || [];
 				const studentRequests = classStudent.map((std) =>
