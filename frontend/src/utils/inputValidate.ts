@@ -18,7 +18,7 @@ export const validateName = (name: string): boolean => {
 };
 
 const isValidPhoneNumber = (phoneNumber: string): boolean => {
-	const phoneRegex = /^[0-9]{10,11}$/;
+	const phoneRegex = /^\d{10,11}$/;
 	return phoneRegex.test(phoneNumber);
 };
 
