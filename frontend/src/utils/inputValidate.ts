@@ -1,9 +1,14 @@
-const trimInput = (input: string): string => {
+const trimInput = (input: unknown): string => {
+	if (typeof input !== 'string') {
+		console.error(`Expected a string but received: ${typeof input}`);
+		return '';
+	}
 	return input.trim();
 };
 
 const isValidName = (name: string): boolean => {
-	const nameRegex = /^[a-zA-Z\s]+$/;
+	const nameRegex =
+		/^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s]+$/;
 	return nameRegex.test(name) && name.length >= 2 && name.length <= 50;
 };
 
@@ -31,30 +36,6 @@ export const validatePhoneNumber = (phoneNumber: string): boolean => {
 export const validateVietnamesePhoneNumber = (phoneNumber: string): boolean => {
 	const trimmedPhoneNumber = trimInput(phoneNumber);
 	return isValidVietnamesePhoneNumber(trimmedPhoneNumber);
-};
-
-const isValidDateFormat = (date: string): boolean => {
-	const dateRegex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
-	return dateRegex.test(date);
-};
-
-export const validateDateFormat = (date: string): boolean => {
-	const trimmedDate = trimInput(date);
-	return isValidDateFormat(trimmedDate);
-};
-
-const isWithinLastThreeYears = (date: string): boolean => {
-	const [day, month, year] = date.split('/').map(Number);
-	const birthDate = new Date(year, month - 1, day);
-	const currentDate = new Date();
-	const threeYearsAgo = new Date();
-	threeYearsAgo.setFullYear(currentDate.getFullYear() - 3);
-	return birthDate <= currentDate && birthDate >= threeYearsAgo;
-};
-
-export const validateBirthDate = (date: string): boolean => {
-	const trimmedDate = trimInput(date);
-	return isValidDateFormat(trimmedDate) && isWithinLastThreeYears(trimmedDate);
 };
 
 const isValidVietnameseAddress = (address: string): boolean => {
