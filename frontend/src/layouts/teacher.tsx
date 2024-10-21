@@ -1,4 +1,4 @@
-import { Layout } from 'antd';
+import { FloatButton, Layout } from 'antd';
 import React, { ReactNode } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -30,8 +30,7 @@ const TeacherLayout: React.FC<TeacherLayoutProps> = ({ children }) => {
 			/>
 			<Layout>
 				<Sidebar />
-				<Layout style={{ marginLeft: 200 }}>
-					{' '}
+				<Layout>
 					<Content
 						style={{
 							padding: 24,
@@ -44,6 +43,7 @@ const TeacherLayout: React.FC<TeacherLayoutProps> = ({ children }) => {
 				</Layout>
 				<Footer />
 			</Layout>
+			<FloatButton.BackTop />
 		</Layout>
 	);
 };
