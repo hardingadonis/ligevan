@@ -6,7 +6,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import Sidebar, { MenuItem, getItem } from '@/components/commons/SIdesbar';
+import Sidebar, { MenuItem, getItem } from '@/components/commons/Sidebar';
 
 const AdminSidebar: React.FC = () => {
 	const location = useLocation();
