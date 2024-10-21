@@ -23,8 +23,7 @@ const isValidPhoneNumber = (phoneNumber: string): boolean => {
 };
 
 const isValidVietnamesePhoneNumber = (phoneNumber: string): boolean => {
-	const vietnamesePhoneRegex =
-		/^(03[2-9]|05[6|8|9]|07[0|6-9]|08[1-5]|09[0-9])[0-9]{7}$/;
+	const vietnamesePhoneRegex = /^(03[2-9]|05[689]|07[06-9]|08[1-5]|09\d)\d{7}$/;
 	return vietnamesePhoneRegex.test(phoneNumber);
 };
 
