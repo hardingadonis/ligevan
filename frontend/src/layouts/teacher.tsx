@@ -22,7 +22,10 @@ const TeacherLayout: React.FC<TeacherLayoutProps> = ({ children }) => {
 		<Layout style={{ minHeight: '100vh' }}>
 			<Header
 				rightComponent={
-					<TeacherDropdown avatarUrl={avatar} userFullName={userFullName} />
+					<TeacherDropdown
+						avatarUrl={avatar ?? ''}
+						userFullName={userFullName ?? ''}
+					/>
 				}
 			/>
 			<Layout>
@@ -38,8 +41,8 @@ const TeacherLayout: React.FC<TeacherLayoutProps> = ({ children }) => {
 					>
 						{children}
 					</Content>
-					<Footer />
 				</Layout>
+				<Footer />
 			</Layout>
 		</Layout>
 	);

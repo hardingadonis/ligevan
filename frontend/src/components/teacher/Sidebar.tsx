@@ -1,38 +1,20 @@
 import { CalendarOutlined, TeamOutlined } from '@ant-design/icons';
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
-import Sidebar, { MenuItem } from '@/components/commons/SIdebar';
+import Sidebar, { MenuItem, getItem } from '@/components/commons/Sidebar';
 
-const TeacherSidebar: React.FC<{ defaultSelectedKey?: string }> = ({
-	defaultSelectedKey = 'dashboard',
-}) => {
-	const navigate = useNavigate();
+const StudentSidebar: React.FC = () => {
+	const location = useLocation();
+	const [selectedKey, setSelectedKey] = useState('profile');
 
-	const handleMenuClick = (key: string) => {
-		switch (key) {
-			case 'classes':
-				navigate('/teacher/classes');
-				break;
-			case 'slots':
-				navigate('/teacher/slots');
-				break;
-			default:
-				break;
+	useEffect(() => {
+		if (location.pathname.includes('/teacher/classes')) {
+			setSelectedKey('classes');
+		} else if (location.pathname.includes('/teacher/slots')) {
+			setSelectedKey('slots');
 		}
-	};
-
-	const getItem = (
-		label: React.ReactNode,
-		key: React.Key,
-		icon?: React.ReactNode,
-	): MenuItem => {
-		return {
-			key,
-			icon,
-			label,
-		} as MenuItem;
-	};
+	}, [location.pathname]);
 
 	const items: MenuItem[] = [
 		getItem(
@@ -47,13 +29,14 @@ const TeacherSidebar: React.FC<{ defaultSelectedKey?: string }> = ({
 		),
 	];
 
+	const menuConfig = {
+		classes: '/teacher/classes',
+		slots: '/teacher/slots',
+	};
+
 	return (
-		<Sidebar
-			defaultSelectedKey={defaultSelectedKey}
-			items={items}
-			handleMenuClick={handleMenuClick}
-		/>
+		<Sidebar selectedKey={selectedKey} items={items} menuConfig={menuConfig} />
 	);
 };
 
-export default TeacherSidebar;
+export default StudentSidebar;

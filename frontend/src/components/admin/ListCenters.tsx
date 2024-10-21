@@ -12,6 +12,14 @@ import '@/assets/styles/ListCenters.css';
 import { Center } from '@/schemas/center.schema';
 import { getAllCenter } from '@/services/api/center';
 
+interface DataType {
+	key: string;
+	name: string;
+	address: string;
+	phone: string;
+	actions: JSX.Element;
+}
+
 const ListCenters: React.FC = () => {
 	const [data, setData] = useState<DataType[]>([]);
 	const [searchText, setSearchText] = useState('');
@@ -25,7 +33,7 @@ const ListCenters: React.FC = () => {
 					name: center.name,
 					address: center.address,
 					phone: center.phone,
-					thaotac: renderActions(center._id),
+					actions: renderActions(center._id),
 				}));
 				setData(tableData);
 			} catch (error) {
@@ -74,8 +82,11 @@ const ListCenters: React.FC = () => {
 		setSearchText(e.target.value);
 	};
 
-	const filteredData = data.filter((item) =>
-		item.name.toLowerCase().includes(searchText.toLowerCase()),
+	const filteredData = data.filter(
+		(item) =>
+			item.name.toLowerCase().includes(searchText.toLowerCase()) ||
+			item.address.toLowerCase().includes(searchText.toLowerCase()) ||
+			item.phone.toLowerCase().includes(searchText.toLowerCase()),
 	);
 
 	const columns: TableColumnsType<DataType> = [
@@ -105,7 +116,7 @@ const ListCenters: React.FC = () => {
 		},
 		{
 			title: <div style={{ textAlign: 'center' }}>Thao tác</div>,
-			dataIndex: 'thaotac',
+			dataIndex: 'actions',
 			width: '24%',
 		},
 	];
