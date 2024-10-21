@@ -80,6 +80,10 @@ export class StudentsService {
 		return students;
 	}
 
+	async getById(id: string) {
+		return await this.getStudent({ _id: id });
+	}
+
 	async getByEmail(email: string) {
 		return await this.getStudent({ email: email });
 	}
