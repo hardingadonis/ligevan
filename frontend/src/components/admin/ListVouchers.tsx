@@ -52,7 +52,7 @@ const ListVouchers: React.FC = () => {
 	});
 
 	const renderActions = (id: string): JSX.Element => (
-		<div style={{ display: 'flex', justifyContent: 'center' }}>
+		<div>
 			<Button
 				color="primary"
 				variant="outlined"
@@ -129,9 +129,10 @@ const ListVouchers: React.FC = () => {
 
 	const columns: TableColumnsType<DataType> = [
 		{
-			title: <div style={{ textAlign: 'center' }}>STT</div>,
+			title: 'STT',
 			dataIndex: 'key',
 			width: '5%',
+			align: 'center',
 			sorter: (a, b) => parseInt(a.key) - parseInt(b.key),
 		},
 		{
@@ -147,16 +148,18 @@ const ListVouchers: React.FC = () => {
 			sorter: (a, b) => a.title.localeCompare(b.title),
 		},
 		{
-			title: <div style={{ textAlign: 'center' }}>Giá trị</div>,
+			title: 'Giá trị',
 			dataIndex: 'value',
 			width: '15%',
+			align: 'center',
 			sorter: (a, b) => a.value - b.value,
-			render: (value) => <div style={{ textAlign: 'center' }}>{value}%</div>,
+			render: (value) => `${value}%`,
 		},
 		{
-			title: <div style={{ textAlign: 'center' }}>Thao tác</div>,
+			title: 'Thao tác',
 			dataIndex: 'actions',
 			width: '25%',
+			align: 'center',
 		},
 	];
 
