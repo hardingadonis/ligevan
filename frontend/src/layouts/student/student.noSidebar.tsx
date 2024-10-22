@@ -53,13 +53,6 @@ const StudentLayoutNoSidebar: React.FC<StudentLayoutProps> = ({
 			<Content style={{ margin: '24px 16px 0' }}>
 				<Row justify="center">
 					<Col xs={24} sm={24} md={20} lg={20} xl={20}>
-						{showDropdownCenter && (
-							<DropdownCenter
-								onSelectCenter={handleSelectCenter}
-								className="dropdown-center-mobile"
-								selectedCenter={selectedCenter}
-							/>
-						)}
 						<div style={{ padding: 24, minHeight: 360 }}>{children}</div>
 					</Col>
 				</Row>
