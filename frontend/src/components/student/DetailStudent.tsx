@@ -1,5 +1,5 @@
 import { EditOutlined } from '@ant-design/icons';
-import { Avatar, Button, Col, Form, Input, Row, Typography } from 'antd';
+import { Avatar, Button, Col, Form, Input, Row, Spin, Typography } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 
@@ -30,11 +30,22 @@ const DetailStudent: React.FC = () => {
 	}, []);
 
 	if (loading) {
-		return <div>Đang tải...</div>;
+		return (
+			<div style={{ display: 'inline-flex', alignItems: 'center' }}>
+				<Spin />
+				<span style={{ marginLeft: 8, color: 'white' }}>Đang tải...</span>
+			</div>
+		);
 	}
 
 	if (!student) {
-		return <div>Không tìm thấy dữ liệu của học sinh.</div>;
+		return (
+			<div style={{ textAlign: 'center', padding: '20px' }}>
+				<Typography.Text type="danger" style={{ fontSize: '16px' }}>
+					Không tìm thấy dữ liệu của học sinh.
+				</Typography.Text>
+			</div>
+		);
 	}
 
 	return (
