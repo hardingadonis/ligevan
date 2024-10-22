@@ -166,6 +166,7 @@ const FormUpdate: React.FC = () => {
 								},
 							},
 						]}
+						style={{ marginBottom: '24px' }}
 					>
 						<Input
 							name="fullName"
@@ -201,6 +202,7 @@ const FormUpdate: React.FC = () => {
 								},
 							},
 						]}
+						style={{ marginBottom: '24px' }}
 					>
 						<Input
 							name="phone"
@@ -227,6 +229,7 @@ const FormUpdate: React.FC = () => {
 								},
 							},
 						]}
+						style={{ marginBottom: '24px' }}
 					>
 						<Input
 							name="address"
@@ -241,6 +244,7 @@ const FormUpdate: React.FC = () => {
 						rules={[
 							{ required: true, message: 'Vui lòng chọn giới tính của bạn!' },
 						]}
+						style={{ marginBottom: '24px' }}
 					>
 						<Select value={student.gender} onChange={handleGenderChange}>
 							<Option value="male">Nam</Option>
@@ -267,11 +271,12 @@ const FormUpdate: React.FC = () => {
 								},
 							},
 						]}
+						style={{ marginBottom: '30px' }}
 					>
 						<DatePicker
 							value={student.dob ? dayjs(student.dob) : null}
 							onChange={handleDateChange}
-							placeholder="Vui lòng chọn ngày sinh của bạn"
+							placeholder="Chọn ngày sinh"
 							format="DD/MM/YYYY"
 							style={{ width: '100%' }}
 						/>
