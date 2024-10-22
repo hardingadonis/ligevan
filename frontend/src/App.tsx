@@ -31,6 +31,8 @@ const AdminCentersManagement = lazy(
 	() => import('@/pages/admin/CentersManagement'),
 );
 
+const CourseDetail = lazy(() => import('@/pages/admin/CourseDetail'));
+
 const App: React.FC = () => {
 	return (
 		<Router>
@@ -145,6 +147,17 @@ const App: React.FC = () => {
 								tokenName="accessToken"
 							>
 								<AdminDashboard />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="/admin/courses/:id"
+						element={
+							<ProtectedRoute
+								redirectPath="/admin/login"
+								tokenName="accessToken"
+							>
+								<CourseDetail />
 							</ProtectedRoute>
 						}
 					/>
