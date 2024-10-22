@@ -15,8 +15,9 @@ const VoucherDetail: React.FC = () => {
 
 	useEffect(() => {
 		const fetchVoucher = async () => {
+			if (!id) return;
 			try {
-				const fetchedVoucher = await getVoucherById(id!);
+				const fetchedVoucher = await getVoucherById(id);
 				setVoucher(fetchedVoucher);
 			} catch (error) {
 				console.error('Lỗi khi lấy chi tiết mã giảm giá:', error);
@@ -152,7 +153,7 @@ const VoucherDetail: React.FC = () => {
 										color="primary"
 										variant="outlined"
 										icon={<EditOutlined />}
-										onClick={() => handleEdit(id!)}
+										onClick={() => id && handleEdit(id)}
 										style={{ marginRight: 8 }}
 									>
 										Chỉnh sửa
@@ -161,7 +162,7 @@ const VoucherDetail: React.FC = () => {
 										color="danger"
 										variant="outlined"
 										icon={<DeleteOutlined />}
-										onClick={() => handleDelete(id!)}
+										onClick={() => id && handleDelete(id)}
 									>
 										Xóa
 									</Button>
