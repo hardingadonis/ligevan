@@ -1,9 +1,10 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-import ListClass from '@/components/teacher/ListClass';
+import ListStudent from '@/components/teacher/ListStudent';
+// Import useParams
 import TeacherLayout from '@/layouts/teacher';
 import {
 	selectEmail,
@@ -13,12 +14,13 @@ import {
 } from '@/slices/teacher';
 import { apiBaseUrl } from '@/utils/apiBase';
 
-const ClassesPage: React.FC = () => {
+const ClassDetail: React.FC = () => {
 	const email = useSelector(selectEmail);
 	const token = useSelector(selectToken);
 	const [isMounted, setIsMounted] = useState(false);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	const { id: classID } = useParams<{ id: string }>(); // Lấy classID từ URL
 
 	useEffect(() => {
 		if (!token) {
@@ -26,10 +28,10 @@ const ClassesPage: React.FC = () => {
 		}
 
 		async function fetchMyAPI() {
+			// Lấy thông tin giáo viên
 			const responseAvatar = await axios.get(
 				apiBaseUrl + `/api/teachers/email/${email}`,
 			);
-
 			if (responseAvatar.data.avatar && responseAvatar.data.fullName) {
 				dispatch(setAvatar(responseAvatar.data.avatar));
 				dispatch(setFullName(responseAvatar.data.fullName));
@@ -37,16 +39,17 @@ const ClassesPage: React.FC = () => {
 		}
 		fetchMyAPI();
 		setIsMounted(true);
-	}, [token, email, dispatch, navigate]);
+	}, [token, email, classID, dispatch, navigate]);
 
 	if (!isMounted) {
 		return null;
-	} else
+	} else {
 		return (
 			<TeacherLayout>
-				<ListClass email={email || ''} />
+				<ListStudent classID={classID ?? ''} />
 			</TeacherLayout>
 		);
+	}
 };
 
-export default ClassesPage;
+export default ClassDetail;
