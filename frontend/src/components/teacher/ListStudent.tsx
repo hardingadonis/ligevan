@@ -1,4 +1,4 @@
-import { SearchOutlined } from '@ant-design/icons';
+import { SearchOutlined, SyncOutlined } from '@ant-design/icons';
 import {
 	Alert,
 	Button,
@@ -44,43 +44,43 @@ const ListStudent: React.FC<ListStudentProps> = ({ classID }) => {
 	const [studentsCount, setStudentsCount] = useState<number>(0); // Số học sinh
 	const [slotsCount, setSlotsCount] = useState<number>(0); // Số tiết học
 
+	const fetchListStudent = async () => {
+		setLoading(true);
+		try {
+			const classResponse = await axios.get<Class>(
+				`${apiBaseUrl}/api/classes/${classID}`,
+			);
+			const classes = classResponse.data;
+			setClassName(classes.name);
+			setStudentsCount(classes.students?.length ?? 0);
+			setSlotsCount(classes.slots?.length ?? 0);
+
+			const classStudent = classes.students || [];
+			const studentRequests = classStudent.map((std) =>
+				axios.get<Student>(`${apiBaseUrl}/api/students/${std._id}`),
+			);
+
+			const studentResponses = await Promise.all(studentRequests);
+			const fullStudents = studentResponses.map((response) => response.data);
+
+			const tableData = fullStudents.map((std_id, index) => ({
+				key: (index + 1).toString(),
+				fullName: std_id.fullName,
+				phone: std_id.phone,
+				gender: std_id.gender === 'male' ? 'Nam' : 'Nữ',
+				dob: formatDateToVietnamTimezone(std_id.dob),
+				actions: renderActions(std_id._id),
+			}));
+
+			setData(tableData);
+		} catch {
+			setError('Không thể tải danh sách học sinh');
+		} finally {
+			setLoading(false);
+		}
+	};
+
 	useEffect(() => {
-		const fetchListStudent = async () => {
-			setLoading(true);
-			try {
-				const classResponse = await axios.get<Class>(
-					`${apiBaseUrl}/api/classes/${classID}`,
-				);
-				const classes = classResponse.data;
-				setClassName(classes.name);
-				setStudentsCount(classes.students?.length ?? 0);
-				setSlotsCount(classes.slots?.length ?? 0);
-
-				const classStudent = classes.students || [];
-				const studentRequests = classStudent.map((std) =>
-					axios.get<Student>(`${apiBaseUrl}/api/students/${std._id}`),
-				);
-
-				const studentResponses = await Promise.all(studentRequests);
-				const fullStudents = studentResponses.map((response) => response.data);
-
-				const tableData = fullStudents.map((std_id, index) => ({
-					key: (index + 1).toString(),
-					fullName: std_id.fullName,
-					phone: std_id.phone,
-					gender: std_id.gender === 'male' ? 'Nam' : 'Nữ',
-					dob: formatDateToVietnamTimezone(std_id.dob),
-					actions: renderActions(std_id._id),
-				}));
-
-				setData(tableData);
-			} catch {
-				setError('Không thể tải danh sách học sinh');
-			} finally {
-				setLoading(false);
-			}
-		};
-
 		fetchListStudent();
 	}, [classID]);
 
@@ -90,7 +90,6 @@ const ListStudent: React.FC<ListStudentProps> = ({ classID }) => {
 			variant="solid"
 			type="primary"
 			onClick={() => handleDetail(id)}
-			style={{ marginRight: 8 }}
 		>
 			Xem chi tiết
 		</Button>
@@ -98,6 +97,10 @@ const ListStudent: React.FC<ListStudentProps> = ({ classID }) => {
 
 	const handleDetail = (id: string) => {
 		navigate(`/teacher/classes/student/${id}`);
+	};
+
+	const handleRefresh = () => {
+		fetchListStudent();
 	};
 
 	const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -117,6 +120,7 @@ const ListStudent: React.FC<ListStudentProps> = ({ classID }) => {
 			title: <div style={{ textAlign: 'center' }}>STT</div>,
 			dataIndex: 'key',
 			width: '5%',
+			align: 'center',
 			sorter: (a, b) => parseInt(a.key) - parseInt(b.key),
 		},
 		{
@@ -129,24 +133,28 @@ const ListStudent: React.FC<ListStudentProps> = ({ classID }) => {
 			title: <div style={{ textAlign: 'center' }}>Số điện thoại</div>,
 			dataIndex: 'phone',
 			width: '20%',
+			align: 'center',
 			sorter: (a, b) => parseInt(a.phone) - parseInt(b.phone),
 		},
 		{
 			title: <div style={{ textAlign: 'center' }}>Giới tính</div>,
 			dataIndex: 'gender',
 			width: '15%',
+			align: 'center',
 			sorter: (a, b) => a.gender.localeCompare(b.gender),
 		},
 		{
 			title: <div style={{ textAlign: 'center' }}>Ngày sinh</div>,
 			dataIndex: 'dob',
 			width: '25%',
+			align: 'center',
 			sorter: (a, b) => a.dob.localeCompare(b.dob),
 		},
 		{
 			title: <div style={{ textAlign: 'center' }}>Thao tác</div>,
 			dataIndex: 'actions',
 			width: '10%',
+			align: 'center',
 		},
 	];
 
@@ -180,6 +188,15 @@ const ListStudent: React.FC<ListStudentProps> = ({ classID }) => {
 					</Typography.Text>
 				</Col>
 				<Col>
+					<Button
+						type="default"
+						icon={<SyncOutlined />}
+						onClick={handleRefresh}
+						style={{ marginRight: 8 }}
+					>
+						{' '}
+						Làm mới
+					</Button>
 					<Input
 						placeholder="Tìm kiếm"
 						onChange={handleSearch}
