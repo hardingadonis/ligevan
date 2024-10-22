@@ -44,6 +44,9 @@ export class UpdateClassDto {
 	})
 	teacher?: string;
 
+	@ApiPropertyOptional({ description: 'Course offered by the Class' })
+	course?: string;
+
 	@ApiPropertyOptional({ description: 'Students offered by the Class' })
 	students?: string[];
 
