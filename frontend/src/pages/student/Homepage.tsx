@@ -1,3 +1,4 @@
+import { Typography } from 'antd';
 import React, { useState } from 'react';
 
 import ListCourse from '@/components/student/ListCourse';
@@ -9,6 +10,9 @@ const HomepageStudent: React.FC = () => {
 
 	return (
 		<StudentLayoutNoSidebar onSelectCenter={setSelectedCenter}>
+			<Typography.Title level={1} style={{ textAlign: 'center' }}>
+				「学び、練習し、成功する」
+			</Typography.Title>
 			<ListCourse selectedCenter={selectedCenter} />
 		</StudentLayoutNoSidebar>
 	);
