@@ -1,4 +1,4 @@
-import { SearchOutlined, SyncOutlined } from '@ant-design/icons';
+import { EyeOutlined, SearchOutlined, SyncOutlined } from '@ant-design/icons';
 import {
 	Alert,
 	Button,
@@ -88,10 +88,20 @@ const ListStudent: React.FC<ListStudentProps> = ({ classID }) => {
 			color="default"
 			variant="solid"
 			type="primary"
+			icon={<EyeOutlined />}
 			onClick={() => handleDetail(id)}
 		>
-			Xem chi tiết
+			Chi tiết
 		</Button>
+		// 	<Button
+		// 	color="primary"
+		// 	variant="outlined"
+		// 	icon={<EyeOutlined />}
+		// 	onClick={() => handleDetail(id)}
+		// 	style={{ marginRight: 8 }}
+		// >
+		// 	Chi tiết
+		// </Button>
 	);
 
 	const handleDetail = (id: string) => {

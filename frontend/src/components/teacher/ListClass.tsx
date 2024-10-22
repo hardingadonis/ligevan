@@ -1,4 +1,4 @@
-import { SearchOutlined } from '@ant-design/icons';
+import { EyeOutlined, SearchOutlined, SyncOutlined } from '@ant-design/icons';
 import { Alert, Button, Empty, Input, Spin, Table } from 'antd';
 import type { TableColumnsType, TableProps } from 'antd';
 import axios from 'axios';
@@ -29,40 +29,40 @@ const ListClass: React.FC<ListClassProps> = ({ email }) => {
 	const [error, setError] = useState<string | null>(null);
 	const [searchText, setSearchText] = useState<string>('');
 
+	const fetchClassesForTeacher = async () => {
+		setLoading(true);
+		try {
+			const teacherResponse = await axios.get<Teacher>(
+				apiBaseUrl + `/api/teachers/email/${email}`,
+			);
+			const teacher = teacherResponse.data;
+			const teacherClasses = teacher.classes || [];
+
+			const classRequests = teacherClasses.map((cls) =>
+				axios.get<Class>(apiBaseUrl + `/api/classes/${cls}`),
+			);
+
+			const classResponses = await Promise.all(classRequests);
+			const fullClasses = classResponses.map((response) => response.data);
+
+			const tableData = fullClasses.map((cls, index) => ({
+				key: (index + 1).toString(),
+				name: cls.name,
+				students: (cls.students?.length ?? 0).toString(),
+				slots: (cls.slots?.length ?? 0).toString(),
+				course: cls.course.title,
+				actions: renderActions(cls._id),
+			}));
+
+			setData(tableData);
+		} catch {
+			setError('Không thể tải danh sách lớp học');
+		} finally {
+			setLoading(false);
+		}
+	};
+
 	useEffect(() => {
-		const fetchClassesForTeacher = async () => {
-			setLoading(true);
-			try {
-				const teacherResponse = await axios.get<Teacher>(
-					apiBaseUrl + `/api/teachers/email/${email}`,
-				);
-				const teacher = teacherResponse.data;
-				const teacherClasses = teacher.classes || [];
-
-				const classRequests = teacherClasses.map((cls) =>
-					axios.get<Class>(apiBaseUrl + `/api/classes/${cls}`),
-				);
-
-				const classResponses = await Promise.all(classRequests);
-				const fullClasses = classResponses.map((response) => response.data);
-
-				const tableData = fullClasses.map((cls, index) => ({
-					key: (index + 1).toString(),
-					name: cls.name,
-					students: (cls.students?.length ?? 0).toString(),
-					slots: (cls.slots?.length ?? 0).toString(),
-					course: cls.course.title,
-					actions: renderActions(cls._id),
-				}));
-
-				setData(tableData);
-			} catch {
-				setError('Không thể tải danh sách lớp học');
-			} finally {
-				setLoading(false);
-			}
-		};
-
 		fetchClassesForTeacher();
 	}, [email]);
 
@@ -71,15 +71,20 @@ const ListClass: React.FC<ListClassProps> = ({ email }) => {
 			color="default"
 			variant="solid"
 			type="primary"
+			icon={<EyeOutlined />}
 			onClick={() => handleDetail(id)}
 			style={{ marginRight: 8 }}
 		>
-			Xem chi tiết
+			Chi tiết
 		</Button>
 	);
 
 	const handleDetail = (id: string) => {
 		navigate(`/teacher/classes/${id}`);
+	};
+
+	const handleRefresh = () => {
+		fetchClassesForTeacher();
 	};
 
 	const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -99,6 +104,7 @@ const ListClass: React.FC<ListClassProps> = ({ email }) => {
 			title: <div style={{ textAlign: 'center' }}>STT</div>,
 			dataIndex: 'key',
 			width: '5%',
+			align: 'center',
 			sorter: (a, b) => parseInt(a.key) - parseInt(b.key),
 		},
 		{
@@ -108,26 +114,29 @@ const ListClass: React.FC<ListClassProps> = ({ email }) => {
 			sorter: (a, b) => a.name.localeCompare(b.name),
 		},
 		{
-			title: <div style={{ textAlign: 'center' }}>Học sinh</div>,
-			dataIndex: 'students',
-			width: '15%',
-			sorter: (a, b) => parseInt(a.students) - parseInt(b.students),
-		},
-		{
-			title: <div style={{ textAlign: 'center' }}>Tiết học</div>,
-			dataIndex: 'slots',
-			width: '15%',
-			sorter: (a, b) => parseInt(a.slots) - parseInt(b.slots),
-		},
-		{
 			title: <div style={{ textAlign: 'center' }}>Khóa học</div>,
 			dataIndex: 'course',
 			width: '30%',
 			sorter: (a, b) => a.course.localeCompare(b.course),
 		},
 		{
+			title: <div style={{ textAlign: 'center' }}>Học sinh</div>,
+			dataIndex: 'students',
+			width: '15%',
+			align: 'center',
+			sorter: (a, b) => parseInt(a.students) - parseInt(b.students),
+		},
+		{
+			title: <div style={{ textAlign: 'center' }}>Tiết học</div>,
+			dataIndex: 'slots',
+			width: '15%',
+			align: 'center',
+			sorter: (a, b) => parseInt(a.slots) - parseInt(b.slots),
+		},
+		{
 			title: <div style={{ textAlign: 'center' }}>Thao tác</div>,
 			dataIndex: 'actions',
+			align: 'center',
 			width: '10%',
 		},
 	];
@@ -154,6 +163,15 @@ const ListClass: React.FC<ListClassProps> = ({ email }) => {
 					marginBottom: '20px',
 				}}
 			>
+				<Button
+					type="default"
+					icon={<SyncOutlined />}
+					onClick={handleRefresh}
+					style={{ marginRight: 8 }}
+				>
+					{' '}
+					Làm mới
+				</Button>
 				<Input
 					placeholder="Tìm kiếm"
 					onChange={handleSearch}
