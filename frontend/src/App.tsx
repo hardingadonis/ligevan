@@ -8,11 +8,10 @@ import {
 } from 'react-router-dom';
 
 import ProtectedRoute from '@/components/commons/ProtectedRoute';
-import StudentProfile from '@/pages/student/Profile';
-
-import EditProfileStudent from './pages/student/EditProfile';
 
 const HomepageStudent = lazy(() => import('@/pages/student/Homepage'));
+const StudentProfile = lazy(() => import('@/pages/student/Profile'));
+const EditProfileStudent = lazy(() => import('@/pages/student/EditProfile'));
 const ClassesPage = lazy(() => import('@/pages/teacher/Classes'));
 const AdminDashboard = lazy(() => import('@/pages/admin/Dashboard'));
 const AdminCoursesManagement = lazy(
