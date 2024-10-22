@@ -21,3 +21,13 @@ export const createCourse = async (course: Course): Promise<void> => {
 		throw error;
 	}
 };
+
+export const getCourseById = async (id: string): Promise<Course> => {
+	try {
+		const response = await axios.get(`${apiBaseUrl}/api/courses/${id}`);
+		return response.data;
+	} catch (error) {
+		console.error('Error fetching course detail:', error);
+		throw error;
+	}
+};
