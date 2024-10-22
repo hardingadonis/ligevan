@@ -12,3 +12,12 @@ export const getAllCourse = async (): Promise<Course[]> => {
 		throw error;
 	}
 };
+
+export const createCourse = async (course: Course): Promise<void> => {
+	try {
+		await axios.post(`${apiBaseUrl}/api/courses`, course);
+	} catch (error) {
+		console.error('Error creating course:', error);
+		throw error;
+	}
+};
