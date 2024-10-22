@@ -103,7 +103,7 @@ const AdminLogin: React.FC = () => {
 									{ required: true, message: 'Vui lòng nhập tên đăng nhập!' },
 								]}
 							>
-								<Input placeholder="Nhập email" />
+								<Input placeholder="Nhập tên đăng nhập" />
 							</Form.Item>
 							<Form.Item
 								label="Mật khẩu"
