@@ -1,5 +1,3 @@
-import { ArrowLeftOutlined } from '@ant-design/icons';
-import { Button, Space } from 'antd';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
