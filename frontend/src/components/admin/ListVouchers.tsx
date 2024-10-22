@@ -1,17 +1,17 @@
 import {
 	DeleteOutlined,
-	EditOutlined,
+	EyeOutlined,
 	PlusOutlined,
 	SearchOutlined,
 	SyncOutlined,
 } from '@ant-design/icons';
-import { Button, Empty, Input, Table } from 'antd';
+import { Button, Empty, Input, Modal, Table, notification } from 'antd';
 import type { TableColumnsType, TableProps } from 'antd';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { Voucher } from '@/schemas/voucher.schema';
-import { getAllVoucher } from '@/services/api/voucher';
-import { formatDateTimeToVietnamTimezone } from '@/utils/dateFormat';
+import { deleteVoucher, getAllVoucher } from '@/services/api/voucher';
 
 interface DataType {
 	key: string;
@@ -26,6 +26,7 @@ interface DataType {
 const ListVouchers: React.FC = () => {
 	const [data, setData] = useState<DataType[]>([]);
 	const [searchText, setSearchText] = useState('');
+	const navigate = useNavigate();
 
 	const fetchData = async () => {
 		try {
@@ -48,36 +49,60 @@ const ListVouchers: React.FC = () => {
 
 	useEffect(() => {
 		fetchData();
-	}, []);
+	});
 
 	const renderActions = (id: string): JSX.Element => (
-		<>
+		<div>
 			<Button
-				type="primary"
-				icon={<EditOutlined />}
-				onClick={() => handleEdit(id)}
+				color="primary"
+				variant="outlined"
+				icon={<EyeOutlined />}
+				onClick={() => handleViewDetail(id)}
 				style={{ marginRight: 8 }}
 			>
-				Chỉnh sửa
+				Chi tiết
 			</Button>
 			<Button
-				type="primary"
-				danger
+				color="danger"
+				variant="outlined"
 				icon={<DeleteOutlined />}
 				onClick={() => handleDelete(id)}
-				style={{ backgroundColor: 'red', borderColor: 'red' }}
 			>
 				Xóa
 			</Button>
-		</>
+		</div>
 	);
 
-	const handleEdit = (id: string) => {
-		console.log(`Chỉnh sửa mã giảm giá có id: ${id}`);
+	const handleViewDetail = (id: string) => {
+		navigate(`/admin/vouchers/${id}`);
 	};
 
-	const handleDelete = (id: string) => {
-		console.log(`Xóa mã giảm giá có id: ${id}`);
+	const handleDelete = async (id: string) => {
+		Modal.confirm({
+			title: 'Xác nhận xóa',
+			content: 'Bạn có chắc chắn muốn xóa mã giảm giá này?',
+			okText: 'Xóa',
+			cancelText: 'Hủy',
+			centered: true,
+			onOk: async () => {
+				try {
+					await deleteVoucher(id);
+					notification.success({
+						message: 'Xóa thành công',
+						description: 'Mã giảm giá đã được xóa thành công.',
+						duration: 3,
+					});
+					navigate(`/admin/vouchers`);
+				} catch (error) {
+					console.error('Lỗi khi xóa mã giảm giá:', error);
+					notification.error({
+						message: 'Lỗi',
+						description: 'Đã xảy ra lỗi khi xóa mã giảm giá.',
+						duration: 3,
+					});
+				}
+			},
+		});
 	};
 
 	const handleCreateNewvoucher = () => {
@@ -104,57 +129,37 @@ const ListVouchers: React.FC = () => {
 
 	const columns: TableColumnsType<DataType> = [
 		{
-			title: <div style={{ textAlign: 'center' }}>STT</div>,
+			title: 'STT',
 			dataIndex: 'key',
 			width: '5%',
+			align: 'center',
 			sorter: (a, b) => parseInt(a.key) - parseInt(b.key),
 		},
 		{
 			title: <div style={{ textAlign: 'center' }}>Mã giảm giá</div>,
 			dataIndex: 'code',
-			width: '15%',
+			width: '20%',
 			sorter: (a, b) => a.code.localeCompare(b.code),
 		},
 		{
 			title: <div style={{ textAlign: 'center' }}>Tiêu đề</div>,
 			dataIndex: 'title',
-			width: '25%',
+			width: '35%',
 			sorter: (a, b) => a.title.localeCompare(b.title),
 		},
 		{
-			title: <div style={{ textAlign: 'center' }}>Giá trị</div>,
+			title: 'Giá trị',
 			dataIndex: 'value',
-			width: '10%',
+			width: '15%',
+			align: 'center',
 			sorter: (a, b) => a.value - b.value,
-			render: (value) => <div style={{ textAlign: 'center' }}>{value}%</div>,
+			render: (value) => `${value}%`,
 		},
 		{
-			title: <div style={{ textAlign: 'center' }}>Ngày bắt đầu</div>,
-			dataIndex: 'start',
-			width: '15%',
-			sorter: (a, b) =>
-				new Date(a.start).getTime() - new Date(b.start).getTime(),
-			render: (date) => (
-				<div style={{ textAlign: 'center' }}>
-					{formatDateTimeToVietnamTimezone(new Date(date))}
-				</div>
-			),
-		},
-		{
-			title: <div style={{ textAlign: 'center' }}>Ngày kết thúc</div>,
-			dataIndex: 'end',
-			width: '15%',
-			sorter: (a, b) => new Date(a.end).getTime() - new Date(b.end).getTime(),
-			render: (date) => (
-				<div style={{ textAlign: 'center' }}>
-					{formatDateTimeToVietnamTimezone(new Date(date))}
-				</div>
-			),
-		},
-		{
-			title: <div style={{ textAlign: 'center' }}>Thao tác</div>,
+			title: 'Thao tác',
 			dataIndex: 'actions',
-			width: '15%',
+			width: '25%',
+			align: 'center',
 		},
 	];
 
