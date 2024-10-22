@@ -8,6 +8,7 @@ import {
 import { Button, Empty, Input, Table } from 'antd';
 import type { TableColumnsType, TableProps } from 'antd';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { Voucher } from '@/schemas/voucher.schema';
 import { getAllVoucher } from '@/services/api/voucher';
@@ -26,6 +27,7 @@ interface DataType {
 const ListVouchers: React.FC = () => {
 	const [data, setData] = useState<DataType[]>([]);
 	const [searchText, setSearchText] = useState('');
+	const navigate = useNavigate();
 
 	const fetchData = async () => {
 		try {
@@ -73,7 +75,7 @@ const ListVouchers: React.FC = () => {
 	);
 
 	const handleViewDetail = (id: string) => {
-		console.log(`Chỉnh sửa mã giảm giá có id: ${id}`);
+		navigate(`/admin/vouchers/${id}`);
 	};
 
 	const handleDelete = (id: string) => {
