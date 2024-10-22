@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+import ListClass from '@/components/teacher/ListClass';
 import TeacherLayout from '@/layouts/teacher';
 import {
 	selectEmail,
@@ -11,8 +12,6 @@ import {
 	setFullName,
 } from '@/slices/teacher';
 import { apiBaseUrl } from '@/utils/apiBase';
-
-import ListClass from './ListClass';
 
 const ClassesPage: React.FC = () => {
 	const email = useSelector(selectEmail);
