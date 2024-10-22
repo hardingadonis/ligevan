@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import ListStudent from '@/components/teacher/ListStudent';
 // Import useParams
 import TeacherLayout from '@/layouts/teacher';
 import {
@@ -12,8 +13,6 @@ import {
 	setFullName,
 } from '@/slices/teacher';
 import { apiBaseUrl } from '@/utils/apiBase';
-
-import ListStudent from './ListStudent';
 
 const ClassDetail: React.FC = () => {
 	const email = useSelector(selectEmail);
@@ -37,16 +36,6 @@ const ClassDetail: React.FC = () => {
 				dispatch(setAvatar(responseAvatar.data.avatar));
 				dispatch(setFullName(responseAvatar.data.fullName));
 			}
-
-			// // Có thể sử dụng classID để lấy thông tin lớp học nếu cần
-			// if (classID) {
-			// const responseClass = await axios.get(
-			// 	apiBaseUrl + `/api/classes/${classID}`
-			// );
-			// 	// Xử lý dữ liệu lớp học (responseClass.data)
-			// 	// console.log("Check" + responseClass.data);
-			// 	// console.log("Class data (formatted):", JSON.stringify(responseClass.data, null, 2));
-			// }
 		}
 		fetchMyAPI();
 		setIsMounted(true);
@@ -57,7 +46,6 @@ const ClassDetail: React.FC = () => {
 	} else {
 		return (
 			<TeacherLayout>
-				{/* Truyền classID vào component Detail nếu cần */}
 				<ListStudent classID={classID ?? ''} />
 			</TeacherLayout>
 		);
