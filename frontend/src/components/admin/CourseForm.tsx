@@ -1,20 +1,10 @@
 import { PlusOutlined } from '@ant-design/icons';
-import {
-	Button,
-	Card,
-	Form,
-	Input,
-	InputNumber,
-	Typography,
-	message,
-} from 'antd';
+import { Button, Card, Form, Input, InputNumber, message } from 'antd';
 import React, { useState } from 'react';
 
 import type { Course } from '@/schemas/course.schema';
-// Import icon PlusOutlined
 import { createCourse } from '@/services/api/course';
-
-const { Title } = Typography;
+import { formatPrice } from '@/utils/formatPrice';
 
 interface CourseFormProps {
 	onSuccess: () => void;
@@ -80,10 +70,7 @@ const CourseForm: React.FC<CourseFormProps> = ({ onSuccess }) => {
 								min={0}
 								placeholder="Nhập giá khóa học"
 								style={{ width: '100%' }}
-								formatter={(value: number | undefined): string => {
-									if (value === undefined || value === null) return '';
-									return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-								}}
+								formatter={formatPrice}
 								parser={(value: string | undefined): number => {
 									if (!value) return 0;
 									return Number(value.replace(/[^\d.-]/g, ''));
