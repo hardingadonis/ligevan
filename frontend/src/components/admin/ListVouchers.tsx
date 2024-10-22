@@ -12,7 +12,6 @@ import { useNavigate } from 'react-router-dom';
 
 import { Voucher } from '@/schemas/voucher.schema';
 import { deleteVoucher, getAllVoucher } from '@/services/api/voucher';
-import { formatDateToVietnamTimezone } from '@/utils/dateFormat';
 
 interface DataType {
 	key: string;
@@ -53,7 +52,7 @@ const ListVouchers: React.FC = () => {
 	});
 
 	const renderActions = (id: string): JSX.Element => (
-		<>
+		<div style={{ display: 'flex', justifyContent: 'center' }}>
 			<Button
 				color="primary"
 				variant="outlined"
@@ -71,7 +70,7 @@ const ListVouchers: React.FC = () => {
 			>
 				Xóa
 			</Button>
-		</>
+		</div>
 	);
 
 	const handleViewDetail = (id: string) => {
@@ -138,49 +137,26 @@ const ListVouchers: React.FC = () => {
 		{
 			title: <div style={{ textAlign: 'center' }}>Mã giảm giá</div>,
 			dataIndex: 'code',
-			width: '15%',
+			width: '20%',
 			sorter: (a, b) => a.code.localeCompare(b.code),
 		},
 		{
 			title: <div style={{ textAlign: 'center' }}>Tiêu đề</div>,
 			dataIndex: 'title',
-			width: '25%',
+			width: '35%',
 			sorter: (a, b) => a.title.localeCompare(b.title),
 		},
 		{
 			title: <div style={{ textAlign: 'center' }}>Giá trị</div>,
 			dataIndex: 'value',
-			width: '10%',
+			width: '15%',
 			sorter: (a, b) => a.value - b.value,
 			render: (value) => <div style={{ textAlign: 'center' }}>{value}%</div>,
 		},
 		{
-			title: <div style={{ textAlign: 'center' }}>Thời gian bắt đầu</div>,
-			dataIndex: 'start',
-			width: '15%',
-			sorter: (a, b) =>
-				new Date(a.start).getTime() - new Date(b.start).getTime(),
-			render: (date) => (
-				<div style={{ textAlign: 'center' }}>
-					{formatDateToVietnamTimezone(new Date(date))}
-				</div>
-			),
-		},
-		{
-			title: <div style={{ textAlign: 'center' }}>Thời gian kết thúc</div>,
-			dataIndex: 'end',
-			width: '15%',
-			sorter: (a, b) => new Date(a.end).getTime() - new Date(b.end).getTime(),
-			render: (date) => (
-				<div style={{ textAlign: 'center' }}>
-					{formatDateToVietnamTimezone(new Date(date))}
-				</div>
-			),
-		},
-		{
 			title: <div style={{ textAlign: 'center' }}>Thao tác</div>,
 			dataIndex: 'actions',
-			width: '15%',
+			width: '25%',
 		},
 	];
 
