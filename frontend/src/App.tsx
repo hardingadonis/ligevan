@@ -8,9 +8,10 @@ import {
 } from 'react-router-dom';
 
 import ProtectedRoute from '@/components/commons/ProtectedRoute';
-import StudentProfile from '@/pages/student/Profile';
 
 const HomepageStudent = lazy(() => import('@/pages/student/Homepage'));
+const StudentProfile = lazy(() => import('@/pages/student/Profile'));
+const EditProfileStudent = lazy(() => import('@/pages/student/EditProfile'));
 const ClassesPage = lazy(() => import('@/pages/teacher/Classes'));
 const AdminDashboard = lazy(() => import('@/pages/admin/Dashboard'));
 const AdminCoursesManagement = lazy(
@@ -19,6 +20,7 @@ const AdminCoursesManagement = lazy(
 const AdminVouchersManagement = lazy(
 	() => import('@/pages/admin/VouchersManagement'),
 );
+const AdminVoucherDetail = lazy(() => import('@/pages/admin/VoucherDetail'));
 const LoginTeacher = lazy(() => import('@/pages/teacher/Login'));
 const AdminLogin = lazy(() => import('@/pages/admin/Login'));
 
@@ -45,6 +47,14 @@ const App: React.FC = () => {
 						element={
 							<ProtectedRoute redirectPath="/student" tokenName="token">
 								<StudentProfile />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="/student/profile/edit"
+						element={
+							<ProtectedRoute redirectPath="/student" tokenName="token">
+								<EditProfileStudent />
 							</ProtectedRoute>
 						}
 					/>
@@ -85,6 +95,17 @@ const App: React.FC = () => {
 								tokenName="accessToken"
 							>
 								<AdminVouchersManagement />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="/admin/vouchers/:id"
+						element={
+							<ProtectedRoute
+								redirectPath="/admin/login"
+								tokenName="accessToken"
+							>
+								<AdminVoucherDetail />
 							</ProtectedRoute>
 						}
 					/>

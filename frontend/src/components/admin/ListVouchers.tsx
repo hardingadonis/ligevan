@@ -1,17 +1,18 @@
 import {
 	DeleteOutlined,
-	EditOutlined,
+	EyeOutlined,
 	PlusOutlined,
 	SearchOutlined,
 	SyncOutlined,
 } from '@ant-design/icons';
-import { Button, Empty, Input, Table } from 'antd';
+import { Button, Empty, Input, Modal, Table, notification } from 'antd';
 import type { TableColumnsType, TableProps } from 'antd';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { Voucher } from '@/schemas/voucher.schema';
-import { getAllVoucher } from '@/services/api/voucher';
-import { formatDateTimeToVietnamTimezone } from '@/utils/dateFormat';
+import { deleteVoucher, getAllVoucher } from '@/services/api/voucher';
+import { formatDateToVietnamTimezone } from '@/utils/dateFormat';
 
 interface DataType {
 	key: string;
@@ -26,6 +27,7 @@ interface DataType {
 const ListVouchers: React.FC = () => {
 	const [data, setData] = useState<DataType[]>([]);
 	const [searchText, setSearchText] = useState('');
+	const navigate = useNavigate();
 
 	const fetchData = async () => {
 		try {
@@ -48,36 +50,60 @@ const ListVouchers: React.FC = () => {
 
 	useEffect(() => {
 		fetchData();
-	}, []);
+	});
 
 	const renderActions = (id: string): JSX.Element => (
 		<>
 			<Button
-				type="primary"
-				icon={<EditOutlined />}
-				onClick={() => handleEdit(id)}
+				color="primary"
+				variant="outlined"
+				icon={<EyeOutlined />}
+				onClick={() => handleViewDetail(id)}
 				style={{ marginRight: 8 }}
 			>
-				Chỉnh sửa
+				Chi tiết
 			</Button>
 			<Button
-				type="primary"
-				danger
+				color="danger"
+				variant="outlined"
 				icon={<DeleteOutlined />}
 				onClick={() => handleDelete(id)}
-				style={{ backgroundColor: 'red', borderColor: 'red' }}
 			>
 				Xóa
 			</Button>
 		</>
 	);
 
-	const handleEdit = (id: string) => {
-		console.log(`Chỉnh sửa mã giảm giá có id: ${id}`);
+	const handleViewDetail = (id: string) => {
+		navigate(`/admin/vouchers/${id}`);
 	};
 
-	const handleDelete = (id: string) => {
-		console.log(`Xóa mã giảm giá có id: ${id}`);
+	const handleDelete = async (id: string) => {
+		Modal.confirm({
+			title: 'Xác nhận xóa',
+			content: 'Bạn có chắc chắn muốn xóa mã giảm giá này?',
+			okText: 'Xóa',
+			cancelText: 'Hủy',
+			centered: true,
+			onOk: async () => {
+				try {
+					await deleteVoucher(id);
+					notification.success({
+						message: 'Xóa thành công',
+						description: 'Mã giảm giá đã được xóa thành công.',
+						duration: 3,
+					});
+					navigate(`/admin/vouchers`);
+				} catch (error) {
+					console.error('Lỗi khi xóa mã giảm giá:', error);
+					notification.error({
+						message: 'Lỗi',
+						description: 'Đã xảy ra lỗi khi xóa mã giảm giá.',
+						duration: 3,
+					});
+				}
+			},
+		});
 	};
 
 	const handleCreateNewvoucher = () => {
@@ -129,25 +155,25 @@ const ListVouchers: React.FC = () => {
 			render: (value) => <div style={{ textAlign: 'center' }}>{value}%</div>,
 		},
 		{
-			title: <div style={{ textAlign: 'center' }}>Ngày bắt đầu</div>,
+			title: <div style={{ textAlign: 'center' }}>Thời gian bắt đầu</div>,
 			dataIndex: 'start',
 			width: '15%',
 			sorter: (a, b) =>
 				new Date(a.start).getTime() - new Date(b.start).getTime(),
 			render: (date) => (
 				<div style={{ textAlign: 'center' }}>
-					{formatDateTimeToVietnamTimezone(new Date(date))}
+					{formatDateToVietnamTimezone(new Date(date))}
 				</div>
 			),
 		},
 		{
-			title: <div style={{ textAlign: 'center' }}>Ngày kết thúc</div>,
+			title: <div style={{ textAlign: 'center' }}>Thời gian kết thúc</div>,
 			dataIndex: 'end',
 			width: '15%',
 			sorter: (a, b) => new Date(a.end).getTime() - new Date(b.end).getTime(),
 			render: (date) => (
 				<div style={{ textAlign: 'center' }}>
-					{formatDateTimeToVietnamTimezone(new Date(date))}
+					{formatDateToVietnamTimezone(new Date(date))}
 				</div>
 			),
 		},
