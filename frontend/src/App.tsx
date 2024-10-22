@@ -69,7 +69,7 @@ const App: React.FC = () => {
 						}
 					/>
 					<Route
-						path="/admin/centers/centerDetail/:id"
+						path="/admin/centers/:id"
 						element={
 							<ProtectedRoute
 								redirectPath="/admin/login"

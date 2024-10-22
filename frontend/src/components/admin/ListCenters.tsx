@@ -3,6 +3,7 @@ import {
 	EyeOutlined,
 	PlusOutlined,
 	SearchOutlined,
+	SyncOutlined,
 } from '@ant-design/icons';
 import { Button, Empty, Input, Table } from 'antd';
 import type { TableColumnsType, TableProps } from 'antd';
@@ -24,23 +25,23 @@ const ListCenters: React.FC = () => {
 	const [data, setData] = useState<DataType[]>([]);
 	const [searchText, setSearchText] = useState('');
 
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const centers: Center[] = await getAllCenter();
-				const tableData = centers.map((center, index) => ({
-					key: (index + 1).toString(),
-					name: center.name,
-					address: center.address,
-					phone: center.phone,
-					actions: renderActions(center._id),
-				}));
-				setData(tableData);
-			} catch (error) {
-				console.error('Lỗi khi lấy danh sách trung tâm:', error);
-			}
-		};
+	const fetchData = async () => {
+		try {
+			const centers: Center[] = await getAllCenter();
+			const tableData = centers.map((center, index) => ({
+				key: (index + 1).toString(),
+				name: center.name,
+				address: center.address,
+				phone: center.phone,
+				actions: renderActions(center._id),
+			}));
+			setData(tableData);
+		} catch (error) {
+			console.error('Lỗi khi lấy danh sách trung tâm:', error);
+		}
+	};
 
+	useEffect(() => {
 		fetchData();
 	}, []);
 
@@ -76,7 +77,7 @@ const ListCenters: React.FC = () => {
 	const navigate = useNavigate();
 
 	const handleDetail = (id: string) => {
-		navigate(`/admin/centers/centerDetail/${id}`);
+		navigate(`/admin/centers/${id}`);
 	};
 
 	const handleDelete = (id: string) => {
@@ -89,6 +90,10 @@ const ListCenters: React.FC = () => {
 
 	const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchText(e.target.value);
+	};
+
+	const handleRefresh = () => {
+		fetchData();
 	};
 
 	const filteredData = data.filter(
@@ -159,13 +164,22 @@ const ListCenters: React.FC = () => {
 				>
 					Tạo trung tâm mới
 				</Button>
-				{/* Updated Search Input */}
-				<Input
-					placeholder="Tìm kiếm"
-					onChange={handleSearch}
-					style={{ width: 200 }}
-					prefix={<SearchOutlined />}
-				/>
+				<div>
+					<Button
+						type="default"
+						icon={<SyncOutlined />}
+						onClick={handleRefresh}
+						style={{ marginRight: 8 }}
+					>
+						Làm mới
+					</Button>
+					<Input
+						placeholder="Tìm kiếm"
+						onChange={handleSearch}
+						style={{ width: 200 }}
+						prefix={<SearchOutlined />}
+					/>
+				</div>
 			</div>
 
 			<div style={{ overflow: 'auto', marginBottom: '60px' }}>

@@ -8,7 +8,7 @@ const CenterDetail: React.FC = () => {
 	const { id } = useParams<{ id: string }>();
 
 	if (!id) {
-		return <div>No center ID provided</div>;
+		return <div>Không cung cấp ID trung tâm</div>;
 	}
 
 	return (
