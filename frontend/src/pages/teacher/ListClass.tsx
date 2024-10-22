@@ -5,7 +5,6 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import '@/assets/styles/ListCenters.css';
 import { Class } from '@/schemas/class.schema';
 import { Teacher } from '@/schemas/teacher.schema';
 import { apiBaseUrl } from '@/utils/apiBase';
