@@ -1,3 +1,4 @@
+import { ArrowLeftOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
@@ -24,6 +25,7 @@ const ButtonGoBack: React.FC<ButtonGoBackProps> = ({ link }) => {
 			onClick={handleGoBack}
 			style={{ marginBottom: '20px' }}
 		>
+			<ArrowLeftOutlined />
 			Quay Lại
 		</Button>
 	);

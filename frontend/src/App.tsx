@@ -12,6 +12,7 @@ import ProtectedRoute from '@/components/commons/ProtectedRoute';
 const HomepageStudent = lazy(() => import('@/pages/student/Homepage'));
 const StudentProfile = lazy(() => import('@/pages/student/Profile'));
 const EditProfileStudent = lazy(() => import('@/pages/student/EditProfile'));
+const StudentClassList = lazy(() => import('@/pages/student/ClassList'));
 const ClassesPage = lazy(() => import('@/pages/teacher/Classes'));
 const ClassDetail = lazy(() => import('@/pages/teacher/ClassDetail'));
 
@@ -57,6 +58,14 @@ const App: React.FC = () => {
 						element={
 							<ProtectedRoute redirectPath="/student" tokenName="token">
 								<EditProfileStudent />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="/student/classes"
+						element={
+							<ProtectedRoute redirectPath="/student" tokenName="token">
+								<StudentClassList />
 							</ProtectedRoute>
 						}
 					/>
