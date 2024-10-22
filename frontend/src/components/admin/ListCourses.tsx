@@ -7,6 +7,7 @@ import {
 import { Button, Empty, Input, Table } from 'antd';
 import type { TableColumnsType, TableProps } from 'antd';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { Course } from '@/schemas/course.schema';
 import { getAllCourse } from '@/services/api/course';
@@ -22,6 +23,7 @@ interface DataType {
 const ListCourses: React.FC = () => {
 	const [data, setData] = useState<DataType[]>([]);
 	const [searchText, setSearchText] = useState('');
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -74,7 +76,7 @@ const ListCourses: React.FC = () => {
 	};
 
 	const handleCreateNewCourse = () => {
-		console.log('Tạo khóa học mới');
+		navigate('/admin/courses/create');
 	};
 
 	const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
