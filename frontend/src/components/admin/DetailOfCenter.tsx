@@ -1,5 +1,5 @@
 import { DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons';
-import { Button, Card, Col, Input, Row, Typography } from 'antd';
+import { Button, Card, Col, Input, Row, Tooltip, Typography } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -41,6 +41,16 @@ const DetailOfCenter: React.FC = () => {
 	const handleDelete = () => {
 		console.log(`Xóa trung tâm: ${center._id}`);
 	};
+
+	const buttonStyle = {
+		backgroundColor: 'white',
+		borderColor: 'blue',
+		color: 'blue',
+		width: '100%',
+		height: '35px',
+	};
+
+	const handleNavigation = (path: string) => navigate(path);
 
 	return (
 		<div style={{ padding: '0 20px 0 270px' }}>
@@ -96,70 +106,34 @@ const DetailOfCenter: React.FC = () => {
 				{/* Buttons for Courses, Vouchers, Classes, Teachers */}
 				<div style={{ marginTop: '40px' }}>
 					<Row gutter={[16, 16]}>
-						<Col span={6}>
-							<Button
-								type="primary"
-								icon={<EyeOutlined style={{ color: 'blue' }} />}
-								onClick={() => navigate(`/admin/centers/${id}/courses`)}
-								style={{
-									backgroundColor: 'white',
-									borderColor: 'blue',
-									color: 'blue',
-									width: '100%',
-									height: '35px',
-								}}
-							>
-								Khóa học
-							</Button>
-						</Col>
-						<Col span={6}>
-							<Button
-								type="primary"
-								icon={<EyeOutlined style={{ color: 'blue' }} />}
-								onClick={() => navigate(`/admin/centers/${id}/vouchers`)}
-								style={{
-									backgroundColor: 'white',
-									borderColor: 'blue',
-									color: 'blue',
-									width: '100%',
-									height: '35px',
-								}}
-							>
-								Mã giảm giá
-							</Button>
-						</Col>
-						<Col span={6}>
-							<Button
-								type="primary"
-								icon={<EyeOutlined style={{ color: 'blue' }} />}
-								onClick={() => navigate(`/admin/centers/${id}/classes`)}
-								style={{
-									backgroundColor: 'white',
-									borderColor: 'blue',
-									color: 'blue',
-									width: '100%',
-									height: '35px',
-								}}
-							>
-								Lớp học
-							</Button>
-						</Col>
-						<Col span={6}>
-							<Button
-								type="primary"
-								icon={<EyeOutlined style={{ color: 'blue' }} />}
-								onClick={() => navigate(`/admin/centers/${id}/teachers`)}
-								style={{
-									backgroundColor: 'white',
-									borderColor: 'blue',
-									color: 'blue',
-									width: '100%',
-									height: '35px',
-								}}
-							>
-								Giáo viên
-							</Button>
-						</Col>
+						{[
+							{ label: 'Khóa học', path: 'courses' },
+							{ label: 'Mã giảm giá', path: 'vouchers' },
+							{ label: 'Lớp học', path: 'classes' },
+							{ label: 'Giáo viên', path: 'teachers' },
+						].map((item, index) => (
+							<Col span={6} key={index}>
+								<Tooltip title="Nhấn để xem chi tiết">
+									<Button
+										icon={<EyeOutlined style={{ color: 'blue' }} />}
+										style={buttonStyle}
+										onClick={() =>
+											handleNavigation(`/admin/centers/${id}/${item.path}`)
+										}
+										onMouseOver={(e) => {
+											e.currentTarget.style.backgroundColor = '#1890ff';
+											e.currentTarget.style.color = 'white';
+										}}
+										onMouseOut={(e) => {
+											e.currentTarget.style.backgroundColor = 'white';
+											e.currentTarget.style.color = 'blue';
+										}}
+									>
+										{item.label}
+									</Button>
+								</Tooltip>
+							</Col>
+						))}
 					</Row>
 				</div>
 			</Card>
