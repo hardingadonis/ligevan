@@ -48,26 +48,19 @@ const ListCenters: React.FC = () => {
 	const renderActions = (id: string): JSX.Element => (
 		<>
 			<Button
-				type="primary"
+				color="primary"
+				variant="outlined"
 				icon={<EyeOutlined />}
 				onClick={() => handleDetail(id)}
-				style={{
-					marginRight: 8,
-					backgroundColor: '#556359',
-					borderColor: '#556359',
-				}}
+				style={{ marginRight: 8 }}
 			>
 				Chi tiết
 			</Button>
 			<Button
-				type="primary"
-				danger
+				color="danger"
+				variant="outlined"
 				icon={<DeleteOutlined />}
 				onClick={() => handleDelete(id)}
-				style={{
-					backgroundColor: '#f44336',
-					borderColor: '#f44336',
-				}}
 			>
 				Xóa
 			</Button>

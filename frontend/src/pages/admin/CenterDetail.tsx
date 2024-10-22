@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
-import DetailOfCenter from '@/components/admin/DetailOfDetail';
+import DetailOfCenter from '@/components/admin/DetailOfCenter';
 import AdminLayout from '@/layouts/admin';
 
 const CenterDetail: React.FC = () => {
