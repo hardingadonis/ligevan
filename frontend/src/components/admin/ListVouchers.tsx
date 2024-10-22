@@ -1,6 +1,6 @@
 import {
 	DeleteOutlined,
-	EditOutlined,
+	EyeOutlined,
 	PlusOutlined,
 	SearchOutlined,
 	SyncOutlined,
@@ -48,31 +48,31 @@ const ListVouchers: React.FC = () => {
 
 	useEffect(() => {
 		fetchData();
-	}, []);
+	});
 
 	const renderActions = (id: string): JSX.Element => (
 		<>
 			<Button
-				type="primary"
-				icon={<EditOutlined />}
-				onClick={() => handleEdit(id)}
+				color="primary"
+				variant="outlined"
+				icon={<EyeOutlined />}
+				onClick={() => handleViewDetail(id)}
 				style={{ marginRight: 8 }}
 			>
-				Chỉnh sửa
+				Chi tiết
 			</Button>
 			<Button
-				type="primary"
-				danger
+				color="danger"
+				variant="outlined"
 				icon={<DeleteOutlined />}
 				onClick={() => handleDelete(id)}
-				style={{ backgroundColor: 'red', borderColor: 'red' }}
 			>
 				Xóa
 			</Button>
 		</>
 	);
 
-	const handleEdit = (id: string) => {
+	const handleViewDetail = (id: string) => {
 		console.log(`Chỉnh sửa mã giảm giá có id: ${id}`);
 	};
 
