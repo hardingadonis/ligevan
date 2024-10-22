@@ -161,4 +161,16 @@ export class ClassesService {
 			message: 'Class deleted successfully',
 		};
 	}
+
+	async findClassByCenterAndCourse(centerId: string, courseId: string) {
+		return this.classModel
+			.find({
+				center: centerId,
+				course: courseId,
+				isDeleted: false,
+			})
+			.populate('center')
+			.populate('course')
+			.exec();
+	}
 }

@@ -47,4 +47,12 @@ export class ClassesController {
 	async delete(@Param('id') id: string) {
 		return await this.classesService.delete(id);
 	}
+
+	@Get(':idcenter/courses/:idcourse/class')
+	async getClassByCenterAndCourse(
+		@Param('idcenter') idcenter: string,
+		@Param('idcourse') idcourse: string,
+	) {
+		return this.classesService.findClassByCenterAndCourse(idcenter, idcourse);
+	}
 }
