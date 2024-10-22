@@ -1,4 +1,9 @@
-import { HistoryOutlined, TeamOutlined, UserOutlined } from '@ant-design/icons';
+import {
+	HistoryOutlined,
+	ScheduleOutlined,
+	TeamOutlined,
+	UserOutlined,
+} from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
@@ -9,12 +14,21 @@ const StudentSidebar: React.FC = () => {
 	const [selectedKey, setSelectedKey] = useState('profile');
 
 	useEffect(() => {
-		if (location.pathname.includes('/student/profile')) {
-			setSelectedKey('profile');
-		} else if (location.pathname.includes('/student/classes')) {
-			setSelectedKey('classList');
-		} else if (location.pathname.includes('/student/payment-history')) {
-			setSelectedKey('paymentHistory');
+		switch (true) {
+			case location.pathname.includes('/student/profile'):
+				setSelectedKey('profile');
+				break;
+			case location.pathname.includes('/student/classes'):
+				setSelectedKey('classList');
+				break;
+			case location.pathname.includes('/student/schedule'):
+				setSelectedKey('schedule');
+				break;
+			case location.pathname.includes('/student/payment-history'):
+				setSelectedKey('paymentHistory');
+				break;
+			default:
+				break;
 		}
 	}, [location.pathname]);
 
@@ -26,6 +40,11 @@ const StudentSidebar: React.FC = () => {
 			<TeamOutlined style={{ fontSize: '18px' }} />,
 		),
 		getItem(
+			'Lịch học',
+			'schedule',
+			<ScheduleOutlined style={{ fontSize: '18px' }} />,
+		),
+		getItem(
 			'Lịch sử thanh toán',
 			'paymentHistory',
 			<HistoryOutlined style={{ fontSize: '18px' }} />,
@@ -35,6 +54,7 @@ const StudentSidebar: React.FC = () => {
 	const menuConfig = {
 		profile: '/student/profile',
 		classList: '/student/classes',
+		schedule: '/student/schedule',
 		paymentHistory: '/student/payment-history',
 	};
 
