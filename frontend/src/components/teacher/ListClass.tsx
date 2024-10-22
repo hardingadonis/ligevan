@@ -1,9 +1,4 @@
-import {
-	DeleteOutlined,
-	EditOutlined,
-	PlusOutlined,
-	SearchOutlined,
-} from '@ant-design/icons';
+import { EyeOutlined, SearchOutlined, SyncOutlined } from '@ant-design/icons';
 import { Alert, Button, Empty, Input, Spin, Table } from 'antd';
 import type { TableColumnsType, TableProps } from 'antd';
 import axios from 'axios';
@@ -34,76 +29,62 @@ const ListClass: React.FC<ListClassProps> = ({ email }) => {
 	const [error, setError] = useState<string | null>(null);
 	const [searchText, setSearchText] = useState<string>('');
 
+	const fetchClassesForTeacher = async () => {
+		setLoading(true);
+		try {
+			const teacherResponse = await axios.get<Teacher>(
+				apiBaseUrl + `/api/teachers/email/${email}`,
+			);
+			const teacher = teacherResponse.data;
+			const teacherClasses = teacher.classes || [];
+
+			const classRequests = teacherClasses.map((cls) =>
+				axios.get<Class>(apiBaseUrl + `/api/classes/${cls}`),
+			);
+
+			const classResponses = await Promise.all(classRequests);
+			const fullClasses = classResponses.map((response) => response.data);
+
+			const tableData = fullClasses.map((cls, index) => ({
+				key: (index + 1).toString(),
+				name: cls.name,
+				students: (cls.students?.length ?? 0).toString(),
+				slots: (cls.slots?.length ?? 0).toString(),
+				course: cls.course.title,
+				actions: renderActions(cls._id),
+			}));
+
+			setData(tableData);
+		} catch {
+			setError('Không thể tải danh sách lớp học');
+		} finally {
+			setLoading(false);
+		}
+	};
+
 	useEffect(() => {
-		const fetchClassesForTeacher = async () => {
-			setLoading(true);
-			try {
-				const teacherResponse = await axios.get<Teacher>(
-					apiBaseUrl + `/api/teachers/email/${email}`,
-				);
-				const teacher = teacherResponse.data;
-				const teacherClasses = teacher.classes || [];
-
-				const classRequests = teacherClasses.map((cls) =>
-					axios.get<Class>(apiBaseUrl + `/api/classes/${cls}`),
-				);
-
-				const classResponses = await Promise.all(classRequests);
-				const fullClasses = classResponses.map((response) => response.data);
-
-				const tableData = fullClasses.map((cls, index) => ({
-					key: (index + 1).toString(),
-					name: cls.name,
-					students: (cls.students?.length ?? 0).toString(),
-					slots: (cls.slots?.length ?? 0).toString(),
-					course: cls.course.title,
-					actions: renderActions(cls._id),
-				}));
-
-				setData(tableData);
-			} catch {
-				setError('Không thể tải danh sách lớp học');
-			} finally {
-				setLoading(false);
-			}
-		};
-
 		fetchClassesForTeacher();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [email]);
 
 	const renderActions = (id: string): JSX.Element => (
-		<>
-			<Button
-				type="primary"
-				icon={<EditOutlined />}
-				onClick={() => handleEdit(id)}
-				style={{ marginRight: 8 }}
-			>
-				Chỉnh sửa
-			</Button>
-			<Button
-				type="primary"
-				danger
-				icon={<DeleteOutlined />}
-				onClick={() => handleDelete(id)}
-				style={{ backgroundColor: 'red', borderColor: 'red' }}
-			>
-				Xóa
-			</Button>
-		</>
+		<Button
+			color="default"
+			variant="solid"
+			type="primary"
+			icon={<EyeOutlined />}
+			onClick={() => handleDetail(id)}
+			style={{ marginRight: 8 }}
+		>
+			Chi tiết
+		</Button>
 	);
 
-	const handleEdit = (id: string) => {
+	const handleDetail = (id: string) => {
 		navigate(`/teacher/classes/${id}`);
 	};
 
-	const handleDelete = (id: string) => {
-		console.log(`Xóa lớp có id: ${id}`);
-	};
-
-	const handleCreateNewClass = () => {
-		console.log('Tạo lớp mới');
+	const handleRefresh = () => {
+		fetchClassesForTeacher();
 	};
 
 	const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -123,36 +104,40 @@ const ListClass: React.FC<ListClassProps> = ({ email }) => {
 			title: <div style={{ textAlign: 'center' }}>STT</div>,
 			dataIndex: 'key',
 			width: '5%',
+			align: 'center',
 			sorter: (a, b) => parseInt(a.key) - parseInt(b.key),
 		},
 		{
 			title: <div style={{ textAlign: 'center' }}>Tên Lớp</div>,
 			dataIndex: 'name',
-			width: '15%',
+			width: '25%',
 			sorter: (a, b) => a.name.localeCompare(b.name),
+		},
+		{
+			title: <div style={{ textAlign: 'center' }}>Khóa học</div>,
+			dataIndex: 'course',
+			width: '30%',
+			sorter: (a, b) => a.course.localeCompare(b.course),
 		},
 		{
 			title: <div style={{ textAlign: 'center' }}>Học sinh</div>,
 			dataIndex: 'students',
 			width: '15%',
+			align: 'center',
 			sorter: (a, b) => parseInt(a.students) - parseInt(b.students),
 		},
 		{
 			title: <div style={{ textAlign: 'center' }}>Tiết học</div>,
 			dataIndex: 'slots',
 			width: '15%',
+			align: 'center',
 			sorter: (a, b) => parseInt(a.slots) - parseInt(b.slots),
-		},
-		{
-			title: <div style={{ textAlign: 'center' }}>Khóa học</div>,
-			dataIndex: 'course',
-			width: '20%',
-			sorter: (a, b) => a.course.localeCompare(b.course),
 		},
 		{
 			title: <div style={{ textAlign: 'center' }}>Thao tác</div>,
 			dataIndex: 'actions',
-			width: '30%',
+			align: 'center',
+			width: '10%',
 		},
 	];
 
@@ -174,16 +159,18 @@ const ListClass: React.FC<ListClassProps> = ({ email }) => {
 			<div
 				style={{
 					display: 'flex',
-					justifyContent: 'space-between',
+					justifyContent: 'flex-end',
 					marginBottom: '20px',
 				}}
 			>
 				<Button
-					type="primary"
-					icon={<PlusOutlined />}
-					onClick={handleCreateNewClass}
+					type="default"
+					icon={<SyncOutlined />}
+					onClick={handleRefresh}
+					style={{ marginRight: 8 }}
 				>
-					Tạo lớp mới
+					{' '}
+					Làm mới
 				</Button>
 				<Input
 					placeholder="Tìm kiếm"
