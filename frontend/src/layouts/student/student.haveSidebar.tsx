@@ -25,7 +25,7 @@ const StudentLayoutWithSidebar: React.FC<StudentLayoutProps> = ({
 				<Layout style={{ paddingLeft: 250 }}>
 					<Content style={{ margin: '24px 16px 0' }}>
 						<Row justify="center">
-							<Col xs={24} sm={24} md={20} lg={20} xl={20}>
+							<Col xs={24} sm={24} md={22} lg={22} xl={22}>
 								<div style={{ padding: 24, minHeight: 360 }}>{children}</div>
 							</Col>
 						</Row>
