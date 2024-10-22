@@ -66,15 +66,14 @@ const CourseForm: React.FC<CourseFormProps> = ({ onSuccess }) => {
 							label={<span style={{ fontWeight: 'bold' }}>Giá khóa học</span>}
 							rules={[{ required: true, message: 'Vui lòng nhập giá!' }]}
 						>
-							<InputNumber
+							<InputNumber<number>
 								min={0}
 								placeholder="Nhập giá khóa học"
 								style={{ width: '100%' }}
-								formatter={formatPrice}
-								parser={(value: string | undefined): number => {
-									if (!value) return 0;
-									return Number(value.replace(/[^\d.-]/g, ''));
-								}}
+								formatter={(value) => (value ? formatPrice(Number(value)) : '')}
+								parser={(value) =>
+									value ? Number(value.replace(/\D/g, '')) : 0
+								}
 							/>
 						</Form.Item>
 					</div>
