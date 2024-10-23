@@ -18,7 +18,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
 	const navigate = useNavigate();
 
 	const handleCardClick = () => {
-		navigate(`/student/courses/${course._id}?centerId=${selectedCenterId}`);
+		navigate(`/student/courses/${course._id}/${selectedCenterId}`);
 	};
 
 	return (
