@@ -7,6 +7,7 @@ import {
 import { Button, Empty, Input, Table } from 'antd';
 import type { TableColumnsType, TableProps } from 'antd';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { Center } from '@/schemas/center.schema';
 import { getAllCenter } from '@/services/api/center';
@@ -20,6 +21,7 @@ interface DataType {
 }
 
 const ListCenters: React.FC = () => {
+	const navigate = useNavigate();
 	const [data, setData] = useState<DataType[]>([]);
 	const [searchText, setSearchText] = useState('');
 
@@ -66,7 +68,7 @@ const ListCenters: React.FC = () => {
 	);
 
 	const handleEdit = (id: string) => {
-		console.log(`Chỉnh sửa trung tâm có id: ${id}`);
+		navigate(`/admin/centers/edit/${id}`);
 	};
 
 	const handleDelete = (id: string) => {
