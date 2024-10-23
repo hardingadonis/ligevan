@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import CenterForm from '@/components/admin/CenterForm';
+import CenterForm from '@/components/admin/FormCreateCenter';
 import AdminLayout from '@/layouts/admin';
 
 const CreateCenterPage: React.FC = () => {
