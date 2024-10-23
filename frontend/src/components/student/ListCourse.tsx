@@ -107,7 +107,10 @@ const ListCourse: React.FC<ListCourseProps> = ({ selectedCenter }) => {
 					<Row gutter={[24, 24]}>
 						{paginatedCourses.map((course) => (
 							<Col xs={24} sm={12} md={12} lg={12} xl={12} key={course._id}>
-								<CardCourse course={course} />
+								<CardCourse
+									course={course}
+									selectedCenterId={selectedCenter?._id || null}
+								/>
 							</Col>
 						))}
 					</Row>

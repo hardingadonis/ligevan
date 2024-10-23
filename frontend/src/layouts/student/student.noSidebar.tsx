@@ -40,11 +40,12 @@ const StudentLayoutNoSidebar: React.FC<StudentLayoutProps> = ({
 		<Layout style={{ minHeight: '100vh' }}>
 			<Header
 				leftComponent={
-					<DropdownCenter
-						onSelectCenter={handleSelectCenter}
-						selectedCenter={selectedCenter}
-						display={showDropdownCenter ? 'block' : 'none'}
-					/>
+					showDropdownCenter ? (
+						<DropdownCenter
+							onSelectCenter={handleSelectCenter}
+							selectedCenter={selectedCenter}
+						/>
+					) : null
 				}
 				rightComponent={rightComponent}
 			/>
