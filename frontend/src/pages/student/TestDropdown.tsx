@@ -1,12 +1,12 @@
 import React from 'react';
 
-import StudentLayoutWithSidebar from '@/layouts/student/student.haveSidebar';
+import StudentLayoutNoSidebar from '@/layouts/student/student.noSidebar';
 
 const TestDrodown: React.FC = () => {
 	return (
-		<StudentLayoutWithSidebar>
+		<StudentLayoutNoSidebar>
 			<div>Test Dropdown</div>
-		</StudentLayoutWithSidebar>
+		</StudentLayoutNoSidebar>
 	);
 };
 

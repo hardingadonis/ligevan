@@ -42,9 +42,8 @@ const StudentLayoutNoSidebar: React.FC<StudentLayoutProps> = ({
 				leftComponent={
 					<DropdownCenter
 						onSelectCenter={handleSelectCenter}
-						className="dropdown-center"
 						selectedCenter={selectedCenter}
-						disabled={!showDropdownCenter}
+						display={showDropdownCenter ? 'block' : 'none'}
 					/>
 				}
 				rightComponent={rightComponent}
