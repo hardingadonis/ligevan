@@ -50,3 +50,13 @@ export const validateVietnameseAddress = (address: string): boolean => {
 	const trimmedAddress = trimInput(address);
 	return isValidVietnameseAddress(trimmedAddress);
 };
+
+const isValidDiscount = (discount: string): boolean => {
+	const discountValue = parseFloat(discount);
+	return !isNaN(discountValue) && discountValue >= 0 && discountValue <= 100;
+};
+
+export const validateDiscount = (discount: string): boolean => {
+	const trimmedDiscount = trimInput(discount);
+	return isValidDiscount(trimmedDiscount);
+};

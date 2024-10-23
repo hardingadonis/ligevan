@@ -18,6 +18,7 @@ import { useNavigate } from 'react-router-dom';
 import { Voucher } from '@/schemas/voucher.schema';
 import { createVoucher } from '@/services/api/voucher';
 import { formatDateToUTC } from '@/utils/dateFormat';
+import { validateDiscount, validateName } from '@/utils/inputValidate';
 
 dayjs.locale('vi');
 
@@ -29,6 +30,7 @@ const VoucherForm: React.FC = () => {
 		try {
 			const formattedVoucher = {
 				...voucher,
+				code: voucher.code.toUpperCase(),
 				start: new Date(formatDateToUTC(voucher.start)),
 				end: new Date(formatDateToUTC(voucher.end)),
 			};
@@ -93,6 +95,20 @@ const VoucherForm: React.FC = () => {
 														required: true,
 														message: 'Vui lòng nhập mã giảm giá!',
 													},
+													{
+														validator: (_, value) => {
+															if (!value) {
+																return Promise.resolve();
+															}
+															return validateName(value)
+																? Promise.resolve()
+																: Promise.reject(
+																		new Error(
+																			'Mã giảm giá không hợp lệ! Vui lòng nhập lại!',
+																		),
+																	);
+														},
+													},
 												]}
 											>
 												<Input placeholder="Nhập mã giảm giá" />
@@ -105,7 +121,24 @@ const VoucherForm: React.FC = () => {
 												labelAlign="left"
 												name="value"
 												rules={[
-													{ required: true, message: 'Vui lòng nhập giá trị!' },
+													{
+														required: true,
+														message: 'Vui lòng nhập giá trị của mã giảm giá!',
+													},
+													{
+														validator: (_, value) => {
+															if (!value) {
+																return Promise.resolve();
+															}
+															return validateDiscount(value)
+																? Promise.resolve()
+																: Promise.reject(
+																		new Error(
+																			'Giá trị không hợp lệ! Vui lòng nhập lại!',
+																		),
+																	);
+														},
+													},
 												]}
 											>
 												<Input placeholder="Nhập giá trị" />
@@ -118,6 +151,20 @@ const VoucherForm: React.FC = () => {
 										name="title"
 										rules={[
 											{ required: true, message: 'Vui lòng nhập tiêu đề!' },
+											{
+												validator: (_, value) => {
+													if (!value) {
+														return Promise.resolve();
+													}
+													return validateName(value)
+														? Promise.resolve()
+														: Promise.reject(
+																new Error(
+																	'Tiêu đề không hợp lệ! Vui lòng nhập lại!',
+																),
+															);
+												},
+											},
 										]}
 									>
 										<Input placeholder="Nhập tiêu đề" />
