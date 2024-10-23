@@ -1,5 +1,5 @@
 import { DownOutlined, EnvironmentOutlined } from '@ant-design/icons';
-import { Button, Dropdown, Space, Spin } from 'antd';
+import { Button, Dropdown, Space, Spin, Typography } from 'antd';
 import React, { useEffect, useState } from 'react';
 
 import { Center } from '@/schemas/center.schema';
@@ -66,7 +66,7 @@ const DropdownCenter: React.FC<DropdownCenterProps> = ({
 	}
 
 	if (error) {
-		return <div>{error}</div>;
+		return <Typography.Text color="white">{error}</Typography.Text>;
 	}
 
 	return (
