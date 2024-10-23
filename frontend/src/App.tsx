@@ -13,6 +13,7 @@ const HomepageStudent = lazy(() => import('@/pages/student/Homepage'));
 const StudentProfile = lazy(() => import('@/pages/student/Profile'));
 const EditProfileStudent = lazy(() => import('@/pages/student/EditProfile'));
 const StudentClassList = lazy(() => import('@/pages/student/ClassList'));
+const StudentCourseDetail = lazy(() => import('@/pages/student/CourseDetail'));
 const ClassesPage = lazy(() => import('@/pages/teacher/Classes'));
 const ClassDetail = lazy(() => import('@/pages/teacher/ClassDetail'));
 
@@ -26,10 +27,12 @@ const AdminVouchersManagement = lazy(
 const AdminVoucherDetail = lazy(() => import('@/pages/admin/VoucherDetail'));
 const LoginTeacher = lazy(() => import('@/pages/teacher/Login'));
 const AdminLogin = lazy(() => import('@/pages/admin/Login'));
-
+const AdminCourseCreate = lazy(() => import('@/pages/admin/CourseCreate'));
 const AdminCentersManagement = lazy(
 	() => import('@/pages/admin/CentersManagement'),
 );
+
+const CourseDetail = lazy(() => import('@/pages/admin/CourseDetail'));
 
 const App: React.FC = () => {
 	return (
@@ -45,6 +48,10 @@ const App: React.FC = () => {
 					<Route index element={<Navigate to="/student" replace />} />
 					<Route path="/student" element={<HomepageStudent />} />
 					<Route path="/student/login" element={<HomepageStudent />} />
+					<Route
+						path="/student/courses/:courseID/:centerID"
+						element={<StudentCourseDetail />}
+					/>
 					<Route
 						path="/student/profile"
 						element={
@@ -122,6 +129,17 @@ const App: React.FC = () => {
 						}
 					/>
 					<Route
+						path="/admin/courses/create"
+						element={
+							<ProtectedRoute
+								redirectPath="/admin/login"
+								tokenName="accessToken"
+							>
+								<AdminCourseCreate />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
 						path="/admin"
 						element={<Navigate replace to="/admin/dashboard" />}
 					/>
@@ -134,6 +152,17 @@ const App: React.FC = () => {
 								tokenName="accessToken"
 							>
 								<AdminDashboard />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="/admin/courses/:id"
+						element={
+							<ProtectedRoute
+								redirectPath="/admin/login"
+								tokenName="accessToken"
+							>
+								<CourseDetail />
 							</ProtectedRoute>
 						}
 					/>

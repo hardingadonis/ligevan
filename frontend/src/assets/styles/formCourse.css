@@ -1,0 +1,23 @@
+.courseFormCard {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03),
+              0 2px 4px rgba(0, 0, 0, 0.03);
+}
+
+.courseFormCard :global(.ant-form-item-label > label) {
+  font-weight: 500;
+}
+
+.courseFormCard :global(.ant-input-number) {
+  width: 100%;
+}
+
+.courseFormCard :global(.ant-input),
+.courseFormCard :global(.ant-input-number-input) {
+  padding: 8px 12px;
+}
+
+.courseFormCard :global(.ant-input-textarea textarea) {
+  min-height: 120px;
+}
