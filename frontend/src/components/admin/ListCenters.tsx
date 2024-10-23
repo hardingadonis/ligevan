@@ -1,15 +1,17 @@
 import {
 	DeleteOutlined,
-	EditOutlined,
+	EyeOutlined,
 	PlusOutlined,
 	SearchOutlined,
+	SyncOutlined,
 } from '@ant-design/icons';
-import { Button, Empty, Input, Table } from 'antd';
+import { Button, Empty, Input, Modal, Table, notification } from 'antd';
 import type { TableColumnsType, TableProps } from 'antd';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { Center } from '@/schemas/center.schema';
-import { getAllCenter } from '@/services/api/center';
+import { deleteCenter, getAllCenter } from '@/services/api/center';
 
 interface DataType {
 	key: string;
@@ -23,64 +25,102 @@ const ListCenters: React.FC = () => {
 	const [data, setData] = useState<DataType[]>([]);
 	const [searchText, setSearchText] = useState('');
 
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const centers: Center[] = await getAllCenter();
-				const tableData = centers.map((center, index) => ({
-					key: (index + 1).toString(),
-					name: center.name,
-					address: center.address,
-					phone: center.phone,
-					actions: renderActions(center._id),
-				}));
-				setData(tableData);
-			} catch (error) {
-				console.error('Lỗi khi lấy danh sách trung tâm:', error);
-			}
-		};
+	const navigate = useNavigate();
 
+	// Fetch centers data from the server
+	const fetchData = async () => {
+		try {
+			const centers: Center[] = await getAllCenter();
+			const tableData = centers.map((center, index) => ({
+				key: (index + 1).toString(),
+				name: center.name,
+				address: center.address,
+				phone: center.phone,
+				actions: renderActions(center._id),
+			}));
+			setData(tableData);
+		} catch (error) {
+			console.error('Lỗi khi lấy danh sách trung tâm:', error);
+		}
+	};
+
+	useEffect(() => {
 		fetchData();
 	}, []);
 
+	// Render action buttons for each row
 	const renderActions = (id: string): JSX.Element => (
 		<>
 			<Button
-				type="primary"
-				icon={<EditOutlined />}
-				onClick={() => handleEdit(id)}
+				color="primary"
+				variant="outlined"
+				icon={<EyeOutlined />}
+				onClick={() => handleDetail(id)}
 				style={{ marginRight: 8 }}
 			>
-				Chỉnh sửa
+				Chi tiết
 			</Button>
 			<Button
-				type="primary"
-				danger
+				color="danger"
+				variant="outlined"
 				icon={<DeleteOutlined />}
 				onClick={() => handleDelete(id)}
-				style={{ backgroundColor: 'red', borderColor: 'red' }}
 			>
 				Xóa
 			</Button>
 		</>
 	);
 
-	const handleEdit = (id: string) => {
-		console.log(`Chỉnh sửa trung tâm có id: ${id}`);
+	// Handle view center details
+	const handleDetail = (id: string) => {
+		navigate(`/admin/centers/${id}`);
 	};
 
-	const handleDelete = (id: string) => {
-		console.log(`Xóa trung tâm có id: ${id}`);
+	// Handle delete center with confirmation and notification
+	const handleDelete = async (id: string) => {
+		Modal.confirm({
+			title: 'Xác nhận xóa',
+			content: 'Bạn có chắc chắn muốn xóa trung tâm này?',
+			okText: 'Xóa',
+			cancelText: 'Hủy',
+			centered: true,
+			onOk: async () => {
+				try {
+					await deleteCenter(id);
+					notification.success({
+						message: 'Xóa thành công',
+						description: 'Trung tâm đã được xóa thành công.',
+						duration: 3,
+					});
+					fetchData(); // Refresh data after deletion
+				} catch (error) {
+					console.error('Lỗi khi xóa trung tâm:', error);
+					notification.error({
+						message: 'Lỗi',
+						description: 'Đã xảy ra lỗi khi xóa trung tâm.',
+						duration: 3,
+					});
+				}
+			},
+		});
 	};
 
+	// Handle create new center
 	const handleCreateNewCenter = () => {
 		console.log('Tạo trung tâm mới');
 	};
 
+	// Handle search input change
 	const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchText(e.target.value);
 	};
 
+	// Handle refresh button click
+	const handleRefresh = () => {
+		fetchData();
+	};
+
+	// Filter data based on search text
 	const filteredData = data.filter(
 		(item) =>
 			item.name.toLowerCase().includes(searchText.toLowerCase()) ||
@@ -88,6 +128,7 @@ const ListCenters: React.FC = () => {
 			item.phone.toLowerCase().includes(searchText.toLowerCase()),
 	);
 
+	// Define columns for the table
 	const columns: TableColumnsType<DataType> = [
 		{
 			title: <div style={{ textAlign: 'center' }}>STT</div>,
@@ -149,13 +190,22 @@ const ListCenters: React.FC = () => {
 				>
 					Tạo trung tâm mới
 				</Button>
-				{/* Updated Search Input */}
-				<Input
-					placeholder="Tìm kiếm"
-					onChange={handleSearch}
-					style={{ width: 200 }}
-					prefix={<SearchOutlined />}
-				/>
+				<div>
+					<Button
+						type="default"
+						icon={<SyncOutlined />}
+						onClick={handleRefresh}
+						style={{ marginRight: 8 }}
+					>
+						Làm mới
+					</Button>
+					<Input
+						placeholder="Tìm kiếm"
+						onChange={handleSearch}
+						style={{ width: 200 }}
+						prefix={<SearchOutlined />}
+					/>
+				</div>
 			</div>
 
 			<div style={{ overflow: 'auto', marginBottom: '60px' }}>

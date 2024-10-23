@@ -12,3 +12,24 @@ export const getAllCenter = async (): Promise<Center[]> => {
 		throw error;
 	}
 };
+
+export const getCenterById = async (id: string): Promise<Center> => {
+	try {
+		const response = await axios.get(`${apiBaseUrl}/api/centers/${id}`);
+		return response.data;
+	} catch (error) {
+		console.error('Error fetching center detail:', error);
+		throw error;
+	}
+};
+
+export const deleteCenter = async (id: string): Promise<void> => {
+	try {
+		await axios.delete(`${apiBaseUrl}/api/centers/${id}`);
+	} catch (error) {
+		console.error('Error deleting center:', error);
+		throw error;
+	}
+};
+
+
