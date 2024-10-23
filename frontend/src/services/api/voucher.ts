@@ -23,10 +23,9 @@ export const getVoucherById = async (id: string): Promise<Voucher> => {
 	}
 };
 
-export const createVoucher = async (voucher: Voucher): Promise<Voucher> => {
+export const createVoucher = async (voucher: Voucher): Promise<void> => {
 	try {
-		const response = await axios.post(`${apiBaseUrl}/api/vouchers`, voucher);
-		return response.data;
+		await axios.post(`${apiBaseUrl}/api/vouchers`, voucher);
 	} catch (error) {
 		console.error('Error creating voucher:', error);
 		throw error;
