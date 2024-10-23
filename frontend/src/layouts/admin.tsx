@@ -20,7 +20,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({
 		<AdminHeader />
 		<Layout hasSider={showSidebar}>
 			{showSidebar && <Sidebar />}
-			<Layout style={{ paddingLeft: '250px' }}>
+			<Layout>
 				<Content
 					style={{
 						marginLeft: showSidebar ? 0 : undefined,
