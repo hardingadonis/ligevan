@@ -5,13 +5,13 @@ import {
 	SearchOutlined,
 	SyncOutlined,
 } from '@ant-design/icons';
-import { Button, Empty, Input, Table } from 'antd';
+import { Button, Empty, Input, Modal, Table, notification } from 'antd';
 import type { TableColumnsType, TableProps } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Center } from '@/schemas/center.schema';
-import { getAllCenter } from '@/services/api/center';
+import { deleteCenter, getAllCenter } from '@/services/api/center';
 
 interface DataType {
 	key: string;
@@ -25,6 +25,9 @@ const ListCenters: React.FC = () => {
 	const [data, setData] = useState<DataType[]>([]);
 	const [searchText, setSearchText] = useState('');
 
+	const navigate = useNavigate();
+
+	// Fetch centers data from the server
 	const fetchData = async () => {
 		try {
 			const centers: Center[] = await getAllCenter();
@@ -45,6 +48,7 @@ const ListCenters: React.FC = () => {
 		fetchData();
 	}, []);
 
+	// Render action buttons for each row
 	const renderActions = (id: string): JSX.Element => (
 		<>
 			<Button
@@ -67,28 +71,56 @@ const ListCenters: React.FC = () => {
 		</>
 	);
 
-	const navigate = useNavigate();
-
+	// Handle view center details
 	const handleDetail = (id: string) => {
 		navigate(`/admin/centers/${id}`);
 	};
 
-	const handleDelete = (id: string) => {
-		console.log(`Xóa trung tâm có id: ${id}`);
+	// Handle delete center with confirmation and notification
+	const handleDelete = async (id: string) => {
+		Modal.confirm({
+			title: 'Xác nhận xóa',
+			content: 'Bạn có chắc chắn muốn xóa trung tâm này?',
+			okText: 'Xóa',
+			cancelText: 'Hủy',
+			centered: true,
+			onOk: async () => {
+				try {
+					await deleteCenter(id);
+					notification.success({
+						message: 'Xóa thành công',
+						description: 'Trung tâm đã được xóa thành công.',
+						duration: 3,
+					});
+					fetchData(); // Refresh data after deletion
+				} catch (error) {
+					console.error('Lỗi khi xóa trung tâm:', error);
+					notification.error({
+						message: 'Lỗi',
+						description: 'Đã xảy ra lỗi khi xóa trung tâm.',
+						duration: 3,
+					});
+				}
+			},
+		});
 	};
 
+	// Handle create new center
 	const handleCreateNewCenter = () => {
 		console.log('Tạo trung tâm mới');
 	};
 
+	// Handle search input change
 	const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchText(e.target.value);
 	};
 
+	// Handle refresh button click
 	const handleRefresh = () => {
 		fetchData();
 	};
 
+	// Filter data based on search text
 	const filteredData = data.filter(
 		(item) =>
 			item.name.toLowerCase().includes(searchText.toLowerCase()) ||
@@ -96,6 +128,7 @@ const ListCenters: React.FC = () => {
 			item.phone.toLowerCase().includes(searchText.toLowerCase()),
 	);
 
+	// Define columns for the table
 	const columns: TableColumnsType<DataType> = [
 		{
 			title: <div style={{ textAlign: 'center' }}>STT</div>,
