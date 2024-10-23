@@ -7,6 +7,7 @@ import {
 import { Button, Empty, Input, Table } from 'antd';
 import type { TableColumnsType, TableProps } from 'antd';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { Center } from '@/schemas/center.schema';
 import { getAllCenter } from '@/services/api/center';
@@ -73,8 +74,10 @@ const ListCenters: React.FC = () => {
 		console.log(`Xóa trung tâm có id: ${id}`);
 	};
 
+	const navigate = useNavigate();
+
 	const handleCreateNewCenter = () => {
-		console.log('Tạo trung tâm mới');
+		navigate('/admin/centers/create');
 	};
 
 	const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
