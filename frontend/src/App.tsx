@@ -13,6 +13,7 @@ const HomepageStudent = lazy(() => import('@/pages/student/Homepage'));
 const StudentProfile = lazy(() => import('@/pages/student/Profile'));
 const EditProfileStudent = lazy(() => import('@/pages/student/EditProfile'));
 const StudentClassList = lazy(() => import('@/pages/student/ClassList'));
+const StudentCourseDetail = lazy(() => import('@/pages/student/CourseDetail'));
 const ClassesPage = lazy(() => import('@/pages/teacher/Classes'));
 const ClassDetail = lazy(() => import('@/pages/teacher/ClassDetail'));
 
@@ -30,6 +31,7 @@ const AdminCourseCreate = lazy(() => import('@/pages/admin/CourseCreate'));
 const AdminCentersManagement = lazy(
 	() => import('@/pages/admin/CentersManagement'),
 );
+const AdminCenterEdit = lazy(() => import('@/pages/admin/CenterEdit'));
 
 const CourseDetail = lazy(() => import('@/pages/admin/CourseDetail'));
 
@@ -47,6 +49,10 @@ const App: React.FC = () => {
 					<Route index element={<Navigate to="/student" replace />} />
 					<Route path="/student" element={<HomepageStudent />} />
 					<Route path="/student/login" element={<HomepageStudent />} />
+					<Route
+						path="/student/courses/:courseID/:centerID"
+						element={<StudentCourseDetail />}
+					/>
 					<Route
 						path="/student/profile"
 						element={
@@ -158,6 +164,17 @@ const App: React.FC = () => {
 								tokenName="accessToken"
 							>
 								<CourseDetail />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="/admin/centers/edit/:id"
+						element={
+							<ProtectedRoute
+								redirectPath="/admin/login"
+								tokenName="accessToken"
+							>
+								<AdminCenterEdit />
 							</ProtectedRoute>
 						}
 					/>
