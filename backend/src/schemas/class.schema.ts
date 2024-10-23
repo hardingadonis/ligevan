@@ -15,7 +15,7 @@ export class Class {
 	@Prop({ type: Types.ObjectId, ref: 'Teacher', required: true })
 	teacher: Types.ObjectId;
 
-	@Prop({ type: Types.Array<Types.ObjectId>, ref: 'Teacher', required: false })
+	@Prop({ type: Types.Array<Types.ObjectId>, ref: 'Student', required: false })
 	students: Types.ObjectId[];
 
 	@Prop({ type: Types.Array<Types.ObjectId>, ref: 'Slot', required: false })
