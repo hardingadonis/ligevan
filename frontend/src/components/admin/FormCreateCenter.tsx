@@ -1,6 +1,7 @@
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, Card, Form, Input, message } from 'antd';
 import React, { useState } from 'react';
+import { validateName, validatePhoneNumber, validateVietnameseAddress } from '@/utils/inputValidate';
 
 import type { Center } from '@/schemas/center.schema';
 import { createCenter } from '@/services/api/center';
@@ -18,7 +19,6 @@ const CenterForm: React.FC<CenterFormProps> = ({ onSuccess }) => {
 		try {
 			const centerData: Center = {
 				...values,
-				_id: values._id || '', 
 			} as Center;
 			await createCenter(centerData);
 			message.success('Tạo trung tâm thành công!');
@@ -31,6 +31,28 @@ const CenterForm: React.FC<CenterFormProps> = ({ onSuccess }) => {
 		}
 	};
 
+	// Custom validation logic for form fields
+	const validateFormName = (_: unknown, value: string) => {
+		if (validateName(value)) {
+			return Promise.resolve();
+		}
+		return Promise.reject(new Error('Tên trung tâm không hợp lệ!'));
+	};
+
+	const validateFormPhone = (_: unknown, value: string) => {
+		if (validatePhoneNumber(value)) {
+			return Promise.resolve();
+		}
+		return Promise.reject(new Error('Số điện thoại không hợp lệ!'));
+	};
+
+	const validateFormAddress = (_: unknown, value: string) => {
+		if (validateVietnameseAddress(value)) {
+			return Promise.resolve();
+		}
+		return Promise.reject(new Error('Địa chỉ không hợp lệ!'));
+	};
+
 	return (
 		<div style={{ padding: '0 30px 0 150px', marginLeft: '110px' }}>
 			<div style={{ textAlign: 'center', marginBottom: 20 }}>
@@ -41,7 +63,7 @@ const CenterForm: React.FC<CenterFormProps> = ({ onSuccess }) => {
 					<Form.Item
 						name="name"
 						label={<span style={{ fontWeight: 'bold' }}>Tên trung tâm</span>}
-						rules={[{ required: true, message: 'Vui lòng nhập tên trung tâm!' }]}
+						rules={[{ required: true, validator: validateFormName }]}
 					>
 						<Input placeholder="Nhập tên trung tâm" />
 					</Form.Item>
@@ -49,7 +71,7 @@ const CenterForm: React.FC<CenterFormProps> = ({ onSuccess }) => {
 					<Form.Item
 						name="email"
 						label={<span style={{ fontWeight: 'bold' }}>Email</span>}
-						rules={[{ required: true, message: 'Vui lòng nhập email!' }]}
+						rules={[{ required: true, type: 'email', message: 'Vui lòng nhập email hợp lệ!' }]}
 					>
 						<Input placeholder="Nhập email trung tâm" />
 					</Form.Item>
@@ -58,14 +80,12 @@ const CenterForm: React.FC<CenterFormProps> = ({ onSuccess }) => {
 						name="phone"
 						label={<span style={{ fontWeight: 'bold' }}>Số điện thoại</span>}
 						rules={[
-							{ required: true, message: 'Vui lòng nhập số điện thoại!' },
-							{ pattern: /^\d+$/, message: 'Số điện thoại chỉ được chứa chữ số!' },
-							{ len: 10, message: 'Số điện thoại phải gồm đúng 10 chữ số!' },
+							{ required: true, validator: validateFormPhone },
 						]}
 					>
 						<Input
-							placeholder="Nhập số điện thoại"
-							maxLength={10}
+							placeholder="(+84) Nhập số điện thoại"
+							maxLength={11}
 							onKeyPress={(event) => {
 								if (!/\d/.test(event.key)) {
 									event.preventDefault();
@@ -77,7 +97,7 @@ const CenterForm: React.FC<CenterFormProps> = ({ onSuccess }) => {
 					<Form.Item
 						name="address"
 						label={<span style={{ fontWeight: 'bold' }}>Địa chỉ</span>}
-						rules={[{ required: true, message: 'Vui lòng nhập địa chỉ!' }]}
+						rules={[{ required: true, validator: validateFormAddress }]}
 					>
 						<Input placeholder="Nhập địa chỉ trung tâm" />
 					</Form.Item>
