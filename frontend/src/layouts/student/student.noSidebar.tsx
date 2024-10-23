@@ -1,5 +1,6 @@
 import { Col, FloatButton, Layout, Row } from 'antd';
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import Footer from '@/components/commons/Footer';
 import Header from '@/components/commons/Header';
@@ -20,6 +21,7 @@ const StudentLayoutNoSidebar: React.FC<StudentLayoutProps> = ({
 	onSelectCenter,
 }) => {
 	const [selectedCenter, setSelectedCenter] = useState<Center | null>(null);
+	const location = useLocation();
 
 	const handleSelectCenter = (center: Center | null) => {
 		setSelectedCenter(center);
@@ -31,26 +33,25 @@ const StudentLayoutNoSidebar: React.FC<StudentLayoutProps> = ({
 	const token = localStorage.getItem('token');
 	const rightComponent = token ? <DropdownProfile /> : <ButtonLogin />;
 
+	const showDropdownCenter =
+		location.pathname === '/student' || location.pathname === '/student/login';
+
 	return (
 		<Layout style={{ minHeight: '100vh' }}>
 			<Header
 				leftComponent={
-					<DropdownCenter
-						onSelectCenter={handleSelectCenter}
-						className="dropdown-center"
-						selectedCenter={selectedCenter}
-					/>
+					showDropdownCenter ? (
+						<DropdownCenter
+							onSelectCenter={handleSelectCenter}
+							selectedCenter={selectedCenter}
+						/>
+					) : null
 				}
 				rightComponent={rightComponent}
 			/>
 			<Content style={{ margin: '24px 16px 0' }}>
 				<Row justify="center">
 					<Col xs={24} sm={24} md={20} lg={20} xl={20}>
-						<DropdownCenter
-							onSelectCenter={handleSelectCenter}
-							className="dropdown-center-mobile"
-							selectedCenter={selectedCenter}
-						/>
 						<div style={{ padding: 24, minHeight: 360 }}>{children}</div>
 					</Col>
 				</Row>

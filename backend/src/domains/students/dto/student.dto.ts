@@ -45,12 +45,12 @@ export class CreateStudentDto {
 
 	@ApiProperty({ description: 'Classes offered by the Student' })
 	@IsArray()
-	@IsNotEmpty()
+	@IsOptional()
 	classes: string[];
 
 	@ApiProperty({ description: 'Payments offered by the Student' })
 	@IsArray()
-	@IsNotEmpty()
+	@IsOptional()
 	payments: string[];
 }
 

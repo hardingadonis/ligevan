@@ -31,7 +31,7 @@ export class CreateCenterDto {
 
 	@ApiProperty({ description: 'Courses offered by the center' })
 	@IsArray()
-	@IsNotEmpty()
+	@IsOptional()
 	courses: string[];
 
 	@ApiProperty({ description: 'Vouchers offered by the center' })
@@ -41,12 +41,12 @@ export class CreateCenterDto {
 
 	@ApiProperty({ description: 'Teachers offered by the center' })
 	@IsArray()
-	@IsNotEmpty()
+	@IsOptional()
 	teachers: string[];
 
 	@ApiProperty({ description: 'Classes offered by the center' })
 	@IsArray()
-	@IsNotEmpty()
+	@IsOptional()
 	classes: string[];
 }
 
