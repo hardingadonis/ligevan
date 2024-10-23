@@ -32,10 +32,6 @@ const CenterForm: React.FC<CenterFormProps> = ({ onSuccess }) => {
 	const [teachers, setTeachers] = useState<Teacher[]>([]);
 	const [vouchers, setVouchers] = useState<Voucher[]>([]);
 	const [classes, setClasses] = useState<Class[]>([]);
-	const [loadingCourses, setLoadingCourses] = useState<boolean>(false);
-	const [loadingVouchers, setLoadingVouchers] = useState<boolean>(false);
-	const [loadingTeachers, setLoadingTeachers] = useState<boolean>(false);
-	const [loadingClasses, setLoadingClasses] = useState<boolean>(false);
 
 	const onFinish = async (values: Center) => {
 		setLoading(true);
@@ -45,65 +41,30 @@ const CenterForm: React.FC<CenterFormProps> = ({ onSuccess }) => {
 			onSuccess();
 		} catch (error) {
 			message.error('Không thể tạo trung tâm.');
-			console.log(error);
+			console.error(error);
 		} finally {
 			setLoading(false);
 		}
 	};
 
 	useEffect(() => {
-		const fetchCourses = async () => {
-			setLoadingCourses(true);
+		const fetchData = async () => {
 			try {
-				const courseData = await getAllCourse();
+				const [courseData, voucherData, teacherData, classData] = await Promise.all([
+					getAllCourse(),
+					getAllVoucher(),
+					getAllTeacher(),
+					getAllClasses()
+				]);
 				setCourses(courseData);
-			} catch (error) {
-				console.error('Error fetching courses:', error);
-			} finally {
-				setLoadingCourses(false);
-			}
-		};
-
-		const fetchVouchers = async () => {
-			setLoadingVouchers(true);
-			try {
-				const voucherData = await getAllVoucher();
 				setVouchers(voucherData);
-			} catch (error) {
-				console.error('Error fetching vouchers:', error);
-			} finally {
-				setLoadingVouchers(false);
-			}
-		};
-
-		const fetchTeachers = async () => {
-			setLoadingTeachers(true);
-			try {
-				const teacherData = await getAllTeacher();
 				setTeachers(teacherData);
-			} catch (error) {
-				console.error('Error fetching teachers:', error);
-			} finally {
-				setLoadingTeachers(false);
-			}
-		};
-
-		const fetchClasses = async () => {
-			setLoadingClasses(true);
-			try {
-				const classData = await getAllClasses();
 				setClasses(classData);
 			} catch (error) {
-				console.error('Error fetching classes:', error);
-			} finally {
-				setLoadingClasses(false);
+				console.error('Error fetching data:', error);
 			}
 		};
-
-		fetchCourses();
-		fetchVouchers();
-		fetchTeachers();
-		fetchClasses();
+		fetchData();
 	}, []);
 
 	return (
@@ -111,22 +72,12 @@ const CenterForm: React.FC<CenterFormProps> = ({ onSuccess }) => {
 			<div style={{ textAlign: 'center', marginBottom: 20 }}>
 				<h2>Tạo trung tâm mới</h2>
 			</div>
-			<Card
-				className="center-form-card"
-				style={{ backgroundColor: '#f5f5f5', padding: '24px' }}
-			>
-				<Form
-					form={form}
-					layout="vertical"
-					onFinish={onFinish}
-					requiredMark={false}
-				>
+			<Card className="center-form-card" style={{ backgroundColor: '#f5f5f5', padding: '24px' }}>
+				<Form form={form} layout="vertical" onFinish={onFinish} requiredMark={false}>
 					<Form.Item
 						name="name"
 						label={<span style={{ fontWeight: 'bold' }}>Tên trung tâm</span>}
-						rules={[
-							{ required: true, message: 'Vui lòng nhập tên trung tâm!' },
-						]}
+						rules={[{ required: true, message: 'Vui lòng nhập tên trung tâm!' }]}
 					>
 						<Input placeholder="Nhập tên trung tâm" />
 					</Form.Item>
@@ -144,10 +95,7 @@ const CenterForm: React.FC<CenterFormProps> = ({ onSuccess }) => {
 						label={<span style={{ fontWeight: 'bold' }}>Số điện thoại</span>}
 						rules={[
 							{ required: true, message: 'Vui lòng nhập số điện thoại!' },
-							{
-								pattern: /^[0-9]+$/,
-								message: 'Số điện thoại chỉ được chứa chữ số!',
-							},
+							{ pattern: /^\d+$/, message: 'Số điện thoại chỉ được chứa chữ số!' },
 							{ len: 10, message: 'Số điện thoại phải gồm đúng 10 chữ số!' },
 						]}
 					>
@@ -155,7 +103,7 @@ const CenterForm: React.FC<CenterFormProps> = ({ onSuccess }) => {
 							placeholder="Nhập số điện thoại"
 							maxLength={10}
 							onKeyPress={(event) => {
-								if (!/[0-9]/.test(event.key)) {
+								if (!/\d/.test(event.key)) {
 									event.preventDefault();
 								}
 							}}
@@ -170,7 +118,6 @@ const CenterForm: React.FC<CenterFormProps> = ({ onSuccess }) => {
 						<Input placeholder="Nhập địa chỉ trung tâm" />
 					</Form.Item>
 
-					{/* Full-width Fields */}
 					<Form.Item
 						name="courses"
 						label={<span style={{ fontWeight: 'bold' }}>Khóa học</span>}
@@ -179,7 +126,6 @@ const CenterForm: React.FC<CenterFormProps> = ({ onSuccess }) => {
 						<Select
 							mode="multiple"
 							placeholder="Chọn các khóa học"
-							loading={loadingCourses}
 							options={courses.map((course) => ({
 								label: course.title,
 								value: course._id,
@@ -195,7 +141,6 @@ const CenterForm: React.FC<CenterFormProps> = ({ onSuccess }) => {
 						<Select
 							mode="multiple"
 							placeholder="Chọn các mã giảm giá"
-							loading={loadingVouchers}
 							options={vouchers.map((voucher) => ({
 								label: voucher.title,
 								value: voucher._id,
@@ -211,7 +156,6 @@ const CenterForm: React.FC<CenterFormProps> = ({ onSuccess }) => {
 						<Select
 							mode="multiple"
 							placeholder="Chọn các giáo viên"
-							loading={loadingTeachers}
 							options={teachers.map((teacher) => ({
 								label: teacher.fullName,
 								value: teacher._id,
@@ -227,7 +171,6 @@ const CenterForm: React.FC<CenterFormProps> = ({ onSuccess }) => {
 						<Select
 							mode="multiple"
 							placeholder="Chọn các lớp học"
-							loading={loadingClasses}
 							options={classes.map((classItem) => ({
 								label: classItem.name,
 								value: classItem._id,
@@ -235,7 +178,6 @@ const CenterForm: React.FC<CenterFormProps> = ({ onSuccess }) => {
 						/>
 					</Form.Item>
 
-					{/* Submit Button */}
 					<Form.Item>
 						<Button
 							type="primary"
