@@ -105,8 +105,8 @@ const ListVouchers: React.FC = () => {
 		});
 	};
 
-	const handleCreateNewvoucher = () => {
-		console.log('Tạo mã giảm giá mới');
+	const handleCreateVoucher = () => {
+		navigate(`/admin/vouchers/create`);
 	};
 
 	const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -189,7 +189,7 @@ const ListVouchers: React.FC = () => {
 					<Button
 						type="primary"
 						icon={<PlusOutlined />}
-						onClick={handleCreateNewvoucher}
+						onClick={handleCreateVoucher}
 					>
 						Tạo mã giảm giá mới
 					</Button>
