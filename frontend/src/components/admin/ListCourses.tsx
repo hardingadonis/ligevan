@@ -1,16 +1,17 @@
 import {
 	DeleteOutlined,
-	EditOutlined,
+	EyeOutlined,
 	PlusOutlined,
 	SearchOutlined,
+	SyncOutlined,
 } from '@ant-design/icons';
-import { Button, Empty, Input, Table } from 'antd';
+import { Button, Empty, Input, Modal, Table, notification } from 'antd';
 import type { TableColumnsType, TableProps } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Course } from '@/schemas/course.schema';
-import { getAllCourse } from '@/services/api/course';
+import { deleteCourse, getAllCourse } from '@/services/api/course';
 
 interface DataType {
 	key: string;
@@ -25,54 +26,77 @@ const ListCourses: React.FC = () => {
 	const [searchText, setSearchText] = useState('');
 	const navigate = useNavigate();
 
+	const fetchData = async () => {
+		try {
+			const courses: Course[] = await getAllCourse();
+			const tableData = courses.map((course, index) => ({
+				key: (index + 1).toString(),
+				code: course.code,
+				title: course.title,
+				price: course.price,
+				actions: renderActions(course._id),
+			}));
+			setData(tableData);
+		} catch (error) {
+			console.error('Lỗi khi lấy danh sách khóa học:', error);
+		}
+	};
 	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const courses: Course[] = await getAllCourse();
-				const tableData = courses.map((course, index) => ({
-					key: (index + 1).toString(),
-					code: course.code,
-					title: course.title,
-					price: course.price,
-					actions: renderActions(course._id),
-				}));
-				setData(tableData);
-			} catch (error) {
-				console.error('Lỗi khi lấy danh sách khóa học:', error);
-			}
-		};
-
 		fetchData();
 	}, []);
 
 	const renderActions = (id: string): JSX.Element => (
 		<>
 			<Button
-				type="primary"
-				icon={<EditOutlined />}
-				onClick={() => handleEdit(id)}
+				color="primary"
+				variant="outlined"
+				icon={<EyeOutlined />}
+				onClick={() => handleDetail(id)}
 				style={{ marginRight: 8 }}
 			>
-				Chỉnh sửa
+				Chi tiết
 			</Button>
 			<Button
-				type="primary"
-				danger
+				color="danger"
+				variant="outlined"
 				icon={<DeleteOutlined />}
 				onClick={() => handleDelete(id)}
-				style={{ backgroundColor: 'red', borderColor: 'red' }}
 			>
 				Xóa
 			</Button>
 		</>
 	);
 
-	const handleEdit = (id: string) => {
-		console.log(`Chỉnh sửa khóa học có id: ${id}`);
+	const handleDetail = (id: string) => {
+		navigate(`/admin/courses/${id}`);
 	};
 
-	const handleDelete = (id: string) => {
-		console.log(`Xóa khóa học có id: ${id}`);
+	const handleDelete = async (id: string) => {
+		Modal.confirm({
+			title: 'Xác nhận xóa',
+			content: 'Bạn có chắc chắn muốn xóa mã giảm giá này?',
+			okText: 'Xóa',
+			cancelText: 'Hủy',
+			centered: true,
+			onOk: async () => {
+				try {
+					await deleteCourse(id);
+					notification.success({
+						message: 'Xóa thành công',
+						description: 'Mã giảm giá đã được xóa thành công.',
+						duration: 3,
+					});
+					navigate(`/admin/courses`);
+				} catch (error) {
+					console.error('Lỗi khi xóa mã giảm giá:', error);
+					notification.error({
+						message: 'Lỗi',
+						description: 'Đã xảy ra lỗi khi xóa mã giảm giá.',
+						duration: 3,
+					});
+				}
+			},
+		});
 	};
 
 	const handleCreateNewCourse = () => {
@@ -81,6 +105,9 @@ const ListCourses: React.FC = () => {
 
 	const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchText(e.target.value);
+	};
+	const handleRefresh = () => {
+		fetchData();
 	};
 
 	// Hàm lọc dữ liệu theo nhiều trường
@@ -161,12 +188,22 @@ const ListCourses: React.FC = () => {
 				>
 					Tạo khóa học mới
 				</Button>
-				<Input
-					placeholder="Tìm kiếm"
-					onChange={handleSearch}
-					style={{ width: 200 }}
-					prefix={<SearchOutlined />}
-				/>
+				<div>
+					<Button
+						type="default"
+						icon={<SyncOutlined />}
+						onClick={handleRefresh}
+						style={{ marginRight: 8 }}
+					>
+						Làm mới
+					</Button>
+					<Input
+						placeholder="Tìm kiếm"
+						onChange={handleSearch}
+						style={{ width: 200 }}
+						prefix={<SearchOutlined />}
+					/>
+				</div>
 			</div>
 
 			<div style={{ overflow: 'auto', marginBottom: '60px' }}>
