@@ -1,6 +1,6 @@
 import { Schema } from '@nestjs/mongoose';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsArray, IsNotEmpty, IsString } from 'class-validator';
+import { IsArray, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 @Schema({ timestamps: true })
 export class CreateClassDto {
@@ -26,7 +26,7 @@ export class CreateClassDto {
 
 	@ApiProperty({ description: 'Students offered by the Class' })
 	@IsArray()
-	@IsNotEmpty()
+	@IsOptional()
 	students: string[];
 
 	@ApiProperty({ description: 'Slot offered by the Class' })
