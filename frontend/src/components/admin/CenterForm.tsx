@@ -1,5 +1,5 @@
 import { PlusOutlined } from '@ant-design/icons';
-import { Button, Card, Col, Form, Input, Row, Select, message } from 'antd';
+import { Button, Card, Form, Input, Select, message } from 'antd';
 import React, { useEffect, useState } from 'react';
 
 import type { Center } from '@/schemas/center.schema';
@@ -121,153 +121,119 @@ const CenterForm: React.FC<CenterFormProps> = ({ onSuccess }) => {
 					onFinish={onFinish}
 					requiredMark={false}
 				>
-					<Row gutter={16}>
-						{/* Name Field */}
-						<Col span={12}>
-							<Form.Item
-								name="name"
-								label={
-									<span style={{ fontWeight: 'bold' }}>Tên trung tâm</span>
+					<Form.Item
+						name="name"
+						label={<span style={{ fontWeight: 'bold' }}>Tên trung tâm</span>}
+						rules={[
+							{ required: true, message: 'Vui lòng nhập tên trung tâm!' },
+						]}
+					>
+						<Input placeholder="Nhập tên trung tâm" />
+					</Form.Item>
+
+					<Form.Item
+						name="email"
+						label={<span style={{ fontWeight: 'bold' }}>Email</span>}
+						rules={[{ required: true, message: 'Vui lòng nhập email!' }]}
+					>
+						<Input placeholder="Nhập email trung tâm" />
+					</Form.Item>
+
+					<Form.Item
+						name="phone"
+						label={<span style={{ fontWeight: 'bold' }}>Số điện thoại</span>}
+						rules={[
+							{ required: true, message: 'Vui lòng nhập số điện thoại!' },
+							{
+								pattern: /^[0-9]+$/,
+								message: 'Số điện thoại chỉ được chứa chữ số!',
+							},
+							{ len: 10, message: 'Số điện thoại phải gồm đúng 10 chữ số!' },
+						]}
+					>
+						<Input
+							placeholder="Nhập số điện thoại"
+							maxLength={10}
+							onKeyPress={(event) => {
+								if (!/[0-9]/.test(event.key)) {
+									event.preventDefault();
 								}
-								rules={[
-									{ required: true, message: 'Vui lòng nhập tên trung tâm!' },
-								]}
-							>
-								<Input placeholder="Nhập tên trung tâm" />
-							</Form.Item>
-						</Col>
+							}}
+						/>
+					</Form.Item>
 
-						{/* Email Field */}
-						<Col span={12}>
-							<Form.Item
-								name="email"
-								label={<span style={{ fontWeight: 'bold' }}>Email</span>}
-								rules={[{ required: true, message: 'Vui lòng nhập email!' }]}
-							>
-								<Input placeholder="Nhập email trung tâm" />
-							</Form.Item>
-						</Col>
-					</Row>
+					<Form.Item
+						name="address"
+						label={<span style={{ fontWeight: 'bold' }}>Địa chỉ</span>}
+						rules={[{ required: true, message: 'Vui lòng nhập địa chỉ!' }]}
+					>
+						<Input placeholder="Nhập địa chỉ trung tâm" />
+					</Form.Item>
 
-					<Row gutter={16}>
-						{/* Phone Number Field */}
-						<Col span={12}>
-							<Form.Item
-								name="phone"
-								label={
-									<span style={{ fontWeight: 'bold' }}>Số điện thoại</span>
-								}
-								rules={[
-									{ required: true, message: 'Vui lòng nhập số điện thoại!' },
-									{
-										pattern: /^[0-9]+$/,
-										message: 'Số điện thoại chỉ được chứa chữ số!',
-									},
-									{
-										len: 10,
-										message: 'Số điện thoại phải gồm đúng 10 chữ số!',
-									},
-								]}
-							>
-								<Input
-									placeholder="Nhập số điện thoại"
-									maxLength={10} // Limit the input length to 10
-									onKeyPress={(event) => {
-										if (!/[0-9]/.test(event.key)) {
-											event.preventDefault(); // Prevent non-numeric input
-										}
-									}}
-								/>
-							</Form.Item>
-						</Col>
+					{/* Full-width Fields */}
+					<Form.Item
+						name="courses"
+						label={<span style={{ fontWeight: 'bold' }}>Khóa học</span>}
+						rules={[{ required: true, message: 'Vui lòng chọn khóa học!' }]}
+					>
+						<Select
+							mode="multiple"
+							placeholder="Chọn các khóa học"
+							loading={loadingCourses}
+							options={courses.map((course) => ({
+								label: course.title,
+								value: course._id,
+							}))}
+						/>
+					</Form.Item>
 
-						{/* Address Field */}
-						<Col span={12}>
-							<Form.Item
-								name="address"
-								label={<span style={{ fontWeight: 'bold' }}>Địa chỉ</span>}
-								rules={[{ required: true, message: 'Vui lòng nhập địa chỉ!' }]}
-							>
-								<Input placeholder="Nhập địa chỉ trung tâm" />
-							</Form.Item>
-						</Col>
-					</Row>
+					<Form.Item
+						name="vouchers"
+						label={<span style={{ fontWeight: 'bold' }}>Mã giảm giá</span>}
+						rules={[{ required: true, message: 'Vui lòng chọn mã giảm giá!' }]}
+					>
+						<Select
+							mode="multiple"
+							placeholder="Chọn các mã giảm giá"
+							loading={loadingVouchers}
+							options={vouchers.map((voucher) => ({
+								label: voucher.title,
+								value: voucher._id,
+							}))}
+						/>
+					</Form.Item>
 
-					<Row gutter={16}>
-						{/* Courses Field */}
-						<Col span={12}>
-							<Form.Item
-								name="courses"
-								label={<span style={{ fontWeight: 'bold' }}>Khóa học</span>}
-							>
-								<Select
-									mode="multiple"
-									placeholder="Chọn các khóa học"
-									loading={loadingCourses}
-									options={courses.map((course) => ({
-										label: course.title,
-										value: course._id,
-									}))}
-								/>
-							</Form.Item>
-						</Col>
+					<Form.Item
+						name="teachers"
+						label={<span style={{ fontWeight: 'bold' }}>Giáo viên</span>}
+						rules={[{ required: true, message: 'Vui lòng chọn giáo viên!' }]}
+					>
+						<Select
+							mode="multiple"
+							placeholder="Chọn các giáo viên"
+							loading={loadingTeachers}
+							options={teachers.map((teacher) => ({
+								label: teacher.fullName,
+								value: teacher._id,
+							}))}
+						/>
+					</Form.Item>
 
-						{/* Vouchers Field */}
-						<Col span={12}>
-							<Form.Item
-								name="vouchers"
-								label={<span style={{ fontWeight: 'bold' }}>Mã giảm giá</span>}
-							>
-								<Select
-									mode="multiple"
-									placeholder="Chọn các mã giảm giá"
-									loading={loadingVouchers}
-									options={vouchers.map((voucher) => ({
-										label: voucher.title,
-										value: voucher._id,
-									}))}
-								/>
-							</Form.Item>
-						</Col>
-					</Row>
-
-					<Row gutter={16}>
-						{/* Teachers Field */}
-						<Col span={12}>
-							<Form.Item
-								name="teachers"
-								label={<span style={{ fontWeight: 'bold' }}>Giáo viên</span>}
-							>
-								<Select
-									mode="multiple"
-									placeholder="Chọn các giáo viên"
-									loading={loadingTeachers}
-									options={teachers.map((teacher) => ({
-										label: teacher.fullName,
-										value: teacher._id,
-									}))}
-								/>
-							</Form.Item>
-						</Col>
-
-						{/* Classes Field */}
-						<Col span={12}>
-							<Form.Item
-								name="classes"
-								label={<span style={{ fontWeight: 'bold' }}>Lớp học</span>}
-							>
-								<Select
-									mode="multiple"
-									placeholder="Chọn các lớp học"
-									loading={loadingClasses}
-									options={classes.map((classItem) => ({
-										label: classItem.name,
-										value: classItem._id,
-									}))}
-								/>
-							</Form.Item>
-						</Col>
-					</Row>
+					<Form.Item
+						name="classes"
+						label={<span style={{ fontWeight: 'bold' }}>Lớp học</span>}
+						rules={[{ required: true, message: 'Vui lòng chọn lớp học!' }]}
+					>
+						<Select
+							mode="multiple"
+							placeholder="Chọn các lớp học"
+							loading={loadingClasses}
+							options={classes.map((classItem) => ({
+								label: classItem.name,
+								value: classItem._id,
+							}))}
+						/>
+					</Form.Item>
 
 					{/* Submit Button */}
 					<Form.Item>
