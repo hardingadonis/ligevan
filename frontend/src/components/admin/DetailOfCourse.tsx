@@ -1,20 +1,27 @@
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import { Button, Card, Col, Input, Row, Typography } from 'antd';
+import {
+	Button,
+	Card,
+	Col,
+	Input,
+	Modal,
+	Row,
+	Typography,
+	notification,
+} from 'antd';
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { Course } from '@/schemas/course.schema';
-import { getCourseById } from '@/services/api/course';
+import { deleteCourse, getCourseById } from '@/services/api/course';
 import { formatPrice } from '@/utils/formatPrice';
-
-// Import hàm formatPrice
 
 const { Title } = Typography;
 
 const DetailOfCourse: React.FC = () => {
 	const { id } = useParams<{ id: string }>();
 	const [course, setCourse] = useState<Course | null>(null);
-
+	const navigate = useNavigate();
 	useEffect(() => {
 		const fetchCourseDetail = async () => {
 			try {
@@ -40,8 +47,32 @@ const DetailOfCourse: React.FC = () => {
 		console.log(`Chỉnh sửa khóa học: ${course._id}`);
 	};
 
-	const handleDelete = () => {
-		console.log(`Xóa khóa học: ${course._id}`);
+	const handleDelete = async (id: string) => {
+		Modal.confirm({
+			title: 'Xác nhận xóa',
+			content: 'Bạn có chắc chắn muốn xóa mã giảm giá này?',
+			okText: 'Xóa',
+			cancelText: 'Hủy',
+			centered: true,
+			onOk: async () => {
+				try {
+					await deleteCourse(id);
+					notification.success({
+						message: 'Xóa thành công',
+						description: 'Mã giảm giá đã được xóa thành công.',
+						duration: 3,
+					});
+					navigate(`/admin/courses`);
+				} catch (error) {
+					console.error('Lỗi khi xóa mã giảm giá:', error);
+					notification.error({
+						message: 'Lỗi',
+						description: 'Đã xảy ra lỗi khi xóa mã giảm giá.',
+						duration: 3,
+					});
+				}
+			},
+		});
 	};
 
 	return (
@@ -144,7 +175,7 @@ const DetailOfCourse: React.FC = () => {
 					type="primary"
 					danger
 					icon={<DeleteOutlined style={{ color: 'red' }} />}
-					onClick={handleDelete}
+					onClick={() => id && handleDelete(id)}
 					style={{
 						backgroundColor: 'white',
 						borderColor: 'red',

@@ -5,13 +5,13 @@ import {
 	SearchOutlined,
 	SyncOutlined,
 } from '@ant-design/icons';
-import { Button, Empty, Input, Table } from 'antd';
+import { Button, Empty, Input, Modal, Table, notification } from 'antd';
 import type { TableColumnsType, TableProps } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Course } from '@/schemas/course.schema';
-import { getAllCourse } from '@/services/api/course';
+import { deleteCourse, getAllCourse } from '@/services/api/course';
 
 interface DataType {
 	key: string;
@@ -71,8 +71,32 @@ const ListCourses: React.FC = () => {
 		navigate(`/admin/courses/${id}`);
 	};
 
-	const handleDelete = (id: string) => {
-		console.log(`Xóa khóa học có id: ${id}`);
+	const handleDelete = async (id: string) => {
+		Modal.confirm({
+			title: 'Xác nhận xóa',
+			content: 'Bạn có chắc chắn muốn xóa mã giảm giá này?',
+			okText: 'Xóa',
+			cancelText: 'Hủy',
+			centered: true,
+			onOk: async () => {
+				try {
+					await deleteCourse(id);
+					notification.success({
+						message: 'Xóa thành công',
+						description: 'Mã giảm giá đã được xóa thành công.',
+						duration: 3,
+					});
+					navigate(`/admin/courses`);
+				} catch (error) {
+					console.error('Lỗi khi xóa mã giảm giá:', error);
+					notification.error({
+						message: 'Lỗi',
+						description: 'Đã xảy ra lỗi khi xóa mã giảm giá.',
+						duration: 3,
+					});
+				}
+			},
+		});
 	};
 
 	const handleCreateNewCourse = () => {

@@ -31,3 +31,12 @@ export const getCourseById = async (id: string): Promise<Course> => {
 		throw error;
 	}
 };
+
+export const deleteCourse = async (id: string): Promise<void> => {
+	try {
+		await axios.delete(`${apiBaseUrl}/api/courses/${id}`);
+	} catch (error) {
+		console.error('Error deleting voucher:', error);
+		throw error;
+	}
+};
