@@ -19,12 +19,13 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import { Center } from '@/schemas/center.schema';
 import { Class } from '@/schemas/class.schema';
 import { Course } from '@/schemas/course.schema';
 import { apiBaseUrl } from '@/utils/apiBase';
 
 const MAX_STUDENTS = parseInt(
-	import.meta.env.REACT_APP_MAX_STUDENTS || '20',
+	import.meta.env.REACT_APP_MAX_STUDENTS || '1',
 	10,
 );
 
@@ -39,10 +40,24 @@ const CourseDetail: React.FC = () => {
 	const { courseID } = useParams<{ courseID: string }>();
 	const { centerID } = useParams<{ centerID: string }>();
 	const [course, setCourse] = useState<Course | null>(null);
+	const [center, setCenter] = useState<Center | null>(null);
 	const [classes, setClasses] = useState<Class[]>([]);
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
 	const navigate = useNavigate();
+
+	const fetchCenter = async () => {
+		try {
+			const fetchCenter = await axios.get(
+				`${apiBaseUrl}/api/centers/${centerID}`,
+			);
+			setCenter(fetchCenter.data);
+			console.log('center' + fetchCenter.data);
+		} catch (err) {
+			console.log('error' + err);
+			setError('Failed to fetch course data.');
+		}
+	};
 
 	const fetchCourse = async () => {
 		try {
@@ -51,6 +66,7 @@ const CourseDetail: React.FC = () => {
 			);
 			setCourse(fetchedCourse.data);
 		} catch (err) {
+			console.log(err);
 			setError('Failed to fetch course data.');
 		}
 	};
@@ -85,6 +101,7 @@ const CourseDetail: React.FC = () => {
 	useEffect(() => {
 		fetchCourse();
 		fetchClasses();
+		fetchCenter();
 	}, [centerID, courseID]);
 
 	if (!course) {
@@ -146,16 +163,9 @@ const CourseDetail: React.FC = () => {
 
 	const columns: TableColumnsType<DataType> = [
 		{
-			title: <div style={{ textAlign: 'center' }}>STT</div>,
-			dataIndex: 'key',
-			width: '5%',
-			align: 'center',
-			sorter: (a, b) => parseInt(a.key) - parseInt(b.key),
-		},
-		{
 			title: <div style={{ textAlign: 'center' }}>Tên Lớp</div>,
 			dataIndex: 'name',
-			width: '25%',
+			width: '30%',
 			sorter: (a, b) => a.name.localeCompare(b.name),
 		},
 		{
@@ -196,6 +206,16 @@ const CourseDetail: React.FC = () => {
 							justifyContent: 'space-between',
 						}}
 					>
+						<h3
+							style={{
+								textTransform: 'uppercase',
+								fontWeight: 'bold',
+								fontSize: '24px',
+								marginBottom: '16px',
+							}}
+						>
+							{center?.name}
+						</h3>
 						<h3
 							style={{
 								textTransform: 'uppercase',
