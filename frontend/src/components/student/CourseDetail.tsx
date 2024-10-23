@@ -25,7 +25,7 @@ import { Course } from '@/schemas/course.schema';
 import { apiBaseUrl } from '@/utils/apiBase';
 
 const MAX_STUDENTS = parseInt(
-	import.meta.env.REACT_APP_MAX_STUDENTS || '1',
+	import.meta.env.REACT_APP_MAX_STUDENTS || '20',
 	10,
 );
 
