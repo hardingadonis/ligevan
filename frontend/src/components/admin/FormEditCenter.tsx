@@ -1,10 +1,10 @@
-import ButtonGoBack from '../commons/ButtonGoback';
 import { SaveOutlined } from '@ant-design/icons';
 import { Button, Col, Form, Input, Row, message } from 'antd';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import ButtonGoBack from '@/components/commons/ButtonGoback';
 import { Center } from '@/schemas/center.schema';
 import { getCenterById } from '@/services/api/center';
 import {
