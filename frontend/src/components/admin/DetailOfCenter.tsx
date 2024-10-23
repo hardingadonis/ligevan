@@ -15,11 +15,11 @@ const DetailOfCenter: React.FC = () => {
 
 	useEffect(() => {
 		const fetchCenterDetail = async () => {
+			if (!id) {
+				console.error('No ID provided');
+				return;
+			}
 			try {
-				if (!id) {
-					console.error('No ID provided');
-					return;
-				}
 				const fetchedCenter = await getCenterById(id);
 				setCenter(fetchedCenter);
 			} catch (error) {
@@ -50,7 +50,14 @@ const DetailOfCenter: React.FC = () => {
 		height: '35px',
 	};
 
-	const handleNavigation = (path: string) => navigate(path);
+	const handleNavigation = (path: string) => navigate(`/admin/centers/${id}/${path}`);
+
+	const sections = [
+		{ label: 'Khóa học', path: 'courses' },
+		{ label: 'Mã giảm giá', path: 'vouchers' },
+		{ label: 'Lớp học', path: 'classes' },
+		{ label: 'Giáo viên', path: 'teachers' },
+	];
 
 	return (
 		<div style={{ padding: '0 20px 0 270px' }}>
@@ -58,7 +65,6 @@ const DetailOfCenter: React.FC = () => {
 				Chi tiết trung tâm
 			</Title>
 
-			{/* Card wrapping Tên, Email, Địa chỉ, Phone, and Buttons */}
 			<Card
 				style={{
 					padding: '20px',
@@ -67,59 +73,37 @@ const DetailOfCenter: React.FC = () => {
 					backgroundColor: '#f5f5f5',
 				}}
 			>
-				{/* Row for Tên and Email */}
 				<Row gutter={[16, 16]}>
 					<Col span={12}>
 						<Title level={5}>Tên</Title>
-						<Input
-							value={center.name}
-							style={{ backgroundColor: '#fff', borderRadius: '5px' }}
-						/>
+						<Input value={center.name} style={{ backgroundColor: '#fff', borderRadius: '5px' }} readOnly />
 					</Col>
 					<Col span={12}>
 						<Title level={5}>Email</Title>
-						<Input
-							value={center.email || 'Không có email'}
-							style={{ backgroundColor: '#fff', borderRadius: '5px' }}
-						/>
+						<Input value={center.email || 'Không có email'} style={{ backgroundColor: '#fff', borderRadius: '5px' }} readOnly />
 					</Col>
 				</Row>
 
-				{/* Row for Địa chỉ and Phone */}
 				<Row gutter={[16, 16]} style={{ marginTop: '20px' }}>
 					<Col span={12}>
 						<Title level={5}>Địa chỉ</Title>
-						<Input
-							value={center.address}
-							style={{ backgroundColor: '#fff', borderRadius: '5px' }}
-						/>
+						<Input value={center.address} style={{ backgroundColor: '#fff', borderRadius: '5px' }} readOnly />
 					</Col>
 					<Col span={12}>
 						<Title level={5}>Số điện thoại</Title>
-						<Input
-							value={center.phone}
-							style={{ backgroundColor: '#fff', borderRadius: '5px' }}
-						/>
+						<Input value={center.phone} style={{ backgroundColor: '#fff', borderRadius: '5px' }} readOnly />
 					</Col>
 				</Row>
 
-				{/* Buttons for Courses, Vouchers, Classes, Teachers */}
 				<div style={{ marginTop: '40px' }}>
 					<Row gutter={[16, 16]}>
-						{[
-							{ label: 'Khóa học', path: 'courses' },
-							{ label: 'Mã giảm giá', path: 'vouchers' },
-							{ label: 'Lớp học', path: 'classes' },
-							{ label: 'Giáo viên', path: 'teachers' },
-						].map((item, index) => (
-							<Col span={6} key={index}>
+						{sections.map(({ label, path }) => (
+							<Col span={6} key={path}>
 								<Tooltip title="Nhấn để xem chi tiết">
 									<Button
 										icon={<EyeOutlined style={{ color: 'blue' }} />}
 										style={buttonStyle}
-										onClick={() =>
-											handleNavigation(`/admin/centers/${id}/${item.path}`)
-										}
+										onClick={() => handleNavigation(path)}
 										onMouseOver={(e) => {
 											e.currentTarget.style.backgroundColor = '#1890ff';
 											e.currentTarget.style.color = 'white';
@@ -129,7 +113,7 @@ const DetailOfCenter: React.FC = () => {
 											e.currentTarget.style.color = 'blue';
 										}}
 									>
-										{item.label}
+										{label}
 									</Button>
 								</Tooltip>
 							</Col>
