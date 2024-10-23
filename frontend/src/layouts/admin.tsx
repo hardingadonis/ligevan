@@ -20,16 +20,18 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({
 		<AdminHeader />
 		<Layout hasSider={showSidebar}>
 			{showSidebar && <Sidebar />}
-			<Content
-				style={{
-					marginLeft: showSidebar ? 0 : undefined,
-					padding: 24,
-					minHeight: 280,
-					background: '#fff',
-				}}
-			>
-				{children}
-			</Content>
+			<Layout style={{ paddingLeft: '250px' }}>
+				<Content
+					style={{
+						marginLeft: showSidebar ? 0 : undefined,
+						padding: 24,
+						minHeight: 280,
+						background: '#fff',
+					}}
+				>
+					{children}
+				</Content>
+			</Layout>
 		</Layout>
 		<Footer />
 		<FloatButton.BackTop />
