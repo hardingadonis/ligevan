@@ -1,5 +1,5 @@
 import { DownOutlined, EnvironmentOutlined } from '@ant-design/icons';
-import { Button, Dropdown, Space, Spin } from 'antd';
+import { Button, Dropdown, Space, Spin, Typography } from 'antd';
 import React, { useEffect, useState } from 'react';
 
 import { Center } from '@/schemas/center.schema';
@@ -9,12 +9,14 @@ interface DropdownCenterProps {
 	onSelectCenter: (center: Center | null) => void;
 	className?: string;
 	selectedCenter?: Center | null;
+	disabled?: boolean;
 }
 
 const DropdownCenter: React.FC<DropdownCenterProps> = ({
 	onSelectCenter,
 	className,
 	selectedCenter,
+	disabled = false,
 }) => {
 	const [centers, setCenters] = useState<Center[]>([]);
 	const [loading, setLoading] = useState<boolean>(true);
@@ -66,13 +68,13 @@ const DropdownCenter: React.FC<DropdownCenterProps> = ({
 	}
 
 	if (error) {
-		return <div>{error}</div>;
+		return <Typography.Text color="white">{error}</Typography.Text>;
 	}
 
 	return (
 		<Space wrap className={className}>
-			<Dropdown menu={menuProps}>
-				<Button>
+			<Dropdown menu={menuProps} disabled={disabled}>
+				<Button disabled={disabled}>
 					<Space>
 						{selectedCenter?.name}
 						<DownOutlined />
