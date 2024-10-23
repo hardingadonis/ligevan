@@ -31,7 +31,6 @@ const ListVouchers: React.FC = () => {
 	const fetchData = async () => {
 		try {
 			const vouchers: Voucher[] = await getAllVoucher();
-			console.log('Danh sách mã giảm giá:', vouchers);
 			const tableData = vouchers.map((voucher, index) => ({
 				key: (index + 1).toString(),
 				code: voucher.code,
