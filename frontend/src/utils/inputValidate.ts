@@ -50,3 +50,13 @@ export const validateVietnameseAddress = (address: string): boolean => {
 	const trimmedAddress = trimInput(address);
 	return isValidVietnameseAddress(trimmedAddress);
 };
+
+const isValidNumber = (input: string): boolean => {
+	const numberRegex = /^\d+$/;
+	return numberRegex.test(input);
+};
+
+export const validateNumber = (input: string): boolean => {
+	const trimmedInput = trimInput(input);
+	return isValidNumber(trimmedInput);
+};

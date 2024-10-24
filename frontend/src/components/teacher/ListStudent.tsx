@@ -169,7 +169,7 @@ const ListStudent: React.FC<ListStudentProps> = ({ classID }) => {
 	};
 
 	return (
-		<div style={{ padding: '65px 20px 0 270px' }}>
+		<div style={{ paddingLeft: '270px' }}>
 			<div style={{ textAlign: 'center', marginBottom: 20 }}>
 				<h2>CHI TIẾT LỚP {className.toUpperCase()}</h2>
 			</div>

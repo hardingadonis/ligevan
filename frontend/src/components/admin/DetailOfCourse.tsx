@@ -44,7 +44,7 @@ const DetailOfCourse: React.FC = () => {
 	}
 
 	const handleEdit = () => {
-		console.log(`Chỉnh sửa khóa học: ${course._id}`);
+		navigate(`/admin/courses/edit/${course._id}`);
 	};
 
 	const handleDelete = async (id: string) => {
@@ -76,7 +76,7 @@ const DetailOfCourse: React.FC = () => {
 	};
 
 	return (
-		<div style={{ padding: '0 20px 0 270px' }}>
+		<div style={{ paddingLeft: '270px' }}>
 			<Title level={3} style={{ textAlign: 'center', marginBottom: '20px' }}>
 				Chi tiết Khóa học
 			</Title>
