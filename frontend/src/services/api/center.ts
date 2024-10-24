@@ -38,3 +38,12 @@ export const updateCenter = async (
 		throw error;
 	}
 };
+
+export const deleteCenter = async (id: string): Promise<void> => {
+	try {
+		await axios.delete(`${apiBaseUrl}/api/centers/${id}`);
+	} catch (error) {
+		console.error('Error deleting center:', error);
+		throw error;
+	}
+};
