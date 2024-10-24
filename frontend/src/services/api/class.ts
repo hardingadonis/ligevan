@@ -12,3 +12,13 @@ export const getClassById = async (id: string): Promise<Class> => {
 		throw error;
 	}
 };
+
+export const getAllClasses = async (): Promise<Class[]> => {
+	try {
+		const response = await axios.get(`${apiBaseUrl}/api/classes`);
+		return response.data;
+	} catch (error) {
+		console.error('Error fetching classes:', error);
+		throw error;
+	}
+};

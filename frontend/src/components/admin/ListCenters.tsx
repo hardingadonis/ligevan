@@ -107,7 +107,7 @@ const ListCenters: React.FC = () => {
 
 	// Handle create new center
 	const handleCreateNewCenter = () => {
-		console.log('Tạo trung tâm mới');
+		navigate('/admin/centers/create');
 	};
 
 	// Handle search input change

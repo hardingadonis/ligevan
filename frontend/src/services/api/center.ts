@@ -47,3 +47,12 @@ export const deleteCenter = async (id: string): Promise<void> => {
 		throw error;
 	}
 };
+
+export const createCenter = async (center: Center): Promise<void> => {
+	try {
+		await axios.post(`${apiBaseUrl}/api/centers`, center);
+	} catch (error) {
+		console.error('Error creating center:', error);
+		throw error;
+	}
+};
