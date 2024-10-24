@@ -44,7 +44,7 @@ const DetailOfCourse: React.FC = () => {
 	}
 
 	const handleEdit = () => {
-		console.log(`Chỉnh sửa khóa học: ${course._id}`);
+		navigate(`/admin/courses/edit/${course._id}`);
 	};
 
 	const handleDelete = async (id: string) => {
