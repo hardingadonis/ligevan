@@ -96,7 +96,7 @@ const ListStudent: React.FC<ListStudentProps> = ({ classID }) => {
 	);
 
 	const handleDetail = (id: string) => {
-		navigate(`/teacher/students/${id}`);
+		navigate(`/teacher/classes/student/${id}`);
 	};
 
 	const handleRefresh = () => {
