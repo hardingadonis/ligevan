@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
-import DetailOfCourse from '@/components/admin/DetailOfCourse';
+import DetailOfCourse from '@/components/admin/CourseDetail';
 import AdminLayout from '@/layouts/admin';
 
 const CenterDetail: React.FC = () => {
