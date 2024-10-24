@@ -94,15 +94,6 @@ const ListStudent: React.FC<ListStudentProps> = ({ classID }) => {
 		>
 			Chi tiết
 		</Button>
-		// 	<Button
-		// 	color="primary"
-		// 	variant="outlined"
-		// 	icon={<EyeOutlined />}
-		// 	onClick={() => handleDetail(id)}
-		// 	style={{ marginRight: 8 }}
-		// >
-		// 	Chi tiết
-		// </Button>
 	);
 
 	const handleDetail = (id: string) => {
