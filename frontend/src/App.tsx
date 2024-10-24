@@ -210,6 +210,17 @@ const App: React.FC = () => {
 							</ProtectedRoute>
 						}
 					/>
+					<Route
+						path="/admin/courses/edit/:id"
+						element={
+							<ProtectedRoute
+								redirectPath="/admin/login"
+								tokenName="accessToken"
+							>
+								<AdminCenterEdit />
+							</ProtectedRoute>
+						}
+					/>
 				</Routes>
 			</Suspense>
 		</Router>
