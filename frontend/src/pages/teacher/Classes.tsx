@@ -44,7 +44,7 @@ const ClassesPage: React.FC = () => {
 	} else
 		return (
 			<TeacherLayout>
-				<ListClass email={email || ''} />
+				<ListClass email={email ?? ''} />
 			</TeacherLayout>
 		);
 };

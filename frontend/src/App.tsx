@@ -15,6 +15,7 @@ const EditProfileStudent = lazy(() => import('@/pages/student/EditProfile'));
 const StudentClassList = lazy(() => import('@/pages/student/ClassList'));
 const ClassesPage = lazy(() => import('@/pages/teacher/Classes'));
 const ClassDetail = lazy(() => import('@/pages/teacher/ClassDetail'));
+const TeacherProfile = lazy(() => import('@/pages/teacher/Profile'));
 
 const AdminDashboard = lazy(() => import('@/pages/admin/Dashboard'));
 const AdminCoursesManagement = lazy(
@@ -77,6 +78,17 @@ const App: React.FC = () => {
 					<Route
 						path="/teacher"
 						element={<Navigate to="/teacher/classes" replace />}
+					/>
+					<Route
+						path="/teacher/profile"
+						element={
+							<ProtectedRoute
+								redirectPath="/teacher/login"
+								tokenName="teacherToken"
+							>
+								<TeacherProfile />
+							</ProtectedRoute>
+						}
 					/>
 					<Route path="/admin/login" element={<AdminLogin />} />
 					<Route
