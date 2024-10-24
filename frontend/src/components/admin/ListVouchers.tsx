@@ -31,7 +31,12 @@ const ListVouchers: React.FC = () => {
 	const fetchData = async () => {
 		try {
 			const vouchers: Voucher[] = await getAllVoucher();
-			const tableData = vouchers.map((voucher, index) => ({
+			const sortedVouchers = vouchers.sort((a, b) => {
+				const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+				const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+				return dateB - dateA;
+			});
+			const tableData = sortedVouchers.map((voucher, index) => ({
 				key: (index + 1).toString(),
 				code: voucher.code,
 				title: voucher.title,
@@ -48,7 +53,7 @@ const ListVouchers: React.FC = () => {
 
 	useEffect(() => {
 		fetchData();
-	});
+	}, []);
 
 	const renderActions = (id: string): JSX.Element => (
 		<div>
