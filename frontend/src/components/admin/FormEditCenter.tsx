@@ -54,7 +54,7 @@ const FormEditCenter: React.FC = () => {
 				.then(() => {
 					dispatch(updateCenterFulfilled());
 					message.success('Cập nhật trung tâm thành công.');
-					navigate('/admin/centers');
+					navigate(`/admin/centers/${id}`);
 				})
 				.catch((error: { message: string }) => {
 					dispatch(updateCenterRejected(error.message));
@@ -86,7 +86,7 @@ const FormEditCenter: React.FC = () => {
 		<div style={{ padding: '65px 20px 0 270px' }}>
 			<Row>
 				<Col span={2}>
-					<ButtonGoBack link="/admin/centers" />
+					<ButtonGoBack link={`/admin/centers/${id}`} />
 				</Col>
 				<Col span={20}>
 					<h2 style={{ textAlign: 'center', marginBottom: '20px' }}>

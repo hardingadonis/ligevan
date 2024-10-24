@@ -47,7 +47,7 @@ const DetailOfCenter: React.FC = () => {
 	}
 
 	const handleEdit = () => {
-		console.log(`Chỉnh sửa trung tâm: ${center._id}`);
+		navigate(`/admin/centers/edit/${center._id}`);
 	};
 
 	const handleDelete = async () => {
