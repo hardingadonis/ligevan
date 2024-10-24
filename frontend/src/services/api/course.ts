@@ -40,3 +40,15 @@ export const deleteCourse = async (id: string): Promise<void> => {
 		throw error;
 	}
 };
+
+export const updateCourse = async (
+	id: string,
+	course: Partial<Course>,
+): Promise<void> => {
+	try {
+		await axios.put(`${apiBaseUrl}/api/courses/${id}`, course);
+	} catch (error) {
+		console.error('Error updating course:', error);
+		throw error;
+	}
+};
