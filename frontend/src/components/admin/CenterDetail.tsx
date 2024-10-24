@@ -13,6 +13,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import ButtonGoBack from '@/components/commons/ButtonGoback';
 import { Center } from '@/schemas/center.schema';
 import { deleteCenter, getCenterById } from '@/services/api/center';
 
@@ -98,9 +99,12 @@ const CenterDetail: React.FC = () => {
 
 	return (
 		<div style={{ paddingLeft: '270px' }}>
-			<Title level={3} style={{ textAlign: 'center', marginBottom: '20px' }}>
-				Chi tiết trung tâm
-			</Title>
+			<div style={{ textAlign: 'center', marginBottom: 20 }}>
+				<div style={{ textAlign: 'left' }}>
+					<ButtonGoBack link="/admin/vouchers" />
+				</div>
+				<h2>Chi tiết trung tâm</h2>
+			</div>
 
 			<Card
 				style={{
