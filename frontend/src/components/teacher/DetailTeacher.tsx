@@ -50,7 +50,7 @@ const DetailTeacher: React.FC = () => {
 	}
 
 	return (
-		<div style={{ padding: '20px 20px 0 270px' }}>
+		<div style={{ paddingLeft: '270px' }}>
 			<Row>
 				<Col span={2}>
 					<ButtonGoBack />
@@ -63,7 +63,7 @@ const DetailTeacher: React.FC = () => {
 			</Row>
 			<div
 				style={{
-					maxWidth: 900,
+					maxWidth: 1000,
 					margin: '0 auto',
 					padding: '10px 90px',
 					boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
@@ -118,6 +118,7 @@ const DetailTeacher: React.FC = () => {
 									type="primary"
 									icon={<EditOutlined />}
 									href="/teacher/profile/edit"
+									style={{ backgroundColor: '#ffae00', color: 'white' }}
 								>
 									Cập nhật
 								</Button>

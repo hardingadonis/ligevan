@@ -9,14 +9,13 @@ import {
 
 import ProtectedRoute from '@/components/commons/ProtectedRoute';
 
-import TeacherProfile from './pages/teacher/Profile';
-
 const HomepageStudent = lazy(() => import('@/pages/student/Homepage'));
 const StudentProfile = lazy(() => import('@/pages/student/Profile'));
 const EditProfileStudent = lazy(() => import('@/pages/student/EditProfile'));
 const StudentClassList = lazy(() => import('@/pages/student/ClassList'));
 const ClassesPage = lazy(() => import('@/pages/teacher/Classes'));
 const ClassDetail = lazy(() => import('@/pages/teacher/ClassDetail'));
+const TeacherProfile = lazy(() => import('@/pages/teacher/Profile'));
 
 const AdminDashboard = lazy(() => import('@/pages/admin/Dashboard'));
 const AdminCoursesManagement = lazy(
