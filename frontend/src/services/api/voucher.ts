@@ -56,3 +56,15 @@ export const deleteVoucher = async (id: string): Promise<void> => {
 		throw error;
 	}
 };
+
+export const checkVoucherCodeExists = async (
+	code: string,
+): Promise<boolean> => {
+	try {
+		const listVouchers = await getAllVoucher();
+		return listVouchers.some((voucher) => voucher.code === code);
+	} catch (error) {
+		console.error('Error checking voucher code:', error);
+		throw error;
+	}
+};
