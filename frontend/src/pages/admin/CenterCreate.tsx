@@ -13,15 +13,7 @@ const CreateCenterPage: React.FC = () => {
 
 	return (
 		<AdminLayout>
-			<div
-				style={{
-					maxWidth: 800,
-					margin: '0 auto',
-					padding: '24px',
-				}}
-			>
-				<CenterForm onSuccess={handleGoBack} />
-			</div>
+			<CenterForm onSuccess={handleGoBack} />
 		</AdminLayout>
 	);
 };
