@@ -9,6 +9,8 @@ import {
 
 import ProtectedRoute from '@/components/commons/ProtectedRoute';
 
+import TeacherProfile from './pages/teacher/Profile';
+
 const HomepageStudent = lazy(() => import('@/pages/student/Homepage'));
 const StudentProfile = lazy(() => import('@/pages/student/Profile'));
 const EditProfileStudent = lazy(() => import('@/pages/student/EditProfile'));
@@ -77,6 +79,17 @@ const App: React.FC = () => {
 					<Route
 						path="/teacher"
 						element={<Navigate to="/teacher/classes" replace />}
+					/>
+					<Route
+						path="/teacher/profile"
+						element={
+							<ProtectedRoute
+								redirectPath="/teacher/login"
+								tokenName="teacherToken"
+							>
+								<TeacherProfile />
+							</ProtectedRoute>
+						}
 					/>
 					<Route path="/admin/login" element={<AdminLogin />} />
 					<Route
