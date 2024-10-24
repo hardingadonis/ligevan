@@ -32,11 +32,7 @@ const VoucherDetail: React.FC = () => {
 	}, [id]);
 
 	const handleEdit = (id: string) => {
-		try {
-			console.log('Chỉnh sửa mã giảm giá:', id);
-		} catch (error) {
-			console.error('Lỗi khi chỉnh sửa mã giảm giá:', error);
-		}
+		navigate(`/admin/vouchers/${id}/edit`);
 	};
 
 	const handleDelete = async (id: string) => {
@@ -72,7 +68,7 @@ const VoucherDetail: React.FC = () => {
 	}
 
 	return (
-		<div style={{ padding: '65px 20px 0 270px' }}>
+		<div style={{ paddingLeft: '270px' }}>
 			<div style={{ textAlign: 'center', marginBottom: 20 }}>
 				<h2>Chi tiết mã giảm giá</h2>
 			</div>
