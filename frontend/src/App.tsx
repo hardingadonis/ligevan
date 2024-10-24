@@ -35,8 +35,11 @@ const AdminCentersManagement = lazy(
 const AdminCenterEdit = lazy(() => import('@/pages/admin/CenterEdit'));
 
 const CourseDetail = lazy(() => import('@/pages/admin/CourseDetail'));
-
 const CenterDetail = lazy(() => import('@/pages/admin/CenterDetail'));
+
+const CourseDetailCenter = lazy(
+	() => import('@/pages/admin/CourseDetailCenter'),
+);
 
 const App: React.FC = () => {
 	return (
@@ -110,6 +113,21 @@ const App: React.FC = () => {
 							</ProtectedRoute>
 						}
 					/>
+
+					{/* ------------------ */}
+					<Route
+						path="/admin/centers/:id/courses"
+						element={
+							<ProtectedRoute
+								redirectPath="/admin/login"
+								tokenName="accessToken"
+							>
+								<CourseDetailCenter />
+							</ProtectedRoute>
+						}
+					/>
+					{/* ------------------ */}
+
 					<Route
 						path="/admin/courses"
 						element={

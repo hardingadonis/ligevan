@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import { Center } from '@/schemas/center.schema';
+import { Course } from '@/schemas/course.schema';
 import { apiBaseUrl } from '@/utils/apiBase';
 
 export const getAllCenter = async (): Promise<Center[]> => {
@@ -53,6 +54,18 @@ export const createCenter = async (center: Center): Promise<void> => {
 		await axios.post(`${apiBaseUrl}/api/centers`, center);
 	} catch (error) {
 		console.error('Error creating center:', error);
+		throw error;
+	}
+};
+
+export const getCoursesByCenterId = async (id: string): Promise<Course[]> => {
+	try {
+		// Lấy thông tin trung tâm theo ID
+		const center = await getCenterById(id);
+		// Trả về danh sách các khóa học từ dữ liệu của trung tâm
+		return center.courses || [];
+	} catch (error) {
+		console.error('Error fetching courses by center id:', error);
 		throw error;
 	}
 };
