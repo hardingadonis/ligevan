@@ -3,6 +3,7 @@ import { Button, Col, Form, Input, Modal, Row, Spin, message } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import ButtonGoBack from '@/components/commons/ButtonGoback';
 import { Voucher } from '@/schemas/voucher.schema';
 import { deleteVoucher, getVoucherById } from '@/services/api/voucher';
 import { formatDateToVietnamTimezone } from '@/utils/dateFormat';
@@ -70,6 +71,9 @@ const VoucherDetail: React.FC = () => {
 	return (
 		<div style={{ paddingLeft: '270px' }}>
 			<div style={{ textAlign: 'center', marginBottom: 20 }}>
+				<div style={{ textAlign: 'left' }}>
+					<ButtonGoBack link="/admin/vouchers" />
+				</div>
 				<h2>Chi tiết mã giảm giá</h2>
 			</div>
 

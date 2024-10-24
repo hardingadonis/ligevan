@@ -16,6 +16,7 @@ import 'dayjs/locale/vi';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import ButtonGoBack from '@/components/commons/ButtonGoback';
 import { Voucher } from '@/schemas/voucher.schema';
 import { getVoucherById, updateVoucher } from '@/services/api/voucher';
 
@@ -56,7 +57,7 @@ const FormEditVoucher: React.FC = () => {
 		try {
 			await updateVoucher(id, values);
 			message.success('Mã giảm giá đã được cập nhật thành công!', 3);
-			navigate(`/admin/vouchers`);
+			navigate(`/admin/vouchers/${id}`);
 		} catch (error) {
 			console.error('Lỗi khi cập nhật mã giảm giá:', error);
 			message.error('Lỗi: Đã xảy ra lỗi khi cập nhật mã giảm giá!', 3);
@@ -79,6 +80,9 @@ const FormEditVoucher: React.FC = () => {
 		<ConfigProvider locale={locale}>
 			<div style={{ paddingLeft: '270px' }}>
 				<div style={{ textAlign: 'center', marginBottom: 20 }}>
+					<div style={{ textAlign: 'left' }}>
+						<ButtonGoBack />
+					</div>
 					<h2>Chỉnh sửa mã giảm giá</h2>
 				</div>
 
@@ -202,8 +206,20 @@ const FormEditVoucher: React.FC = () => {
 								</Form.Item>
 							</Col>
 						</Row>
-						<Form.Item wrapperCol={{ span: 24 }} style={{ textAlign: 'right' }}>
-							<Button type="primary" icon={<SaveOutlined />} htmlType="submit">
+						<Form.Item
+							wrapperCol={{ span: 24 }}
+							style={{
+								textAlign: 'right',
+							}}
+						>
+							<Button
+								style={{
+									backgroundColor: '#0cd14e',
+									color: 'white',
+								}}
+								icon={<SaveOutlined />}
+								htmlType="submit"
+							>
 								Lưu Lại
 							</Button>
 						</Form.Item>
