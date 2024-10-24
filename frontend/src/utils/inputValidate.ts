@@ -51,9 +51,20 @@ export const validateVietnameseAddress = (address: string): boolean => {
 	return isValidVietnameseAddress(trimmedAddress);
 };
 
+const isValidCode = (code: string): boolean => {
+	const codeRegex =
+		/^[a-zA-Z0-9ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỂẾỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s]+$/;
+	return codeRegex.test(code) && code.length >= 2 && code.length <= 50;
+};
+
+export const validateCode = (code: string): boolean => {
+	const trimmedCode = trimInput(code);
+	return isValidCode(trimmedCode);
+};
+
 const isValidDiscount = (discount: string): boolean => {
 	const discountValue = parseFloat(discount);
-	return !isNaN(discountValue) && discountValue >= 0 && discountValue <= 100;
+	return !isNaN(discountValue) && discountValue > 0 && discountValue <= 100;
 };
 
 export const validateDiscount = (discount: string): boolean => {
