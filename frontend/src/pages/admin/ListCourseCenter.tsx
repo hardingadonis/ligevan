@@ -23,7 +23,7 @@ interface DataType {
 	actions: JSX.Element;
 }
 
-const CourseDetailCenter: React.FC = () => {
+const ListCourseCenter: React.FC = () => {
 	const { id } = useParams<{ id: string }>();
 	const [courses, setCourses] = useState<DataType[]>([]);
 	const [centerName, setCenterName] = useState('');
@@ -232,4 +232,4 @@ const CourseDetailCenter: React.FC = () => {
 	);
 };
 
-export default CourseDetailCenter;
+export default ListCourseCenter;

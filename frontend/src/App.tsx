@@ -37,9 +37,7 @@ const AdminCenterEdit = lazy(() => import('@/pages/admin/CenterEdit'));
 const CourseDetail = lazy(() => import('@/pages/admin/CourseDetail'));
 const CenterDetail = lazy(() => import('@/pages/admin/CenterDetail'));
 
-const CourseDetailCenter = lazy(
-	() => import('@/pages/admin/CourseDetailCenter'),
-);
+const CourseDetailCenter = lazy(() => import('@/pages/admin/ListCourseCenter'));
 
 const App: React.FC = () => {
 	return (
