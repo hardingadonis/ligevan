@@ -37,9 +37,9 @@ const ListCourseCenter: React.FC = () => {
 				console.error('No ID provided');
 				return;
 			}
-			const center = await getCenterById(id); // Fetch center to get name
-			setCenterName(center.name); // Set center name
-			const coursesData: Course[] = await getCoursesByCenterId(id); // Fetch courses
+			const center = await getCenterById(id);
+			setCenterName(center.name);
+			const coursesData: Course[] = await getCoursesByCenterId(id);
 			const tableData = coursesData.map((course, index) => ({
 				key: (index + 1).toString(),
 				code: course.code,

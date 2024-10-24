@@ -36,9 +36,9 @@ const ListVouchersCenter: React.FC = () => {
 				console.error('No ID provided');
 				return;
 			}
-			const center = await getCenterById(id); // Fetch center to get name
-			setCenterName(center.name); // Set center name
-			const vouchersData: Voucher[] = await getVouchersByCenterId(id); // Fetch vouchers
+			const center = await getCenterById(id);
+			setCenterName(center.name);
+			const vouchersData: Voucher[] = await getVouchersByCenterId(id);
 			const tableData = vouchersData.map((voucher, index) => ({
 				key: (index + 1).toString(),
 				code: voucher.code,
@@ -151,7 +151,6 @@ const ListVouchersCenter: React.FC = () => {
 	);
 
 	const handleDetail = (voucherId: string) => {
-		// Correct navigation to the VoucherDetail page
 		navigate(`/admin/vouchers/${voucherId}`);
 	};
 
