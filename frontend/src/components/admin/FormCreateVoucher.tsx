@@ -12,28 +12,32 @@ import {
 import locale from 'antd/locale/vi_VN';
 import dayjs from 'dayjs';
 import 'dayjs/locale/vi';
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Voucher } from '@/schemas/voucher.schema';
 import { checkVoucherCodeExists, createVoucher } from '@/services/api/voucher';
-import { validateDiscount, validateName } from '@/utils/inputValidate';
+import { validateCode, validateDiscount } from '@/utils/inputValidate';
 
 dayjs.locale('vi');
 
 const VoucherForm: React.FC = () => {
 	const [form] = Form.useForm();
 	const navigate = useNavigate();
-	const discount = form.getFieldValue('value');
-	const value = parseFloat(discount);
-	console.log(value);
+	const [discount, setDiscount] = useState<string>('');
+
+	const handleDiscountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const value = e.target.value;
+		setDiscount(value);
+		console.log(parseFloat(value));
+	};
 
 	const handleSubmit = async (voucher: Voucher) => {
 		try {
 			const formattedVoucher = {
 				...voucher,
 				code: voucher.code.toUpperCase(),
-				value: value,
+				value: parseFloat(discount),
 			};
 			console.log(formattedVoucher);
 			await createVoucher(formattedVoucher);
@@ -100,7 +104,7 @@ const VoucherForm: React.FC = () => {
 															if (!value) {
 																return Promise.resolve();
 															}
-															if (!validateName(value)) {
+															if (!validateCode(value)) {
 																return Promise.reject(
 																	new Error(
 																		'Mã giảm giá không hợp lệ! Vui lòng nhập lại!',
@@ -155,6 +159,7 @@ const VoucherForm: React.FC = () => {
 													placeholder="Nhập giá trị"
 													type="number"
 													step="0.01"
+													onChange={handleDiscountChange}
 												/>
 											</Form.Item>
 										</Col>
