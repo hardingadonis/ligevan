@@ -3,6 +3,7 @@ import { Button, Col, Form, Input, Modal, Row, Spin, message } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import ButtonGoBack from '@/components/commons/ButtonGoback';
 import { Voucher } from '@/schemas/voucher.schema';
 import { deleteVoucher, getVoucherById } from '@/services/api/voucher';
 import { formatDateToVietnamTimezone } from '@/utils/dateFormat';
@@ -32,11 +33,7 @@ const VoucherDetail: React.FC = () => {
 	}, [id]);
 
 	const handleEdit = (id: string) => {
-		try {
-			console.log('Chỉnh sửa mã giảm giá:', id);
-		} catch (error) {
-			console.error('Lỗi khi chỉnh sửa mã giảm giá:', error);
-		}
+		navigate(`/admin/vouchers/${id}/edit`);
 	};
 
 	const handleDelete = async (id: string) => {
@@ -72,8 +69,11 @@ const VoucherDetail: React.FC = () => {
 	}
 
 	return (
-		<div style={{ padding: '65px 20px 0 270px' }}>
+		<div style={{ paddingLeft: '270px' }}>
 			<div style={{ textAlign: 'center', marginBottom: 20 }}>
+				<div style={{ textAlign: 'left' }}>
+					<ButtonGoBack link="/admin/vouchers" />
+				</div>
 				<h2>Chi tiết mã giảm giá</h2>
 			</div>
 
@@ -142,17 +142,21 @@ const VoucherDetail: React.FC = () => {
 							>
 								<>
 									<Button
-										color="primary"
-										variant="outlined"
+										style={{
+											backgroundColor: '#ffae00',
+											color: 'white',
+											marginRight: 8,
+										}}
 										icon={<EditOutlined />}
 										onClick={() => id && handleEdit(id)}
-										style={{ marginRight: 8 }}
 									>
 										Chỉnh sửa
 									</Button>
 									<Button
-										color="danger"
-										variant="outlined"
+										style={{
+											backgroundColor: '#ff2121',
+											color: 'white',
+										}}
 										icon={<DeleteOutlined />}
 										onClick={() => id && handleDelete(id)}
 									>

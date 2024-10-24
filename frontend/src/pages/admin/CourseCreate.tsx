@@ -13,15 +13,7 @@ const CreateCoursePage: React.FC = () => {
 
 	return (
 		<AdminLayout>
-			<div
-				style={{
-					maxWidth: 800,
-					margin: '0 auto',
-					padding: '24px',
-				}}
-			>
-				<CourseForm onSuccess={handleGoBack} />
-			</div>
+			<CourseForm onSuccess={handleGoBack} />
 		</AdminLayout>
 	);
 };

@@ -20,7 +20,7 @@ import { deleteCenter, getCenterById } from '@/services/api/center';
 
 const { Title } = Typography;
 
-const DetailOfCenter: React.FC = () => {
+const CenterDetail: React.FC = () => {
 	const { id } = useParams<{ id: string }>();
 	const [center, setCenter] = useState<Center | null>(null);
 	const navigate = useNavigate();
@@ -207,4 +207,4 @@ const DetailOfCenter: React.FC = () => {
 	);
 };
 
-export default DetailOfCenter;
+export default CenterDetail;
