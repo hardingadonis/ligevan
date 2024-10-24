@@ -1,5 +1,5 @@
 import { SaveOutlined } from '@ant-design/icons';
-import { Button, Col, Form, Input, Row, message } from 'antd';
+import { Button, Form, Input, message } from 'antd';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -84,16 +84,12 @@ const FormEditCenter: React.FC = () => {
 
 	return (
 		<div style={{ paddingLeft: '270px' }}>
-			<Row>
-				<Col span={2}>
+			<div style={{ textAlign: 'center', marginBottom: 20 }}>
+				<div style={{ textAlign: 'left' }}>
 					<ButtonGoBack link={`/admin/centers/${id}`} />
-				</Col>
-				<Col span={20}>
-					<h2 style={{ textAlign: 'center', marginBottom: '20px' }}>
-						Chỉnh sửa thông tin trung tâm
-					</h2>
-				</Col>
-			</Row>
+				</div>
+				<h2>Chỉnh sửa trung tâm</h2>
+			</div>
 			<div
 				style={{
 					display: 'flex',
@@ -163,7 +159,7 @@ const FormEditCenter: React.FC = () => {
 						</Form.Item>
 						<Form.Item style={{ display: 'flex', justifyContent: 'flex-end' }}>
 							<Button
-								type="primary"
+								style={{ backgroundColor: '#0cd14e', color: 'white' }}
 								htmlType="submit"
 								loading={loading}
 								icon={<SaveOutlined />}
