@@ -1,5 +1,5 @@
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import { Button, Col, Form, Input, Modal, Row, Spin, notification } from 'antd';
+import { Button, Col, Form, Input, Modal, Row, Spin, message } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -49,19 +49,11 @@ const VoucherDetail: React.FC = () => {
 			onOk: async () => {
 				try {
 					await deleteVoucher(id);
-					notification.success({
-						message: 'Xóa thành công',
-						description: 'Mã giảm giá đã được xóa thành công.',
-						duration: 3,
-					});
+					message.success('Mã giảm giá đã được xóa thành công!', 3);
 					navigate(`/admin/vouchers`);
 				} catch (error) {
 					console.error('Lỗi khi xóa mã giảm giá:', error);
-					notification.error({
-						message: 'Lỗi',
-						description: 'Đã xảy ra lỗi khi xóa mã giảm giá.',
-						duration: 3,
-					});
+					message.error('Lỗi: Đã xảy ra lỗi khi xóa mã giảm giá!', 3);
 				}
 			},
 		});
