@@ -8,7 +8,7 @@ import {
 import { Button, Empty, Input, Table, notification } from 'antd';
 import type { TableColumnsType, TableProps } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import AdminLayout from '@/layouts/admin';
 import { Course } from '@/schemas/course.schema';
@@ -24,6 +24,7 @@ interface DataType {
 }
 
 const ListCourseCenter: React.FC = () => {
+	const navigate = useNavigate();
 	const { id } = useParams<{ id: string }>();
 	const [courses, setCourses] = useState<DataType[]>([]);
 	const [centerName, setCenterName] = useState('');
@@ -81,8 +82,10 @@ const ListCourseCenter: React.FC = () => {
 			item.price.toString().includes(searchText.toLowerCase()),
 	);
 
-	const handleCreateNewCenter = () => {
-		// console.log('Delete course with id:', id);
+	const handleCreateNewCourse = () => {
+		if (id) {
+			navigate(`admin/centers/${id}/courses/add`);
+		}
 	};
 
 	// Define columns for the table
@@ -91,6 +94,7 @@ const ListCourseCenter: React.FC = () => {
 			title: <div style={{ textAlign: 'center' }}>STT</div>,
 			dataIndex: 'key',
 			width: '5%',
+			align: 'center',
 		},
 		{
 			title: <div style={{ textAlign: 'center' }}>Mã khóa học</div>,
@@ -111,12 +115,14 @@ const ListCourseCenter: React.FC = () => {
 			title: <div style={{ textAlign: 'center' }}>Giá</div>,
 			dataIndex: 'price',
 			width: '15%',
+			align: 'center',
 			render: (price) => `${price.toLocaleString()} VND`, // Format price
 		},
 		{
 			title: <div style={{ textAlign: 'center' }}>Thao tác</div>,
 			dataIndex: 'actions',
 			width: '22%',
+			align: 'center',
 		},
 	];
 
@@ -130,13 +136,13 @@ const ListCourseCenter: React.FC = () => {
 	};
 
 	// Render action buttons for each row
-	const renderActions = (id: string): JSX.Element => (
+	const renderActions = (courseId: string): JSX.Element => (
 		<>
 			<Button
 				color="primary"
 				variant="outlined"
 				icon={<EyeOutlined />}
-				onClick={() => handleDetail(id)}
+				onClick={() => handleDetail(courseId)}
 				style={{ marginRight: 8 }}
 			>
 				Chi tiết
@@ -145,7 +151,7 @@ const ListCourseCenter: React.FC = () => {
 				color="danger"
 				variant="outlined"
 				icon={<DeleteOutlined />}
-				onClick={() => handleDelete(id)}
+				onClick={() => handleDelete(courseId)}
 			>
 				Xóa
 			</Button>
@@ -153,15 +159,14 @@ const ListCourseCenter: React.FC = () => {
 	);
 
 	// Handle view course details
-	const handleDetail = (id: string) => {
-		// Navigate to course detail page
-		console.log('View detail for course:', id);
+	const handleDetail = (courseId: string) => {
+		// Correct navigation to the VoucherDetail page
+		navigate(`/admin/courses/${courseId}`);
 	};
 
 	// Handle delete course with notification
-	const handleDelete = async (id: string) => {
-		// Logic for deleting a course
-		console.log('Delete course with id:', id);
+	const handleDelete = async (courseId: string) => {
+		navigate(`admin/courses/${courseId}`); //id của voucher
 	};
 
 	return (
@@ -181,7 +186,7 @@ const ListCourseCenter: React.FC = () => {
 					<Button
 						type="primary"
 						icon={<PlusOutlined />}
-						onClick={handleCreateNewCenter}
+						onClick={handleCreateNewCourse}
 					>
 						Thêm khóa học mới
 					</Button>

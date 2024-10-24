@@ -8,7 +8,7 @@ import {
 import { Button, Empty, Input, Table, notification } from 'antd';
 import type { TableColumnsType, TableProps } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import AdminLayout from '@/layouts/admin';
 import { Voucher } from '@/schemas/voucher.schema';
@@ -23,6 +23,7 @@ interface DataType {
 }
 
 const ListVouchersCenter: React.FC = () => {
+	const navigate = useNavigate();
 	const { id } = useParams<{ id: string }>();
 	const [vouchers, setVouchers] = useState<DataType[]>([]);
 	const [centerName, setCenterName] = useState('');
@@ -79,8 +80,9 @@ const ListVouchersCenter: React.FC = () => {
 	);
 
 	const handleCreateNewVoucher = () => {
-		// Logic to create new voucher
-		console.log('Create new voucher');
+		if (id) {
+			navigate(`admin/centers/${id}/vouchers/add`);
+		}
 	};
 
 	// Define columns for the table
@@ -89,6 +91,7 @@ const ListVouchersCenter: React.FC = () => {
 			title: <div style={{ textAlign: 'center' }}>STT</div>,
 			dataIndex: 'key',
 			width: '5%',
+			align: 'center',
 		},
 		{
 			title: <div style={{ textAlign: 'center' }}>Mã voucher</div>,
@@ -104,12 +107,14 @@ const ListVouchersCenter: React.FC = () => {
 			title: <div style={{ textAlign: 'center' }}>Giá trị</div>,
 			dataIndex: 'value',
 			width: '15%',
-			render: (value) => `${value.toLocaleString()} VND`, // Format value
+			align: 'center',
+			render: (value) => `${value.toLocaleString()}%`,
 		},
 		{
 			title: <div style={{ textAlign: 'center' }}>Thao tác</div>,
 			dataIndex: 'actions',
 			width: '20%',
+			align: 'center',
 		},
 	];
 
@@ -123,13 +128,13 @@ const ListVouchersCenter: React.FC = () => {
 	};
 
 	// Render action buttons for each row
-	const renderActions = (id: string): JSX.Element => (
+	const renderActions = (voucherId: string): JSX.Element => (
 		<>
 			<Button
 				color="primary"
 				variant="outlined"
 				icon={<EyeOutlined />}
-				onClick={() => handleDetail(id)}
+				onClick={() => handleDetail(voucherId)}
 				style={{ marginRight: 8 }}
 			>
 				Chi tiết
@@ -138,23 +143,21 @@ const ListVouchersCenter: React.FC = () => {
 				color="danger"
 				variant="outlined"
 				icon={<DeleteOutlined />}
-				onClick={() => handleDelete(id)}
+				onClick={() => handleDelete(voucherId)}
 			>
 				Xóa
 			</Button>
 		</>
 	);
 
-	// Handle view voucher details
-	const handleDetail = (id: string) => {
-		// Navigate to voucher detail page
-		console.log('View detail for voucher:', id);
+	const handleDetail = (voucherId: string) => {
+		// Correct navigation to the VoucherDetail page
+		navigate(`/admin/vouchers/${voucherId}`);
 	};
 
 	// Handle delete voucher with notification
 	const handleDelete = async (id: string) => {
-		// Logic for deleting a voucher
-		console.log('Delete voucher with id:', id);
+		navigate(`admin/vouchers/${id}`); //id của voucher
 	};
 
 	return (
