@@ -157,6 +157,7 @@ const VoucherForm: React.FC = () => {
 											>
 												<Input
 													placeholder="Nhập giá trị"
+													suffix="%"
 													type="number"
 													step="0.01"
 													onChange={handleDiscountChange}
