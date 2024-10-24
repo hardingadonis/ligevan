@@ -2,10 +2,21 @@ import {
 	DeleteOutlined,
 	EyeOutlined,
 	PlusOutlined,
+	SearchOutlined,
 	SyncOutlined,
 } from '@ant-design/icons';
-import { Alert, Button, Empty, Modal, Spin, Table, notification } from 'antd';
+import {
+	Alert,
+	Button,
+	Empty,
+	Input,
+	Modal,
+	Spin,
+	Table,
+	notification,
+} from 'antd';
 import type { TableColumnsType } from 'antd';
+import { TableProps } from 'antd/lib';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -29,6 +40,7 @@ const ListTeacherOfCenter: React.FC = () => {
 	const [data, setData] = useState<DataType[]>([]);
 	const [loading, setLoading] = useState<boolean>(false);
 	const [error, setError] = useState<string | null>(null);
+	const [searchText, setSearchText] = useState<string>('');
 
 	const fetchTeacher = async () => {
 		setLoading(true);
@@ -72,12 +84,9 @@ const ListTeacherOfCenter: React.FC = () => {
 	const renderActions = (id: string): JSX.Element => (
 		<div>
 			<Button
-				color="default"
-				variant="solid"
-				type="primary"
 				icon={<EyeOutlined />}
 				onClick={() => handleDetail(id)}
-				style={{ marginRight: 8 }}
+				style={{ marginRight: 8, backgroundColor: '#4096ff', color: 'white' }}
 			>
 				Chi tiết
 			</Button>
@@ -87,7 +96,7 @@ const ListTeacherOfCenter: React.FC = () => {
 				type="primary"
 				icon={<DeleteOutlined />}
 				onClick={() => handleDelete(id)}
-				style={{ marginRight: 8 }}
+				style={{ marginRight: 8, backgroundColor: '#ff2121', color: 'white' }}
 			>
 				Xóa
 			</Button>
@@ -130,9 +139,20 @@ const ListTeacherOfCenter: React.FC = () => {
 		fetchTeacher();
 	};
 
+	const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setSearchText(e.target.value);
+	};
+
 	const handleCreateNewTeacher = () => {
 		navigate('/admin/courses/teacher/create');
 	};
+
+	const filteredData = data.filter(
+		(item) =>
+			item.fullName.toLowerCase().includes(searchText.toLowerCase()) ||
+			item.phone.toLowerCase().includes(searchText.toLowerCase()) ||
+			item.address.toLowerCase().includes(searchText.toLowerCase()),
+	);
 
 	const columns: TableColumnsType<DataType> = [
 		{
@@ -169,10 +189,19 @@ const ListTeacherOfCenter: React.FC = () => {
 		},
 	];
 
+	const onChange: TableProps<DataType>['onChange'] = (
+		pagination,
+		filters,
+		sorter,
+		extra,
+	) => {
+		console.log('params', pagination, filters, sorter, extra);
+	};
+
 	return (
-		<div style={{ padding: '65px 20px 0 270px' }}>
+		<div style={{ paddingLeft: '270px' }}>
 			<div style={{ textAlign: 'center', marginBottom: 20 }}>
-				<h2>DANH SÁCH GIÁO VIÊN</h2>
+				<h2>Danh sách giáo viên</h2>
 			</div>
 
 			<div
@@ -183,21 +212,30 @@ const ListTeacherOfCenter: React.FC = () => {
 				}}
 			>
 				<Button
-					type="primary"
+					style={{ marginRight: 8, backgroundColor: '#0cd14e', color: 'white' }}
+					// type="primary"
 					icon={<PlusOutlined />}
 					onClick={handleCreateNewTeacher}
 				>
 					Tạo khóa học mới
 				</Button>
-				<Button
-					type="default"
-					icon={<SyncOutlined />}
-					onClick={handleRefresh}
-					style={{ marginRight: 8 }}
-				>
-					{' '}
-					Làm mới
-				</Button>
+				<div>
+					<Button
+						type="default"
+						icon={<SyncOutlined />}
+						onClick={handleRefresh}
+						style={{ marginRight: 8 }}
+					>
+						{' '}
+						Làm mới
+					</Button>
+					<Input
+						placeholder="Tìm kiếm"
+						onChange={handleSearch}
+						style={{ width: 200 }}
+						prefix={<SearchOutlined />}
+					/>
+				</div>
 			</div>
 
 			{loading && <Spin size="large" />}
@@ -208,7 +246,10 @@ const ListTeacherOfCenter: React.FC = () => {
 				<div style={{ overflow: 'auto', marginBottom: '60px' }}>
 					<Table<DataType>
 						columns={columns}
-						dataSource={data} // Ensure data is passed here
+						// dataSource={data}
+						dataSource={filteredData.length ? filteredData : []}
+						onChange={onChange}
+						// locale={{
 						locale={{
 							emptyText: (
 								<Empty
@@ -217,7 +258,7 @@ const ListTeacherOfCenter: React.FC = () => {
 								/>
 							),
 						}}
-						pagination={{ pageSize: 10 }}
+						pagination={{ pageSize: 7 }}
 						rowClassName={(_, index) =>
 							index % 2 === 0 ? 'table-row-even' : 'table-row-odd'
 						}
