@@ -13,6 +13,7 @@ interface CourseFormProps {
 const CourseForm: React.FC<CourseFormProps> = ({ onSuccess }) => {
 	const [loading, setLoading] = useState(false);
 	const [form] = Form.useForm();
+	const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(null);
 
 	const onFinish = async (values: Course) => {
 		setLoading(true);
@@ -26,6 +27,10 @@ const CourseForm: React.FC<CourseFormProps> = ({ onSuccess }) => {
 		} finally {
 			setLoading(false);
 		}
+	};
+
+	const handleThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setThumbnailUrl(e.target.value);
 	};
 
 	return (
@@ -97,7 +102,24 @@ const CourseForm: React.FC<CourseFormProps> = ({ onSuccess }) => {
 						name="thumbnail"
 						label={<span style={{ fontWeight: 'bold' }}>URL Hình ảnh</span>}
 					>
-						<Input placeholder="Nhập đường dẫn hình ảnh" />
+						<Input
+							placeholder="Nhập đường dẫn hình ảnh"
+							onChange={handleThumbnailChange}
+						/>
+					</Form.Item>
+
+					<Form.Item
+						label={
+							<span style={{ fontWeight: 'bold' }}>Xem trước hình ảnh</span>
+						}
+					>
+						{thumbnailUrl && (
+							<img
+								src={thumbnailUrl}
+								alt="Ảnh xem trước"
+								style={{ maxWidth: '100%', maxHeight: '200px' }}
+							/>
+						)}
 					</Form.Item>
 
 					<Form.Item style={{ marginTop: 24, textAlign: 'right' }}>
