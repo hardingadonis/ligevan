@@ -144,7 +144,7 @@ const ListTeacherOfCenter: React.FC = () => {
 	};
 
 	const handleCreateNewTeacher = () => {
-		navigate('/admin/courses/teacher/create');
+		navigate('/admin/courses/teachers/create');
 	};
 
 	const filteredData = data.filter(
@@ -217,7 +217,7 @@ const ListTeacherOfCenter: React.FC = () => {
 					icon={<PlusOutlined />}
 					onClick={handleCreateNewTeacher}
 				>
-					Tạo khóa học mới
+					Tạo giáo viên mới
 				</Button>
 				<div>
 					<Button
