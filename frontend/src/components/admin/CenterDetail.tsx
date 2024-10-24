@@ -80,9 +80,8 @@ const CenterDetail: React.FC = () => {
 	};
 
 	const buttonStyle = {
-		backgroundColor: 'white',
-		borderColor: 'blue',
-		color: 'blue',
+		backgroundColor: '#4096ff',
+		color: 'white',
 		width: '100%',
 		height: '35px',
 	};
@@ -101,13 +100,15 @@ const CenterDetail: React.FC = () => {
 		<div style={{ paddingLeft: '270px' }}>
 			<div style={{ textAlign: 'center', marginBottom: 20 }}>
 				<div style={{ textAlign: 'left' }}>
-					<ButtonGoBack link="/admin/vouchers" />
+					<ButtonGoBack link="/admin/centers" />
 				</div>
 				<h2>Chi tiết trung tâm</h2>
 			</div>
 
 			<Card
 				style={{
+					maxWidth: '1000px',
+					margin: '0 auto',
 					padding: '20px',
 					borderRadius: '8px',
 					boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
@@ -158,17 +159,9 @@ const CenterDetail: React.FC = () => {
 							<Col span={6} key={path}>
 								<Tooltip title="Nhấn để xem chi tiết">
 									<Button
-										icon={<EyeOutlined style={{ color: 'blue' }} />}
+										icon={<EyeOutlined />}
 										style={buttonStyle}
 										onClick={() => handleNavigation(path)}
-										onMouseOver={(e) => {
-											e.currentTarget.style.backgroundColor = '#1890ff';
-											e.currentTarget.style.color = 'white';
-										}}
-										onMouseOut={(e) => {
-											e.currentTarget.style.backgroundColor = 'white';
-											e.currentTarget.style.color = 'blue';
-										}}
 									>
 										{label}
 									</Button>
@@ -177,36 +170,33 @@ const CenterDetail: React.FC = () => {
 						))}
 					</Row>
 				</div>
+				<div style={{ marginTop: '40px', textAlign: 'right' }}>
+					<Button
+						type="primary"
+						icon={<EditOutlined />}
+						onClick={handleEdit}
+						style={{
+							marginRight: '20px',
+							backgroundColor: '#ffae00',
+							color: 'white',
+						}}
+					>
+						Chỉnh sửa
+					</Button>
+					<Button
+						type="primary"
+						danger
+						icon={<DeleteOutlined />}
+						onClick={handleDelete}
+						style={{
+							backgroundColor: '#ff2121',
+							color: 'white',
+						}}
+					>
+						Xóa
+					</Button>
+				</div>
 			</Card>
-
-			<div style={{ marginTop: '60px', textAlign: 'right' }}>
-				<Button
-					type="primary"
-					icon={<EditOutlined style={{ color: 'blue' }} />}
-					onClick={handleEdit}
-					style={{
-						marginRight: '20px',
-						backgroundColor: 'white',
-						borderColor: 'blue',
-						color: 'blue',
-					}}
-				>
-					Chỉnh sửa
-				</Button>
-				<Button
-					type="primary"
-					danger
-					icon={<DeleteOutlined style={{ color: 'red' }} />}
-					onClick={handleDelete}
-					style={{
-						backgroundColor: 'white',
-						borderColor: 'red',
-						color: 'red',
-					}}
-				>
-					Xóa
-				</Button>
-			</div>
 		</div>
 	);
 };
