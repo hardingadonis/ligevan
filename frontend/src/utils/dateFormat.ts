@@ -11,3 +11,7 @@ export const formatDateTimeToVietnamTimezone = (date: Date): string => {
 export const formatDateToUTC = (date: Date): string => {
 	return moment(date).tz('Asia/Ho_Chi_Minh').utc().format('YYYY-MM-DD');
 };
+
+export const formatTimeToVietnamTimezone = (date: Date): string => {
+	return moment(date).tz('Asia/Ho_Chi_Minh').format('HH:mm');
+};
