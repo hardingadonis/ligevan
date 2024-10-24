@@ -26,8 +26,6 @@ const ListCenters: React.FC = () => {
 	const [data, setData] = useState<DataType[]>([]);
 	const [searchText, setSearchText] = useState('');
 
-	const navigate = useNavigate();
-
 	// Fetch centers data from the server
 	const fetchData = async () => {
 		try {
@@ -47,6 +45,7 @@ const ListCenters: React.FC = () => {
 
 	useEffect(() => {
 		fetchData();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	// Render action buttons for each row

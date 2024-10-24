@@ -102,6 +102,7 @@ const CourseDetail: React.FC = () => {
 		fetchCourse();
 		fetchClasses();
 		fetchCenter();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [centerID, courseID]);
 
 	if (!course) {

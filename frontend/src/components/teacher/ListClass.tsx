@@ -64,6 +64,7 @@ const ListClass: React.FC<ListClassProps> = ({ email }) => {
 
 	useEffect(() => {
 		fetchClassesForTeacher();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [email]);
 
 	const renderActions = (id: string): JSX.Element => (

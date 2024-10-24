@@ -81,6 +81,7 @@ const ListStudent: React.FC<ListStudentProps> = ({ classID }) => {
 
 	useEffect(() => {
 		fetchListStudent();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [classID]);
 
 	const renderActions = (id: string): JSX.Element => (
