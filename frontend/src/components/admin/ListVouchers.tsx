@@ -53,17 +53,14 @@ const ListVouchers: React.FC = () => {
 	const renderActions = (id: string): JSX.Element => (
 		<div>
 			<Button
-				color="primary"
-				variant="outlined"
+				style={{ backgroundColor: '#4096ff', color: 'white', marginRight: 8 }}
 				icon={<EyeOutlined />}
 				onClick={() => handleViewDetail(id)}
-				style={{ marginRight: 8 }}
 			>
 				Chi tiết
 			</Button>
 			<Button
-				color="danger"
-				variant="outlined"
+				style={{ backgroundColor: '#ff2121', color: 'white' }}
 				icon={<DeleteOutlined />}
 				onClick={() => handleDelete(id)}
 			>
@@ -113,9 +110,7 @@ const ListVouchers: React.FC = () => {
 			item.key.toLowerCase().includes(searchText.toLowerCase()) ||
 			item.code.toLowerCase().includes(searchText.toLowerCase()) ||
 			item.title.toLowerCase().includes(searchText.toLowerCase()) ||
-			item.value.toString().toLowerCase().includes(searchText.toLowerCase()) ||
-			item.start.toString().toLowerCase().includes(searchText.toLowerCase()) ||
-			item.end.toString().toLowerCase().includes(searchText.toLowerCase()),
+			item.value.toString().includes(searchText),
 	);
 
 	const columns: TableColumnsType<DataType> = [
@@ -178,7 +173,7 @@ const ListVouchers: React.FC = () => {
 			>
 				<div>
 					<Button
-						type="primary"
+						style={{ backgroundColor: '#0cd14e', color: 'white' }}
 						icon={<PlusOutlined />}
 						onClick={handleCreateVoucher}
 					>
