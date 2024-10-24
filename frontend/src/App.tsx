@@ -26,6 +26,7 @@ const AdminVouchersManagement = lazy(
 	() => import('@/pages/admin/VouchersManagement'),
 );
 const AdminVoucherDetail = lazy(() => import('@/pages/admin/VoucherDetail'));
+const AdminVoucherEdit = lazy(() => import('@/pages/admin/VoucherEdit'));
 const LoginTeacher = lazy(() => import('@/pages/teacher/Login'));
 const AdminLogin = lazy(() => import('@/pages/admin/Login'));
 const AdminCenterCreate = lazy(() => import('@/pages/admin/CenterCreate'));
@@ -146,6 +147,17 @@ const App: React.FC = () => {
 								tokenName="accessToken"
 							>
 								<AdminVoucherDetail />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="/admin/vouchers/:id/edit"
+						element={
+							<ProtectedRoute
+								redirectPath="/admin/login"
+								tokenName="accessToken"
+							>
+								<AdminVoucherEdit />
 							</ProtectedRoute>
 						}
 					/>
