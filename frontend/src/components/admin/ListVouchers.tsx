@@ -5,7 +5,7 @@ import {
 	SearchOutlined,
 	SyncOutlined,
 } from '@ant-design/icons';
-import { Button, Empty, Input, Modal, Table, notification } from 'antd';
+import { Button, Empty, Input, Modal, Table, message } from 'antd';
 import type { TableColumnsType, TableProps } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -86,19 +86,11 @@ const ListVouchers: React.FC = () => {
 			onOk: async () => {
 				try {
 					await deleteVoucher(id);
-					notification.success({
-						message: 'Xóa thành công',
-						description: 'Mã giảm giá đã được xóa thành công.',
-						duration: 3,
-					});
+					message.success('Mã giảm giá đã được xóa thành công!', 3);
 					navigate(`/admin/vouchers`);
 				} catch (error) {
 					console.error('Lỗi khi xóa mã giảm giá:', error);
-					notification.error({
-						message: 'Lỗi',
-						description: 'Đã xảy ra lỗi khi xóa mã giảm giá.',
-						duration: 3,
-					});
+					message.error('Lỗi: Đã xảy ra lỗi khi xóa mã giảm giá!', 3);
 				}
 			},
 		});
@@ -172,7 +164,7 @@ const ListVouchers: React.FC = () => {
 	};
 
 	return (
-		<div style={{ padding: '65px 20px 0 270px' }}>
+		<div style={{ padding: '0 20px 0 270px' }}>
 			<div style={{ textAlign: 'center', marginBottom: 20 }}>
 				<h2>Tất cả các mã giảm giá</h2>
 			</div>
@@ -228,7 +220,7 @@ const ListVouchers: React.FC = () => {
 							/>
 						),
 					}}
-					pagination={{ pageSize: 10 }}
+					pagination={{ pageSize: 7 }}
 					rowClassName={(_, index) =>
 						index % 2 === 0 ? 'table-row-even' : 'table-row-odd'
 					}
