@@ -138,17 +138,21 @@ const VoucherDetail: React.FC = () => {
 							>
 								<>
 									<Button
-										color="primary"
-										variant="outlined"
+										style={{
+											backgroundColor: '#ffae00',
+											color: 'white',
+											marginRight: 8,
+										}}
 										icon={<EditOutlined />}
 										onClick={() => id && handleEdit(id)}
-										style={{ marginRight: 8 }}
 									>
 										Chỉnh sửa
 									</Button>
 									<Button
-										color="danger"
-										variant="outlined"
+										style={{
+											backgroundColor: '#ff2121',
+											color: 'white',
+										}}
 										icon={<DeleteOutlined />}
 										onClick={() => id && handleDelete(id)}
 									>
