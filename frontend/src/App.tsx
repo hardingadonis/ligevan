@@ -16,6 +16,7 @@ const StudentClassList = lazy(() => import('@/pages/student/ClassList'));
 const StudentCourseDetail = lazy(() => import('@/pages/student/CourseDetail'));
 const ClassesPage = lazy(() => import('@/pages/teacher/Classes'));
 const ClassDetail = lazy(() => import('@/pages/teacher/ClassDetail'));
+const StudentDetail = lazy(() => import('@/pages/teacher/StudentDetail'));
 
 const AdminDashboard = lazy(() => import('@/pages/admin/Dashboard'));
 const AdminCoursesManagement = lazy(
@@ -83,6 +84,10 @@ const App: React.FC = () => {
 					<Route path="/teacher/login" element={<LoginTeacher />} />
 					<Route path="/teacher/classes" element={<ClassesPage />} />
 					<Route path="/teacher/classes/:id" element={<ClassDetail />} />
+					<Route
+						path="/teacher/classes/student/:studentID"
+						element={<StudentDetail />}
+					/>
 					<Route
 						path="/teacher"
 						element={<Navigate to="/teacher/classes" replace />}
