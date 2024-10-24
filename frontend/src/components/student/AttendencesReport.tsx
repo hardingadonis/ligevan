@@ -84,19 +84,24 @@ const AttendencesReportForStudent: React.FC = () => {
 							)
 						: null;
 
+				let statusMessage = 'Chưa có dữ liệu';
+
+				if (attendance) {
+					if (attendance.status === 'attended') {
+						statusMessage = 'Có mặt';
+					} else if (attendance.status === 'absent') {
+						statusMessage = 'Vắng mặt';
+					} else {
+						statusMessage = 'Chưa tới';
+					}
+				}
 				return {
 					key: (index + 1).toString(),
 					room: slt.room,
 					date: formatDateToVietnamTimezone(slt.start),
 					start: formatTimeToVietnamTimezone(slt.start),
 					end: formatTimeToVietnamTimezone(slt.end),
-					status: attendance
-						? attendance.status === 'attended'
-							? 'Có mặt'
-							: attendance.status === 'absent'
-								? 'Vắng mặt'
-								: 'Chưa tới'
-						: 'Chưa có dữ liệu',
+					status: statusMessage,
 				};
 			});
 
