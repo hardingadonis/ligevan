@@ -16,8 +16,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Voucher } from '@/schemas/voucher.schema';
-import { createVoucher } from '@/services/api/voucher';
-import { formatDateToUTC } from '@/utils/dateFormat';
+import { checkVoucherCodeExists, createVoucher } from '@/services/api/voucher';
 import { validateDiscount, validateName } from '@/utils/inputValidate';
 
 dayjs.locale('vi');
@@ -25,16 +24,17 @@ dayjs.locale('vi');
 const VoucherForm: React.FC = () => {
 	const [form] = Form.useForm();
 	const navigate = useNavigate();
+	const discount = form.getFieldValue('value');
+	const value = parseFloat(discount);
+	console.log(value);
 
 	const handleSubmit = async (voucher: Voucher) => {
 		try {
 			const formattedVoucher = {
 				...voucher,
 				code: voucher.code.toUpperCase(),
-				start: new Date(formatDateToUTC(voucher.start)),
-				end: new Date(formatDateToUTC(voucher.end)),
+				value: value,
 			};
-			console.log(new Date(formatDateToUTC(voucher.start)));
 			console.log(formattedVoucher);
 			await createVoucher(formattedVoucher);
 			message.success('Mã giảm giá được tạo thành công!');
@@ -50,7 +50,7 @@ const VoucherForm: React.FC = () => {
 		<ConfigProvider locale={locale}>
 			<div
 				style={{
-					padding: '65px 20px 0 270px',
+					padding: '0 20px 0 270px',
 				}}
 			>
 				<div style={{ textAlign: 'center', marginBottom: 20 }}>
@@ -96,17 +96,27 @@ const VoucherForm: React.FC = () => {
 														message: 'Vui lòng nhập mã giảm giá!',
 													},
 													{
-														validator: (_, value) => {
+														validator: async (_, value) => {
 															if (!value) {
 																return Promise.resolve();
 															}
-															return validateName(value)
-																? Promise.resolve()
-																: Promise.reject(
-																		new Error(
-																			'Mã giảm giá không hợp lệ! Vui lòng nhập lại!',
-																		),
-																	);
+															if (!validateName(value)) {
+																return Promise.reject(
+																	new Error(
+																		'Mã giảm giá không hợp lệ! Vui lòng nhập lại!',
+																	),
+																);
+															}
+															const exists =
+																await checkVoucherCodeExists(value);
+															if (exists) {
+																return Promise.reject(
+																	new Error(
+																		'Mã giảm giá đã tồn tại! Vui lòng nhập mã khác!',
+																	),
+																);
+															}
+															return Promise.resolve();
 														},
 													},
 												]}
@@ -141,7 +151,11 @@ const VoucherForm: React.FC = () => {
 													},
 												]}
 											>
-												<Input placeholder="Nhập giá trị" />
+												<Input
+													placeholder="Nhập giá trị"
+													type="number"
+													step="0.01"
+												/>
 											</Form.Item>
 										</Col>
 									</Row>
@@ -151,20 +165,6 @@ const VoucherForm: React.FC = () => {
 										name="title"
 										rules={[
 											{ required: true, message: 'Vui lòng nhập tiêu đề!' },
-											{
-												validator: (_, value) => {
-													if (!value) {
-														return Promise.resolve();
-													}
-													return validateName(value)
-														? Promise.resolve()
-														: Promise.reject(
-																new Error(
-																	'Tiêu đề không hợp lệ! Vui lòng nhập lại!',
-																),
-															);
-												},
-											},
 										]}
 									>
 										<Input placeholder="Nhập tiêu đề" />
