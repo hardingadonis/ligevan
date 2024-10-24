@@ -83,7 +83,7 @@ const FormEditCenter: React.FC = () => {
 	};
 
 	return (
-		<div style={{ padding: '65px 20px 0 270px' }}>
+		<div style={{ paddingLeft: '270px' }}>
 			<Row>
 				<Col span={2}>
 					<ButtonGoBack link={`/admin/centers/${id}`} />

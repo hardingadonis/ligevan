@@ -97,7 +97,7 @@ const DetailOfCenter: React.FC = () => {
 	];
 
 	return (
-		<div style={{ padding: '0 20px 0 270px' }}>
+		<div style={{ paddingLeft: '270px' }}>
 			<Title level={3} style={{ textAlign: 'center', marginBottom: '20px' }}>
 				Chi tiết trung tâm
 			</Title>

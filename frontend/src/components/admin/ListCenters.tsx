@@ -171,7 +171,7 @@ const ListCenters: React.FC = () => {
 	};
 
 	return (
-		<div style={{ padding: '65px 20px 0 270px' }}>
+		<div style={{ paddingLeft: '270px' }}>
 			<div style={{ textAlign: 'center', marginBottom: 20 }}>
 				<h2>Tất cả các trung tâm</h2>
 			</div>
