@@ -12,3 +12,12 @@ export const getAllTeacher = async (): Promise<Teacher[]> => {
 		throw error;
 	}
 };
+
+export const deleteTeacher = async (id: string): Promise<void> => {
+	try {
+		await axios.delete(`${apiBaseUrl}/api/teachers/${id}`);
+	} catch (error) {
+		console.error('Error deleting teacher:', error);
+		throw error;
+	}
+};
