@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import CourseForm from '@/components/admin/CourseForm';
+import CourseForm from '@/components/admin/FormCreateCourse';
 import AdminLayout from '@/layouts/admin';
 
 const CreateCoursePage: React.FC = () => {
