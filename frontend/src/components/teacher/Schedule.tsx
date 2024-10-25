@@ -25,7 +25,7 @@ import { Button, Tag } from 'antd';
 import React, { useEffect, useState } from 'react';
 
 import { Slot } from '@/schemas/slot.schema';
-import { getAllSlot } from '@/services/api/slot';
+import { getSlotsByTeacherEmail } from '@/services/api/slot';
 import { convertToUTC } from '@/utils/dateFormat';
 
 const Schedule: React.FC = () => {
@@ -34,14 +34,16 @@ const Schedule: React.FC = () => {
 	useEffect(() => {
 		const fetchSlots = async () => {
 			try {
-				const data = await getAllSlot();
-				console.log('Fetched slots:', data);
+				const teacherEmail = localStorage.getItem('teacherEmail');
+				if (!teacherEmail) {
+					throw new Error('Teacher email not found in local storage');
+				}
+				const data = await getSlotsByTeacherEmail(teacherEmail);
 				const convertedData = data.map((slot) => ({
 					...slot,
 					start: convertToUTC(new Date(slot.start)),
 					end: convertToUTC(new Date(slot.end)),
 				}));
-				console.log('Converted slots:', convertedData);
 
 				setSlots(convertedData);
 			} catch (error) {
@@ -60,7 +62,6 @@ const Schedule: React.FC = () => {
 		Description: slot.isDone ? 'Đã dạy' : 'Chưa dạy',
 		IsAllDay: false,
 	}));
-	console.log('Events:', events);
 
 	const handleRedirect = (id: string) => {
 		window.location.href = `/teacher/attendance/${id}`;

@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import { Slot } from '@/schemas/slot.schema';
+import { getTeacherByEmail } from '@/services/api/teacher';
 import { apiBaseUrl } from '@/utils/apiBase';
 
 export const getAllSlot = async (): Promise<Slot[]> => {
@@ -13,13 +14,17 @@ export const getAllSlot = async (): Promise<Slot[]> => {
 	}
 };
 
-export const getSlotByTeacherEmail = async (email: string): Promise<Slot[]> => {
+export const getSlotsByTeacherEmail = async (
+	email: string,
+): Promise<Slot[]> => {
 	try {
+		const teacher = await getTeacherByEmail(email);
+		const teacherId = teacher._id;
 		const allSlots = await getAllSlot();
-		const filteredSlots = allSlots.filter(
-			(slot) => slot.class.teacher.email === email,
+		const teacherSlots = allSlots.filter(
+			(slot) => slot.class.teacher.toString() === teacherId,
 		);
-		return filteredSlots;
+		return teacherSlots;
 	} catch (error) {
 		console.error('Error fetching slots by teacher email:', error);
 		throw error;

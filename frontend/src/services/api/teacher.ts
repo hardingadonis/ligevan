@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+import { Slot } from '@/schemas/slot.schema';
 import { Teacher } from '@/schemas/teacher.schema';
 import { apiBaseUrl } from '@/utils/apiBase';
 
@@ -40,6 +41,17 @@ export const getTeacherById = async (id: string): Promise<Teacher> => {
 		return response.data;
 	} catch (error) {
 		console.error('Error fetching teacher:', error);
+		throw error;
+	}
+};
+
+export const getTeacherBySlotId = async (slotId: string): Promise<Teacher> => {
+	try {
+		const response = await axios.get(`${apiBaseUrl}/api/slots/${slotId}`);
+		const slot: Slot = response.data;
+		return getTeacherById(slot.class.teacher.toString());
+	} catch (error) {
+		console.error('Error fetching teacher by slot ID:', error);
 		throw error;
 	}
 };
