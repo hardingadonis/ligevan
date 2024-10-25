@@ -156,7 +156,14 @@ export class TeachersService {
 
 		this.logger.debug('Found teacher', existingTeacher);
 
-		existingTeacher.set(updateTeacherDto);
+		const { password, ...teacherUpdates } = updateTeacherDto;
+		existingTeacher.set({
+			...existingTeacher,
+			...teacherUpdates,
+			hashedPassword: password
+				? await hash(password)
+				: existingTeacher.hashedPassword,
+		});
 
 		this.logger.debug('Updating teacher');
 
