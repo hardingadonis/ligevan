@@ -4,35 +4,31 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import ButtonGoBack from '@/components/commons/ButtonGoback';
-import { Teacher } from '@/schemas/teacher.schema';
-import { getTeacherByEmail, updateTeacher } from '@/services/api/teacher';
+import {
+	changeTeacherPassword,
+	getTeacherByEmail,
+} from '@/services/api/teacher';
 
 const ChangePasswordForm: React.FC = () => {
-	const [teacherData, setTeacherData] = useState<Teacher | null>(null);
 	const [loading, setLoading] = useState(true);
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		async function fetchTeacherData() {
-			try {
-				const email = localStorage.getItem('teacherEmail');
-				if (!email) {
-					message.error('Không tìm thấy email giáo viên!');
-					return;
-				}
-				const data = await getTeacherByEmail(email);
-				setTeacherData(data);
-			} catch (err) {
-				console.error('Error fetching teacher data:', err);
-			} finally {
-				setLoading(false);
-			}
+		const email = localStorage.getItem('teacherEmail');
+		if (!email) {
+			message.error('Không tìm thấy email giáo viên!');
+			setLoading(false);
+		} else {
+			setLoading(false); // Only fetch email from localStorage in this case
 		}
-
-		fetchTeacherData();
 	}, []);
 
-	const onFinish = async (values: { newPassword: string; email: string }) => {
+	const onFinish = async (values: {
+		currentPassword: string;
+		newPassword: string;
+		confirmPassword: string;
+		email: string;
+	}) => {
 		setLoading(true);
 		try {
 			const storedEmail = localStorage.getItem('teacherEmail');
@@ -43,32 +39,17 @@ const ChangePasswordForm: React.FC = () => {
 				return;
 			}
 
-			if (!teacherData?._id) {
-				message.error('Thông tin giáo viên không hợp lệ!');
-				return;
-			}
-
-			const payload = {
-				fullName: teacherData.fullName || '',
-				email: teacherData.email || '',
-				address: teacherData.address || '',
-				avatar: teacherData.avatar || '',
-				center: teacherData.center || '',
-				classes: teacherData.classes || [],
-				dob: teacherData.dob || '',
-				gender: teacherData.gender || '',
-				phone: teacherData.phone || '',
-				password: values.newPassword,
-				isDeleted: teacherData.isDeleted || false,
-			};
-
-			await updateTeacher(teacherData._id, payload);
+			await changeTeacherPassword(
+				values.email,
+				values.currentPassword,
+				values.newPassword,
+			);
 			message.success('Đổi mật khẩu thành công!');
 			localStorage.removeItem('teacherToken');
 			localStorage.removeItem('teacherEmail');
 			navigate('/teacher/login');
 		} catch (err) {
-			console.error('Error updating teacher:', err);
+			console.error('Error changing password:', err);
 			message.error('Cập nhật thất bại. Vui lòng thử lại!');
 		} finally {
 			setLoading(false);
@@ -97,11 +78,12 @@ const ChangePasswordForm: React.FC = () => {
 						onFinish={onFinish}
 						layout="vertical"
 						style={{
-							maxWidth: 500, // Increased maxWidth for larger form
+							maxWidth: 600,
 							margin: '100px auto',
-							padding: '30px', // Increased padding for a larger feel
+							padding: '30px',
 							boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
 							borderRadius: '8px',
+							backgroundColor: '#f5f5f5',
 						}}
 					>
 						<Form.Item
@@ -110,6 +92,16 @@ const ChangePasswordForm: React.FC = () => {
 							rules={[{ required: true, message: 'Vui lòng nhập email!' }]}
 						>
 							<Input placeholder="Nhập email" />
+						</Form.Item>
+
+						<Form.Item
+							label="Mật khẩu hiện tại"
+							name="currentPassword"
+							rules={[
+								{ required: true, message: 'Vui lòng nhập mật khẩu hiện tại!' },
+							]}
+						>
+							<Input.Password placeholder="Nhập mật khẩu hiện tại" />
 						</Form.Item>
 
 						<Form.Item
