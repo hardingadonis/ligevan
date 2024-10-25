@@ -15,3 +15,9 @@ export const formatDateToUTC = (date: Date): string => {
 export const formatTimeToVietnamTimezone = (date: Date): string => {
 	return moment(date).tz('Asia/Ho_Chi_Minh').format('HH:mm');
 };
+
+export const convertToUTC = (date: Date): Date => {
+	const utcDate = new Date(date);
+	utcDate.setHours(utcDate.getHours() - 7);
+	return utcDate;
+};
