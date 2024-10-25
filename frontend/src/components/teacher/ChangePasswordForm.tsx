@@ -4,10 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import ButtonGoBack from '@/components/commons/ButtonGoback';
-import {
-	changeTeacherPassword,
-	getTeacherByEmail,
-} from '@/services/api/teacher';
+import { changeTeacherPassword } from '@/services/api/teacher';
 
 const ChangePasswordForm: React.FC = () => {
 	const [loading, setLoading] = useState(true);
