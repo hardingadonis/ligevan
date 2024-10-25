@@ -11,8 +11,8 @@ const StudentSidebar: React.FC = () => {
 	useEffect(() => {
 		if (location.pathname.includes('/teacher/classes')) {
 			setSelectedKey('classes');
-		} else if (location.pathname.includes('/teacher/slots')) {
-			setSelectedKey('slots');
+		} else if (location.pathname.includes('/teacher/schedule')) {
+			setSelectedKey('schedule');
 		}
 	}, [location.pathname]);
 
@@ -24,14 +24,14 @@ const StudentSidebar: React.FC = () => {
 		),
 		getItem(
 			'Lịch dạy',
-			'slots',
+			'schedule',
 			<CalendarOutlined style={{ fontSize: '18px' }} />,
 		),
 	];
 
 	const menuConfig = {
 		classes: '/teacher/classes',
-		slots: '/teacher/slots',
+		schedule: '/teacher/schedule',
 	};
 
 	return (
