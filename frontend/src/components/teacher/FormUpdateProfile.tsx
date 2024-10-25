@@ -73,8 +73,10 @@ const FormUpdate: React.FC = () => {
 	};
 
 	const handleDateChange = (date: dayjs.Dayjs | null) => {
-		const formattedDate = date ? formatDateToUTC(date.toDate()) : null;
-		dispatch(setTeacher({ ...teacher, dob: formattedDate }));
+		const formattedDate = date ? date.toDate() : new Date();
+		if (teacher) {
+			dispatch(setTeacher({ ...teacher, dob: formattedDate }));
+		}
 	};
 
 	const onFinish = async (values: Partial<Teacher>) => {
