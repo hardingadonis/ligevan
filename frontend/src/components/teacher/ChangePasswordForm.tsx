@@ -1,4 +1,3 @@
-// Removed useParams since we won't use it
 import { EditOutlined } from '@ant-design/icons';
 import { Button, Col, Form, Input, Row, Spin, message } from 'antd';
 import React, { useEffect, useState } from 'react';
@@ -33,16 +32,22 @@ const ChangePasswordForm: React.FC = () => {
 		fetchTeacherData();
 	}, []);
 
-	const onFinish = async (values: { newPassword: string }) => {
+	const onFinish = async (values: { newPassword: string; email: string }) => {
 		setLoading(true);
 		try {
+			const storedEmail = localStorage.getItem('teacherEmail');
+
+			// Validate the entered email against the stored email
+			if (values.email !== storedEmail) {
+				message.error('Email không khớp với email của bạn!');
+				return;
+			}
+
 			if (!teacherData?._id) {
-				// Check for both teacherData and _id
 				message.error('Thông tin giáo viên không hợp lệ!');
 				return;
 			}
 
-			// Format payload according to the required structure
 			const payload = {
 				fullName: teacherData.fullName || '',
 				email: teacherData.email || '',
@@ -57,10 +62,11 @@ const ChangePasswordForm: React.FC = () => {
 				isDeleted: teacherData.isDeleted || false,
 			};
 
-			// Use teacherData._id instead of id from params
 			await updateTeacher(teacherData._id, payload);
 			message.success('Đổi mật khẩu thành công!');
-			navigate('/teacher');
+			localStorage.removeItem('teacherToken');
+			localStorage.removeItem('teacherEmail');
+			navigate('/teacher/login');
 		} catch (err) {
 			console.error('Error updating teacher:', err);
 			message.error('Cập nhật thất bại. Vui lòng thử lại!');
@@ -91,13 +97,21 @@ const ChangePasswordForm: React.FC = () => {
 						onFinish={onFinish}
 						layout="vertical"
 						style={{
-							maxWidth: 400,
+							maxWidth: 500, // Increased maxWidth for larger form
 							margin: '100px auto',
-							padding: '20px',
+							padding: '30px', // Increased padding for a larger feel
 							boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
 							borderRadius: '8px',
 						}}
 					>
+						<Form.Item
+							label="Email"
+							name="email"
+							rules={[{ required: true, message: 'Vui lòng nhập email!' }]}
+						>
+							<Input placeholder="Nhập email" />
+						</Form.Item>
+
 						<Form.Item
 							label="Mật khẩu mới"
 							name="newPassword"

@@ -250,10 +250,7 @@ const FormUpdate: React.FC = () => {
 							/>
 						</Form.Item>
 
-						<Form.Item
-							wrapperCol={{ span: 24 }}
-							style={{ textAlign: 'center' }}
-						>
+						<Form.Item wrapperCol={{ span: 24 }} style={{ textAlign: 'right' }}>
 							<Button
 								type="primary"
 								icon={<SaveOutlined />}
