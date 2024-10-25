@@ -68,6 +68,7 @@ const DetailTeacher: React.FC = () => {
 					padding: '10px 90px',
 					boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
 					borderRadius: '8px',
+					backgroundColor: '#f5f5f5',
 				}}
 			>
 				<Row>
