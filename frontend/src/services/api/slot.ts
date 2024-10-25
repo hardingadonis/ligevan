@@ -30,3 +30,31 @@ export const getSlotsByTeacherEmail = async (
 		throw error;
 	}
 };
+
+export const filterSlotsforSchedule = async (
+	teacherEmail: string,
+	centerId?: string,
+	courseId?: string,
+): Promise<Slot[]> => {
+	try {
+		const slots = await getSlotsByTeacherEmail(teacherEmail);
+
+		let filteredSlots = slots;
+		if (centerId && centerId !== 'all') {
+			filteredSlots = filteredSlots.filter(
+				(slot) => slot.class.center.toString() === centerId,
+			);
+		}
+
+		if (courseId && courseId !== 'all') {
+			filteredSlots = filteredSlots.filter(
+				(slot) => slot.class.course.toString() === courseId,
+			);
+		}
+
+		return filteredSlots;
+	} catch (error) {
+		console.error('Error filtering slots:', error);
+		throw error;
+	}
+};
