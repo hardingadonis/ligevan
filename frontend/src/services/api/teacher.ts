@@ -33,3 +33,19 @@ export const deleteTeacher = async (id: string): Promise<void> => {
 		throw error;
 	}
 };
+
+export const updateTeacher = async (
+	id: string,
+	updateData: Partial<Teacher>,
+): Promise<Teacher> => {
+	try {
+		const response = await axios.put(
+			`${apiBaseUrl}/api/teachers/${id}`,
+			updateData,
+		);
+		return response.data;
+	} catch (error) {
+		console.error('Error updating teacher:', error);
+		throw error;
+	}
+};
