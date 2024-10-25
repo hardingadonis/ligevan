@@ -83,3 +83,15 @@ export class UpdateTeacherDto {
 	@ApiPropertyOptional({ description: 'Classes offered by the Teacher ' })
 	classes?: string[];
 }
+
+export class ChangePasswordDto {
+	@ApiProperty({ description: 'Teacher current password' })
+	@IsString()
+	@IsNotEmpty()
+	currentPassword: string;
+
+	@ApiProperty({ description: 'Teacher new password' })
+	@IsString()
+	@IsNotEmpty()
+	newPassword: string;
+}
