@@ -1,5 +1,5 @@
 import { SaveOutlined } from '@ant-design/icons';
-import { Button, Col, Form, Input, InputNumber, Row, message } from 'antd';
+import { Button, Form, Input, InputNumber, message } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -14,7 +14,7 @@ import {
 	updateCourseRejected,
 } from '@/slices/course';
 import store from '@/store';
-import { formatPrice } from '@/utils/formatPrice';
+import { formatPriceWithoutSymbol } from '@/utils/formatPrice';
 import { validateNumber } from '@/utils/inputValidate';
 
 type RootState = ReturnType<typeof store.getState>;
@@ -80,16 +80,12 @@ const FormEditCourse: React.FC = () => {
 
 	return (
 		<div style={{ paddingLeft: '270px' }}>
-			<Row>
-				<Col span={2}>
+			<div style={{ textAlign: 'center', marginBottom: 20 }}>
+				<div style={{ textAlign: 'left' }}>
 					<ButtonGoBack link={`/admin/courses/${id}`} />
-				</Col>
-				<Col span={20}>
-					<h2 style={{ textAlign: 'center', marginBottom: '20px' }}>
-						Chỉnh sửa thông tin khoá học
-					</h2>
-				</Col>
-			</Row>
+				</div>
+				<h2>Chỉnh sửa thông tin khoá học</h2>
+			</div>
 			<div
 				style={{
 					display: 'flex',
@@ -99,7 +95,7 @@ const FormEditCourse: React.FC = () => {
 			>
 				<div
 					style={{
-						maxWidth: '800px',
+						maxWidth: '1000px',
 						boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
 						padding: '20px',
 						borderRadius: '8px',
@@ -117,6 +113,7 @@ const FormEditCourse: React.FC = () => {
 						style={{ margin: '15px 20px' }}
 					>
 						<Form.Item
+							style={{ fontWeight: 'bold' }}
 							name="code"
 							label="Mã khoá học"
 							rules={[
@@ -126,6 +123,7 @@ const FormEditCourse: React.FC = () => {
 							<Input />
 						</Form.Item>
 						<Form.Item
+							style={{ fontWeight: 'bold' }}
 							name="price"
 							label="Giá"
 							rules={[
@@ -137,13 +135,16 @@ const FormEditCourse: React.FC = () => {
 								min={0}
 								suffix="₫"
 								style={{ width: '100%' }}
-								formatter={(value) => (value ? formatPrice(Number(value)) : '')}
+								formatter={(value) =>
+									value ? formatPriceWithoutSymbol(Number(value)) : ''
+								}
 								parser={(value) =>
 									value ? Number(value.replace(/\D/g, '')) : 0
 								}
 							/>
 						</Form.Item>
 						<Form.Item
+							style={{ fontWeight: 'bold' }}
 							name="title"
 							label="Tên khoá học"
 							rules={[
@@ -153,6 +154,7 @@ const FormEditCourse: React.FC = () => {
 							<Input />
 						</Form.Item>
 						<Form.Item
+							style={{ fontWeight: 'bold' }}
 							name="description"
 							label="Mô tả"
 							rules={[
@@ -162,16 +164,20 @@ const FormEditCourse: React.FC = () => {
 							<Input.TextArea rows={4} maxLength={1000} showCount />
 						</Form.Item>
 						<Form.Item
+							style={{ fontWeight: 'bold' }}
 							name="thumbnail"
 							label="Ảnh mô tả"
 							rules={[
-								{ required: true, message: 'Vui lòng nhập đường dẫn của ảnh!' },
+								{
+									required: true,
+									message: 'Vui lòng nhập đường dẫn của ảnh!',
+								},
 							]}
 						>
 							<Input onChange={handleThumbnailChange} />
 						</Form.Item>
 						{thumbnailUrl && (
-							<Form.Item label="Xem trước">
+							<Form.Item style={{ fontWeight: 'bold' }} label="Xem trước">
 								<img
 									src={thumbnailUrl}
 									alt="Ảnh xem trước"
@@ -181,7 +187,7 @@ const FormEditCourse: React.FC = () => {
 						)}
 						<Form.Item style={{ display: 'flex', justifyContent: 'flex-end' }}>
 							<Button
-								type="primary"
+								style={{ backgroundColor: '#0cd14e', color: 'white' }}
 								htmlType="submit"
 								loading={loading}
 								icon={<SaveOutlined />}
