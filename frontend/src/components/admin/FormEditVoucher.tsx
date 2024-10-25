@@ -1,12 +1,10 @@
 import { SaveOutlined } from '@ant-design/icons';
 import {
 	Button,
-	Col,
 	ConfigProvider,
 	DatePicker,
 	Form,
 	Input,
-	Row,
 	Spin,
 	message,
 } from 'antd';
@@ -105,107 +103,115 @@ const FormEditVoucher: React.FC = () => {
 						className="custom-form"
 						onFinish={handleUpdate}
 					>
-						<Row>
-							<Col span={11}>
-								<Form.Item name="code" label="Mã giảm giá" labelAlign="left">
-									<Input readOnly />
-								</Form.Item>
-							</Col>
-							<Col span={2}></Col>
-							<Col span={11}>
-								<Form.Item name="value" label="Giá trị" labelAlign="left">
-									<Input suffix="%" />
-								</Form.Item>
-							</Col>
-						</Row>
+						<div
+							style={{
+								display: 'grid',
+								gridTemplateColumns: 'repeat(2, 1fr)',
+								gap: '16px',
+								marginBottom: '16px',
+							}}
+						>
+							{' '}
+							<Form.Item name="code" label="Mã giảm giá" labelAlign="left">
+								<Input readOnly />
+							</Form.Item>
+							<Form.Item name="value" label="Giá trị" labelAlign="left">
+								<Input suffix="%" />
+							</Form.Item>
+						</div>
+
 						<Form.Item name="title" label="Tiêu đề" labelAlign="left">
 							<Input />
 						</Form.Item>
 						<Form.Item name="description" label="Mô tả" labelAlign="left">
 							<Input />
 						</Form.Item>
-						<Row>
-							<Col span={11}>
-								<Form.Item
-									label="Thời gian bắt đầu"
-									labelAlign="left"
-									name="start"
-									rules={[
-										{
-											required: true,
-											message: 'Vui lòng chọn thời gian bắt đầu!',
-										},
-										{
-											validator: (_, value) => {
-												if (!value) {
-													return Promise.resolve();
-												}
-												const now = dayjs();
-												return value.isAfter(now)
-													? Promise.resolve()
-													: Promise.reject(
-															new Error(
-																'Thời gian bắt đầu phải ở sau thời điểm hiện tại!',
-															),
-														);
-											},
-										},
-									]}
-									style={{ marginBottom: '30px' }}
-								>
-									<DatePicker
-										value={voucher.start ? dayjs(voucher.start) : null}
-										name="start"
-										format="DD/MM/YYYY"
-										style={{ width: '100%' }}
-										onChange={(date) => form.setFieldsValue({ start: date })}
-									/>
-								</Form.Item>
-							</Col>
-							<Col span={2}></Col>
-							<Col span={11}>
-								<Form.Item
-									label="Thời gian kết thúc"
-									labelAlign="left"
-									name="end"
-									rules={[
-										{
-											required: true,
-											message: 'Vui lòng chọn thời gian kết thúc!',
-										},
-										{
-											validator: (_, value) => {
-												if (!value) {
-													return Promise.resolve();
-												}
-												const start = form.getFieldValue('start');
-												if (!start) {
-													return Promise.reject(
-														new Error('Vui lòng chọn thời gian bắt đầu trước!'),
+						<div
+							style={{
+								display: 'grid',
+								gridTemplateColumns: 'repeat(2, 1fr)',
+								gap: '16px',
+								marginBottom: '16px',
+							}}
+						>
+							{' '}
+							<Form.Item
+								label="Thời gian bắt đầu"
+								labelAlign="left"
+								name="start"
+								rules={[
+									{
+										required: true,
+										message: 'Vui lòng chọn thời gian bắt đầu!',
+									},
+									{
+										validator: (_, value) => {
+											if (!value) {
+												return Promise.resolve();
+											}
+											const now = dayjs();
+											return value.isAfter(now)
+												? Promise.resolve()
+												: Promise.reject(
+														new Error(
+															'Thời gian bắt đầu phải ở sau thời điểm hiện tại!',
+														),
 													);
-												}
-												return value.isAfter(start)
-													? Promise.resolve()
-													: Promise.reject(
-															new Error(
-																'Thời gian kết thúc phải ở sau thời gian bắt đầu!',
-															),
-														);
-											},
 										},
-									]}
-									style={{ marginBottom: '30px' }}
-								>
-									<DatePicker
-										value={voucher.end ? dayjs(voucher.end) : null}
-										name="end"
-										format="DD/MM/YYYY"
-										style={{ width: '100%' }}
-										onChange={(date) => form.setFieldsValue({ end: date })}
-									/>
-								</Form.Item>
-							</Col>
-						</Row>
+									},
+								]}
+								style={{ marginBottom: '30px' }}
+							>
+								<DatePicker
+									value={voucher.start ? dayjs(voucher.start) : null}
+									name="start"
+									format="DD/MM/YYYY"
+									style={{ width: '100%' }}
+									onChange={(date) => form.setFieldsValue({ start: date })}
+								/>
+							</Form.Item>
+							<Form.Item
+								label="Thời gian kết thúc"
+								labelAlign="left"
+								name="end"
+								rules={[
+									{
+										required: true,
+										message: 'Vui lòng chọn thời gian kết thúc!',
+									},
+									{
+										validator: (_, value) => {
+											if (!value) {
+												return Promise.resolve();
+											}
+											const start = form.getFieldValue('start');
+											if (!start) {
+												return Promise.reject(
+													new Error('Vui lòng chọn thời gian bắt đầu trước!'),
+												);
+											}
+											return value.isAfter(start)
+												? Promise.resolve()
+												: Promise.reject(
+														new Error(
+															'Thời gian kết thúc phải ở sau thời gian bắt đầu!',
+														),
+													);
+										},
+									},
+								]}
+								style={{ marginBottom: '30px' }}
+							>
+								<DatePicker
+									value={voucher.end ? dayjs(voucher.end) : null}
+									name="end"
+									format="DD/MM/YYYY"
+									style={{ width: '100%' }}
+									onChange={(date) => form.setFieldsValue({ end: date })}
+								/>
+							</Form.Item>{' '}
+						</div>
+
 						<Form.Item
 							wrapperCol={{ span: 24 }}
 							style={{

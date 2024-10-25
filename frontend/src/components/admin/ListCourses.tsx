@@ -226,7 +226,7 @@ const ListCourses: React.FC = () => {
 							/>
 						),
 					}}
-					pagination={{ pageSize: 10 }}
+					pagination={{ pageSize: 7 }}
 					rowClassName={(_, index) =>
 						index % 2 === 0 ? 'table-row-even' : 'table-row-odd'
 					}
