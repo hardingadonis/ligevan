@@ -85,13 +85,9 @@ const FormUpdate: React.FC = () => {
 				navigate('/teacher/profile');
 			} catch (error: unknown) {
 				if (error instanceof Error) {
-					console.error('Lỗi cập nhật thông tin:', error.message);
-					message.error(
-						`Cập nhật thông tin giáo viên thất bại: ${error.message}`,
-					);
+					message.error(`Cập nhật thất bại: ${error.message}`);
 				} else {
-					console.error('Lỗi cập nhật thông tin:', error);
-					message.error('Cập nhật thông tin giáo viên thất bại.');
+					message.error('Cập nhật thất bại.');
 				}
 			}
 		}
@@ -147,7 +143,6 @@ const FormUpdate: React.FC = () => {
 						labelCol={isMobile ? {} : { span: 5 }}
 						wrapperCol={isMobile ? {} : { span: 19 }}
 						style={{ marginTop: '40px' }}
-						className="custom-form"
 						initialValues={{
 							fullName: teacher.fullName,
 							phone: teacher.phone,
@@ -168,70 +163,92 @@ const FormUpdate: React.FC = () => {
 									validator: (_, value) =>
 										validateName(value)
 											? Promise.resolve()
-											: Promise.reject('Tên không hợp lệ! Vui lòng nhập lại!'),
+											: Promise.reject(new Error('Tên không hợp lệ!')),
 								},
 							]}
-							style={{ marginBottom: '24px' }}
 						>
-							<Input
-								name="fullName"
-								value={teacher.fullName}
-								onChange={handleInputChange}
-							/>
+							<Input name="fullName" onChange={handleInputChange} />
 						</Form.Item>
+
 						<Form.Item
 							label="Số điện thoại"
 							labelAlign="left"
 							name="phone"
 							rules={[
 								{ required: true, message: 'Vui lòng nhập số điện thoại!' },
+								{
+									validator: (_, value) =>
+										validatePhoneNumber(value)
+											? Promise.resolve()
+											: Promise.reject(
+													new Error('Số điện thoại không hợp lệ!'),
+												),
+								},
+								{
+									validator: (_, value) =>
+										validateVietnamesePhoneNumber(value)
+											? Promise.resolve()
+											: Promise.reject(
+													new Error('Không phải số điện thoại Việt Nam!'),
+												),
+								},
 							]}
-							style={{ marginBottom: '24px' }}
 						>
-							<Input
-								name="phone"
-								value={teacher.phone}
-								onChange={handleInputChange}
-							/>
+							<Input name="phone" onChange={handleInputChange} />
 						</Form.Item>
+
 						<Form.Item
 							label="Địa chỉ"
 							labelAlign="left"
 							name="address"
-							rules={[{ required: true, message: 'Vui lòng nhập địa chỉ!' }]}
-							style={{ marginBottom: '24px' }}
+							rules={[
+								{ required: true, message: 'Vui lòng nhập địa chỉ!' },
+								{
+									validator: (_, value) =>
+										validateVietnameseAddress(value)
+											? Promise.resolve()
+											: Promise.reject(new Error('Địa chỉ không hợp lệ!')),
+								},
+							]}
 						>
-							<Input
-								name="address"
-								value={teacher.address}
-								onChange={handleInputChange}
-							/>
+							<Input name="address" onChange={handleInputChange} />
 						</Form.Item>
+
 						<Form.Item
 							label="Giới tính"
 							labelAlign="left"
 							name="gender"
 							rules={[{ required: true, message: 'Vui lòng chọn giới tính!' }]}
-							style={{ marginBottom: '24px' }}
 						>
 							<Select value={teacher.gender} onChange={handleGenderChange}>
 								<Option value="male">Nam</Option>
 								<Option value="female">Nữ</Option>
 							</Select>
 						</Form.Item>
+
 						<Form.Item
 							label="Ngày sinh"
 							labelAlign="left"
 							name="dob"
-							style={{ marginBottom: '30px' }}
+							rules={[
+								{ required: true, message: 'Vui lòng chọn ngày sinh!' },
+								{
+									validator: (_, value) => {
+										const threeYearsAgo = dayjs().subtract(3, 'year');
+										return value && value.isBefore(threeYearsAgo)
+											? Promise.resolve()
+											: Promise.reject(new Error('Ngày sinh không hợp lệ!'));
+									},
+								},
+							]}
 						>
 							<DatePicker
-								value={teacher.dob ? dayjs(teacher.dob) : null}
 								onChange={handleDateChange}
 								format="DD/MM/YYYY"
 								style={{ width: '100%' }}
 							/>
 						</Form.Item>
+
 						<Form.Item
 							wrapperCol={{ span: 24 }}
 							style={{ textAlign: 'center' }}
