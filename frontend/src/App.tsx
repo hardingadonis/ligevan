@@ -9,48 +9,46 @@ import {
 
 import ProtectedRoute from '@/components/commons/ProtectedRoute';
 
-const HomepageStudent = lazy(() => import('@/pages/student/Homepage'));
-const StudentProfile = lazy(() => import('@/pages/student/Profile'));
-const EditProfileStudent = lazy(() => import('@/pages/student/EditProfile'));
-const StudentClassList = lazy(() => import('@/pages/student/ClassList'));
-const StudentCourseDetail = lazy(() => import('@/pages/student/CourseDetail'));
-const AttendencesReport = lazy(
-	() => import('@/pages/student/AttendencesReport'),
-);
-const ClassesPage = lazy(() => import('@/pages/teacher/Classes'));
-const ClassDetail = lazy(() => import('@/pages/teacher/ClassDetail'));
-const StudentDetail = lazy(() => import('@/pages/teacher/StudentDetail'));
-const TeacherProfile = lazy(() => import('@/pages/teacher/Profile'));
-
+// Admin lazy load
+const AdminLogin = lazy(() => import('@/pages/admin/Login'));
 const AdminDashboard = lazy(() => import('@/pages/admin/Dashboard'));
-const ListTeacher = lazy(() => import('@/pages/admin/ListTeacher'));
+const AdminCentersManagement = lazy(
+	() => import('@/pages/admin/CentersManagement'),
+);
 const AdminCoursesManagement = lazy(
 	() => import('@/pages/admin/CoursesManagement'),
 );
 const AdminVouchersManagement = lazy(
 	() => import('@/pages/admin/VouchersManagement'),
 );
-const AdminVoucherDetail = lazy(() => import('@/pages/admin/VoucherDetail'));
-const AdminVoucherEdit = lazy(() => import('@/pages/admin/VoucherEdit'));
-const LoginTeacher = lazy(() => import('@/pages/teacher/Login'));
-const AdminLogin = lazy(() => import('@/pages/admin/Login'));
 const AdminCenterCreate = lazy(() => import('@/pages/admin/CenterCreate'));
 const AdminCourseCreate = lazy(() => import('@/pages/admin/CourseCreate'));
 const AdminVoucherCreate = lazy(() => import('@/pages/admin/VoucherCreate'));
-const AdminCentersManagement = lazy(
-	() => import('@/pages/admin/CentersManagement'),
-);
 const AdminCenterEdit = lazy(() => import('@/pages/admin/CenterEdit'));
 const AdminCourseEdit = lazy(() => import('@/pages/admin/CourseEdit'));
-
-const CourseDetail = lazy(() => import('@/pages/admin/CourseDetail'));
+const AdminVoucherEdit = lazy(() => import('@/pages/admin/VoucherEdit'));
 const CenterDetail = lazy(() => import('@/pages/admin/CenterDetail'));
-
-const ListCoursesCenter = lazy(() => import('@/pages/admin/ListCoursesCenter'));
-
-const ListVouchersCenter = lazy(
-	() => import('@/pages/admin/ListVouchersCenter'),
+const CourseDetail = lazy(() => import('@/pages/admin/CourseDetail'));
+const VoucherDetail = lazy(() => import('@/pages/admin/VoucherDetail'));
+const ListCoursesOfCenter = lazy(
+	() => import('@/pages/admin/ListCoursesOfCenter'),
 );
+const ListVouchersOfCenter = lazy(
+	() => import('@/pages/admin/ListVouchersOfCenter'),
+);
+
+// Teacher lazy load
+const LoginTeacher = lazy(() => import('@/pages/teacher/Login'));
+const ClassesPage = lazy(() => import('@/pages/teacher/Classes'));
+const ClassDetail = lazy(() => import('@/pages/teacher/ClassDetail'));
+const StudentDetail = lazy(() => import('@/pages/teacher/StudentDetail'));
+
+// Student lazy load
+const HomepageStudent = lazy(() => import('@/pages/student/Homepage'));
+const StudentProfile = lazy(() => import('@/pages/student/Profile'));
+const EditProfileStudent = lazy(() => import('@/pages/student/EditProfile'));
+const StudentClassList = lazy(() => import('@/pages/student/ClassList'));
+const StudentCourseDetail = lazy(() => import('@/pages/student/CourseDetail'));
 
 const App: React.FC = () => {
 	return (
@@ -63,72 +61,19 @@ const App: React.FC = () => {
 				}
 			>
 				<Routes>
-					<Route index element={<Navigate to="/student" replace />} />
-					<Route path="/student" element={<HomepageStudent />} />
-					<Route path="/student/login" element={<HomepageStudent />} />
+					{/* Admin Routes */}
+					<Route path="/admin/login" element={<AdminLogin />} />
 					<Route
-						path="/student/courses/:courseID/:centerID"
-						element={
-							<ProtectedRoute redirectPath="/student" tokenName="token">
-								<StudentCourseDetail />
-							</ProtectedRoute>
-						}
-					/>
-					<Route
-						path="/student/profile"
-						element={
-							<ProtectedRoute redirectPath="/student" tokenName="token">
-								<StudentProfile />
-							</ProtectedRoute>
-						}
-					/>
-					<Route
-						path="/student/profile/edit"
-						element={
-							<ProtectedRoute redirectPath="/student" tokenName="token">
-								<EditProfileStudent />
-							</ProtectedRoute>
-						}
-					/>
-					<Route
-						path="/student/classes"
-						element={
-							<ProtectedRoute redirectPath="/student" tokenName="token">
-								<StudentClassList />
-							</ProtectedRoute>
-						}
-					/>
-					<Route
-						path="/student/classes/:classID"
-						element={
-							<ProtectedRoute redirectPath="/student" tokenName="token">
-								<AttendencesReport />
-							</ProtectedRoute>
-						}
-					/>
-					<Route path="/teacher/login" element={<LoginTeacher />} />
-					<Route path="/teacher/classes" element={<ClassesPage />} />
-					<Route path="/teacher/classes/:id" element={<ClassDetail />} />
-					<Route
-						path="/teacher/classes/student/:studentID"
-						element={<StudentDetail />}
-					/>
-					<Route
-						path="/teacher"
-						element={<Navigate to="/teacher/classes" replace />}
-					/>
-					<Route
-						path="/teacher/profile"
+						path="/admin/dashboard"
 						element={
 							<ProtectedRoute
-								redirectPath="/teacher/login"
-								tokenName="teacherToken"
+								redirectPath="/admin/login"
+								tokenName="accessToken"
 							>
-								<TeacherProfile />
+								<AdminDashboard />
 							</ProtectedRoute>
 						}
 					/>
-					<Route path="/admin/login" element={<AdminLogin />} />
 					<Route
 						path="/admin/centers"
 						element={
@@ -151,8 +96,6 @@ const App: React.FC = () => {
 							</ProtectedRoute>
 						}
 					/>
-
-					{/* ------------------ */}
 					<Route
 						path="/admin/centers/:id/courses"
 						element={
@@ -160,11 +103,10 @@ const App: React.FC = () => {
 								redirectPath="/admin/login"
 								tokenName="accessToken"
 							>
-								<ListCoursesCenter />
+								<ListCoursesOfCenter />
 							</ProtectedRoute>
 						}
 					/>
-
 					<Route
 						path="/admin/centers/:id/vouchers"
 						element={
@@ -172,13 +114,10 @@ const App: React.FC = () => {
 								redirectPath="/admin/login"
 								tokenName="accessToken"
 							>
-								<ListVouchersCenter />
+								<ListVouchersOfCenter />
 							</ProtectedRoute>
 						}
 					/>
-
-					{/* ------------------ */}
-
 					<Route
 						path="/admin/centers/:centerID/teachers"
 						element={
@@ -202,6 +141,39 @@ const App: React.FC = () => {
 						}
 					/>
 					<Route
+						path="/admin/courses/:id"
+						element={
+							<ProtectedRoute
+								redirectPath="/admin/login"
+								tokenName="accessToken"
+							>
+								<CourseDetail />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="/admin/courses/create"
+						element={
+							<ProtectedRoute
+								redirectPath="/admin/login"
+								tokenName="accessToken"
+							>
+								<AdminCourseCreate />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="/admin/courses/edit/:id"
+						element={
+							<ProtectedRoute
+								redirectPath="/admin/login"
+								tokenName="accessToken"
+							>
+								<AdminCourseEdit />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
 						path="/admin/vouchers"
 						element={
 							<ProtectedRoute
@@ -219,42 +191,7 @@ const App: React.FC = () => {
 								redirectPath="/admin/login"
 								tokenName="accessToken"
 							>
-								<AdminVoucherDetail />
-							</ProtectedRoute>
-						}
-					/>
-					<Route
-						path="/admin/vouchers/:id/edit"
-						element={
-							<ProtectedRoute
-								redirectPath="/admin/login"
-								tokenName="accessToken"
-							>
-								<AdminVoucherEdit />
-							</ProtectedRoute>
-						}
-					/>
-
-					<Route
-						path="/admin/centers/create"
-						element={
-							<ProtectedRoute
-								redirectPath="/admin/login"
-								tokenName="accessToken"
-							>
-								<AdminCenterCreate />
-							</ProtectedRoute>
-						}
-					/>
-
-					<Route
-						path="/admin/courses/create"
-						element={
-							<ProtectedRoute
-								redirectPath="/admin/login"
-								tokenName="accessToken"
-							>
-								<AdminCourseCreate />
+								<VoucherDetail />
 							</ProtectedRoute>
 						}
 					/>
@@ -270,29 +207,24 @@ const App: React.FC = () => {
 						}
 					/>
 					<Route
-						path="/admin"
-						element={<Navigate replace to="/admin/dashboard" />}
-					/>
-
-					<Route
-						path="/admin/dashboard"
+						path="/admin/vouchers/:id/edit"
 						element={
 							<ProtectedRoute
 								redirectPath="/admin/login"
 								tokenName="accessToken"
 							>
-								<AdminDashboard />
+								<AdminVoucherEdit />
 							</ProtectedRoute>
 						}
 					/>
 					<Route
-						path="/admin/courses/:id"
+						path="/admin/centers/create"
 						element={
 							<ProtectedRoute
 								redirectPath="/admin/login"
 								tokenName="accessToken"
 							>
-								<CourseDetail />
+								<AdminCenterCreate />
 							</ProtectedRoute>
 						}
 					/>
@@ -308,13 +240,52 @@ const App: React.FC = () => {
 						}
 					/>
 					<Route
-						path="/admin/courses/edit/:id"
+						path="/admin"
+						element={<Navigate replace to="/admin/dashboard" />}
+					/>
+
+					{/* Teacher Routes */}
+					<Route path="/teacher/login" element={<LoginTeacher />} />
+					<Route path="/teacher/classes" element={<ClassesPage />} />
+					<Route path="/teacher/classes/:id" element={<ClassDetail />} />
+					<Route
+						path="/teacher/classes/student/:studentID"
+						element={<StudentDetail />}
+					/>
+					<Route
+						path="/teacher"
+						element={<Navigate to="/teacher/classes" replace />}
+					/>
+
+					{/* Student Routes */}
+					<Route index element={<Navigate to="/student" replace />} />
+					<Route path="/student" element={<HomepageStudent />} />
+					<Route path="/student/login" element={<HomepageStudent />} />
+					<Route
+						path="/student/courses/:courseID/:centerID"
+						element={<StudentCourseDetail />}
+					/>
+					<Route
+						path="/student/profile"
 						element={
-							<ProtectedRoute
-								redirectPath="/admin/login"
-								tokenName="accessToken"
-							>
-								<AdminCourseEdit />
+							<ProtectedRoute redirectPath="/student" tokenName="token">
+								<StudentProfile />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="/student/profile/edit"
+						element={
+							<ProtectedRoute redirectPath="/student" tokenName="token">
+								<EditProfileStudent />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="/student/classes"
+						element={
+							<ProtectedRoute redirectPath="/student" tokenName="token">
+								<StudentClassList />
 							</ProtectedRoute>
 						}
 					/>

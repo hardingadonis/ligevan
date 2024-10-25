@@ -96,46 +96,75 @@ const VoucherDetail: React.FC = () => {
 							style={{ marginTop: '40px' }}
 							className="custom-form"
 						>
-							<Row>
-								<Col span={11}>
-									<Form.Item label="Mã giảm giá" labelAlign="left">
-										<Input value={voucher.code} readOnly />
-									</Form.Item>
-								</Col>
-								<Col span={2}></Col>
-								<Col span={11}>
-									<Form.Item label="Giá trị" labelAlign="left">
-										<Input value={`${voucher.value}%`} readOnly />
-									</Form.Item>
-								</Col>
-							</Row>
-							<Form.Item label="Tiêu đề" labelAlign="left">
+							<div
+								style={{
+									display: 'grid',
+									gridTemplateColumns: 'repeat(2, 1fr)',
+									gap: '16px',
+									marginBottom: '16px',
+								}}
+							>
+								<Form.Item
+									style={{ fontWeight: 'bold' }}
+									label="Mã giảm giá"
+									labelAlign="left"
+								>
+									<Input value={voucher.code} readOnly />
+								</Form.Item>
+								<Form.Item
+									style={{ fontWeight: 'bold' }}
+									label="Giá trị"
+									labelAlign="left"
+								>
+									<Input value={`${voucher.value}%`} readOnly />
+								</Form.Item>
+							</div>
+
+							<Form.Item
+								style={{ fontWeight: 'bold' }}
+								label="Tiêu đề"
+								labelAlign="left"
+							>
 								<Input value={voucher.title} readOnly />
 							</Form.Item>
-							<Form.Item label="Mô tả" labelAlign="left">
+							<Form.Item
+								style={{ fontWeight: 'bold' }}
+								label="Mô tả"
+								labelAlign="left"
+							>
 								<Input value={voucher.description} readOnly />
 							</Form.Item>
-							<Row>
-								<Col span={11}>
-									<Form.Item label="Thời gian bắt đầu" labelAlign="left">
-										<Input
-											value={formatDateToVietnamTimezone(
-												new Date(voucher.start),
-											)}
-											readOnly
-										/>
-									</Form.Item>
-								</Col>
-								<Col span={2}></Col>
-								<Col span={11}>
-									<Form.Item label="Thời gian kết thúc" labelAlign="left">
-										<Input
-											value={formatDateToVietnamTimezone(new Date(voucher.end))}
-											readOnly
-										/>
-									</Form.Item>
-								</Col>
-							</Row>
+							<div
+								style={{
+									display: 'grid',
+									gridTemplateColumns: 'repeat(2, 1fr)',
+									gap: '16px',
+									marginBottom: '16px',
+								}}
+							>
+								<Form.Item
+									style={{ fontWeight: 'bold' }}
+									label="Thời gian bắt đầu"
+									labelAlign="left"
+								>
+									<Input
+										value={formatDateToVietnamTimezone(new Date(voucher.start))}
+										readOnly
+									/>
+								</Form.Item>
+
+								<Form.Item
+									style={{ fontWeight: 'bold' }}
+									label="Thời gian kết thúc"
+									labelAlign="left"
+								>
+									<Input
+										value={formatDateToVietnamTimezone(new Date(voucher.end))}
+										readOnly
+									/>
+								</Form.Item>
+							</div>
+
 							<Form.Item
 								wrapperCol={{ span: 24 }}
 								style={{ textAlign: 'right' }}

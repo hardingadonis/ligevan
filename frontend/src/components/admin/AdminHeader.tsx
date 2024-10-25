@@ -4,11 +4,14 @@ import { Avatar, Dropdown, Menu, Typography, message } from 'antd';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const { Text } = Typography;
 const HeaderAdmin: React.FC = () => {
 	const navigate = useNavigate();
 	const fullName = localStorage.getItem('adminFullName');
 	const accessToken = localStorage.getItem('accessToken');
+
+	const handleChangePassword = () => {
+		navigate('/admin/change-password');
+	};
 
 	const handleLogout = () => {
 		localStorage.clear();
@@ -18,6 +21,9 @@ const HeaderAdmin: React.FC = () => {
 
 	const menu = (
 		<Menu>
+			<Menu.Item key="changePassword" onClick={handleChangePassword}>
+				Đổi mật khẩu
+			</Menu.Item>
 			<Menu.Item key="logout" onClick={handleLogout}>
 				Đăng xuất
 			</Menu.Item>
@@ -27,12 +33,18 @@ const HeaderAdmin: React.FC = () => {
 	const rightComponent = accessToken ? (
 		<div>
 			<Dropdown overlay={menu} trigger={['hover']}>
-				<div>
-					<Text style={{ color: 'white', paddingRight: '15px' }}>
+				<div
+					style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
+				>
+					<Typography.Text style={{ marginRight: 8, color: 'white' }}>
 						{fullName}
-					</Text>
+					</Typography.Text>
 					<Avatar
-						style={{ marginRight: '8px', backgroundColor: 'white' }}
+						style={{
+							marginRight: '8px',
+							backgroundColor: 'white',
+							cursor: 'pointer',
+						}}
 						size="large"
 						icon={<UserOutlined style={{ color: 'black' }} />}
 					/>

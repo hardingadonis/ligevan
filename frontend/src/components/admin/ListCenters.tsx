@@ -26,10 +26,14 @@ const ListCenters: React.FC = () => {
 	const [data, setData] = useState<DataType[]>([]);
 	const [searchText, setSearchText] = useState('');
 
-	// Fetch centers data from the server
 	const fetchData = async () => {
 		try {
 			const centers: Center[] = await getAllCenter();
+			centers.sort(
+				(a, b) =>
+					new Date(b.createdAt ?? 0).getTime() -
+					new Date(a.createdAt ?? 0).getTime(),
+			);
 			const tableData = centers.map((center, index) => ({
 				key: (index + 1).toString(),
 				name: center.name,
@@ -48,21 +52,17 @@ const ListCenters: React.FC = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	// Render action buttons for each row
 	const renderActions = (id: string): JSX.Element => (
 		<>
 			<Button
-				color="primary"
-				variant="outlined"
+				style={{ backgroundColor: '#4096ff', color: 'white', marginRight: 8 }}
 				icon={<EyeOutlined />}
 				onClick={() => handleDetail(id)}
-				style={{ marginRight: 8 }}
 			>
 				Chi tiết
 			</Button>
 			<Button
-				color="danger"
-				variant="outlined"
+				style={{ backgroundColor: '#ff2121', color: 'white' }}
 				icon={<DeleteOutlined />}
 				onClick={() => handleDelete(id)}
 			>
@@ -71,12 +71,10 @@ const ListCenters: React.FC = () => {
 		</>
 	);
 
-	// Handle view center details
 	const handleDetail = (id: string) => {
 		navigate(`/admin/centers/${id}`);
 	};
 
-	// Handle delete center with confirmation and notification
 	const handleDelete = async (id: string) => {
 		Modal.confirm({
 			title: 'Xác nhận xóa',
@@ -92,7 +90,7 @@ const ListCenters: React.FC = () => {
 						description: 'Trung tâm đã được xóa thành công.',
 						duration: 3,
 					});
-					fetchData(); // Refresh data after deletion
+					fetchData();
 				} catch (error) {
 					console.error('Lỗi khi xóa trung tâm:', error);
 					notification.error({
@@ -105,22 +103,18 @@ const ListCenters: React.FC = () => {
 		});
 	};
 
-	// Handle create new center
 	const handleCreateNewCenter = () => {
 		navigate('/admin/centers/create');
 	};
 
-	// Handle search input change
 	const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchText(e.target.value);
 	};
 
-	// Handle refresh button click
 	const handleRefresh = () => {
 		fetchData();
 	};
 
-	// Filter data based on search text
 	const filteredData = data.filter(
 		(item) =>
 			item.name.toLowerCase().includes(searchText.toLowerCase()) ||
@@ -128,7 +122,6 @@ const ListCenters: React.FC = () => {
 			item.phone.toLowerCase().includes(searchText.toLowerCase()),
 	);
 
-	// Define columns for the table
 	const columns: TableColumnsType<DataType> = [
 		{
 			title: <div style={{ textAlign: 'center' }}>STT</div>,
@@ -152,12 +145,14 @@ const ListCenters: React.FC = () => {
 			title: <div style={{ textAlign: 'center' }}>Số điện thoại</div>,
 			dataIndex: 'phone',
 			width: '19%',
+			align: 'center',
 			sorter: (a, b) => a.phone.localeCompare(b.phone),
 		},
 		{
 			title: <div style={{ textAlign: 'center' }}>Thao tác</div>,
 			dataIndex: 'actions',
 			width: '24%',
+			align: 'center',
 		},
 	];
 
@@ -184,7 +179,7 @@ const ListCenters: React.FC = () => {
 				}}
 			>
 				<Button
-					type="primary"
+					style={{ backgroundColor: '#0cd14e', color: 'white' }}
 					icon={<PlusOutlined />}
 					onClick={handleCreateNewCenter}
 				>
@@ -221,7 +216,7 @@ const ListCenters: React.FC = () => {
 							/>
 						),
 					}}
-					pagination={{ pageSize: 10 }}
+					pagination={{ pageSize: 7 }}
 					rowClassName={(_, index) =>
 						index % 2 === 0 ? 'table-row-even' : 'table-row-odd'
 					}

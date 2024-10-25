@@ -1,5 +1,5 @@
 import { PlusOutlined } from '@ant-design/icons';
-import { Button, Form, Input, InputNumber, message } from 'antd';
+import { Button, Col, Form, Input, InputNumber, Row, message } from 'antd';
 import React, { useState } from 'react';
 
 import ButtonGoBack from '@/components/commons/ButtonGoback';
@@ -33,7 +33,7 @@ const CourseForm: React.FC<CourseFormProps> = ({ onSuccess }) => {
 		<div style={{ paddingLeft: '270px' }}>
 			<div style={{ textAlign: 'center', marginBottom: 20 }}>
 				<div style={{ textAlign: 'left' }}>
-					<ButtonGoBack link="/admin/vouchers" />
+					<ButtonGoBack link="/admin/courses" />
 				</div>
 				<h2>Tạo khóa học mới</h2>
 			</div>
@@ -54,88 +54,102 @@ const CourseForm: React.FC<CourseFormProps> = ({ onSuccess }) => {
 						width: '100%',
 					}}
 				>
-					<Form
-						form={form}
-						layout="vertical"
-						onFinish={onFinish}
-						requiredMark={false}
-					>
-						<div
-							style={{
-								display: 'grid',
-								gridTemplateColumns: 'repeat(2, 1fr)',
-								gap: '16px',
-								marginBottom: '16px',
-							}}
-						>
-							<Form.Item
-								name="code"
-								label={<span style={{ fontWeight: 'bold' }}>Mã khóa học</span>}
-								rules={[
-									{ required: true, message: 'Vui lòng nhập mã khóa học!' },
-								]}
+					<Row>
+						<Col span={24}>
+							<Form
+								form={form}
+								layout="vertical"
+								labelCol={{ span: 24 }}
+								wrapperCol={{ span: 24 }}
+								style={{ marginTop: '40px' }}
+								className="custom-form"
+								onFinish={onFinish}
 							>
-								<Input placeholder="Nhập mã khóa học" />
-							</Form.Item>
+								<div
+									style={{
+										display: 'grid',
+										gridTemplateColumns: 'repeat(2, 1fr)',
+										gap: '16px',
+										marginBottom: '16px',
+									}}
+								>
+									<Form.Item
+										name="code"
+										label={
+											<span style={{ fontWeight: 'bold' }}>Mã khóa học</span>
+										}
+										rules={[
+											{ required: true, message: 'Vui lòng nhập mã khóa học!' },
+										]}
+									>
+										<Input placeholder="Nhập mã khóa học" />
+									</Form.Item>
 
-							<Form.Item
-								name="price"
-								label={<span style={{ fontWeight: 'bold' }}>Giá khóa học</span>}
-								rules={[{ required: true, message: 'Vui lòng nhập giá!' }]}
-							>
-								<InputNumber<number>
-									min={0}
-									placeholder="Nhập giá khóa học"
-									style={{ width: '100%' }}
-									formatter={(value) =>
-										value ? formatPrice(Number(value)) : ''
+									<Form.Item
+										style={{ fontWeight: 'bold' }}
+										name="price"
+										label={<span>Giá khóa học</span>}
+										rules={[{ required: true, message: 'Vui lòng nhập giá!' }]}
+									>
+										<InputNumber<number>
+											min={0}
+											placeholder="Nhập giá khóa học"
+											style={{ width: '100%' }}
+											formatter={(value) =>
+												value ? formatPrice(Number(value)) : ''
+											}
+											parser={(value) =>
+												value ? Number(value.replace(/\D/g, '')) : 0
+											}
+										/>
+									</Form.Item>
+								</div>
+
+								<Form.Item
+									name="title"
+									label={
+										<span style={{ fontWeight: 'bold' }}>Tên khóa học</span>
 									}
-									parser={(value) =>
-										value ? Number(value.replace(/\D/g, '')) : 0
+									rules={[
+										{ required: true, message: 'Vui lòng nhập tên khóa học!' },
+									]}
+								>
+									<Input placeholder="Nhập tên khóa học" />
+								</Form.Item>
+
+								<Form.Item
+									name="description"
+									label={<span style={{ fontWeight: 'bold' }}>Mô tả</span>}
+								>
+									<Input.TextArea rows={4} placeholder="Nhập mô tả khóa học" />
+								</Form.Item>
+
+								<Form.Item
+									name="thumbnail"
+									label={
+										<span style={{ fontWeight: 'bold' }}>URL Hình ảnh</span>
 									}
-								/>
-							</Form.Item>
-						</div>
+								>
+									<Input placeholder="Nhập đường dẫn hình ảnh" />
+								</Form.Item>
 
-						<Form.Item
-							name="title"
-							label={<span style={{ fontWeight: 'bold' }}>Tên khóa học</span>}
-							rules={[
-								{ required: true, message: 'Vui lòng nhập tên khóa học!' },
-							]}
-						>
-							<Input placeholder="Nhập tên khóa học" />
-						</Form.Item>
-
-						<Form.Item
-							name="description"
-							label={<span style={{ fontWeight: 'bold' }}>Mô tả</span>}
-						>
-							<Input.TextArea rows={4} placeholder="Nhập mô tả khóa học" />
-						</Form.Item>
-
-						<Form.Item
-							name="thumbnail"
-							label={<span style={{ fontWeight: 'bold' }}>URL Hình ảnh</span>}
-						>
-							<Input placeholder="Nhập đường dẫn hình ảnh" />
-						</Form.Item>
-
-						<Form.Item style={{ marginTop: 24, textAlign: 'right' }}>
-							<Button
-								type="primary"
-								htmlType="submit"
-								loading={loading}
-								icon={<PlusOutlined />}
-								style={{
-									backgroundColor: '#0cd14e',
-									color: 'white',
-								}}
-							>
-								{loading ? 'Đang tạo...' : 'Tạo khóa học mới'}
-							</Button>
-						</Form.Item>
-					</Form>
+								<Form.Item style={{ marginTop: 24, textAlign: 'right' }}>
+									<Button
+										type="primary"
+										htmlType="submit"
+										loading={loading}
+										icon={<PlusOutlined />}
+										style={{
+											backgroundColor: '#0cd14e',
+											color: 'white',
+										}}
+									>
+										{loading ? 'Đang tạo...' : 'Tạo khóa học mới'}
+									</Button>
+								</Form.Item>
+							</Form>
+						</Col>
+					</Row>
 				</div>
 			</div>
 		</div>

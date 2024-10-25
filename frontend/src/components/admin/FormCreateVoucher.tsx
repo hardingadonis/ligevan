@@ -92,84 +92,88 @@ const VoucherForm: React.FC = () => {
 									className="custom-form"
 									onFinish={handleSubmit}
 								>
-									<Row>
-										<Col span={11}>
-											<Form.Item
-												label="Mã giảm giá"
-												labelAlign="left"
-												name="code"
-												rules={[
-													{
-														required: true,
-														message: 'Vui lòng nhập mã giảm giá!',
-													},
-													{
-														validator: async (_, value) => {
-															if (!value) {
-																return Promise.resolve();
-															}
-															if (!validateCode(value)) {
-																return Promise.reject(
-																	new Error(
-																		'Mã giảm giá không hợp lệ! Vui lòng nhập lại!',
-																	),
-																);
-															}
-															const exists =
-																await checkVoucherCodeExists(value);
-															if (exists) {
-																return Promise.reject(
-																	new Error(
-																		'Mã giảm giá đã tồn tại! Vui lòng nhập mã khác!',
-																	),
-																);
-															}
+									<div
+										style={{
+											display: 'grid',
+											gridTemplateColumns: 'repeat(2, 1fr)',
+											gap: '16px',
+											marginBottom: '16px',
+										}}
+									>
+										<Form.Item
+											style={{ fontWeight: 'bold' }}
+											label="Mã giảm giá"
+											labelAlign="left"
+											name="code"
+											rules={[
+												{
+													required: true,
+													message: 'Vui lòng nhập mã giảm giá!',
+												},
+												{
+													validator: async (_, value) => {
+														if (!value) {
 															return Promise.resolve();
-														},
+														}
+														if (!validateCode(value)) {
+															return Promise.reject(
+																new Error(
+																	'Mã giảm giá không hợp lệ! Vui lòng nhập lại!',
+																),
+															);
+														}
+														const exists = await checkVoucherCodeExists(value);
+														if (exists) {
+															return Promise.reject(
+																new Error(
+																	'Mã giảm giá đã tồn tại! Vui lòng nhập mã khác!',
+																),
+															);
+														}
+														return Promise.resolve();
 													},
-												]}
-											>
-												<Input placeholder="Nhập mã giảm giá" />
-											</Form.Item>
-										</Col>
-										<Col span={2}></Col>
-										<Col span={11}>
-											<Form.Item
-												label="Giá trị"
-												labelAlign="left"
-												name="value"
-												rules={[
-													{
-														required: true,
-														message: 'Vui lòng nhập giá trị của mã giảm giá!',
+												},
+											]}
+										>
+											<Input placeholder="Nhập mã giảm giá" />
+										</Form.Item>{' '}
+										<Form.Item
+											style={{ fontWeight: 'bold' }}
+											label="Giá trị"
+											labelAlign="left"
+											name="value"
+											rules={[
+												{
+													required: true,
+													message: 'Vui lòng nhập giá trị của mã giảm giá!',
+												},
+												{
+													validator: (_, value) => {
+														if (!value) {
+															return Promise.resolve();
+														}
+														return validateDiscount(value)
+															? Promise.resolve()
+															: Promise.reject(
+																	new Error(
+																		'Giá trị không hợp lệ! Vui lòng nhập lại!',
+																	),
+																);
 													},
-													{
-														validator: (_, value) => {
-															if (!value) {
-																return Promise.resolve();
-															}
-															return validateDiscount(value)
-																? Promise.resolve()
-																: Promise.reject(
-																		new Error(
-																			'Giá trị không hợp lệ! Vui lòng nhập lại!',
-																		),
-																	);
-														},
-													},
-												]}
-											>
-												<Input
-													placeholder="Nhập giá trị"
-													suffix="%"
-													type="number"
-													step="0.01"
-													onChange={handleDiscountChange}
-												/>
-											</Form.Item>
-										</Col>
-									</Row>
+												},
+											]}
+										>
+											<Input
+												placeholder="Nhập giá trị"
+												suffix="%"
+												type="number"
+												step="0.01"
+												onChange={handleDiscountChange}
+											/>
+										</Form.Item>
+									</div>
 									<Form.Item
+										style={{ fontWeight: 'bold' }}
 										label="Tiêu đề"
 										labelAlign="left"
 										name="title"
@@ -180,97 +184,98 @@ const VoucherForm: React.FC = () => {
 										<Input placeholder="Nhập tiêu đề" />
 									</Form.Item>
 									<Form.Item
+										style={{ fontWeight: 'bold' }}
 										label="Mô tả"
 										labelAlign="left"
 										name="description"
-										rules={[
-											{ required: true, message: 'Vui lòng nhập mô tả!' },
-										]}
 									>
-										<Input placeholder="Nhập mô tả" />
+										<Input.TextArea rows={4} placeholder="Nhập mô tả" />
 									</Form.Item>
-									<Row>
-										<Col span={11}>
-											<Form.Item
-												label="Thời gian bắt đầu"
-												labelAlign="left"
-												name="start"
-												rules={[
-													{
-														required: true,
-														message: 'Vui lòng chọn thời gian bắt đầu!',
-													},
-													{
-														validator: (_, value) => {
-															if (!value) {
-																return Promise.resolve();
-															}
-															const now = dayjs();
-															return value.isAfter(now)
-																? Promise.resolve()
-																: Promise.reject(
-																		new Error(
-																			'Thời gian bắt đầu phải ở sau thời điểm hiện tại!',
-																		),
-																	);
-														},
-													},
-												]}
-												style={{ marginBottom: '30px' }}
-											>
-												<DatePicker
-													name="start"
-													placeholder="Chọn thời gian bắt đầu"
-													format="DD/MM/YYYY"
-													style={{ width: '100%' }}
-												/>
-											</Form.Item>
-										</Col>
-										<Col span={2}></Col>
-										<Col span={11}>
-											<Form.Item
-												label="Thời gian kết thúc"
-												labelAlign="left"
-												name="end"
-												rules={[
-													{
-														required: true,
-														message: 'Vui lòng chọn thời gian kết thúc!',
-													},
-													{
-														validator: (_, value) => {
-															if (!value) {
-																return Promise.resolve();
-															}
-															const start = form.getFieldValue('start');
-															if (!start) {
-																return Promise.reject(
+									<div
+										style={{
+											display: 'grid',
+											gridTemplateColumns: 'repeat(2, 1fr)',
+											gap: '16px',
+											marginBottom: '16px',
+										}}
+									>
+										<Form.Item
+											label="Thời gian bắt đầu"
+											labelAlign="left"
+											name="start"
+											rules={[
+												{
+													required: true,
+													message: 'Vui lòng chọn thời gian bắt đầu!',
+												},
+												{
+													validator: (_, value) => {
+														if (!value) {
+															return Promise.resolve();
+														}
+														const now = dayjs();
+														return value.isAfter(now)
+															? Promise.resolve()
+															: Promise.reject(
 																	new Error(
-																		'Vui lòng chọn thời gian bắt đầu trước!',
+																		'Thời gian bắt đầu phải ở sau thời điểm hiện tại!',
 																	),
 																);
-															}
-															return value.isAfter(start)
-																? Promise.resolve()
-																: Promise.reject(
-																		new Error(
-																			'Thời gian kết thúc phải ở sau thời gian bắt đầu!',
-																		),
-																	);
-														},
 													},
-												]}
-												style={{ marginBottom: '30px' }}
-											>
-												<DatePicker
-													name="end"
-													placeholder="Chọn thời gian kết thúc"
-													format="DD/MM/YYYY"
-													style={{ width: '100%' }}
-												/>
-											</Form.Item>
-										</Col>
-									</Row>
+												},
+											]}
+											style={{ marginBottom: '30px', fontWeight: 'bold' }}
+										>
+											<DatePicker
+												name="start"
+												placeholder="Chọn thời gian bắt đầu"
+												format="DD/MM/YYYY"
+												style={{ width: '100%' }}
+											/>
+										</Form.Item>{' '}
+										<Form.Item
+											label="Thời gian kết thúc"
+											labelAlign="left"
+											name="end"
+											rules={[
+												{
+													required: true,
+													message: 'Vui lòng chọn thời gian kết thúc!',
+												},
+												{
+													validator: (_, value) => {
+														if (!value) {
+															return Promise.resolve();
+														}
+														const start = form.getFieldValue('start');
+														if (!start) {
+															return Promise.reject(
+																new Error(
+																	'Vui lòng chọn thời gian bắt đầu trước!',
+																),
+															);
+														}
+														return value.isAfter(start)
+															? Promise.resolve()
+															: Promise.reject(
+																	new Error(
+																		'Thời gian kết thúc phải ở sau thời gian bắt đầu!',
+																	),
+																);
+													},
+												},
+											]}
+											style={{ marginBottom: '30px', fontWeight: 'bold' }}
+										>
+											<DatePicker
+												name="end"
+												placeholder="Chọn thời gian kết thúc"
+												format="DD/MM/YYYY"
+												style={{ width: '100%' }}
+											/>
+										</Form.Item>
+									</div>
+
 									<Form.Item
 										style={{ display: 'flex', justifyContent: 'flex-end' }}
 									>
@@ -280,7 +285,7 @@ const VoucherForm: React.FC = () => {
 											htmlType="submit"
 										>
 											<PlusOutlined />
-											Tạo mới
+											Tạo mã giảm giá mới
 										</Button>
 									</Form.Item>
 								</Form>
