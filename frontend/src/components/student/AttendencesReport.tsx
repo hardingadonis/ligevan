@@ -58,7 +58,7 @@ const AttendencesReportForStudent: React.FC = () => {
 				`${apiBaseUrl}/api/classes/${classID}`,
 			);
 			setClassData(fetchClass.data);
-		} catch (err) {
+		} catch {
 			setError('Không thể tải thông tin điểm danh chi tiết của học sinh');
 		} finally {
 			setLoading(false);
@@ -120,12 +120,14 @@ const AttendencesReportForStudent: React.FC = () => {
 
 	useEffect(() => {
 		fetchClass();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [classID]);
 
 	useEffect(() => {
 		if (classData) {
 			fetchSlot();
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [classData]);
 
 	const handleRefresh = () => {

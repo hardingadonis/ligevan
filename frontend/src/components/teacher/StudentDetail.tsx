@@ -39,6 +39,7 @@ const StudentDetail: React.FC = () => {
 
 	useEffect(() => {
 		fetchStudent();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [studentID]);
 
 	if (loading) return <Spin size="large" />;
