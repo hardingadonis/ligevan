@@ -3,12 +3,14 @@ import { Avatar, Button, Col, Form, Input, Row, Spin, Typography } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
+import ButtonGoBack from '@/components/commons/ButtonGoback';
 import { Teacher } from '@/schemas/teacher.schema';
 import { getTeacherById } from '@/services/api/teacher';
 import { formatDateToVietnamTimezone } from '@/utils/dateFormat';
 
 const TeacherDetailOfCenter: React.FC = () => {
 	const { teacherID } = useParams<{ teacherID: string }>();
+	const [centerID, setCenterID] = useState<string>('');
 	const [teacher, setTeacher] = useState<Teacher | null>(null);
 	const [loading, setLoading] = useState<boolean>(true);
 
@@ -18,6 +20,7 @@ const TeacherDetailOfCenter: React.FC = () => {
 			try {
 				const fetchTeacher = await getTeacherById(teacherID);
 				setTeacher(fetchTeacher);
+				setCenterID(fetchTeacher.center._id);
 			} catch (error) {
 				console.error('Không thể tải thông tin giáo viên:', error);
 			} finally {
@@ -45,6 +48,9 @@ const TeacherDetailOfCenter: React.FC = () => {
 	return (
 		<div style={{ paddingLeft: '270px' }}>
 			<div style={{ textAlign: 'center', marginBottom: 20 }}>
+				<div style={{ textAlign: 'left' }}>
+					<ButtonGoBack link={`/admin/centers/${centerID}/teachers`} />
+				</div>
 				<Typography.Title level={2}>Thông tin giáo viên</Typography.Title>
 			</div>
 
