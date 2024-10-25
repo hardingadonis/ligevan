@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { SyncOutlined } from '@ant-design/icons';
 import {
 	Alert,
