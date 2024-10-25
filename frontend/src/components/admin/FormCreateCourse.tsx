@@ -33,7 +33,7 @@ const CourseForm: React.FC<CourseFormProps> = ({ onSuccess }) => {
 		<div style={{ paddingLeft: '270px' }}>
 			<div style={{ textAlign: 'center', marginBottom: 20 }}>
 				<div style={{ textAlign: 'left' }}>
-					<ButtonGoBack link="/admin/vouchers" />
+					<ButtonGoBack link="/admin/courses" />
 				</div>
 				<h2>Tạo khóa học mới</h2>
 			</div>
