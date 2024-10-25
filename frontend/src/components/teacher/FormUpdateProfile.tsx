@@ -236,7 +236,7 @@ const FormUpdate: React.FC = () => {
 								{
 									validator: (_, value) => {
 										const threeYearsAgo = dayjs().subtract(3, 'year');
-										return value && value.isBefore(threeYearsAgo)
+										return value?.isBefore(threeYearsAgo)
 											? Promise.resolve()
 											: Promise.reject(new Error('Ngày sinh không hợp lệ!'));
 									},

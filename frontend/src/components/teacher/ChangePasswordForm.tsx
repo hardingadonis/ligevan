@@ -36,7 +36,7 @@ const ChangePasswordForm: React.FC = () => {
 	const onFinish = async (values: { newPassword: string }) => {
 		setLoading(true);
 		try {
-			if (!teacherData || !teacherData._id) {
+			if (!teacherData?._id) {
 				// Check for both teacherData and _id
 				message.error('Thông tin giáo viên không hợp lệ!');
 				return;
