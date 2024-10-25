@@ -2,7 +2,11 @@ import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 import { AdminsService } from '@/domains/admins/admins.service';
-import { CreateAdminDto, UpdateAdminDto } from '@/domains/admins/dto/admin.dto';
+import {
+	ChangePasswordDto,
+	CreateAdminDto,
+	UpdateAdminDto,
+} from '@/domains/admins/dto/admin.dto';
 
 @ApiTags('Admins')
 @Controller('admins')
@@ -25,5 +29,13 @@ export class AdminsController {
 		@Body() updateAdminDto: UpdateAdminDto,
 	) {
 		return await this.adminsService.update(username, updateAdminDto);
+	}
+
+	@Put(':username/change-password')
+	async changePassword(
+		@Param('username') username: string,
+		@Body() changePasswordDto: ChangePasswordDto,
+	) {
+		return await this.adminsService.changePassword(username, changePasswordDto);
 	}
 }

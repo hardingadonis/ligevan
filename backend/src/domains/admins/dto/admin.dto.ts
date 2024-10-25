@@ -25,3 +25,15 @@ export class UpdateAdminDto {
 	@ApiPropertyOptional({ description: 'Admin password' })
 	password?: string;
 }
+
+export class ChangePasswordDto {
+	@ApiProperty({ description: 'Admin current password' })
+	@IsString()
+	@IsNotEmpty()
+	currentPassword: string;
+
+	@ApiProperty({ description: 'Admin new password' })
+	@IsString()
+	@IsNotEmpty()
+	newPassword: string;
+}

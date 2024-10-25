@@ -10,6 +10,7 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 
 import {
+	ChangePasswordDto,
 	CreateTeacherDto,
 	UpdateTeacherDto,
 } from '@/domains/teachers/dto/teacher.dto';
@@ -46,6 +47,14 @@ export class TeachersController {
 		@Body() updateTeacherDto: UpdateTeacherDto,
 	) {
 		return await this.teachersService.update(id, updateTeacherDto);
+	}
+
+	@Put(':email/change-password')
+	async changePassword(
+		@Param('email') email: string,
+		@Body() changePasswordDto: ChangePasswordDto,
+	) {
+		return await this.teachersService.changePassword(email, changePasswordDto);
 	}
 
 	@Delete(':id')

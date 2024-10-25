@@ -15,6 +15,7 @@ const AdminDashboard = lazy(() => import('@/pages/admin/Dashboard'));
 const AdminCentersManagement = lazy(
 	() => import('@/pages/admin/CentersManagement'),
 );
+const TeacherDetail = lazy(() => import('@/pages/admin/TeacherDetail'));
 const AdminCoursesManagement = lazy(
 	() => import('@/pages/admin/CoursesManagement'),
 );
@@ -36,9 +37,10 @@ const ListCoursesOfCenter = lazy(
 const ListVouchersOfCenter = lazy(
 	() => import('@/pages/admin/ListVouchersOfCenter'),
 );
-const ListTeacerOfCenter = lazy(
-	() => import('@/pages/admin/ListTeacerOfCenter'),
+const ListTeacherOfCenter = lazy(
+	() => import('@/pages/admin/ListTeacherOfCenter'),
 );
+const ClassDetailForAdmin = lazy(() => import('@/pages/admin/ClassDetail'));
 const ListClass = lazy(() => import('@/pages/admin/ListClass'));
 
 // Teacher lazy load
@@ -53,6 +55,9 @@ const StudentProfile = lazy(() => import('@/pages/student/Profile'));
 const EditProfileStudent = lazy(() => import('@/pages/student/EditProfile'));
 const StudentClassList = lazy(() => import('@/pages/student/ClassList'));
 const StudentCourseDetail = lazy(() => import('@/pages/student/CourseDetail'));
+const AttendencesReport = lazy(
+	() => import('@/pages/student/AttendencesReport'),
+);
 
 const App: React.FC = () => {
 	return (
@@ -129,7 +134,7 @@ const App: React.FC = () => {
 								redirectPath="/admin/login"
 								tokenName="accessToken"
 							>
-								<ListTeacerOfCenter />
+								<ListTeacherOfCenter />
 							</ProtectedRoute>
 						}
 					/>
@@ -141,6 +146,28 @@ const App: React.FC = () => {
 								tokenName="accessToken"
 							>
 								<ListClass />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="/admin/centers/teachers/:teacherID"
+						element={
+							<ProtectedRoute
+								redirectPath="/admin/login"
+								tokenName="accessToken"
+							>
+								<TeacherDetail />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="/admin/centers/classes/:classID"
+						element={
+							<ProtectedRoute
+								redirectPath="/admin/login"
+								tokenName="accessToken"
+							>
+								<ClassDetailForAdmin />
 							</ProtectedRoute>
 						}
 					/>
@@ -301,6 +328,22 @@ const App: React.FC = () => {
 						element={
 							<ProtectedRoute redirectPath="/student" tokenName="token">
 								<StudentClassList />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="/student/classes"
+						element={
+							<ProtectedRoute redirectPath="/student" tokenName="token">
+								<StudentClassList />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="/student/classes/:classID"
+						element={
+							<ProtectedRoute redirectPath="/student" tokenName="token">
+								<AttendencesReport />
 							</ProtectedRoute>
 						}
 					/>

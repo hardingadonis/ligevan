@@ -8,11 +8,12 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 import {
+	ChangePasswordDto,
 	CreateTeacherDto,
 	UpdateTeacherDto,
 } from '@/domains/teachers/dto/teacher.dto';
 import { Teacher } from '@/schemas/teacher.schema';
-import { hash } from '@/utils/hash.util';
+import { hash, verify } from '@/utils/hash.util';
 
 @Injectable()
 export class TeachersService {
@@ -176,6 +177,37 @@ export class TeachersService {
 		delete teacherObject.hashedPassword;
 
 		return teacherObject;
+	}
+
+	async changePassword(email: string, changePasswordDto: ChangePasswordDto) {
+		const { currentPassword, newPassword } = changePasswordDto;
+
+		const teacher = await this.teacherModel
+			.findOne({ email: email, isDeleted: false })
+			.exec();
+
+		if (!teacher) {
+			this.logger.error(`Teacher not found!`);
+			throw new ConflictException(`Teacher not found!`);
+		}
+
+		const isPasswordValid = await verify(
+			teacher.hashedPassword,
+			currentPassword,
+		);
+
+		if (!isPasswordValid) {
+			this.logger.error(`Current password is incorrect!`);
+			throw new ConflictException(`Current password is incorrect!`);
+		}
+
+		teacher.hashedPassword = await hash(newPassword);
+		await teacher.save();
+
+		this.logger.debug('Password updated', teacher);
+		this.logger.log('Password updated');
+
+		return { message: 'Password updated successfully!' };
 	}
 
 	async delete(id: string) {
