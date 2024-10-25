@@ -36,6 +36,9 @@ const ListCoursesOfCenter = lazy(
 const ListVouchersOfCenter = lazy(
 	() => import('@/pages/admin/ListVouchersOfCenter'),
 );
+const ListTeacerOfCenter = lazy(
+	() => import('@/pages/admin/ListTeacerOfCenter'),
+);
 
 // Teacher lazy load
 const LoginTeacher = lazy(() => import('@/pages/teacher/Login'));
@@ -125,7 +128,7 @@ const App: React.FC = () => {
 								redirectPath="/admin/login"
 								tokenName="accessToken"
 							>
-								<ListTeacher />
+								<ListTeacerOfCenter />
 							</ProtectedRoute>
 						}
 					/>
