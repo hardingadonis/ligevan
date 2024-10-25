@@ -26,6 +26,7 @@ const AdminSidebar: React.FC = () => {
 				location.pathname.startsWith(key),
 			) ?? 'dashboard';
 		setSelectedKey(routeToKeyMap[activeKey as keyof typeof routeToKeyMap]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [location.pathname]);
 
 	const items: MenuItem[] = [

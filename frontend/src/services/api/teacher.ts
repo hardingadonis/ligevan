@@ -12,3 +12,24 @@ export const getAllTeacher = async (): Promise<Teacher[]> => {
 		throw error;
 	}
 };
+
+export const getTeacherByEmail = async (email: string): Promise<Teacher> => {
+	try {
+		const response = await axios.get(
+			`${apiBaseUrl}/api/teachers/email/${email}`,
+		);
+		return response.data;
+	} catch (error) {
+		console.error('Error fetching teacher:', error);
+		throw error;
+	}
+};
+
+export const deleteTeacher = async (id: string): Promise<void> => {
+	try {
+		await axios.delete(`${apiBaseUrl}/api/teachers/${id}`);
+	} catch (error) {
+		console.error('Error deleting teacher:', error);
+		throw error;
+	}
+};

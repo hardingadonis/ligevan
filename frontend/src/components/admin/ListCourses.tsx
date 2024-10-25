@@ -29,7 +29,12 @@ const ListCourses: React.FC = () => {
 	const fetchData = async () => {
 		try {
 			const courses: Course[] = await getAllCourse();
-			const tableData = courses.map((course, index) => ({
+			const sortedCourses = courses.sort(
+				(a, b) =>
+					new Date(b.createdAt ?? 0).getTime() -
+					new Date(a.createdAt ?? 0).getTime(),
+			);
+			const tableData = sortedCourses.map((course, index) => ({
 				key: (index + 1).toString(),
 				code: course.code,
 				title: course.title,
@@ -43,22 +48,20 @@ const ListCourses: React.FC = () => {
 	};
 	useEffect(() => {
 		fetchData();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const renderActions = (id: string): JSX.Element => (
 		<>
 			<Button
-				color="primary"
-				variant="outlined"
+				style={{ backgroundColor: '#4096ff', color: 'white', marginRight: 8 }}
 				icon={<EyeOutlined />}
 				onClick={() => handleDetail(id)}
-				style={{ marginRight: 8 }}
 			>
 				Chi tiết
 			</Button>
 			<Button
-				color="danger"
-				variant="outlined"
+				style={{ backgroundColor: '#ff2121', color: 'white' }}
 				icon={<DeleteOutlined />}
 				onClick={() => handleDelete(id)}
 			>
@@ -156,6 +159,7 @@ const ListCourses: React.FC = () => {
 			title: <div style={{ textAlign: 'center' }}>Thao tác</div>,
 			dataIndex: 'actions',
 			width: '25%',
+			align: 'center',
 		},
 	];
 
@@ -169,7 +173,7 @@ const ListCourses: React.FC = () => {
 	};
 
 	return (
-		<div style={{ padding: '65px 20px 0 270px' }}>
+		<div style={{ paddingLeft: '270px' }}>
 			<div style={{ textAlign: 'center', marginBottom: 20 }}>
 				<h2>Tất cả các khóa học</h2>
 			</div>
@@ -182,7 +186,7 @@ const ListCourses: React.FC = () => {
 				}}
 			>
 				<Button
-					type="primary"
+					style={{ backgroundColor: '#0cd14e', color: 'white' }}
 					icon={<PlusOutlined />}
 					onClick={handleCreateNewCourse}
 				>
@@ -222,7 +226,7 @@ const ListCourses: React.FC = () => {
 							/>
 						),
 					}}
-					pagination={{ pageSize: 10 }}
+					pagination={{ pageSize: 7 }}
 					rowClassName={(_, index) =>
 						index % 2 === 0 ? 'table-row-even' : 'table-row-odd'
 					}

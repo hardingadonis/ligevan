@@ -1,8 +1,9 @@
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import { Button, Col, Form, Input, Modal, Row, Spin, notification } from 'antd';
+import { Button, Col, Form, Input, Modal, Row, Spin, message } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import ButtonGoBack from '@/components/commons/ButtonGoback';
 import { Voucher } from '@/schemas/voucher.schema';
 import { deleteVoucher, getVoucherById } from '@/services/api/voucher';
 import { formatDateToVietnamTimezone } from '@/utils/dateFormat';
@@ -32,11 +33,7 @@ const VoucherDetail: React.FC = () => {
 	}, [id]);
 
 	const handleEdit = (id: string) => {
-		try {
-			console.log('Chỉnh sửa mã giảm giá:', id);
-		} catch (error) {
-			console.error('Lỗi khi chỉnh sửa mã giảm giá:', error);
-		}
+		navigate(`/admin/vouchers/${id}/edit`);
 	};
 
 	const handleDelete = async (id: string) => {
@@ -49,19 +46,11 @@ const VoucherDetail: React.FC = () => {
 			onOk: async () => {
 				try {
 					await deleteVoucher(id);
-					notification.success({
-						message: 'Xóa thành công',
-						description: 'Mã giảm giá đã được xóa thành công.',
-						duration: 3,
-					});
+					message.success('Mã giảm giá đã được xóa thành công!', 3);
 					navigate(`/admin/vouchers`);
 				} catch (error) {
 					console.error('Lỗi khi xóa mã giảm giá:', error);
-					notification.error({
-						message: 'Lỗi',
-						description: 'Đã xảy ra lỗi khi xóa mã giảm giá.',
-						duration: 3,
-					});
+					message.error('Lỗi: Đã xảy ra lỗi khi xóa mã giảm giá!', 3);
 				}
 			},
 		});
@@ -80,8 +69,11 @@ const VoucherDetail: React.FC = () => {
 	}
 
 	return (
-		<div style={{ padding: '65px 20px 0 270px' }}>
+		<div style={{ paddingLeft: '270px' }}>
 			<div style={{ textAlign: 'center', marginBottom: 20 }}>
+				<div style={{ textAlign: 'left' }}>
+					<ButtonGoBack link="/admin/vouchers" />
+				</div>
 				<h2>Chi tiết mã giảm giá</h2>
 			</div>
 
@@ -104,63 +96,96 @@ const VoucherDetail: React.FC = () => {
 							style={{ marginTop: '40px' }}
 							className="custom-form"
 						>
-							<Row>
-								<Col span={11}>
-									<Form.Item label="Mã giảm giá" labelAlign="left">
-										<Input value={voucher.code} readOnly />
-									</Form.Item>
-								</Col>
-								<Col span={2}></Col>
-								<Col span={11}>
-									<Form.Item label="Giá trị" labelAlign="left">
-										<Input value={`${voucher.value}%`} readOnly />
-									</Form.Item>
-								</Col>
-							</Row>
-							<Form.Item label="Tiêu đề" labelAlign="left">
+							<div
+								style={{
+									display: 'grid',
+									gridTemplateColumns: 'repeat(2, 1fr)',
+									gap: '16px',
+									marginBottom: '16px',
+								}}
+							>
+								<Form.Item
+									style={{ fontWeight: 'bold' }}
+									label="Mã giảm giá"
+									labelAlign="left"
+								>
+									<Input value={voucher.code} readOnly />
+								</Form.Item>
+								<Form.Item
+									style={{ fontWeight: 'bold' }}
+									label="Giá trị"
+									labelAlign="left"
+								>
+									<Input value={`${voucher.value}%`} readOnly />
+								</Form.Item>
+							</div>
+
+							<Form.Item
+								style={{ fontWeight: 'bold' }}
+								label="Tiêu đề"
+								labelAlign="left"
+							>
 								<Input value={voucher.title} readOnly />
 							</Form.Item>
-							<Form.Item label="Mô tả" labelAlign="left">
+							<Form.Item
+								style={{ fontWeight: 'bold' }}
+								label="Mô tả"
+								labelAlign="left"
+							>
 								<Input value={voucher.description} readOnly />
 							</Form.Item>
-							<Row>
-								<Col span={11}>
-									<Form.Item label="Thời gian bắt đầu" labelAlign="left">
-										<Input
-											value={formatDateToVietnamTimezone(
-												new Date(voucher.start),
-											)}
-											readOnly
-										/>
-									</Form.Item>
-								</Col>
-								<Col span={2}></Col>
-								<Col span={11}>
-									<Form.Item label="Thời gian kết thúc" labelAlign="left">
-										<Input
-											value={formatDateToVietnamTimezone(new Date(voucher.end))}
-											readOnly
-										/>
-									</Form.Item>
-								</Col>
-							</Row>
+							<div
+								style={{
+									display: 'grid',
+									gridTemplateColumns: 'repeat(2, 1fr)',
+									gap: '16px',
+									marginBottom: '16px',
+								}}
+							>
+								<Form.Item
+									style={{ fontWeight: 'bold' }}
+									label="Thời gian bắt đầu"
+									labelAlign="left"
+								>
+									<Input
+										value={formatDateToVietnamTimezone(new Date(voucher.start))}
+										readOnly
+									/>
+								</Form.Item>
+
+								<Form.Item
+									style={{ fontWeight: 'bold' }}
+									label="Thời gian kết thúc"
+									labelAlign="left"
+								>
+									<Input
+										value={formatDateToVietnamTimezone(new Date(voucher.end))}
+										readOnly
+									/>
+								</Form.Item>
+							</div>
+
 							<Form.Item
 								wrapperCol={{ span: 24 }}
 								style={{ textAlign: 'right' }}
 							>
 								<>
 									<Button
-										color="primary"
-										variant="outlined"
+										style={{
+											backgroundColor: '#ffae00',
+											color: 'white',
+											marginRight: 8,
+										}}
 										icon={<EditOutlined />}
 										onClick={() => id && handleEdit(id)}
-										style={{ marginRight: 8 }}
 									>
 										Chỉnh sửa
 									</Button>
 									<Button
-										color="danger"
-										variant="outlined"
+										style={{
+											backgroundColor: '#ff2121',
+											color: 'white',
+										}}
 										icon={<DeleteOutlined />}
 										onClick={() => id && handleDelete(id)}
 									>
