@@ -14,6 +14,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
+import ButtonGoBack from '@/components/commons/ButtonGoback';
 import { Class } from '@/schemas/class.schema';
 import { Slot } from '@/schemas/slot.schema';
 import { apiBaseUrl } from '@/utils/apiBase';
@@ -35,6 +36,7 @@ const ClassDetailOfCenter: React.FC = () => {
 	const { classID } = useParams<{ classID: string }>();
 	const [data, setData] = useState<DataType[]>([]);
 	const [classData, setClassData] = useState<Class | null>(null);
+	const [centerID, setCenterID] = useState<string>('');
 	const [loading, setLoading] = useState<boolean>(false);
 	const [dataLoading, setDataLoading] = useState<boolean>(false); // Trạng thái tải riêng cho bảng
 	const [error, setError] = useState<string | null>(null);
@@ -49,6 +51,7 @@ const ClassDetailOfCenter: React.FC = () => {
 				`${apiBaseUrl}/api/classes/${classID}`,
 			);
 			setClassData(fetchClass.data);
+			setCenterID(fetchClass.data.center._id);
 			setTeacherName(fetchClass.data.teacher.fullName);
 			setStudentsCount(fetchClass.data.students?.length ?? 0);
 			setSlotsCount(fetchClass.data.slots?.length ?? 0);
@@ -165,6 +168,9 @@ const ClassDetailOfCenter: React.FC = () => {
 	return (
 		<div style={{ paddingLeft: '270px' }}>
 			<div style={{ textAlign: 'center', marginBottom: 20 }}>
+				<div style={{ textAlign: 'left' }}>
+					<ButtonGoBack link={`/admin/centers/${centerID}/classes`} />
+				</div>
 				<Typography.Title level={2}>{classData.name}</Typography.Title>
 			</div>
 
