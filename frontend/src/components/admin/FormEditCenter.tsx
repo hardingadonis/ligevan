@@ -88,7 +88,7 @@ const FormEditCenter: React.FC = () => {
 				<div style={{ textAlign: 'left' }}>
 					<ButtonGoBack link={`/admin/centers/${id}`} />
 				</div>
-				<h2>Chỉnh sửa trung tâm</h2>
+				<h2>Chỉnh sửa thông tin trung tâm</h2>
 			</div>
 			<div
 				style={{
@@ -99,7 +99,7 @@ const FormEditCenter: React.FC = () => {
 			>
 				<div
 					style={{
-						maxWidth: '800px',
+						maxWidth: '1000px',
 						boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
 						padding: '20px',
 						borderRadius: '8px',
@@ -117,6 +117,7 @@ const FormEditCenter: React.FC = () => {
 						style={{ margin: '15px 20px' }}
 					>
 						<Form.Item
+							style={{ fontWeight: 'bold' }}
 							name="name"
 							label="Tên"
 							rules={[
@@ -126,6 +127,7 @@ const FormEditCenter: React.FC = () => {
 							<Input />
 						</Form.Item>
 						<Form.Item
+							style={{ fontWeight: 'bold' }}
 							name="email"
 							label="Email"
 							rules={[
@@ -136,6 +138,7 @@ const FormEditCenter: React.FC = () => {
 							<Input />
 						</Form.Item>
 						<Form.Item
+							style={{ fontWeight: 'bold' }}
 							name="address"
 							label="Địa chỉ"
 							rules={[
@@ -151,6 +154,7 @@ const FormEditCenter: React.FC = () => {
 							<Input />
 						</Form.Item>
 						<Form.Item
+							style={{ fontWeight: 'bold' }}
 							name="phone"
 							label="Số điện thoại"
 							rules={[{ required: true }, { validator: validatePhone }]}
