@@ -49,3 +49,23 @@ export const updateTeacher = async (
 		throw error;
 	}
 };
+
+export const changeTeacherPassword = async (
+	email: string,
+	currentPassword: string,
+	newPassword: string,
+): Promise<void> => {
+	try {
+		const url = `${apiBaseUrl}/api/teachers/${encodeURIComponent(email)}/change-password`;
+		const requestBody = {
+			currentPassword,
+			newPassword,
+		};
+
+		await axios.put(url, requestBody);
+		console.log('Password changed successfully');
+	} catch (error) {
+		console.error('Error changing password:', error);
+		throw error;
+	}
+};
