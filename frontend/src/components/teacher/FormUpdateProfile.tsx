@@ -25,7 +25,6 @@ import { Teacher } from '@/schemas/teacher.schema';
 import { fetchTeacherData } from '@/services/custom/getTeacherbyToken';
 import { setTeacher, updateTeacherData } from '@/slices/teacher';
 import store from '@/store';
-import { formatDateToUTC } from '@/utils/dateFormat';
 import {
 	validateName,
 	validatePhoneNumber,
@@ -73,9 +72,9 @@ const FormUpdate: React.FC = () => {
 	};
 
 	const handleDateChange = (date: dayjs.Dayjs | null) => {
-		const formattedDate = date ? date.toDate() : new Date();
+		const utcDate = date ? new Date(date.toISOString()) : new Date();
 		if (teacher) {
-			dispatch(setTeacher({ ...teacher, dob: formattedDate }));
+			dispatch(setTeacher({ ...teacher, dob: utcDate }));
 		}
 	};
 
