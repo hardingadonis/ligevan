@@ -1,4 +1,9 @@
-import { GoogleOutlined, LoginOutlined, UserOutlined } from '@ant-design/icons';
+import {
+	GoogleOutlined,
+	LoginOutlined,
+	ReadOutlined,
+	UserOutlined,
+} from '@ant-design/icons';
 import { Button, Modal } from 'antd';
 import React, { useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
@@ -24,6 +29,10 @@ const ButtonLogin: React.FC = () => {
 		navigate('/teacher/login');
 	};
 
+	const handleAdminLogin = () => {
+		navigate('/admin/login');
+	};
+
 	const handleCancel = () => {
 		setIsModalVisible(false);
 	};
@@ -47,7 +56,11 @@ const ButtonLogin: React.FC = () => {
 				{!isMobile && 'Đăng nhập'}
 			</Button>
 			<Modal
-				title={<div style={{ textAlign: 'center' }}>Chọn loại đăng nhập</div>}
+				title={
+					<div style={{ textAlign: 'center', marginBottom: '20px' }}>
+						Chọn phương thức đăng nhập
+					</div>
+				}
 				visible={isModalVisible}
 				onCancel={handleCancel}
 				footer={null}
@@ -56,19 +69,32 @@ const ButtonLogin: React.FC = () => {
 					type="primary"
 					size="large"
 					onClick={handleStudentLogin}
-					style={{ width: '100%', marginBottom: '10px' }}
+					style={{
+						width: '100%',
+						marginBottom: '15px',
+						backgroundColor: '#0cd14e',
+					}}
 					icon={<GoogleOutlined />}
 				>
-					Đăng nhập dành cho học sinh
+					Đăng nhập dành cho Học sinh
 				</Button>
 				<Button
 					type="primary"
 					size="large"
 					onClick={handleTeacherLogin}
-					style={{ width: '100%' }}
+					style={{ width: '100%', marginBottom: '15px' }}
+					icon={<ReadOutlined />}
+				>
+					Đăng nhập dành cho Giáo viên
+				</Button>
+				<Button
+					type="primary"
+					size="large"
+					onClick={handleAdminLogin}
+					style={{ width: '100%', backgroundColor: '#ff2121' }}
 					icon={<UserOutlined />}
 				>
-					Đăng nhập dành cho giáo viên
+					Đăng nhập dành cho Quản trị viên
 				</Button>
 			</Modal>
 		</>

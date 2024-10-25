@@ -56,6 +56,7 @@ const LoginTeacher: React.FC = () => {
 			localStorage.setItem('teacherEmail', values.email);
 
 			navigate('/teacher/classes');
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		} catch (error: any) {
 			setError('Đăng nhập thất bại. Vui lòng kiểm tra lại email và mật khẩu.');
 			console.error(

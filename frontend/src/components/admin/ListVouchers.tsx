@@ -5,7 +5,7 @@ import {
 	SearchOutlined,
 	SyncOutlined,
 } from '@ant-design/icons';
-import { Button, Empty, Input, Modal, Table, notification } from 'antd';
+import { Button, Empty, Input, Modal, Table, message } from 'antd';
 import type { TableColumnsType, TableProps } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -31,8 +31,12 @@ const ListVouchers: React.FC = () => {
 	const fetchData = async () => {
 		try {
 			const vouchers: Voucher[] = await getAllVoucher();
-			console.log('Danh sách mã giảm giá:', vouchers);
-			const tableData = vouchers.map((voucher, index) => ({
+			const sortedVouchers = vouchers.sort((a, b) => {
+				const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+				const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+				return dateB - dateA;
+			});
+			const tableData = sortedVouchers.map((voucher, index) => ({
 				key: (index + 1).toString(),
 				code: voucher.code,
 				title: voucher.title,
@@ -49,22 +53,20 @@ const ListVouchers: React.FC = () => {
 
 	useEffect(() => {
 		fetchData();
-	});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	const renderActions = (id: string): JSX.Element => (
 		<div>
 			<Button
-				color="primary"
-				variant="outlined"
+				style={{ backgroundColor: '#4096ff', color: 'white', marginRight: 8 }}
 				icon={<EyeOutlined />}
 				onClick={() => handleViewDetail(id)}
-				style={{ marginRight: 8 }}
 			>
 				Chi tiết
 			</Button>
 			<Button
-				color="danger"
-				variant="outlined"
+				style={{ backgroundColor: '#ff2121', color: 'white' }}
 				icon={<DeleteOutlined />}
 				onClick={() => handleDelete(id)}
 			>
@@ -87,26 +89,18 @@ const ListVouchers: React.FC = () => {
 			onOk: async () => {
 				try {
 					await deleteVoucher(id);
-					notification.success({
-						message: 'Xóa thành công',
-						description: 'Mã giảm giá đã được xóa thành công.',
-						duration: 3,
-					});
+					message.success('Mã giảm giá đã được xóa thành công!', 3);
 					navigate(`/admin/vouchers`);
 				} catch (error) {
 					console.error('Lỗi khi xóa mã giảm giá:', error);
-					notification.error({
-						message: 'Lỗi',
-						description: 'Đã xảy ra lỗi khi xóa mã giảm giá.',
-						duration: 3,
-					});
+					message.error('Lỗi: Đã xảy ra lỗi khi xóa mã giảm giá!', 3);
 				}
 			},
 		});
 	};
 
-	const handleCreateNewvoucher = () => {
-		console.log('Tạo mã giảm giá mới');
+	const handleCreateVoucher = () => {
+		navigate(`/admin/vouchers/create`);
 	};
 
 	const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -122,9 +116,7 @@ const ListVouchers: React.FC = () => {
 			item.key.toLowerCase().includes(searchText.toLowerCase()) ||
 			item.code.toLowerCase().includes(searchText.toLowerCase()) ||
 			item.title.toLowerCase().includes(searchText.toLowerCase()) ||
-			item.value.toString().toLowerCase().includes(searchText.toLowerCase()) ||
-			item.start.toString().toLowerCase().includes(searchText.toLowerCase()) ||
-			item.end.toString().toLowerCase().includes(searchText.toLowerCase()),
+			item.value.toString().includes(searchText),
 	);
 
 	const columns: TableColumnsType<DataType> = [
@@ -173,7 +165,7 @@ const ListVouchers: React.FC = () => {
 	};
 
 	return (
-		<div style={{ padding: '65px 20px 0 270px' }}>
+		<div style={{ paddingLeft: '270px' }}>
 			<div style={{ textAlign: 'center', marginBottom: 20 }}>
 				<h2>Tất cả các mã giảm giá</h2>
 			</div>
@@ -187,9 +179,9 @@ const ListVouchers: React.FC = () => {
 			>
 				<div>
 					<Button
-						type="primary"
+						style={{ backgroundColor: '#0cd14e', color: 'white' }}
 						icon={<PlusOutlined />}
-						onClick={handleCreateNewvoucher}
+						onClick={handleCreateVoucher}
 					>
 						Tạo mã giảm giá mới
 					</Button>
@@ -229,7 +221,7 @@ const ListVouchers: React.FC = () => {
 							/>
 						),
 					}}
-					pagination={{ pageSize: 10 }}
+					pagination={{ pageSize: 7 }}
 					rowClassName={(_, index) =>
 						index % 2 === 0 ? 'table-row-even' : 'table-row-odd'
 					}

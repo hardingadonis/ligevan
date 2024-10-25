@@ -12,13 +12,14 @@ import {
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import ButtonGoBack from '@/components/commons/ButtonGoback';
 import { Course } from '@/schemas/course.schema';
 import { deleteCourse, getCourseById } from '@/services/api/course';
 import { formatPrice } from '@/utils/formatPrice';
 
 const { Title } = Typography;
 
-const DetailOfCourse: React.FC = () => {
+const CourseDetail: React.FC = () => {
 	const { id } = useParams<{ id: string }>();
 	const [course, setCourse] = useState<Course | null>(null);
 	const navigate = useNavigate();
@@ -44,7 +45,7 @@ const DetailOfCourse: React.FC = () => {
 	}
 
 	const handleEdit = () => {
-		console.log(`Chỉnh sửa khóa học: ${course._id}`);
+		navigate(`/admin/courses/edit/${course._id}`);
 	};
 
 	const handleDelete = async (id: string) => {
@@ -76,19 +77,22 @@ const DetailOfCourse: React.FC = () => {
 	};
 
 	return (
-		<div style={{ padding: '0 20px 0 270px' }}>
-			<Title level={3} style={{ textAlign: 'center', marginBottom: '20px' }}>
-				Chi tiết Khóa học
-			</Title>
+		<div style={{ paddingLeft: '270px' }}>
+			<div style={{ textAlign: 'center', marginBottom: 20 }}>
+				<div style={{ textAlign: 'left' }}>
+					<ButtonGoBack link="/admin/courses" />
+				</div>
+				<h2>Chi tiết khóa học</h2>
+			</div>
 
 			<Card
 				style={{
-					padding: '20px',
-					borderRadius: '8px',
-					boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-					backgroundColor: '#f5f5f5',
-					width: '900px',
+					maxWidth: '1000px',
 					margin: '0 auto',
+					padding: '10px 90px',
+					boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+					borderRadius: '8px',
+					backgroundColor: '#f5f5f5',
 				}}
 			>
 				<Row gutter={[16, 16]}>
@@ -142,51 +146,46 @@ const DetailOfCourse: React.FC = () => {
 								margin: '0 auto',
 							}}
 						>
-							<Title level={5}>Thumbnail</Title>
+							<Title level={5}>Ảnh mô tả</Title>
 							<img
 								src={course.thumbnail}
 								alt="Thumbnail"
 								style={{
 									maxWidth: '100%',
-									maxHeight: '150px',
+									maxHeight: '200px',
 									objectFit: 'contain',
 								}}
 							/>
 						</Card>
 					</Col>
 				</Row>
-			</Card>
 
-			<div style={{ marginTop: '60px', textAlign: 'right' }}>
-				<Button
-					type="primary"
-					icon={<EditOutlined style={{ color: 'blue' }} />}
-					onClick={handleEdit}
-					style={{
-						marginRight: '20px',
-						backgroundColor: 'white',
-						borderColor: 'blue',
-						color: 'blue',
-					}}
-				>
-					Chỉnh sửa
-				</Button>
-				<Button
-					type="primary"
-					danger
-					icon={<DeleteOutlined style={{ color: 'red' }} />}
-					onClick={() => id && handleDelete(id)}
-					style={{
-						backgroundColor: 'white',
-						borderColor: 'red',
-						color: 'red',
-					}}
-				>
-					Xóa
-				</Button>
-			</div>
+				<div style={{ paddingTop: '20px', textAlign: 'right' }}>
+					<Button
+						icon={<EditOutlined />}
+						onClick={handleEdit}
+						style={{
+							marginRight: '20px',
+							backgroundColor: '#ffae00',
+							color: 'white',
+						}}
+					>
+						Chỉnh sửa
+					</Button>
+					<Button
+						style={{
+							backgroundColor: '#ff2121',
+							color: 'white',
+						}}
+						icon={<DeleteOutlined />}
+						onClick={() => id && handleDelete(id)}
+					>
+						Xóa
+					</Button>
+				</div>
+			</Card>
 		</div>
 	);
 };
 
-export default DetailOfCourse;
+export default CourseDetail;

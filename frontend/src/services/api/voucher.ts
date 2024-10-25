@@ -23,10 +23,9 @@ export const getVoucherById = async (id: string): Promise<Voucher> => {
 	}
 };
 
-export const createVoucher = async (voucher: Voucher): Promise<Voucher> => {
+export const createVoucher = async (voucher: Voucher): Promise<void> => {
 	try {
-		const response = await axios.post(`${apiBaseUrl}/api/vouchers`, voucher);
-		return response.data;
+		await axios.post(`${apiBaseUrl}/api/vouchers`, voucher);
 	} catch (error) {
 		console.error('Error creating voucher:', error);
 		throw error;
@@ -54,6 +53,18 @@ export const deleteVoucher = async (id: string): Promise<void> => {
 		await axios.delete(`${apiBaseUrl}/api/vouchers/${id}`);
 	} catch (error) {
 		console.error('Error deleting voucher:', error);
+		throw error;
+	}
+};
+
+export const checkVoucherCodeExists = async (
+	code: string,
+): Promise<boolean> => {
+	try {
+		const listVouchers = await getAllVoucher();
+		return listVouchers.some((voucher) => voucher.code === code);
+	} catch (error) {
+		console.error('Error checking voucher code:', error);
 		throw error;
 	}
 };

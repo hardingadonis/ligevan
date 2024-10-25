@@ -1,4 +1,15 @@
-export const formatPrice = (value: number | undefined): string => {
+const formatNumber = (
+	value: number | undefined,
+	options: Intl.NumberFormatOptions,
+): string => {
 	if (value === undefined || value === null) return '';
-	return value.toLocaleString('vi-VN');
+	return new Intl.NumberFormat('vi-VN', options).format(value);
+};
+
+export const formatPrice = (value: number | undefined): string => {
+	return formatNumber(value, { style: 'currency', currency: 'VND' });
+};
+
+export const formatPriceWithoutSymbol = (value: number | undefined): string => {
+	return formatNumber(value, { style: 'decimal' });
 };

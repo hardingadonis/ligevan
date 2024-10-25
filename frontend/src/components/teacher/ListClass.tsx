@@ -64,6 +64,7 @@ const ListClass: React.FC<ListClassProps> = ({ email }) => {
 
 	useEffect(() => {
 		fetchClassesForTeacher();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [email]);
 
 	const renderActions = (id: string): JSX.Element => (
@@ -151,7 +152,7 @@ const ListClass: React.FC<ListClassProps> = ({ email }) => {
 	};
 
 	return (
-		<div style={{ padding: '65px 20px 0 270px' }}>
+		<div style={{ paddingLeft: '270px' }}>
 			<div style={{ textAlign: 'center', marginBottom: 20 }}>
 				<h2>Danh sách lớp học</h2>
 			</div>

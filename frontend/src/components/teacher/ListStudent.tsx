@@ -81,6 +81,7 @@ const ListStudent: React.FC<ListStudentProps> = ({ classID }) => {
 
 	useEffect(() => {
 		fetchListStudent();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [classID]);
 
 	const renderActions = (id: string): JSX.Element => (
@@ -93,15 +94,6 @@ const ListStudent: React.FC<ListStudentProps> = ({ classID }) => {
 		>
 			Chi tiết
 		</Button>
-		// 	<Button
-		// 	color="primary"
-		// 	variant="outlined"
-		// 	icon={<EyeOutlined />}
-		// 	onClick={() => handleDetail(id)}
-		// 	style={{ marginRight: 8 }}
-		// >
-		// 	Chi tiết
-		// </Button>
 	);
 
 	const handleDetail = (id: string) => {
@@ -177,7 +169,7 @@ const ListStudent: React.FC<ListStudentProps> = ({ classID }) => {
 	};
 
 	return (
-		<div style={{ padding: '65px 20px 0 270px' }}>
+		<div style={{ paddingLeft: '270px' }}>
 			<div style={{ textAlign: 'center', marginBottom: 20 }}>
 				<h2>CHI TIẾT LỚP {className.toUpperCase()}</h2>
 			</div>

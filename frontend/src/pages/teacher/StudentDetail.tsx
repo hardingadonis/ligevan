@@ -1,9 +1,10 @@
+// import axios from 'axios';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import ListClass from '@/components/teacher/ListClass';
+import StudentDetailForTeacher from '@/components/teacher/StudentDetail';
 import TeacherLayout from '@/layouts/teacher';
 import {
 	selectEmail,
@@ -13,7 +14,7 @@ import {
 } from '@/slices/teacher';
 import { apiBaseUrl } from '@/utils/apiBase';
 
-const ClassesPage: React.FC = () => {
+const StudentDetail: React.FC = () => {
 	const email = useSelector(selectEmail);
 	const token = useSelector(selectToken);
 	const [isMounted, setIsMounted] = useState(false);
@@ -29,7 +30,6 @@ const ClassesPage: React.FC = () => {
 			const responseAvatar = await axios.get(
 				apiBaseUrl + `/api/teachers/email/${email}`,
 			);
-
 			if (responseAvatar.data.avatar && responseAvatar.data.fullName) {
 				dispatch(setAvatar(responseAvatar.data.avatar));
 				dispatch(setFullName(responseAvatar.data.fullName));
@@ -41,12 +41,13 @@ const ClassesPage: React.FC = () => {
 
 	if (!isMounted) {
 		return null;
-	} else
+	} else {
 		return (
 			<TeacherLayout>
-				<ListClass email={email ?? ''} />
+				<StudentDetailForTeacher />
 			</TeacherLayout>
 		);
+	}
 };
 
-export default ClassesPage;
+export default StudentDetail;

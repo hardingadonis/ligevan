@@ -34,7 +34,9 @@ const StudentLayoutNoSidebar: React.FC<StudentLayoutProps> = ({
 	const rightComponent = token ? <DropdownProfile /> : <ButtonLogin />;
 
 	const showDropdownCenter =
-		location.pathname === '/student' || location.pathname === '/student/login';
+		location.pathname === '/student' ||
+		location.pathname === '/student/login' ||
+		location.pathname === '/student/';
 
 	return (
 		<Layout style={{ minHeight: '100vh' }}>

@@ -1,21 +1,21 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import CourseForm from '@/components/admin/FormCreateCourse';
+import CenterForm from '@/components/admin/FormCreateCenter';
 import AdminLayout from '@/layouts/admin';
 
-const CreateCoursePage: React.FC = () => {
+const CreateCenterPage: React.FC = () => {
 	const navigate = useNavigate();
 
 	const handleGoBack = () => {
-		navigate('/admin/courses');
+		navigate('/admin/centers');
 	};
 
 	return (
 		<AdminLayout>
-			<CourseForm onSuccess={handleGoBack} />
+			<CenterForm onSuccess={handleGoBack} />
 		</AdminLayout>
 	);
 };
 
-export default CreateCoursePage;
+export default CreateCenterPage;
