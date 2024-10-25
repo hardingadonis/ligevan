@@ -21,6 +21,9 @@ const AdminCoursesManagement = lazy(
 const AdminVouchersManagement = lazy(
 	() => import('@/pages/admin/VouchersManagement'),
 );
+const AdminSchedulesManagement = lazy(
+	() => import('@/pages/admin/SchedulesManagement'),
+);
 const AdminCenterCreate = lazy(() => import('@/pages/admin/CenterCreate'));
 const AdminCourseCreate = lazy(() => import('@/pages/admin/CourseCreate'));
 const AdminVoucherCreate = lazy(() => import('@/pages/admin/VoucherCreate'));
@@ -257,6 +260,17 @@ const App: React.FC = () => {
 					<Route
 						path="/admin"
 						element={<Navigate replace to="/admin/dashboard" />}
+					/>
+					<Route
+						path="/admin/schedules"
+						element={
+							<ProtectedRoute
+								redirectPath="/admin/login"
+								tokenName="accessToken"
+							>
+								<AdminSchedulesManagement />
+							</ProtectedRoute>
+						}
 					/>
 
 					{/* Teacher Routes */}

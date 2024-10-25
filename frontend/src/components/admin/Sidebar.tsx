@@ -1,6 +1,7 @@
 import {
 	BankOutlined,
 	BookOutlined,
+	CalendarOutlined,
 	DashboardOutlined,
 	TagsOutlined,
 } from '@ant-design/icons';
@@ -18,6 +19,7 @@ const AdminSidebar: React.FC = () => {
 		'/admin/centers': 'centers',
 		'/admin/courses': 'courses',
 		'/admin/vouchers': 'vouchers',
+		'/admin/schedules': 'schedules',
 	};
 
 	useEffect(() => {
@@ -50,6 +52,11 @@ const AdminSidebar: React.FC = () => {
 			'vouchers',
 			<TagsOutlined style={{ fontSize: '18px' }} />,
 		),
+		getItem(
+			'Xếp lịch học',
+			'schedules',
+			<CalendarOutlined style={{ fontSize: '18px' }} />,
+		),
 	];
 
 	const menuConfig = {
@@ -57,6 +64,7 @@ const AdminSidebar: React.FC = () => {
 		centers: '/admin/centers',
 		courses: '/admin/courses',
 		vouchers: '/admin/vouchers',
+		schedules: '/admin/schedules',
 	};
 
 	return (
