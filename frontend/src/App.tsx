@@ -46,6 +46,8 @@ const LoginTeacher = lazy(() => import('@/pages/teacher/Login'));
 const ClassesPage = lazy(() => import('@/pages/teacher/Classes'));
 const ClassDetail = lazy(() => import('@/pages/teacher/ClassDetail'));
 const StudentDetail = lazy(() => import('@/pages/teacher/StudentDetail'));
+const TeacherProfile = lazy(() => import('@/pages/teacher/Profile'));
+const EditTeacherProfile = lazy(() => import('@/pages/teacher/EditProfile'));
 
 // Student lazy load
 const HomepageStudent = lazy(() => import('@/pages/student/Homepage'));
@@ -270,6 +272,22 @@ const App: React.FC = () => {
 					<Route
 						path="/teacher"
 						element={<Navigate to="/teacher/classes" replace />}
+					/>
+					<Route
+						path="/teacher/profile"
+						element={
+							<ProtectedRoute redirectPath="/teacher" tokenName="teacherToken">
+								<TeacherProfile />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="/teacher/profile/edit"
+						element={
+							<ProtectedRoute redirectPath="/teacher" tokenName="teacherToken">
+								<EditTeacherProfile />
+							</ProtectedRoute>
+						}
 					/>
 
 					{/* Student Routes */}
