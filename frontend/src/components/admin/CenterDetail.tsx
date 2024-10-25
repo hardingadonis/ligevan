@@ -20,7 +20,7 @@ import { deleteCenter, getCenterById } from '@/services/api/center';
 
 const { Title } = Typography;
 
-const DetailOfCenter: React.FC = () => {
+const CenterDetail: React.FC = () => {
 	const { id } = useParams<{ id: string }>();
 	const [center, setCenter] = useState<Center | null>(null);
 	const navigate = useNavigate();
@@ -47,7 +47,7 @@ const DetailOfCenter: React.FC = () => {
 	}
 
 	const handleEdit = () => {
-		console.log(`Chỉnh sửa trung tâm: ${center._id}`);
+		navigate(`/admin/centers/edit/${center._id}`);
 	};
 
 	const handleDelete = async () => {
@@ -97,7 +97,7 @@ const DetailOfCenter: React.FC = () => {
 	];
 
 	return (
-		<div style={{ padding: '0 20px 0 270px' }}>
+		<div style={{ paddingLeft: '270px' }}>
 			<Title level={3} style={{ textAlign: 'center', marginBottom: '20px' }}>
 				Chi tiết trung tâm
 			</Title>
@@ -207,4 +207,4 @@ const DetailOfCenter: React.FC = () => {
 	);
 };
 
-export default DetailOfCenter;
+export default CenterDetail;

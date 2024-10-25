@@ -30,7 +30,7 @@ const StudentDetail: React.FC = () => {
 				`${apiBaseUrl}/api/students/${studentID}`,
 			);
 			setStudent(fetchStudent.data);
-		} catch (err) {
+		} catch {
 			setError('Không thể tải thông tin chi tiết của học sinh');
 		} finally {
 			setLoading(false);
@@ -50,7 +50,7 @@ const StudentDetail: React.FC = () => {
 		);
 
 	return (
-		<div style={{ padding: '65px 20px 0 270px' }}>
+		<div style={{ paddingLeft: '270px' }}>
 			<div style={{ textAlign: 'center', marginBottom: 20 }}>
 				<Typography.Title level={2}>THÔNG TIN HỌC SINH</Typography.Title>
 			</div>

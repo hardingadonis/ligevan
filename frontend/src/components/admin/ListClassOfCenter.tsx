@@ -1,56 +1,62 @@
-import { EyeOutlined, SearchOutlined, SyncOutlined } from '@ant-design/icons';
+import {
+	DeleteOutlined,
+	EyeOutlined,
+	PlusOutlined,
+	SearchOutlined,
+	SyncOutlined,
+} from '@ant-design/icons';
 import { Alert, Button, Empty, Input, Spin, Table } from 'antd';
-import type { TableColumnsType, TableProps } from 'antd';
+import type { TableColumnsType } from 'antd';
+import { TableProps } from 'antd/lib';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
+import { Center } from '@/schemas/center.schema';
 import { Class } from '@/schemas/class.schema';
-import { Teacher } from '@/schemas/teacher.schema';
 import { apiBaseUrl } from '@/utils/apiBase';
 
 interface DataType {
 	key: string;
 	name: string;
+	teacher: string;
 	students: string;
 	slots: string;
-	course: string;
 	actions: JSX.Element;
 }
 
-interface ListClassProps {
-	email: string;
-}
-
-const ListClass: React.FC<ListClassProps> = ({ email }) => {
+const ListClassOfCenter: React.FC = () => {
+	const { centerID } = useParams<{ centerID: string }>();
 	const navigate = useNavigate();
 	const [data, setData] = useState<DataType[]>([]);
 	const [loading, setLoading] = useState<boolean>(false);
 	const [error, setError] = useState<string | null>(null);
 	const [searchText, setSearchText] = useState<string>('');
 
-	const fetchClassesForTeacher = async () => {
+	const fetchClass = async () => {
 		setLoading(true);
 		try {
-			const teacherResponse = await axios.get<Teacher>(
-				apiBaseUrl + `/api/teachers/email/${email}`,
+			const centerResponse = await axios.get<Center>(
+				apiBaseUrl + `/api/centers/${centerID}`,
 			);
-			const teacher = teacherResponse.data;
-			const teacherClasses = teacher.classes || [];
+			const center = centerResponse.data;
+			const classList = center.classes || [];
 
-			const classRequests = teacherClasses.map((cls) =>
-				axios.get<Class>(apiBaseUrl + `/api/classes/${cls}`),
+			const classRequests = classList.map((cls) =>
+				axios.get<Class>(apiBaseUrl + `/api/classes/${cls._id}`),
 			);
 
 			const classResponses = await Promise.all(classRequests);
-			const fullClasses = classResponses.map((response) => response.data);
+			const fullClass = classResponses.map((response) => response.data);
 
-			const tableData = fullClasses.map((cls, index) => ({
+			console.log(JSON.stringify(fullClass, null, 2));
+
+			const tableData = fullClass.map((cls, index) => ({
 				key: (index + 1).toString(),
 				name: cls.name,
+				teacher: cls.teacher.fullName,
 				students: (cls.students?.length ?? 0).toString(),
 				slots: (cls.slots?.length ?? 0).toString(),
-				course: cls.course.title,
 				actions: renderActions(cls._id),
 			}));
 
@@ -63,41 +69,52 @@ const ListClass: React.FC<ListClassProps> = ({ email }) => {
 	};
 
 	useEffect(() => {
-		fetchClassesForTeacher();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [email]);
+		fetchClass();
+	}, []);
 
 	const renderActions = (id: string): JSX.Element => (
-		<Button
-			color="default"
-			variant="solid"
-			type="primary"
-			icon={<EyeOutlined />}
-			onClick={() => handleDetail(id)}
-			style={{ marginRight: 8 }}
-		>
-			Chi tiết
-		</Button>
+		<div>
+			<Button
+				icon={<EyeOutlined />}
+				onClick={() => handleDetail(id)}
+				style={{ marginRight: 8, backgroundColor: '#4096ff', color: 'white' }}
+			>
+				Chi tiết
+			</Button>
+			<Button
+				color="default"
+				variant="solid"
+				type="primary"
+				icon={<DeleteOutlined />}
+				style={{ marginRight: 8, backgroundColor: '#ff2121', color: 'white' }}
+			>
+				Xóa
+			</Button>
+		</div>
 	);
 
 	const handleDetail = (id: string) => {
-		navigate(`/teacher/classes/${id}`);
+		navigate(`/admin/centers/classes/${id}`);
 	};
 
 	const handleRefresh = () => {
-		fetchClassesForTeacher();
+		fetchClass();
 	};
 
 	const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchText(e.target.value);
 	};
 
+	const handleCreateNewTeacher = () => {
+		navigate('/admin/courses/classes/create');
+	};
+
 	const filteredData = data.filter(
 		(item) =>
 			item.name.toLowerCase().includes(searchText.toLowerCase()) ||
+			item.teacher.toLowerCase().includes(searchText.toLowerCase()) ||
 			item.students.toLowerCase().includes(searchText.toLowerCase()) ||
-			item.slots.toLowerCase().includes(searchText.toLowerCase()) ||
-			item.course.toLowerCase().includes(searchText.toLowerCase()),
+			item.slots.toLowerCase().includes(searchText.toLowerCase()),
 	);
 
 	const columns: TableColumnsType<DataType> = [
@@ -109,28 +126,28 @@ const ListClass: React.FC<ListClassProps> = ({ email }) => {
 			sorter: (a, b) => parseInt(a.key) - parseInt(b.key),
 		},
 		{
-			title: <div style={{ textAlign: 'center' }}>Tên Lớp</div>,
+			title: <div style={{ textAlign: 'center' }}>Tên lớp học</div>,
 			dataIndex: 'name',
 			width: '25%',
 			sorter: (a, b) => a.name.localeCompare(b.name),
 		},
 		{
-			title: <div style={{ textAlign: 'center' }}>Khóa học</div>,
-			dataIndex: 'course',
-			width: '30%',
-			sorter: (a, b) => a.course.localeCompare(b.course),
+			title: <div style={{ textAlign: 'center' }}>Tên giáo viên</div>,
+			dataIndex: 'teacher',
+			width: '20%',
+			sorter: (a, b) => a.teacher.localeCompare(b.teacher),
 		},
 		{
 			title: <div style={{ textAlign: 'center' }}>Học sinh</div>,
 			dataIndex: 'students',
-			width: '15%',
+			width: '10%',
 			align: 'center',
 			sorter: (a, b) => parseInt(a.students) - parseInt(b.students),
 		},
 		{
 			title: <div style={{ textAlign: 'center' }}>Tiết học</div>,
 			dataIndex: 'slots',
-			width: '15%',
+			width: '10%',
 			align: 'center',
 			sorter: (a, b) => parseInt(a.slots) - parseInt(b.slots),
 		},
@@ -138,7 +155,7 @@ const ListClass: React.FC<ListClassProps> = ({ email }) => {
 			title: <div style={{ textAlign: 'center' }}>Thao tác</div>,
 			dataIndex: 'actions',
 			align: 'center',
-			width: '10%',
+			width: '20%',
 		},
 	];
 
@@ -160,25 +177,34 @@ const ListClass: React.FC<ListClassProps> = ({ email }) => {
 			<div
 				style={{
 					display: 'flex',
-					justifyContent: 'flex-end',
+					justifyContent: 'space-between',
 					marginBottom: '20px',
 				}}
 			>
 				<Button
-					type="default"
-					icon={<SyncOutlined />}
-					onClick={handleRefresh}
-					style={{ marginRight: 8 }}
+					style={{ marginRight: 8, backgroundColor: '#0cd14e', color: 'white' }}
+					icon={<PlusOutlined />}
+					onClick={handleCreateNewTeacher}
 				>
-					{' '}
-					Làm mới
+					Tạo lớp học mới
 				</Button>
-				<Input
-					placeholder="Tìm kiếm"
-					onChange={handleSearch}
-					style={{ width: 200 }}
-					prefix={<SearchOutlined />}
-				/>
+				<div>
+					<Button
+						type="default"
+						icon={<SyncOutlined />}
+						onClick={handleRefresh}
+						style={{ marginRight: 8 }}
+					>
+						{' '}
+						Làm mới
+					</Button>
+					<Input
+						placeholder="Tìm kiếm"
+						onChange={handleSearch}
+						style={{ width: 200 }}
+						prefix={<SearchOutlined />}
+					/>
+				</div>
 			</div>
 
 			{loading && <Spin size="large" />}
@@ -199,7 +225,7 @@ const ListClass: React.FC<ListClassProps> = ({ email }) => {
 								/>
 							),
 						}}
-						pagination={{ pageSize: 10 }}
+						pagination={{ pageSize: 7 }}
 						rowClassName={(_, index) =>
 							index % 2 === 0 ? 'table-row-even' : 'table-row-odd'
 						}
@@ -215,4 +241,4 @@ const ListClass: React.FC<ListClassProps> = ({ email }) => {
 	);
 };
 
-export default ListClass;
+export default ListClassOfCenter;

@@ -71,3 +71,13 @@ export const validateDiscount = (discount: string): boolean => {
 	const trimmedDiscount = trimInput(discount);
 	return isValidDiscount(trimmedDiscount);
 };
+
+const isValidNumber = (input: string): boolean => {
+	const numberRegex = /^\d+$/;
+	return numberRegex.test(input);
+};
+
+export const validateNumber = (input: string): boolean => {
+	const trimmedInput = trimInput(input);
+	return isValidNumber(trimmedInput);
+};

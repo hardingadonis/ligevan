@@ -14,11 +14,17 @@ const StudentProfile = lazy(() => import('@/pages/student/Profile'));
 const EditProfileStudent = lazy(() => import('@/pages/student/EditProfile'));
 const StudentClassList = lazy(() => import('@/pages/student/ClassList'));
 const StudentCourseDetail = lazy(() => import('@/pages/student/CourseDetail'));
+const AttendencesReport = lazy(
+	() => import('@/pages/student/AttendencesReport'),
+);
 const ClassesPage = lazy(() => import('@/pages/teacher/Classes'));
 const ClassDetail = lazy(() => import('@/pages/teacher/ClassDetail'));
 const StudentDetail = lazy(() => import('@/pages/teacher/StudentDetail'));
+const TeacherProfile = lazy(() => import('@/pages/teacher/Profile'));
 
 const AdminDashboard = lazy(() => import('@/pages/admin/Dashboard'));
+const ListTeacher = lazy(() => import('@/pages/admin/ListTeacher'));
+const ListClass = lazy(() => import('@/pages/admin/ListClass'));
 const AdminCoursesManagement = lazy(
 	() => import('@/pages/admin/CoursesManagement'),
 );
@@ -26,6 +32,7 @@ const AdminVouchersManagement = lazy(
 	() => import('@/pages/admin/VouchersManagement'),
 );
 const AdminVoucherDetail = lazy(() => import('@/pages/admin/VoucherDetail'));
+const AdminVoucherEdit = lazy(() => import('@/pages/admin/VoucherEdit'));
 const LoginTeacher = lazy(() => import('@/pages/teacher/Login'));
 const AdminLogin = lazy(() => import('@/pages/admin/Login'));
 const AdminCenterCreate = lazy(() => import('@/pages/admin/CenterCreate'));
@@ -35,10 +42,16 @@ const AdminCentersManagement = lazy(
 	() => import('@/pages/admin/CentersManagement'),
 );
 const AdminCenterEdit = lazy(() => import('@/pages/admin/CenterEdit'));
+const AdminCourseEdit = lazy(() => import('@/pages/admin/CourseEdit'));
 
 const CourseDetail = lazy(() => import('@/pages/admin/CourseDetail'));
-
 const CenterDetail = lazy(() => import('@/pages/admin/CenterDetail'));
+
+const ListCoursesCenter = lazy(() => import('@/pages/admin/ListCoursesCenter'));
+
+const ListVouchersCenter = lazy(
+	() => import('@/pages/admin/ListVouchersCenter'),
+);
 
 const App: React.FC = () => {
 	return (
@@ -56,7 +69,11 @@ const App: React.FC = () => {
 					<Route path="/student/login" element={<HomepageStudent />} />
 					<Route
 						path="/student/courses/:courseID/:centerID"
-						element={<StudentCourseDetail />}
+						element={
+							<ProtectedRoute redirectPath="/student" tokenName="token">
+								<StudentCourseDetail />
+							</ProtectedRoute>
+						}
 					/>
 					<Route
 						path="/student/profile"
@@ -82,6 +99,14 @@ const App: React.FC = () => {
 							</ProtectedRoute>
 						}
 					/>
+					<Route
+						path="/student/classes/:classID"
+						element={
+							<ProtectedRoute redirectPath="/student" tokenName="token">
+								<AttendencesReport />
+							</ProtectedRoute>
+						}
+					/>
 					<Route path="/teacher/login" element={<LoginTeacher />} />
 					<Route path="/teacher/classes" element={<ClassesPage />} />
 					<Route path="/teacher/classes/:id" element={<ClassDetail />} />
@@ -92,6 +117,17 @@ const App: React.FC = () => {
 					<Route
 						path="/teacher"
 						element={<Navigate to="/teacher/classes" replace />}
+					/>
+					<Route
+						path="/teacher/profile"
+						element={
+							<ProtectedRoute
+								redirectPath="/teacher/login"
+								tokenName="teacherToken"
+							>
+								<TeacherProfile />
+							</ProtectedRoute>
+						}
 					/>
 					<Route path="/admin/login" element={<AdminLogin />} />
 					<Route
@@ -113,6 +149,56 @@ const App: React.FC = () => {
 								tokenName="accessToken"
 							>
 								<CenterDetail />
+							</ProtectedRoute>
+						}
+					/>
+
+					{/* ------------------ */}
+					<Route
+						path="/admin/centers/:id/courses"
+						element={
+							<ProtectedRoute
+								redirectPath="/admin/login"
+								tokenName="accessToken"
+							>
+								<ListCoursesCenter />
+							</ProtectedRoute>
+						}
+					/>
+
+					<Route
+						path="/admin/centers/:id/vouchers"
+						element={
+							<ProtectedRoute
+								redirectPath="/admin/login"
+								tokenName="accessToken"
+							>
+								<ListVouchersCenter />
+							</ProtectedRoute>
+						}
+					/>
+
+					{/* ------------------ */}
+
+					<Route
+						path="/admin/centers/:centerID/teachers"
+						element={
+							<ProtectedRoute
+								redirectPath="/admin/login"
+								tokenName="accessToken"
+							>
+								<ListTeacher />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="/admin/centers/:centerID/classes"
+						element={
+							<ProtectedRoute
+								redirectPath="/admin/login"
+								tokenName="accessToken"
+							>
+								<ListClass />
 							</ProtectedRoute>
 						}
 					/>
@@ -146,6 +232,17 @@ const App: React.FC = () => {
 								tokenName="accessToken"
 							>
 								<AdminVoucherDetail />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="/admin/vouchers/:id/edit"
+						element={
+							<ProtectedRoute
+								redirectPath="/admin/login"
+								tokenName="accessToken"
+							>
+								<AdminVoucherEdit />
 							</ProtectedRoute>
 						}
 					/>
@@ -219,6 +316,17 @@ const App: React.FC = () => {
 								tokenName="accessToken"
 							>
 								<AdminCenterEdit />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="/admin/courses/edit/:id"
+						element={
+							<ProtectedRoute
+								redirectPath="/admin/login"
+								tokenName="accessToken"
+							>
+								<AdminCourseEdit />
 							</ProtectedRoute>
 						}
 					/>

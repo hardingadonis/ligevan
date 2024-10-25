@@ -15,6 +15,7 @@ import 'dayjs/locale/vi';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import ButtonGoBack from '@/components/commons/ButtonGoback';
 import { Voucher } from '@/schemas/voucher.schema';
 import { checkVoucherCodeExists, createVoucher } from '@/services/api/voucher';
 import { validateCode, validateDiscount } from '@/utils/inputValidate';
@@ -54,10 +55,13 @@ const VoucherForm: React.FC = () => {
 		<ConfigProvider locale={locale}>
 			<div
 				style={{
-					padding: '0 20px 0 270px',
+					paddingLeft: '270px',
 				}}
 			>
 				<div style={{ textAlign: 'center', marginBottom: 20 }}>
+					<div style={{ textAlign: 'left' }}>
+						<ButtonGoBack link="/admin/vouchers" />
+					</div>
 					<h2>Tạo mã giảm giá mới</h2>
 				</div>
 				<div
@@ -157,6 +161,7 @@ const VoucherForm: React.FC = () => {
 											>
 												<Input
 													placeholder="Nhập giá trị"
+													suffix="%"
 													type="number"
 													step="0.01"
 													onChange={handleDiscountChange}
