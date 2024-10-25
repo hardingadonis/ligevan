@@ -145,7 +145,7 @@ export class TeachersService {
 	): Promise<Teacher> {
 		const existingTeacher = await this.teacherModel
 			.findOne({ _id: id, isDeleted: false })
-			.select('-__v -hashedPassword')
+			.select('-__v')
 			.exec();
 
 		if (!existingTeacher) {
