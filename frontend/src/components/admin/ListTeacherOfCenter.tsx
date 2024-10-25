@@ -21,6 +21,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import ButtonGoBack from '@/components/commons/ButtonGoback';
 import { Center } from '@/schemas/center.schema';
 import { Teacher } from '@/schemas/teacher.schema';
 import { deleteTeacher } from '@/services/api/teacher';
@@ -202,6 +203,9 @@ const ListTeacherOfCenter: React.FC = () => {
 	return (
 		<div style={{ paddingLeft: '270px' }}>
 			<div style={{ textAlign: 'center', marginBottom: 20 }}>
+				<div style={{ textAlign: 'left' }}>
+					<ButtonGoBack />
+				</div>
 				<h2>Danh sách giáo viên</h2>
 			</div>
 

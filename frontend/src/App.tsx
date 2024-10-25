@@ -15,6 +15,7 @@ const AdminDashboard = lazy(() => import('@/pages/admin/Dashboard'));
 const AdminCentersManagement = lazy(
 	() => import('@/pages/admin/CentersManagement'),
 );
+const TeacherDetail = lazy(() => import('@/pages/admin/TeacherDetail'));
 const AdminCoursesManagement = lazy(
 	() => import('@/pages/admin/CoursesManagement'),
 );
@@ -36,8 +37,8 @@ const ListCoursesOfCenter = lazy(
 const ListVouchersOfCenter = lazy(
 	() => import('@/pages/admin/ListVouchersOfCenter'),
 );
-const ListTeacerOfCenter = lazy(
-	() => import('@/pages/admin/ListTeacerOfCenter'),
+const ListTeacherOfCenter = lazy(
+	() => import('@/pages/admin/ListTeacherOfCenter'),
 );
 const ListClass = lazy(() => import('@/pages/admin/ListClass'));
 
@@ -129,7 +130,7 @@ const App: React.FC = () => {
 								redirectPath="/admin/login"
 								tokenName="accessToken"
 							>
-								<ListTeacerOfCenter />
+								<ListTeacherOfCenter />
 							</ProtectedRoute>
 						}
 					/>
@@ -141,6 +142,17 @@ const App: React.FC = () => {
 								tokenName="accessToken"
 							>
 								<ListClass />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="/admin/centers/teachers/:teacherID"
+						element={
+							<ProtectedRoute
+								redirectPath="/admin/login"
+								tokenName="accessToken"
+							>
+								<TeacherDetail />
 							</ProtectedRoute>
 						}
 					/>
