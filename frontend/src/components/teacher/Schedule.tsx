@@ -35,7 +35,7 @@ import DropdownCourse from '@/components/teacher/DropdownCourse';
 import { Center } from '@/schemas/center.schema';
 import { Course } from '@/schemas/course.schema';
 import { Slot } from '@/schemas/slot.schema';
-import { getAllCenter } from '@/services/api/center';
+import { getAllCenter, getCentersByTeacherEmail } from '@/services/api/center';
 import { filterSlotsforSchedule } from '@/services/api/slot';
 import { convertToUTC } from '@/utils/dateFormat';
 import { decodeToken } from '@/utils/jwtDecode';
@@ -85,7 +85,11 @@ const Schedule: React.FC = () => {
 	useEffect(() => {
 		const fetchCenters = async () => {
 			try {
-				const data = await getAllCenter();
+				const teacherEmail = localStorage.getItem('teacherEmail');
+				if (!teacherEmail) {
+					throw new Error('Teacher email not found in local storage');
+				}
+				const data = await getCentersByTeacherEmail(teacherEmail);
 				setCenters(data);
 			} catch (error) {
 				console.error('Error fetching centers:', error);
