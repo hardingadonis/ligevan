@@ -109,9 +109,20 @@ const FormChangePassword: React.FC = () => {
 						<Form.Item
 							label="Mật khẩu mới"
 							name="newPassword"
+							dependencies={['currentPassword']}
 							rules={[
 								{ required: true, message: 'Vui lòng nhập mật khẩu mới!' },
 								{ min: 8, message: 'Mật khẩu mới phải có ít nhất 8 ký tự!' },
+								({ getFieldValue }) => ({
+									validator(_, value) {
+										if (!value || getFieldValue('currentPassword') !== value) {
+											return Promise.resolve();
+										}
+										return Promise.reject(
+											new Error('Mật khẩu mới phải khác mật khẩu hiện tại!'),
+										);
+									},
+								}),
 							]}
 						>
 							<Input.Password placeholder="Nhập mật khẩu mới" />
