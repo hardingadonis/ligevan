@@ -13,6 +13,7 @@ import {
 	ClockCircleOutlined,
 	ScheduleOutlined,
 } from '@ant-design/icons';
+import { L10n, loadCldr } from '@syncfusion/ej2-base';
 import {
 	Day,
 	Inject,
@@ -22,6 +23,10 @@ import {
 	WorkWeek,
 } from '@syncfusion/ej2-react-schedule';
 import { Button, Col, Row, Tag, Typography } from 'antd';
+import * as gregorian from 'cldr-data/main/vi/ca-gregorian.json';
+import * as numberingSystems from 'cldr-data/main/vi/numbers.json';
+import * as timeZoneNames from 'cldr-data/main/vi/timeZoneNames.json';
+import * as weekData from 'cldr-data/supplemental/weekData.json';
 import React, { useEffect, useRef, useState } from 'react';
 
 import ButtonGoBack from '@/components/commons/ButtonGoback';
@@ -34,6 +39,25 @@ import { getAllCenter } from '@/services/api/center';
 import { filterSlotsforSchedule } from '@/services/api/slot';
 import { convertToUTC } from '@/utils/dateFormat';
 import { decodeToken } from '@/utils/jwtDecode';
+
+loadCldr(numberingSystems, gregorian, timeZoneNames, weekData);
+
+L10n.load({
+	vi: {
+		schedule: {
+			day: 'Ngày',
+			week: 'Tuần',
+			workWeek: 'Tuần làm việc',
+			month: 'Tháng',
+			today: 'Hôm nay',
+			noEvents: 'Không có sự kiện',
+			allDay: 'Cả ngày',
+			start: 'Bắt đầu',
+			end: 'Kết thúc',
+			more: 'Thêm',
+		},
+	},
+});
 
 const Schedule: React.FC = () => {
 	const [slots, setSlots] = useState<Slot[]>([]);
@@ -144,7 +168,7 @@ const Schedule: React.FC = () => {
 			}}
 		>
 			<div>
-				<strong>{props.Subject}</strong>
+				<h3>{props.Subject}</h3>
 			</div>
 			<div style={{ marginTop: '10px' }}>
 				{new Date(props.StartTime).toLocaleTimeString([], {
@@ -219,6 +243,7 @@ const Schedule: React.FC = () => {
 				endHour="21:00"
 				eventSettings={{ dataSource: events, template: eventTemplate }}
 				readonly={isReadOnly}
+				locale="vi"
 			>
 				<Inject services={[Day, Week, WorkWeek, Month]} />
 			</ScheduleComponent>

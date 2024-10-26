@@ -16,9 +16,11 @@
 	"dependencies": {
 		"@ant-design/plots": "2.3.2",
 		"@reduxjs/toolkit": "2.2.7",
+		"@syncfusion/ej2-base": "27.1.55",
 		"@syncfusion/ej2-react-schedule": "27.1.56",
 		"antd": "5.21.0",
 		"axios": "1.7.7",
+		"cldr-data": "36.0.2",
 		"dayjs": "1.11.13",
 		"jwt-decode": "4.0.0",
 		"moment-timezone": "0.5.46",
