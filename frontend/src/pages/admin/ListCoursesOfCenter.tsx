@@ -13,6 +13,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import AdminLayout from '@/layouts/admin';
 import { Course } from '@/schemas/course.schema';
 import { getCenterById, getCoursesByCenterId } from '@/services/api/center';
+import { formatPrice } from '@/utils/formatPrice';
 
 interface DataType {
 	key: string;
@@ -117,7 +118,7 @@ const ListCourseCenter: React.FC = () => {
 			dataIndex: 'price',
 			width: '15%',
 			align: 'center',
-			render: (price) => `${price.toLocaleString()} VND`, // Format price
+			render: (price) => `${formatPrice(price)}`,
 		},
 		{
 			title: <div style={{ textAlign: 'center' }}>Thao tác</div>,
