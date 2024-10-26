@@ -107,8 +107,8 @@ const ListClassOfCenter: React.FC = () => {
 		setSearchText(e.target.value);
 	};
 
-	const handleCreateNewTeacher = () => {
-		navigate('/admin/courses/classes/create');
+	const handleCreateNewClass = () => {
+		navigate(`/admin/centers/${centerID}/classes/create`);
 	};
 
 	const filteredData = data.filter(
@@ -189,7 +189,7 @@ const ListClassOfCenter: React.FC = () => {
 				<Button
 					style={{ marginRight: 8, backgroundColor: '#0cd14e', color: 'white' }}
 					icon={<PlusOutlined />}
-					onClick={handleCreateNewTeacher}
+					onClick={handleCreateNewClass}
 				>
 					Tạo lớp học mới
 				</Button>
