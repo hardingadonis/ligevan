@@ -21,10 +21,10 @@ import {
 	Week,
 	WorkWeek,
 } from '@syncfusion/ej2-react-schedule';
-import { Button, Tag, Typography } from 'antd';
+import { Button, Col, Row, Tag, Typography } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 
-import '@/assets/styles/schedule.css';
+import ButtonGoBack from '@/components/commons/ButtonGoback';
 import DropdownCenter from '@/components/teacher/DropdownCenter';
 import DropdownCourse from '@/components/teacher/DropdownCourse';
 import { Center } from '@/schemas/center.schema';
@@ -188,9 +188,16 @@ const Schedule: React.FC = () => {
 
 	return (
 		<div style={{ paddingLeft: '270px' }}>
-			<Typography.Title level={2} style={{ textAlign: 'center' }}>
-				Lịch giảng dạy
-			</Typography.Title>
+			<Row>
+				<Col span={2}>
+					<ButtonGoBack />
+				</Col>
+				<Col span={20}>
+					<Typography.Title level={2} style={{ textAlign: 'center' }}>
+						Lịch giảng dạy
+					</Typography.Title>
+				</Col>
+			</Row>
 			<div style={{ display: 'flex' }}>
 				<DropdownCenter
 					centers={centers}
