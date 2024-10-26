@@ -140,7 +140,7 @@ const LoginTeacher: React.FC = () => {
 										htmlType="submit"
 										loading={loading}
 										block
-										style={{ marginTop: '16px' }}
+										style={{ marginTop: '16px', backgroundColor: 'black' }}
 									>
 										Đăng Nhập
 									</Button>

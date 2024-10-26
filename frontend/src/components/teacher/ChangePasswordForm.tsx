@@ -3,7 +3,6 @@ import { Button, Col, Form, Input, Row, Spin, Typography, message } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import ButtonGoBack from '@/components/commons/ButtonGoback';
 import { changeTeacherPassword } from '@/services/api/teacher';
 
 const { Title } = Typography;
@@ -63,14 +62,9 @@ const ChangePasswordForm: React.FC = () => {
 	}
 
 	return (
-		<div style={{ padding: '20px' }}>
+		<div style={{ padding: '90px 0 50px 0' }}>
 			<Row>
-				<Col span={2} style={{ paddingLeft: '270px' }}>
-					<ButtonGoBack />
-				</Col>
-			</Row>
-			<Row>
-				<Col span={24} style={{ paddingLeft: '270px' }}>
+				<Col span={24}>
 					<Form
 						name="changePassword"
 						onFinish={onFinish}
@@ -90,6 +84,7 @@ const ChangePasswordForm: React.FC = () => {
 								ligevan
 							</Title>
 						</div>
+
 						<Form.Item
 							label="Email"
 							name="email"
@@ -111,9 +106,20 @@ const ChangePasswordForm: React.FC = () => {
 						<Form.Item
 							label="Mật khẩu mới"
 							name="newPassword"
+							dependencies={['currentPassword']}
 							rules={[
 								{ required: true, message: 'Vui lòng nhập mật khẩu mới!' },
-								{ min: 6, message: 'Mật khẩu mới phải có ít nhất 6 ký tự!' },
+								{ min: 8, message: 'Mật khẩu mới phải có ít nhất 8 ký tự!' },
+								({ getFieldValue }) => ({
+									validator(_, value) {
+										if (!value || getFieldValue('currentPassword') !== value) {
+											return Promise.resolve();
+										}
+										return Promise.reject(
+											new Error('Mật khẩu mới phải khác mật khẩu hiện tại!'),
+										);
+									},
+								}),
 							]}
 						>
 							<Input.Password placeholder="Nhập mật khẩu mới" />
@@ -147,8 +153,7 @@ const ChangePasswordForm: React.FC = () => {
 								loading={loading}
 								style={{
 									width: '100%',
-									backgroundColor: '#ffae00',
-									color: 'white',
+									backgroundColor: 'black',
 								}}
 								icon={<EditOutlined />}
 							>
