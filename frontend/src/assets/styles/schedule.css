@@ -1,3 +1,14 @@
 .e-appointment {
 	width: 100% !important;
+	background-image: url('') !important;
+	background-size: cover !important;
+	background-repeat: no-repeat !important;
+	background-position: center !important;
+}
+
+.e-popup-header {
+	background-image: url('') !important;
+	background-size: cover !important;
+	background-repeat: no-repeat !important;
+	background-position: center !important;
 }
