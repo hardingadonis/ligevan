@@ -1,19 +1,17 @@
-import '../../../node_modules/@syncfusion/ej2-base/styles/material.css';
-import '../../../node_modules/@syncfusion/ej2-buttons/styles/material.css';
-import '../../../node_modules/@syncfusion/ej2-calendars/styles/material.css';
-import '../../../node_modules/@syncfusion/ej2-dropdowns/styles/material.css';
-import '../../../node_modules/@syncfusion/ej2-inputs/styles/material.css';
-import '../../../node_modules/@syncfusion/ej2-lists/styles/material.css';
-import '../../../node_modules/@syncfusion/ej2-navigations/styles/material.css';
-import '../../../node_modules/@syncfusion/ej2-popups/styles/material.css';
-import '../../../node_modules/@syncfusion/ej2-react-schedule/styles/material.css';
-import '../../../node_modules/@syncfusion/ej2-splitbuttons/styles/material.css';
 import {
 	CheckCircleOutlined,
 	ClockCircleOutlined,
 	ScheduleOutlined,
 } from '@ant-design/icons';
 import { L10n, loadCldr } from '@syncfusion/ej2-base';
+import '@syncfusion/ej2-base/styles/material.css';
+import '@syncfusion/ej2-buttons/styles/material.css';
+import '@syncfusion/ej2-calendars/styles/material.css';
+import '@syncfusion/ej2-dropdowns/styles/material.css';
+import '@syncfusion/ej2-inputs/styles/material.css';
+import '@syncfusion/ej2-lists/styles/material.css';
+import '@syncfusion/ej2-navigations/styles/material.css';
+import '@syncfusion/ej2-popups/styles/material.css';
 import {
 	Day,
 	Inject,
@@ -22,6 +20,8 @@ import {
 	Week,
 	WorkWeek,
 } from '@syncfusion/ej2-react-schedule';
+import '@syncfusion/ej2-react-schedule/styles/material.css';
+import '@syncfusion/ej2-splitbuttons/styles/material.css';
 import { Button, Col, Row, Tag, Typography } from 'antd';
 import * as gregorian from 'cldr-data/main/vi/ca-gregorian.json';
 import * as numberingSystems from 'cldr-data/main/vi/numbers.json';
@@ -59,8 +59,12 @@ L10n.load({
 	},
 });
 
+interface ExtendedSlot extends Slot {
+	centerName: string;
+}
+
 const Schedule: React.FC = () => {
-	const [slots, setSlots] = useState<Slot[]>([]);
+	const [slots, setSlots] = useState<ExtendedSlot[]>([]);
 	const [centers, setCenters] = useState<Center[]>([]);
 	const [selectedCenter, setSelectedCenter] = useState<string | undefined>(
 		'all',
@@ -110,7 +114,7 @@ const Schedule: React.FC = () => {
 					selectedCenter,
 					selectedCourse,
 				);
-				const convertedData = await Promise.all(
+				const convertedData: ExtendedSlot[] = await Promise.all(
 					filteredSlots.map(async (slot) => {
 						const center = await getCenterById(slot.class.center.toString());
 						return {
@@ -138,7 +142,7 @@ const Schedule: React.FC = () => {
 	const handleCenterChange = (value: string) => {
 		setSelectedCenter(value);
 		const selected = centers.find((center) => center._id === value);
-		if (selected && selected.courses) {
+		if (selected?.courses) {
 			setCourses(selected.courses);
 		} else {
 			setCourses([]);
@@ -158,8 +162,7 @@ const Schedule: React.FC = () => {
 		Location: slot.room,
 		Description: slot.isDone ? 'Đã dạy' : 'Chưa dạy',
 		IsAllDay: false,
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		CenterName: (slot as any).centerName,
+		CenterName: slot.centerName,
 	}));
 
 	const handleRedirect = (id: string) => {
