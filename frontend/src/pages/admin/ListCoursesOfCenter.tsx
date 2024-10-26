@@ -84,7 +84,8 @@ const ListCourseCenter: React.FC = () => {
 
 	const handleCreateNewCourse = () => {
 		if (id) {
-			navigate(`admin/centers/${id}/courses/add`);
+			// navigate(`admin/centers/${id}/courses/create`);
+			navigate(`create`);
 		}
 	};
 
