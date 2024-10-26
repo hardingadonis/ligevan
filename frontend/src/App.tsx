@@ -28,6 +28,7 @@ const AdminVoucherCreate = lazy(() => import('@/pages/admin/VoucherCreate'));
 const ClassCreate = lazy(() => import('@/pages/admin/ClassCreate'));
 const TeacherCreate = lazy(() => import('@/pages/admin/TeacherCreate'));
 const AddCourse = lazy(() => import('@/pages/admin/AddCourse'));
+const AddVoucher = lazy(() => import('@/pages/admin/AddVoucher'));
 const AdminCenterEdit = lazy(() => import('@/pages/admin/CenterEdit'));
 const AdminCourseEdit = lazy(() => import('@/pages/admin/CourseEdit'));
 const AdminVoucherEdit = lazy(() => import('@/pages/admin/VoucherEdit'));
@@ -145,6 +146,17 @@ const App: React.FC = () => {
 								tokenName="accessToken"
 							>
 								<ListVouchersOfCenter />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="/admin/centers/:centerID/vouchers/create"
+						element={
+							<ProtectedRoute
+								redirectPath="/admin/login"
+								tokenName="accessToken"
+							>
+								<AddVoucher />
 							</ProtectedRoute>
 						}
 					/>

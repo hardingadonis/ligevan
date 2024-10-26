@@ -81,7 +81,7 @@ const ListVouchersCenter: React.FC = () => {
 
 	const handleCreateNewVoucher = () => {
 		if (id) {
-			navigate(`admin/centers/${id}/vouchers/add`);
+			navigate(`create`);
 		}
 	};
 
