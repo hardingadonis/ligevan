@@ -35,7 +35,7 @@ import DropdownCourse from '@/components/teacher/DropdownCourse';
 import { Center } from '@/schemas/center.schema';
 import { Course } from '@/schemas/course.schema';
 import { Slot } from '@/schemas/slot.schema';
-import { getAllCenter, getCentersByTeacherEmail } from '@/services/api/center';
+import { getCentersByTeacherEmail } from '@/services/api/center';
 import { filterSlotsforSchedule } from '@/services/api/slot';
 import { convertToUTC } from '@/utils/dateFormat';
 import { decodeToken } from '@/utils/jwtDecode';
