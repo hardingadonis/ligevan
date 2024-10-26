@@ -71,25 +71,6 @@ const ClassForm: React.FC = () => {
 	}, [center]);
 
 	const handleSubmit = async (values: any) => {
-		const isDuplicateCourseAndTeacher = center?.classes?.some(
-			(existingClass) => {
-				return (
-					existingClass.course === values.course &&
-					existingClass.teacher === values.teacher
-				);
-			},
-		);
-
-		if (isDuplicateCourseAndTeacher) {
-			Modal.confirm({
-				title: 'Cảnh báo',
-				content: 'Lớp học này đã tồn tại với khóa học và giáo viên đã chọn.',
-				onOk: () => {},
-				onCancel: () => {},
-			});
-			return;
-		}
-
 		const isDuplicateClassName = center?.classes?.some((existingClass) => {
 			return existingClass.name === values.name;
 		});
@@ -98,6 +79,7 @@ const ClassForm: React.FC = () => {
 			Modal.confirm({
 				title: 'Cảnh báo',
 				content: 'Lớp học này đã tồn tại với tên đã nhập.',
+				centered: true,
 				onOk: () => {},
 				onCancel: () => {},
 			});
@@ -146,11 +128,35 @@ const ClassForm: React.FC = () => {
 				teachers: updatedTeachers,
 			});
 
+			const teacherIndex = teachers.findIndex(
+				(teacher) => teacher._id === values.teacher,
+			);
+			if (teacherIndex !== -1) {
+				const updatedTeacherClasses = [
+					...(teachers[teacherIndex].classes || []),
+					newClassId,
+				];
+
+				await axios.put(`${apiBaseUrl}/api/teachers/${values.teacher}`, {
+					...teachers[teacherIndex],
+					classes: updatedTeacherClasses,
+				});
+			}
+
 			navigate(`/admin/centers/${centerID}/classes`);
 		} catch (error) {
 			console.error('Không thể tạo lớp học mới:', error);
 		}
 	};
+
+	const existingCourseIds =
+		center?.classes?.map((cls) => cls.course as unknown as string) || [];
+	const filteredCourses = courses.filter(
+		(course) => !existingCourseIds.includes(course._id),
+	);
+	const filteredTeachers = teachers.filter(
+		(teacher) => teacher.classes && teacher.classes.length < 1,
+	);
 
 	return (
 		<div style={{ paddingLeft: '270px' }}>
@@ -187,7 +193,7 @@ const ClassForm: React.FC = () => {
 						rules={[{ required: true, message: 'Vui lòng chọn khóa học' }]}
 					>
 						<Select placeholder="Chọn khóa học">
-							{courses.map((course) => (
+							{filteredCourses.map((course) => (
 								<Option key={course._id} value={course._id}>
 									{course.code}
 								</Option>
@@ -201,7 +207,7 @@ const ClassForm: React.FC = () => {
 						rules={[{ required: true, message: 'Vui lòng chọn giáo viên' }]}
 					>
 						<Select placeholder="Chọn giáo viên">
-							{teachers.map((teacher) => (
+							{filteredTeachers.map((teacher) => (
 								<Option key={teacher._id} value={teacher._id}>
 									{teacher.fullName}
 								</Option>
