@@ -1,10 +1,12 @@
 import { EditOutlined } from '@ant-design/icons';
-import { Button, Col, Form, Input, Row, Spin, message } from 'antd';
+import { Button, Col, Form, Input, Row, Spin, Typography, message } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import ButtonGoBack from '@/components/commons/ButtonGoback';
 import { changeTeacherPassword } from '@/services/api/teacher';
+
+const { Title } = Typography;
 
 const ChangePasswordForm: React.FC = () => {
 	const [loading, setLoading] = useState(true);
@@ -16,7 +18,7 @@ const ChangePasswordForm: React.FC = () => {
 			message.error('Không tìm thấy email giáo viên!');
 			setLoading(false);
 		} else {
-			setLoading(false); // Only fetch email from localStorage in this case
+			setLoading(false);
 		}
 	}, []);
 
@@ -30,7 +32,6 @@ const ChangePasswordForm: React.FC = () => {
 		try {
 			const storedEmail = localStorage.getItem('teacherEmail');
 
-			// Validate the entered email against the stored email
 			if (values.email !== storedEmail) {
 				message.error('Email không khớp với email của bạn!');
 				return;
@@ -75,14 +76,20 @@ const ChangePasswordForm: React.FC = () => {
 						onFinish={onFinish}
 						layout="vertical"
 						style={{
-							maxWidth: 600,
-							margin: '100px auto',
+							maxWidth: 500,
+							margin: '0 auto',
 							padding: '30px',
 							boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
 							borderRadius: '8px',
 							backgroundColor: '#f5f5f5',
 						}}
 					>
+						<div style={{ textAlign: 'center' }}>
+							<Title level={2}>Đổi mật khẩu</Title>
+							<Title level={3} style={{ fontFamily: 'cursive', margin: 0 }}>
+								ligevan
+							</Title>
+						</div>
 						<Form.Item
 							label="Email"
 							name="email"
