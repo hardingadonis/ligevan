@@ -1,13 +1,4 @@
-import {
-	Button,
-	Col,
-	Form,
-	Input,
-	Modal,
-	Row,
-	Typography,
-	message,
-} from 'antd';
+import { Button, Col, Form, Input, Row, Typography, message } from 'antd';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -25,7 +16,6 @@ export interface ChangePasswordFormValues {
 const FormChangePassword: React.FC = () => {
 	const navigate = useNavigate();
 	const [loading, setLoading] = useState(false);
-	const [error, setError] = useState<string | null>(null);
 
 	const onFinish = async (values: ChangePasswordFormValues) => {
 		setLoading(true);
@@ -53,20 +43,16 @@ const FormChangePassword: React.FC = () => {
 						break;
 					default:
 						errorMessage = data?.message
-							? `Lỗi: ${data.message}`
+							? `Lỗi: Mật khẩu hiện tại không chính xác`
 							: errorMessage;
 						break;
 				}
 			}
 
-			setError(errorMessage);
+			message.error(errorMessage);
 		} finally {
 			setLoading(false);
 		}
-	};
-
-	const handleCloseError = () => {
-		setError(null);
 	};
 
 	return (
@@ -125,6 +111,7 @@ const FormChangePassword: React.FC = () => {
 							name="newPassword"
 							rules={[
 								{ required: true, message: 'Vui lòng nhập mật khẩu mới!' },
+								{ min: 8, message: 'Mật khẩu mới phải có ít nhất 8 ký tự!' },
 							]}
 						>
 							<Input.Password placeholder="Nhập mật khẩu mới" />
@@ -166,28 +153,6 @@ const FormChangePassword: React.FC = () => {
 						</Form.Item>
 					</Form>
 				</div>
-				{error && (
-					<Modal
-						title="Đổi mật khẩu thất bại"
-						visible={!!error}
-						onCancel={handleCloseError}
-						footer={[
-							<Button
-								key="ok"
-								onClick={handleCloseError}
-								style={{
-									backgroundColor: 'black',
-									borderColor: 'black',
-									color: 'white',
-								}}
-							>
-								OK
-							</Button>,
-						]}
-					>
-						<p>{error}</p>
-					</Modal>
-				)}
 			</Col>
 		</Row>
 	);
