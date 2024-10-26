@@ -5,6 +5,8 @@ import { Course } from '@/schemas/course.schema';
 import { Voucher } from '@/schemas/voucher.schema';
 import { apiBaseUrl } from '@/utils/apiBase';
 
+import { getTeacherByEmail } from './teacher';
+
 export const getAllCenter = async (): Promise<Center[]> => {
 	try {
 		const response = await axios.get(`${apiBaseUrl}/api/centers`);
@@ -77,6 +79,27 @@ export const getVouchersByCenterId = async (id: string): Promise<Voucher[]> => {
 		return center.vouchers || [];
 	} catch (error) {
 		console.error('Error fetching vouchers by center id:', error);
+		throw error;
+	}
+};
+
+export const getCentersByTeacherEmail = async (
+	email: string,
+): Promise<Center[]> => {
+	try {
+		const teacher = await getTeacherByEmail(email);
+		if (!teacher) {
+			throw new Error('Teacher not found');
+		}
+
+		const centers = await getAllCenter();
+		const centersWithTeacher = centers.filter((center) =>
+			center.teachers?.some((t) => t.email === email),
+		);
+
+		return centersWithTeacher;
+	} catch (error) {
+		console.error('Error fetching centers by teacher email:', error);
 		throw error;
 	}
 };

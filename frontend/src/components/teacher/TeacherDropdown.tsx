@@ -27,6 +27,12 @@ const TeacherDropdown: React.FC<TeacherDropdownProps> = ({
 			<Menu.Item key="profile" onClick={() => navigate('/teacher/profile')}>
 				Hồ sơ
 			</Menu.Item>
+			<Menu.Item
+				key="change-password"
+				onClick={() => navigate('/teacher/change-password')}
+			>
+				Đổi mật khẩu
+			</Menu.Item>
 			<Menu.Item key="logout" onClick={handleLogout}>
 				Đăng xuất
 			</Menu.Item>

@@ -40,3 +40,13 @@ export const updateStudent = async (
 		throw error;
 	}
 };
+
+export const getStudentByID = async (id: string): Promise<Student> => {
+	try {
+		const response = await axios.get(`${apiBaseUrl}/api/students/${id}`);
+		return response.data;
+	} catch (error) {
+		console.error('Error fetching student:', error);
+		throw error;
+	}
+};

@@ -21,8 +21,7 @@ interface DataType {
 	key: string;
 	name: string;
 	teacher: string;
-	students: string;
-	slots: string;
+	course: string;
 	actions: JSX.Element;
 }
 
@@ -56,8 +55,7 @@ const ListClassOfCenter: React.FC = () => {
 				key: (index + 1).toString(),
 				name: cls.name,
 				teacher: cls.teacher.fullName,
-				students: (cls.students?.length ?? 0).toString(),
-				slots: (cls.slots?.length ?? 0).toString(),
+				course: cls.course.code,
 				actions: renderActions(cls._id),
 			}));
 
@@ -107,16 +105,15 @@ const ListClassOfCenter: React.FC = () => {
 		setSearchText(e.target.value);
 	};
 
-	const handleCreateNewTeacher = () => {
-		navigate('/admin/courses/classes/create');
+	const handleCreateNewClass = () => {
+		navigate(`/admin/centers/${centerID}/classes/create`);
 	};
 
 	const filteredData = data.filter(
 		(item) =>
 			item.name.toLowerCase().includes(searchText.toLowerCase()) ||
 			item.teacher.toLowerCase().includes(searchText.toLowerCase()) ||
-			item.students.toLowerCase().includes(searchText.toLowerCase()) ||
-			item.slots.toLowerCase().includes(searchText.toLowerCase()),
+			item.course.toLowerCase().includes(searchText.toLowerCase()),
 	);
 
 	const columns: TableColumnsType<DataType> = [
@@ -140,18 +137,10 @@ const ListClassOfCenter: React.FC = () => {
 			sorter: (a, b) => a.teacher.localeCompare(b.teacher),
 		},
 		{
-			title: <div style={{ textAlign: 'center' }}>Học sinh</div>,
-			dataIndex: 'students',
-			width: '10%',
-			align: 'center',
-			sorter: (a, b) => parseInt(a.students) - parseInt(b.students),
-		},
-		{
-			title: <div style={{ textAlign: 'center' }}>Tiết học</div>,
-			dataIndex: 'slots',
-			width: '10%',
-			align: 'center',
-			sorter: (a, b) => parseInt(a.slots) - parseInt(b.slots),
+			title: <div style={{ textAlign: 'center' }}>Khóa học</div>,
+			dataIndex: 'course',
+			width: '20%',
+			sorter: (a, b) => a.course.localeCompare(b.course),
 		},
 		{
 			title: <div style={{ textAlign: 'center' }}>Thao tác</div>,
@@ -189,7 +178,7 @@ const ListClassOfCenter: React.FC = () => {
 				<Button
 					style={{ marginRight: 8, backgroundColor: '#0cd14e', color: 'white' }}
 					icon={<PlusOutlined />}
-					onClick={handleCreateNewTeacher}
+					onClick={handleCreateNewClass}
 				>
 					Tạo lớp học mới
 				</Button>

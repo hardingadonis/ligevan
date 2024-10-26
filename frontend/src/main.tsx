@@ -9,6 +9,7 @@ import './assets/styles/global.css';
 import './assets/styles/header.css';
 import './assets/styles/listCenters.css';
 import './assets/styles/listCourse.css';
+import './assets/styles/schedule.css';
 
 createRoot(document.getElementById('root')!).render(
 	<StrictMode>

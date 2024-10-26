@@ -25,6 +25,10 @@ const AdminVouchersManagement = lazy(
 const AdminCenterCreate = lazy(() => import('@/pages/admin/CenterCreate'));
 const AdminCourseCreate = lazy(() => import('@/pages/admin/CourseCreate'));
 const AdminVoucherCreate = lazy(() => import('@/pages/admin/VoucherCreate'));
+const ClassCreate = lazy(() => import('@/pages/admin/ClassCreate'));
+const TeacherCreate = lazy(() => import('@/pages/admin/TeacherCreate'));
+const AddCourse = lazy(() => import('@/pages/admin/AddCourse'));
+const AddVoucher = lazy(() => import('@/pages/admin/AddVoucher'));
 const AdminCenterEdit = lazy(() => import('@/pages/admin/CenterEdit'));
 const AdminCourseEdit = lazy(() => import('@/pages/admin/CourseEdit'));
 const AdminVoucherEdit = lazy(() => import('@/pages/admin/VoucherEdit'));
@@ -48,6 +52,10 @@ const LoginTeacher = lazy(() => import('@/pages/teacher/Login'));
 const ClassesPage = lazy(() => import('@/pages/teacher/Classes'));
 const ClassDetail = lazy(() => import('@/pages/teacher/ClassDetail'));
 const StudentDetail = lazy(() => import('@/pages/teacher/StudentDetail'));
+const TeacherProfile = lazy(() => import('@/pages/teacher/Profile'));
+const EditTeacherProfile = lazy(() => import('@/pages/teacher/EditProfile'));
+const ChangePasswordPage = lazy(() => import('@/pages/teacher/ChangePassword'));
+const TeacherSchedule = lazy(() => import('@/pages/teacher/ScheduleView'));
 
 // Student lazy load
 const HomepageStudent = lazy(() => import('@/pages/student/Homepage'));
@@ -58,6 +66,9 @@ const StudentCourseDetail = lazy(() => import('@/pages/student/CourseDetail'));
 const AttendencesReport = lazy(
 	() => import('@/pages/student/AttendencesReport'),
 );
+const PaymentHistory = lazy(() => import('@/pages/student/PaymentHistory'));
+
+const PaymentDetail = lazy(() => import('@/pages/student/PaymentDetail'));
 
 const App: React.FC = () => {
 	return (
@@ -117,6 +128,17 @@ const App: React.FC = () => {
 						}
 					/>
 					<Route
+						path="/admin/centers/:centerID/courses/create"
+						element={
+							<ProtectedRoute
+								redirectPath="/admin/login"
+								tokenName="accessToken"
+							>
+								<AddCourse />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
 						path="/admin/centers/:id/vouchers"
 						element={
 							<ProtectedRoute
@@ -124,6 +146,17 @@ const App: React.FC = () => {
 								tokenName="accessToken"
 							>
 								<ListVouchersOfCenter />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="/admin/centers/:centerID/vouchers/create"
+						element={
+							<ProtectedRoute
+								redirectPath="/admin/login"
+								tokenName="accessToken"
+							>
+								<AddVoucher />
 							</ProtectedRoute>
 						}
 					/>
@@ -161,6 +194,17 @@ const App: React.FC = () => {
 						}
 					/>
 					<Route
+						path="/admin/centers/:centerID/teachers/create"
+						element={
+							<ProtectedRoute
+								redirectPath="/admin/login"
+								tokenName="accessToken"
+							>
+								<TeacherCreate />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
 						path="/admin/centers/classes/:classID"
 						element={
 							<ProtectedRoute
@@ -168,6 +212,17 @@ const App: React.FC = () => {
 								tokenName="accessToken"
 							>
 								<ClassDetailForAdmin />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="/admin/centers/:centerID/classes/create"
+						element={
+							<ProtectedRoute
+								redirectPath="/admin/login"
+								tokenName="accessToken"
+							>
+								<ClassCreate />
 							</ProtectedRoute>
 						}
 					/>
@@ -298,6 +353,31 @@ const App: React.FC = () => {
 						path="/teacher"
 						element={<Navigate to="/teacher/classes" replace />}
 					/>
+					<Route
+						path="/teacher/profile"
+						element={
+							<ProtectedRoute redirectPath="/teacher" tokenName="teacherToken">
+								<TeacherProfile />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="/teacher/profile/edit"
+						element={
+							<ProtectedRoute redirectPath="/teacher" tokenName="teacherToken">
+								<EditTeacherProfile />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="/teacher/change-password/"
+						element={
+							<ProtectedRoute redirectPath="/teacher" tokenName="teacherToken">
+								<ChangePasswordPage />
+							</ProtectedRoute>
+						}
+					/>
+					<Route path="/teacher/schedule" element={<TeacherSchedule />} />
 
 					{/* Student Routes */}
 					<Route index element={<Navigate to="/student" replace />} />
@@ -344,6 +424,22 @@ const App: React.FC = () => {
 						element={
 							<ProtectedRoute redirectPath="/student" tokenName="token">
 								<AttendencesReport />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="/student/payment-history"
+						element={
+							<ProtectedRoute redirectPath="/student" tokenName="token">
+								<PaymentHistory />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="/student/payment-history/:id"
+						element={
+							<ProtectedRoute redirectPath="/student" tokenName="token">
+								<PaymentDetail />
 							</ProtectedRoute>
 						}
 					/>
