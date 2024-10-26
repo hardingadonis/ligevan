@@ -120,7 +120,7 @@ const AddCourseForm: React.FC = () => {
 					labelAlign="left"
 				>
 					<Form.Item label="Trung tâm">
-						<Input value={center?.name} disabled />
+						<Input value={center?.name} readOnly />
 					</Form.Item>
 
 					<Form.Item
@@ -139,13 +139,13 @@ const AddCourseForm: React.FC = () => {
 					{selectedCourse && (
 						<>
 							<Form.Item label="Tên khóa học">
-								<Input value={selectedCourse.title} disabled />
+								<Input value={selectedCourse.title} readOnly />
 							</Form.Item>
 							<Form.Item label="Mô tả khóa học">
-								<Input value={selectedCourse.description} disabled />
+								<Input value={selectedCourse.description} readOnly />
 							</Form.Item>
 							<Form.Item label="Giá khóa học">
-								<Input value={formatPrice(selectedCourse.price)} disabled />
+								<Input value={formatPrice(selectedCourse.price)} readOnly />
 							</Form.Item>
 
 							<Form.Item label="Ảnh mô tả">
