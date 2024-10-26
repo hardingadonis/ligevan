@@ -11,6 +11,7 @@ import ProtectedRoute from '@/components/commons/ProtectedRoute';
 
 // Admin lazy load
 const AdminLogin = lazy(() => import('@/pages/admin/Login'));
+const AdminChangePassword = lazy(() => import('@/pages/admin/ChangePassword'));
 const AdminDashboard = lazy(() => import('@/pages/admin/Dashboard'));
 const AdminCentersManagement = lazy(
 	() => import('@/pages/admin/CentersManagement'),
@@ -70,6 +71,17 @@ const App: React.FC = () => {
 				<Routes>
 					{/* Admin Routes */}
 					<Route path="/admin/login" element={<AdminLogin />} />
+					<Route
+						path="admin/change-password"
+						element={
+							<ProtectedRoute
+								redirectPath="/admin/login"
+								tokenName="accessToken"
+							>
+								<AdminChangePassword />
+							</ProtectedRoute>
+						}
+					/>
 					<Route
 						path="/admin/dashboard"
 						element={
