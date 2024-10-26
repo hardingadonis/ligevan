@@ -70,7 +70,11 @@ const ClassForm: React.FC = () => {
 		}
 	}, [center]);
 
-	const handleSubmit = async (values: any) => {
+	const handleSubmit = async (values: {
+		course: string;
+		teacher: string;
+		name: string;
+	}) => {
 		const isDuplicateClassName = center?.classes?.some((existingClass) => {
 			return existingClass.name === values.name;
 		});
