@@ -33,3 +33,13 @@ export const deleteTeacher = async (id: string): Promise<void> => {
 		throw error;
 	}
 };
+
+export const getTeacherById = async (id: string): Promise<Teacher> => {
+	try {
+		const response = await axios.get(`${apiBaseUrl}/api/teachers/${id}`);
+		return response.data;
+	} catch (error) {
+		console.error('Error fetching teacher detail:', error);
+		throw error;
+	}
+};
