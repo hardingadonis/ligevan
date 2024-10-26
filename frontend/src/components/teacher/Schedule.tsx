@@ -226,7 +226,7 @@ const Schedule: React.FC = () => {
 					</Typography.Title>
 				</Col>
 			</Row>
-			<div style={{ display: 'flex' }}>
+			<div style={{ display: 'flex', marginTop: '20px' }}>
 				<DropdownCenter
 					centers={centers}
 					selectedCenter={selectedCenter || 'all'}
@@ -244,10 +244,11 @@ const Schedule: React.FC = () => {
 				ref={scheduleRef}
 				height="650px"
 				startHour="07:00"
-				endHour="21:00"
+				endHour="17:15"
 				eventSettings={{ dataSource: events, template: eventTemplate }}
 				readonly={isReadOnly}
 				locale="vi"
+				style={{ marginTop: '15px' }}
 			>
 				<Inject services={[Day, Week, WorkWeek, Month]} />
 			</ScheduleComponent>
