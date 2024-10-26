@@ -35,7 +35,7 @@ import DropdownCourse from '@/components/teacher/DropdownCourse';
 import { Center } from '@/schemas/center.schema';
 import { Course } from '@/schemas/course.schema';
 import { Slot } from '@/schemas/slot.schema';
-import { getCentersByTeacherEmail } from '@/services/api/center';
+import { getCenterById, getCentersByTeacherEmail } from '@/services/api/center';
 import { filterSlotsforSchedule } from '@/services/api/slot';
 import { convertToUTC } from '@/utils/dateFormat';
 import { decodeToken } from '@/utils/jwtDecode';
@@ -110,11 +110,17 @@ const Schedule: React.FC = () => {
 					selectedCenter,
 					selectedCourse,
 				);
-				const convertedData = filteredSlots.map((slot) => ({
-					...slot,
-					start: convertToUTC(new Date(slot.start)),
-					end: convertToUTC(new Date(slot.end)),
-				}));
+				const convertedData = await Promise.all(
+					filteredSlots.map(async (slot) => {
+						const center = await getCenterById(slot.class.center.toString());
+						return {
+							...slot,
+							start: convertToUTC(new Date(slot.start)),
+							end: convertToUTC(new Date(slot.end)),
+							centerName: center.name,
+						};
+					}),
+				);
 				setSlots(convertedData);
 			} catch (error) {
 				console.error('Error fetching filtered slots:', error);
@@ -152,6 +158,8 @@ const Schedule: React.FC = () => {
 		Location: slot.room,
 		Description: slot.isDone ? 'Đã dạy' : 'Chưa dạy',
 		IsAllDay: false,
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		CenterName: (slot as any).centerName,
 	}));
 
 	const handleRedirect = (id: string) => {
@@ -165,6 +173,7 @@ const Schedule: React.FC = () => {
 		EndTime: string;
 		Id: string;
 		Location: string;
+		CenterName: string;
 	}) => (
 		<div
 			style={{
@@ -174,7 +183,7 @@ const Schedule: React.FC = () => {
 			<div>
 				<h3>{props.Subject}</h3>
 			</div>
-			<div style={{ marginTop: '10px' }}>
+			<div style={{ marginTop: '7px' }}>
 				{new Date(props.StartTime).toLocaleTimeString([], {
 					hour: '2-digit',
 					minute: '2-digit',
@@ -184,6 +193,9 @@ const Schedule: React.FC = () => {
 					hour: '2-digit',
 					minute: '2-digit',
 				})}
+			</div>
+			<div style={{ marginTop: '5px' }}>
+				<strong>{props.CenterName}</strong>
 			</div>
 			<div style={{ marginTop: '5px' }}>
 				<strong>Tại phòng: </strong>
@@ -249,6 +261,7 @@ const Schedule: React.FC = () => {
 				readonly={isReadOnly}
 				locale="vi"
 				style={{ marginTop: '15px' }}
+				views={['Day', 'Week', 'WorkWeek', 'Month']}
 			>
 				<Inject services={[Day, Week, WorkWeek, Month]} />
 			</ScheduleComponent>
