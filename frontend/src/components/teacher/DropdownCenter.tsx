@@ -17,7 +17,7 @@ const DropdownCenter: React.FC<DropdownCenterProps> = ({
 }) => (
 	<div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
 		<Typography.Text style={{ fontWeight: 'bold', marginRight: '8px' }}>
-			Từ:
+			Tại:
 		</Typography.Text>
 		<Select
 			style={{ width: 200, marginRight: '20px' }}
