@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { PlusOutlined } from '@ant-design/icons';
-import { Button, Form, Input, Select } from 'antd';
+import { Button, Col, Form, Input, Row, Select } from 'antd';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -122,11 +122,7 @@ const AddVoucherForm: React.FC = () => {
 					labelAlign="left"
 				>
 					<Form.Item label="Trung tâm">
-						<Input
-							value={center?.name}
-							readOnly
-							style={{ backgroundColor: '#f5f5f5' }}
-						/>
+						<Input value={center?.name} readOnly />
 					</Form.Item>
 
 					<Form.Item
@@ -146,40 +142,35 @@ const AddVoucherForm: React.FC = () => {
 					{selectedVoucher && (
 						<>
 							<Form.Item label="Tên voucher">
-								<Input
-									value={selectedVoucher.title}
-									readOnly
-									style={{ backgroundColor: '#f5f5f5' }}
-								/>
+								<Input value={selectedVoucher.title} readOnly />
 							</Form.Item>
 							<Form.Item label="Mô tả voucher">
-								<Input
-									value={selectedVoucher.description}
-									readOnly
-									style={{ backgroundColor: '#f5f5f5' }}
-								/>
+								<Input value={selectedVoucher.description} readOnly />
 							</Form.Item>
 							<Form.Item label="Giá trị voucher">
 								<Input
 									value={formatPercentage(selectedVoucher.value)}
 									readOnly
-									style={{ backgroundColor: '#f5f5f5' }}
 								/>
 							</Form.Item>
-							<Form.Item label="Ngày bắt đầu">
-								<Input
-									value={formatDateToVietnamTimezone(selectedVoucher.start)}
-									readOnly
-									style={{ backgroundColor: '#f5f5f5' }}
-								/>
-							</Form.Item>
-							<Form.Item label="Ngày kết thúc">
-								<Input
-									value={formatDateToVietnamTimezone(selectedVoucher.end)}
-									readOnly
-									style={{ backgroundColor: '#f5f5f5' }}
-								/>
-							</Form.Item>
+							<Row gutter={16}>
+								<Col span={12}>
+									<Form.Item label="Ngày bắt đầu">
+										<Input
+											value={formatDateToVietnamTimezone(selectedVoucher.start)}
+											readOnly
+										/>
+									</Form.Item>
+								</Col>
+								<Col span={12}>
+									<Form.Item label="Ngày kết thúc">
+										<Input
+											value={formatDateToVietnamTimezone(selectedVoucher.end)}
+											readOnly
+										/>
+									</Form.Item>
+								</Col>
+							</Row>
 						</>
 					)}
 
