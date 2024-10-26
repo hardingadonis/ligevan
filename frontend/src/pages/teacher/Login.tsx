@@ -1,36 +1,32 @@
+// LoginTeacher.tsx
 import {
 	selectEmail,
 	selectToken,
 	setEmail,
 	setToken,
 } from '../../slices/teacher';
-import { Button, Col, Form, Input, Modal, Row, Typography } from 'antd';
+import { Button, Col, Form, Input, Layout, Modal, Row, Typography } from 'antd';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+import Footer from '@/components/commons/Footer';
+import Header from '@/components/commons/Header';
 import { apiBaseUrl } from '@/utils/apiBase';
 
 const { Title } = Typography;
+const { Content } = Layout;
 
 const LoginTeacher: React.FC = () => {
 	const token = useSelector(selectToken);
 	const email = useSelector(selectEmail);
-
 	const navigate = useNavigate();
-
-	useEffect(() => {
-		if (!token && !email) {
-			navigate('../teacher/login');
-		}
-	}, [token, email, navigate]);
-
-	const [isMounted, setIsMounted] = useState(false);
+	const dispatch = useDispatch();
 
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
-	const dispatch = useDispatch();
+	const [isMounted, setIsMounted] = useState(false);
 
 	useEffect(() => {
 		const token = localStorage.getItem('teacherToken');
@@ -38,6 +34,16 @@ const LoginTeacher: React.FC = () => {
 			navigate('/teacher/classes');
 		}
 	}, [navigate]);
+
+	useEffect(() => {
+		if (!token && !email) {
+			navigate('../teacher/login');
+		}
+	}, [token, email, navigate]);
+
+	useEffect(() => {
+		setIsMounted(true);
+	}, []);
 
 	const onFinish = async (values: { email: string; password: string }) => {
 		setLoading(true);
@@ -56,7 +62,6 @@ const LoginTeacher: React.FC = () => {
 			localStorage.setItem('teacherEmail', values.email);
 
 			navigate('/teacher/classes');
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		} catch (error: any) {
 			setError('Đăng nhập thất bại. Vui lòng kiểm tra lại email và mật khẩu.');
 			console.error(
@@ -67,113 +72,101 @@ const LoginTeacher: React.FC = () => {
 			setLoading(false);
 		}
 	};
-	useEffect(() => {
-		setIsMounted(true);
-	}, []);
 
-	if (!isMounted) {
-		return null;
-	}
 	const handleCloseError = () => {
 		setError(null);
 	};
 
+	if (!isMounted) return null;
+
 	return (
-		<Row justify="center" align="middle" style={{ height: '100vh' }}>
-			<Col xs={22} sm={18} md={12} lg={8}>
-				<div
-					style={{
-						backgroundColor: '#fff',
-						padding: '32px',
-						borderRadius: '8px',
-						boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
-					}}
+		<Layout style={{ minHeight: '100vh' }}>
+			<Header />
+			<Content>
+				<Row
+					justify="center"
+					align="middle"
+					style={{ height: 'calc(100vh - 134px)' }}
 				>
-					<div style={{ flex: 1, textAlign: 'center' }}>
-						<Title
-							level={3}
+					<Col xs={22} sm={18} md={12} lg={8}>
+						<div
 							style={{
-								margin: 0,
-								fontFamily: 'cursive',
-								color: 'black',
 								backgroundColor: '#fff',
-								padding: '8px 0',
+								padding: '32px',
+								borderRadius: '8px',
+								boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
 							}}
 						>
-							ligevan
-						</Title>
-					</div>
+							<div style={{ flex: 1, textAlign: 'center' }}>
+								<Title level={3} style={{ fontFamily: 'cursive', margin: 0 }}>
+									ligevan
+								</Title>
+							</div>
 
-					<Title
-						level={2}
-						style={{ textAlign: 'center', marginBottom: '24px' }}
-					>
-						Đăng nhập
-					</Title>
-
-					<Form
-						name="login"
-						initialValues={{ remember: true }}
-						onFinish={onFinish}
-						layout="vertical"
-					>
-						<Form.Item
-							label="Email"
-							name="email"
-							rules={[
-								{ required: true, message: 'Vui lòng nhập email của bạn!' },
-							]}
-						>
-							<Input placeholder="Nhập email" />
-						</Form.Item>
-
-						<Form.Item
-							label="Mật khẩu"
-							name="password"
-							rules={[
-								{ required: true, message: 'Vui lòng nhập mật khẩu của bạn!' },
-							]}
-						>
-							<Input.Password placeholder="Nhập mật khẩu" />
-						</Form.Item>
-
-						<Form.Item>
-							<Button
-								color="default"
-								variant="solid"
-								type="primary"
-								htmlType="submit"
-								loading={loading}
-								block
-								style={{ marginTop: '16px' }}
+							<Title
+								level={2}
+								style={{ textAlign: 'center', marginBottom: '24px' }}
 							>
-								Đăng Nhập
-							</Button>
-						</Form.Item>
-					</Form>
-				</div>
+								Đăng nhập
+							</Title>
 
-				{error && (
-					<Modal
-						title="Đăng nhập thất bại"
-						visible={!!error}
-						onCancel={handleCloseError}
-						footer={[
-							<Button
-								key="ok"
-								onClick={handleCloseError}
-								color="default"
-								variant="solid"
+							<Form name="login" onFinish={onFinish} layout="vertical">
+								<Form.Item
+									label="Email"
+									name="email"
+									rules={[
+										{ required: true, message: 'Vui lòng nhập email của bạn!' },
+									]}
+								>
+									<Input placeholder="Nhập email" />
+								</Form.Item>
+
+								<Form.Item
+									label="Mật khẩu"
+									name="password"
+									rules={[
+										{
+											required: true,
+											message: 'Vui lòng nhập mật khẩu của bạn!',
+										},
+									]}
+								>
+									<Input.Password placeholder="Nhập mật khẩu" />
+								</Form.Item>
+
+								<Form.Item>
+									<Button
+										type="primary"
+										htmlType="submit"
+										loading={loading}
+										block
+										style={{ marginTop: '16px', backgroundColor: 'black' }}
+									>
+										Đăng Nhập
+									</Button>
+								</Form.Item>
+							</Form>
+						</div>
+
+						{error && (
+							<Modal
+								title="Đăng nhập thất bại"
+								visible={!!error}
+								onCancel={handleCloseError}
+								footer={[
+									<Button key="ok" onClick={handleCloseError}>
+										OK
+									</Button>,
+								]}
 							>
-								OK
-							</Button>,
-						]}
-					>
-						<p>{error}</p>
-					</Modal>
-				)}
-			</Col>
-		</Row>
+								<p>{error}</p>
+							</Modal>
+						)}
+					</Col>
+				</Row>
+			</Content>
+			<Footer />
+		</Layout>
 	);
 };
 

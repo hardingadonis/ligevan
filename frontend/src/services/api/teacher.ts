@@ -43,3 +43,39 @@ export const deleteTeacher = async (id: string): Promise<void> => {
 		throw error;
 	}
 };
+
+export const updateTeacher = async (
+	id: string,
+	updateData: Partial<Teacher>,
+): Promise<Teacher> => {
+	try {
+		const response = await axios.put(
+			`${apiBaseUrl}/api/teachers/${id}`,
+			updateData,
+		);
+		return response.data;
+	} catch (error) {
+		console.error('Error updating teacher:', error);
+		throw error;
+	}
+};
+
+export const changeTeacherPassword = async (
+	email: string,
+	currentPassword: string,
+	newPassword: string,
+): Promise<void> => {
+	try {
+		const url = `${apiBaseUrl}/api/teachers/${encodeURIComponent(email)}/change-password`;
+		const requestBody = {
+			currentPassword,
+			newPassword,
+		};
+
+		await axios.put(url, requestBody);
+		console.log('Password changed successfully');
+	} catch (error) {
+		console.error('Error changing password:', error);
+		throw error;
+	}
+};
