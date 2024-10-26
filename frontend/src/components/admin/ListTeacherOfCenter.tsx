@@ -146,7 +146,7 @@ const ListTeacherOfCenter: React.FC = () => {
 	};
 
 	const handleCreateNewTeacher = () => {
-		navigate('/admin/courses/teachers/create');
+		navigate(`/admin/centers/${centerID}/teachers/create`);
 	};
 
 	const filteredData = data.filter(

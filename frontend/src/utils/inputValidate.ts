@@ -81,3 +81,13 @@ export const validateNumber = (input: string): boolean => {
 	const trimmedInput = trimInput(input);
 	return isValidNumber(trimmedInput);
 };
+
+const isValidEmailName = (name: string): boolean => {
+	const emailNameRegex = /^[a-zA-Z0-9]+$/;
+	return emailNameRegex.test(name);
+};
+
+export const validateEmailName = (name: string): boolean => {
+	const trimmedName = trimInput(name);
+	return isValidEmailName(trimmedName);
+};
