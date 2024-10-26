@@ -16,5 +16,5 @@ export const formatPriceWithoutSymbol = (value: number | undefined): string => {
 
 export const formatPercentage = (value: number | undefined): string => {
 	if (value === undefined || value === null) return '';
-	return `${value.toFixed(1)}%`; // Đảm bảo có một chữ số thập phân
+	return `${value.toFixed(0)}%`; // Đảm bảo có một chữ số thập phân
 };
