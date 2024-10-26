@@ -26,21 +26,19 @@ const PaymentHistory: React.FC = () => {
 		try {
 			const studentData = await fetchStudentData();
 
-			if (studentData && studentData.payments) {
+			if (studentData?.payments) {
 				const paymentDetailsPromises = studentData.payments.map(
 					async (payment) => {
 						try {
 							const paymentDetail = await getPaymentByID(payment._id);
-							console.log('Payment detail:', paymentDetail);
-							console.log('Teacher', paymentDetail.class.teacher);
 							const teacher = await getTeacherById(
-								paymentDetail.class.teacher.toString(),
+								paymentDetail.class?.teacher?.toString() ?? '',
 							);
 							return {
 								...paymentDetail,
-								className: paymentDetail.class.name,
-								courseTitle: paymentDetail.course.title,
-								teacherName: teacher.fullName,
+								className: paymentDetail.class?.name ?? 'N/A',
+								courseTitle: paymentDetail.course?.title ?? 'N/A',
+								teacherName: teacher?.fullName ?? 'N/A',
 							};
 						} catch (paymentError) {
 							console.error(
