@@ -80,3 +80,13 @@ export const filterSlotsforSchedule = async (
 		throw error;
 	}
 };
+
+export const updateSlot = async (id: string, slot: Slot) => {
+	try {
+		const response = await axios.put(`${apiBaseUrl}/api/slots/${id}`, slot);
+		return response.data;
+	} catch (error) {
+		console.error('Error updating slot:', error);
+		throw error;
+	}
+};
