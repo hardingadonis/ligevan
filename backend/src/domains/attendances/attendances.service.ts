@@ -9,6 +9,7 @@ import { Model } from 'mongoose';
 
 import { CreateAttendanceDto } from '@/domains/attendances/dto/attendance.dto';
 import { Attendance } from '@/schemas/attendance.schema';
+import { Slot } from '@/schemas/slot.schema';
 
 @Injectable()
 export class AttendancesService {
@@ -17,6 +18,7 @@ export class AttendancesService {
 	constructor(
 		@InjectModel(Attendance.name)
 		private readonly attendanceModel: Model<Attendance>,
+		@InjectModel(Slot.name) private readonly slotModel: Model<Slot>,
 	) {}
 
 	async create(createAttendanceDto: CreateAttendanceDto) {
@@ -118,6 +120,25 @@ export class AttendancesService {
 		return attendance;
 	}
 
+	async createAttendancesForSlot(slotId: string, listStudentId: string[]) {
+		const slot = await this.slotModel.findById(slotId);
+
+		if (!slot) {
+			this.logger.error('Slot not found!');
+
+			throw new NotFoundException('Slot not found!');
+		}
+
+		const attendanceDocs = listStudentId.map((studentId) => ({
+			student: studentId,
+			slot: slotId,
+		}));
+
+		this.logger.debug('Creating new attendances', attendanceDocs);
+
+		return this.attendanceModel.insertMany(attendanceDocs);
+	}
+
 	async updateAttendance(
 		slotId: string,
 		attendanceUpdates: { studentId: string; status: string }[],
@@ -129,6 +150,9 @@ export class AttendancesService {
 				upsert: true,
 			},
 		}));
+
+		this.logger.debug('Updating attendances', bulkOps);
+
 		return this.attendanceModel.bulkWrite(bulkOps);
 	}
 }

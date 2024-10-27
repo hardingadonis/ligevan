@@ -35,6 +35,17 @@ export class AttendancesController {
 		return await this.attendancesService.update(id, updateAttendanceDto);
 	}
 
+	@Post('create-all/:slotId')
+	async createAttendancesForSlot(
+		@Param('slotId') slotId: string,
+		@Body() listStudentId: string[],
+	) {
+		return this.attendancesService.createAttendancesForSlot(
+			slotId,
+			listStudentId,
+		);
+	}
+
 	@Put('/check-attendances/:slotId')
 	async updateAttendance(
 		@Param('slotId') slotId: string,
