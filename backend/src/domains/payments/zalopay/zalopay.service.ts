@@ -19,7 +19,7 @@ export class ZalopayService {
 
 	async createOrder(dto: CreateZaloPayOrderDto) {
 		const embed_data = {
-			redirecturl: `${process.env.FRONTEND_URL}/student/payment-history${dto.id}`,
+			redirecturl: `${process.env.FRONTEND_URL}/student/payment-history/${dto.id}`,
 		};
 
 		const items = [];
@@ -28,7 +28,7 @@ export class ZalopayService {
 
 		const order = {
 			app_id: this.config.app_id,
-			app_user: dto.studentEmail,
+			app_user: 'ligevan',
 			app_trans_id: `${format(date, 'yyMMdd')}_${transID}`,
 			app_time: Date.now(),
 			item: JSON.stringify(items),
@@ -36,7 +36,7 @@ export class ZalopayService {
 			amount: dto.amount,
 			callback_url: process.env.ZALOPAY_CALLBACK,
 			description: `ligevan - Thanh toán cho đơn hàng #${transID}`,
-			bank_code: 'zalopayapp',
+			bank_code: '',
 			mac: '',
 		};
 
