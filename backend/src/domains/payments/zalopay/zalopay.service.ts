@@ -23,19 +23,18 @@ export class ZalopayService {
 		};
 
 		const items = [];
-		const transID = Math.floor(Math.random() * 1000000);
 		const date = new TZDate(new Date(), 'Asia/Ho_Chi_Minh');
 
 		const order = {
 			app_id: this.config.app_id,
 			app_user: 'ligevan',
-			app_trans_id: `${format(date, 'yyMMdd')}_${transID}`,
+			app_trans_id: `${format(date, 'yyMMdd')}_${dto.id}`,
 			app_time: Date.now(),
 			item: JSON.stringify(items),
 			embed_data: JSON.stringify(embed_data),
 			amount: dto.amount,
 			callback_url: process.env.ZALOPAY_CALLBACK,
-			description: `ligevan - Thanh toán cho đơn hàng #${transID}`,
+			description: `ligevan - Thanh toán cho đơn hàng #${dto.id}`,
 			bank_code: '',
 			mac: '',
 		};
