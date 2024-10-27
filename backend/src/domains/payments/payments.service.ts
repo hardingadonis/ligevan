@@ -6,6 +6,7 @@ import {
 	CreatePaymentDto,
 	UpdatePaymentDto,
 } from '@/domains/payments/dto/payment.dto';
+import { ZalopayService } from '@/domains/payments/zalopay/zalopay.service';
 import { Payment } from '@/schemas/payment.schema';
 
 @Injectable()
@@ -14,6 +15,7 @@ export class PaymentsService {
 
 	constructor(
 		@InjectModel(Payment.name) private readonly salaryModel: Model<Payment>,
+		private readonly zalopayService: ZalopayService,
 	) {}
 
 	async create(createPaymentDto: CreatePaymentDto) {
@@ -44,7 +46,12 @@ export class PaymentsService {
 		this.logger.debug('Payment created', newPayment);
 		this.logger.log('Payment created');
 
-		return newPayment;
+		const result = await this.zalopayService.create({
+			id: newPayment._id.toString(),
+			amount: newPayment.finalPrice,
+		});
+
+		return result;
 	}
 
 	private async populatePayment(query) {
