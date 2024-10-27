@@ -32,12 +32,18 @@ export const getSlotsByTeacherEmail = async (
 };
 
 export const filterSlotsforSchedule = async (
-	teacherEmail: string,
+	teacherEmail?: string,
 	centerId?: string,
 	courseId?: string,
 ): Promise<Slot[]> => {
 	try {
-		const slots = await getSlotsByTeacherEmail(teacherEmail);
+		let slots: Slot[];
+
+		if (teacherEmail) {
+			slots = await getSlotsByTeacherEmail(teacherEmail);
+		} else {
+			slots = await getAllSlot();
+		}
 
 		let filteredSlots = slots;
 		if (centerId && centerId !== 'all') {
