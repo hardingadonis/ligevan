@@ -11,6 +11,7 @@ import ProtectedRoute from '@/components/commons/ProtectedRoute';
 
 // Admin lazy load
 const AdminLogin = lazy(() => import('@/pages/admin/Login'));
+const AdminChangePassword = lazy(() => import('@/pages/admin/ChangePassword'));
 const AdminDashboard = lazy(() => import('@/pages/admin/Dashboard'));
 const AdminCentersManagement = lazy(
 	() => import('@/pages/admin/CentersManagement'),
@@ -21,6 +22,9 @@ const AdminCoursesManagement = lazy(
 );
 const AdminVouchersManagement = lazy(
 	() => import('@/pages/admin/VouchersManagement'),
+);
+const AdminSchedulesManagement = lazy(
+	() => import('@/pages/admin/SchedulesManagement'),
 );
 const AdminCenterCreate = lazy(() => import('@/pages/admin/CenterCreate'));
 const AdminCourseCreate = lazy(() => import('@/pages/admin/CourseCreate'));
@@ -83,6 +87,17 @@ const App: React.FC = () => {
 				<Routes>
 					{/* Admin Routes */}
 					<Route path="/admin/login" element={<AdminLogin />} />
+					<Route
+						path="admin/change-password"
+						element={
+							<ProtectedRoute
+								redirectPath="/admin/login"
+								tokenName="accessToken"
+							>
+								<AdminChangePassword />
+							</ProtectedRoute>
+						}
+					/>
 					<Route
 						path="/admin/dashboard"
 						element={
@@ -339,6 +354,17 @@ const App: React.FC = () => {
 					<Route
 						path="/admin"
 						element={<Navigate replace to="/admin/dashboard" />}
+					/>
+					<Route
+						path="/admin/schedules"
+						element={
+							<ProtectedRoute
+								redirectPath="/admin/login"
+								tokenName="accessToken"
+							>
+								<AdminSchedulesManagement />
+							</ProtectedRoute>
+						}
 					/>
 
 					{/* Teacher Routes */}

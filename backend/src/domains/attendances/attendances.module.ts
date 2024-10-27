@@ -4,11 +4,13 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AttendancesController } from '@/domains/attendances/attendances.controller';
 import { AttendancesService } from '@/domains/attendances/attendances.service';
 import { AttendanceSchema } from '@/schemas/attendance.schema';
+import { SlotSchema } from '@/schemas/slot.schema';
 
 @Module({
 	imports: [
 		MongooseModule.forFeature([
 			{ name: 'Attendance', schema: AttendanceSchema },
+			{ name: 'Slot', schema: SlotSchema },
 		]),
 	],
 	controllers: [AttendancesController],
