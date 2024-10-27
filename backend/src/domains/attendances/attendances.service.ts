@@ -117,4 +117,18 @@ export class AttendancesService {
 
 		return attendance;
 	}
+
+	async updateAttendance(
+		slotId: string,
+		attendanceUpdates: { studentId: string; status: string }[],
+	) {
+		const bulkOps = attendanceUpdates.map(({ studentId, status }) => ({
+			updateOne: {
+				filter: { slot: slotId, student: studentId },
+				update: { $set: { status } },
+				upsert: true,
+			},
+		}));
+		return this.attendanceModel.bulkWrite(bulkOps);
+	}
 }

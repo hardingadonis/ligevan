@@ -34,4 +34,18 @@ export class AttendancesController {
 	) {
 		return await this.attendancesService.update(id, updateAttendanceDto);
 	}
+
+	@Put('/check-attendances/:slotId')
+	async updateAttendance(
+		@Param('slotId') slotId: string,
+		@Body() attendanceUpdates: UpdateAttendanceDto[],
+	) {
+		return await this.attendancesService.updateAttendance(
+			slotId,
+			attendanceUpdates.map((update) => ({
+				studentId: update.student,
+				status: update.status,
+			})),
+		);
+	}
 }
