@@ -28,7 +28,10 @@ export class PaymentsController {
 	@HttpCode(HttpStatus.OK)
 	@Post()
 	async create(@Body() createPaymentDto: CreatePaymentDto) {
-		return await this.paymentsService.create(createPaymentDto);
+		const response = await this.paymentsService.create(createPaymentDto);
+		const { order_url } = response;
+
+		return { payment_url: order_url };
 	}
 
 	@Get()

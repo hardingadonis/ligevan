@@ -51,7 +51,7 @@ export class PaymentsService {
 			amount: newPayment.finalPrice,
 		});
 
-		return newPayment;
+		return result;
 	}
 
 	private async populatePayment(query) {
