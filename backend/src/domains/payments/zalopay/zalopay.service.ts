@@ -17,7 +17,7 @@ export class ZalopayService {
 		private readonly config: ConfigType<typeof zalopayConfig>,
 	) {}
 
-	async createOrder(dto: CreateZaloPayOrderDto) {
+	async create(dto: CreateZaloPayOrderDto) {
 		const embed_data = {
 			redirecturl: `${process.env.FRONTEND_URL}/student/payment-history/${dto.id}`,
 		};
@@ -54,9 +54,10 @@ export class ZalopayService {
 			order.embed_data +
 			'|' +
 			order.item;
-		const hmac = crypto.createHmac('sha256', this.config.key1);
-		hmac.update(data);
-		order.mac = hmac.digest('hex');
+		order.mac = crypto
+			.createHmac('sha256', this.config.key1)
+			.update(data)
+			.digest('hex');
 
 		this.logger.log(`Create order #${order.app_trans_id}`);
 		this.logger.debug(order);
@@ -68,5 +69,40 @@ export class ZalopayService {
 		this.logger.debug(result.data);
 
 		return result.data;
+	}
+
+	async callback(body: any) {
+		const result = { return_code: 0, return_message: '' };
+
+		this.logger.debug('Callback body', body);
+
+		try {
+			const dataStr = body.data;
+			const reqMac = body.mac;
+
+			const mac = crypto
+				.createHmac('sha256', this.config.key2)
+				.update(dataStr)
+				.digest('hex');
+			this.logger.debug('mac =', mac);
+
+			if (reqMac !== mac) {
+				result.return_code = -1;
+				result.return_message = 'mac not equal';
+			} else {
+				const dataJson = JSON.parse(dataStr);
+				this.logger.log(
+					"Update order's status = success where app_trans_id =",
+					dataJson['app_trans_id'],
+				);
+
+				result.return_code = 1;
+				result.return_message = 'success';
+			}
+		} catch (ex: any) {
+			this.logger.error('Error:::' + ex.message);
+			result.return_code = 0;
+			result.return_message = ex.message;
+		}
 	}
 }
