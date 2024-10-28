@@ -3,6 +3,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 import { AttendancesController } from '@/domains/attendances/attendances.controller';
 import { AttendancesService } from '@/domains/attendances/attendances.service';
+import { SlotsService } from '@/domains/slots/slots.service';
 import { AttendanceSchema } from '@/schemas/attendance.schema';
 import { SlotSchema } from '@/schemas/slot.schema';
 
@@ -14,7 +15,7 @@ import { SlotSchema } from '@/schemas/slot.schema';
 		]),
 	],
 	controllers: [AttendancesController],
-	providers: [AttendancesService],
+	providers: [AttendancesService, SlotsService],
 	exports: [AttendancesService],
 })
 export class AttendancesModule {}
