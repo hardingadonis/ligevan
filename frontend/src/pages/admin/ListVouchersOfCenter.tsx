@@ -1,5 +1,4 @@
 import {
-	DeleteOutlined,
 	EyeOutlined,
 	PlusOutlined,
 	SearchOutlined,
@@ -8,11 +7,14 @@ import {
 import { Button, Empty, Input, Table, notification } from 'antd';
 import type { TableColumnsType, TableProps } from 'antd';
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import ButtonGoBack from '@/components/commons/ButtonGoback';
 import AdminLayout from '@/layouts/admin';
 import { Voucher } from '@/schemas/voucher.schema';
 import { getCenterById, getVouchersByCenterId } from '@/services/api/center';
+import { setCenterID } from '@/slices/center';
 
 interface DataType {
 	key: string;
@@ -24,12 +26,12 @@ interface DataType {
 
 const ListVouchersCenter: React.FC = () => {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 	const { id } = useParams<{ id: string }>();
 	const [vouchers, setVouchers] = useState<DataType[]>([]);
 	const [centerName, setCenterName] = useState('');
 	const [searchText, setSearchText] = useState('');
 
-	// Fetch vouchers and center data by center ID
 	const fetchVouchers = async () => {
 		try {
 			if (!id) {
@@ -61,17 +63,14 @@ const ListVouchersCenter: React.FC = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	// Handle search input change
 	const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchText(e.target.value);
 	};
 
-	// Handle refresh button click
 	const handleRefresh = () => {
 		fetchVouchers();
 	};
 
-	// Filter vouchers based on search text
 	const filteredVouchers = vouchers.filter(
 		(item) =>
 			item.code.toLowerCase().includes(searchText.toLowerCase()) ||
@@ -85,7 +84,6 @@ const ListVouchersCenter: React.FC = () => {
 		}
 	};
 
-	// Define columns for the table
 	const columns: TableColumnsType<DataType> = [
 		{
 			title: <div style={{ textAlign: 'center' }}>STT</div>,
@@ -96,7 +94,7 @@ const ListVouchersCenter: React.FC = () => {
 		{
 			title: <div style={{ textAlign: 'center' }}>Mã voucher</div>,
 			dataIndex: 'code',
-			width: '15%',
+			width: '30%',
 		},
 		{
 			title: <div style={{ textAlign: 'center' }}>Tên voucher</div>,
@@ -113,7 +111,7 @@ const ListVouchersCenter: React.FC = () => {
 		{
 			title: <div style={{ textAlign: 'center' }}>Thao tác</div>,
 			dataIndex: 'actions',
-			width: '20%',
+			width: '15%',
 			align: 'center',
 		},
 	];
@@ -127,7 +125,6 @@ const ListVouchersCenter: React.FC = () => {
 		console.log('params', pagination, filters, sorter, extra);
 	};
 
-	// Render action buttons for each row
 	const renderActions = (voucherId: string): JSX.Element => (
 		<>
 			<Button
@@ -135,34 +132,27 @@ const ListVouchersCenter: React.FC = () => {
 				variant="outlined"
 				icon={<EyeOutlined />}
 				onClick={() => handleDetail(voucherId)}
-				style={{ marginRight: 8 }}
+				style={{ marginRight: 8, backgroundColor: '#4096ff', color: 'white' }}
 			>
 				Chi tiết
-			</Button>
-			<Button
-				color="danger"
-				variant="outlined"
-				icon={<DeleteOutlined />}
-				onClick={() => handleDelete(voucherId)}
-			>
-				Xóa
 			</Button>
 		</>
 	);
 
 	const handleDetail = (voucherId: string) => {
-		navigate(`/admin/vouchers/${voucherId}`);
-	};
-
-	// Handle delete voucher with notification
-	const handleDelete = async (id: string) => {
-		navigate(`admin/vouchers/${id}`); //id của voucher
+		if (id) {
+			dispatch(setCenterID(id));
+			navigate(`/admin/centers/vouchers/${voucherId}`);
+		}
 	};
 
 	return (
 		<AdminLayout>
 			<div style={{ padding: '65px 20px 0 270px' }}>
 				<div style={{ textAlign: 'center', marginBottom: 20 }}>
+					<div style={{ textAlign: 'left' }}>
+						<ButtonGoBack />
+					</div>
 					<h2>Danh sách voucher tại {centerName}</h2>
 				</div>
 
@@ -177,6 +167,11 @@ const ListVouchersCenter: React.FC = () => {
 						type="primary"
 						icon={<PlusOutlined />}
 						onClick={handleCreateNewVoucher}
+						style={{
+							marginRight: 8,
+							backgroundColor: '#0cd14e',
+							color: 'white',
+						}}
 					>
 						Thêm voucher mới
 					</Button>
