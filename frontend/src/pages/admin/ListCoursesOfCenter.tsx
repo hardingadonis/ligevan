@@ -1,5 +1,4 @@
 import {
-	DeleteOutlined,
 	EyeOutlined,
 	PlusOutlined,
 	SearchOutlined,
@@ -8,11 +7,14 @@ import {
 import { Button, Empty, Input, Table, notification } from 'antd';
 import type { TableColumnsType, TableProps } from 'antd';
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import ButtonGoBack from '@/components/commons/ButtonGoback';
 import AdminLayout from '@/layouts/admin';
 import { Course } from '@/schemas/course.schema';
 import { getCenterById, getCoursesByCenterId } from '@/services/api/center';
+import { setCenterID } from '@/slices/center';
 import { formatPrice } from '@/utils/formatPrice';
 
 interface DataType {
@@ -30,8 +32,8 @@ const ListCourseCenter: React.FC = () => {
 	const [courses, setCourses] = useState<DataType[]>([]);
 	const [centerName, setCenterName] = useState('');
 	const [searchText, setSearchText] = useState('');
+	const dispatch = useDispatch();
 
-	// Fetch courses and center data by center ID
 	const fetchCourses = async () => {
 		try {
 			if (!id) {
@@ -64,17 +66,14 @@ const ListCourseCenter: React.FC = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	// Handle search input change
 	const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchText(e.target.value);
 	};
 
-	// Handle refresh button click
 	const handleRefresh = () => {
 		fetchCourses();
 	};
 
-	// Filter courses based on search text
 	const filteredCourses = courses.filter(
 		(item) =>
 			item.code.toLowerCase().includes(searchText.toLowerCase()) ||
@@ -85,12 +84,10 @@ const ListCourseCenter: React.FC = () => {
 
 	const handleCreateNewCourse = () => {
 		if (id) {
-			// navigate(`admin/centers/${id}/courses/create`);
 			navigate(`create`);
 		}
 	};
 
-	// Define columns for the table
 	const columns: TableColumnsType<DataType> = [
 		{
 			title: <div style={{ textAlign: 'center' }}>STT</div>,
@@ -123,7 +120,7 @@ const ListCourseCenter: React.FC = () => {
 		{
 			title: <div style={{ textAlign: 'center' }}>Thao tác</div>,
 			dataIndex: 'actions',
-			width: '22%',
+			width: '12%',
 			align: 'center',
 		},
 	];
@@ -137,7 +134,6 @@ const ListCourseCenter: React.FC = () => {
 		console.log('params', pagination, filters, sorter, extra);
 	};
 
-	// Render action buttons for each row
 	const renderActions = (courseId: string): JSX.Element => (
 		<>
 			<Button
@@ -145,36 +141,27 @@ const ListCourseCenter: React.FC = () => {
 				variant="outlined"
 				icon={<EyeOutlined />}
 				onClick={() => handleDetail(courseId)}
-				style={{ marginRight: 8 }}
+				style={{ marginRight: 8, backgroundColor: '#4096ff', color: 'white' }}
 			>
 				Chi tiết
-			</Button>
-			<Button
-				color="danger"
-				variant="outlined"
-				icon={<DeleteOutlined />}
-				onClick={() => handleDelete(courseId)}
-			>
-				Xóa
 			</Button>
 		</>
 	);
 
-	// Handle view course details
 	const handleDetail = (courseId: string) => {
-		// Correct navigation to the VoucherDetail page
-		navigate(`/admin/courses/${courseId}`);
-	};
-
-	// Handle delete course with notification
-	const handleDelete = async (courseId: string) => {
-		navigate(`admin/courses/${courseId}`); //id của voucher
+		if (id) {
+			dispatch(setCenterID(id));
+			navigate(`/admin/centers/courses/${courseId}`);
+		}
 	};
 
 	return (
 		<AdminLayout>
-			<div style={{ padding: '65px 20px 0 270px' }}>
+			<div style={{ paddingLeft: '270px' }}>
 				<div style={{ textAlign: 'center', marginBottom: 20 }}>
+					<div style={{ textAlign: 'left' }}>
+						<ButtonGoBack />
+					</div>
 					<h2>Danh sách khóa học tại {centerName}</h2>
 				</div>
 
@@ -189,6 +176,11 @@ const ListCourseCenter: React.FC = () => {
 						type="primary"
 						icon={<PlusOutlined />}
 						onClick={handleCreateNewCourse}
+						style={{
+							marginRight: 8,
+							backgroundColor: '#0cd14e',
+							color: 'white',
+						}}
 					>
 						Thêm khóa học mới
 					</Button>
