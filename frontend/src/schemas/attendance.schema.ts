@@ -11,6 +11,6 @@ export interface Attendance {
 }
 
 export interface CheckAttendance {
-	studentId: string;
+	student: string;
 	status: string;
 }
