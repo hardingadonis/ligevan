@@ -6,6 +6,7 @@ import {
 	CreatePaymentDto,
 	UpdatePaymentDto,
 } from '@/domains/payments/dto/payment.dto';
+import { MomoService } from '@/domains/payments/momo/momo.service';
 import { ZalopayService } from '@/domains/payments/zalopay/zalopay.service';
 import { Payment } from '@/schemas/payment.schema';
 
@@ -16,6 +17,7 @@ export class PaymentsService {
 	constructor(
 		@InjectModel(Payment.name) private readonly salaryModel: Model<Payment>,
 		private readonly zalopayService: ZalopayService,
+		private readonly momoService: MomoService,
 	) {}
 
 	async create(createPaymentDto: CreatePaymentDto) {
@@ -46,12 +48,25 @@ export class PaymentsService {
 		this.logger.debug('Payment created', newPayment);
 		this.logger.log('Payment created');
 
-		const result = await this.zalopayService.create({
-			id: newPayment._id.toString(),
-			amount: newPayment.finalPrice,
-		});
+		switch (createPaymentDto.method) {
+			case 'zalo-pay': {
+				const result = await this.zalopayService.create({
+					id: newPayment._id.toString(),
+					amount: newPayment.finalPrice,
+				});
 
-		return result;
+				return { order_url: result.order_url };
+			}
+
+			case 'momo': {
+				const result = await this.momoService.create({
+					id: newPayment._id.toString(),
+					amount: newPayment.finalPrice,
+				});
+
+				return { order_url: result.shortLink };
+			}
+		}
 	}
 
 	private async populatePayment(query) {
