@@ -253,6 +253,17 @@ const App: React.FC = () => {
 						}
 					/>
 					<Route
+						path="/admin/centers/courses/:id"
+						element={
+							<ProtectedRoute
+								redirectPath="/admin/login"
+								tokenName="accessToken"
+							>
+								<CourseDetail />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
 						path="/admin/courses/:id"
 						element={
 							<ProtectedRoute
@@ -293,6 +304,17 @@ const App: React.FC = () => {
 								tokenName="accessToken"
 							>
 								<AdminVouchersManagement />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="/admin/centers/vouchers/:id"
+						element={
+							<ProtectedRoute
+								redirectPath="/admin/login"
+								tokenName="accessToken"
+							>
+								<VoucherDetail />
 							</ProtectedRoute>
 						}
 					/>
