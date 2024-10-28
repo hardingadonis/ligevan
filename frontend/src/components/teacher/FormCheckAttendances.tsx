@@ -45,7 +45,7 @@ const FormCheckAttendances: React.FC<FormCheckAttendancesProps> = ({
 			const students = await getStudentsInClassBySlotId(slotId);
 			const slot = await getSlotById(slotId);
 			const attendances = slot.attendances;
-			console.log('Fetched attendances:', attendances); // Debug log
+			const isSlotDone = slot.isDone;
 
 			const formattedStudents = students
 				? students.map((student: any, index: number) => {
@@ -57,7 +57,6 @@ const FormCheckAttendances: React.FC<FormCheckAttendancesProps> = ({
 							(attendance: Attendance) =>
 								attendance.student.toString() === studentId,
 						);
-						console.log('Student ID:', studentId); // Debug log
 						console.log('Attendance record:', attendanceRecord); // Debug log
 						return {
 							key: (index + 1).toString(),
@@ -65,11 +64,16 @@ const FormCheckAttendances: React.FC<FormCheckAttendancesProps> = ({
 							fullName: student.fullName,
 							phone: student.phone,
 							gender: student.gender === 'male' ? 'Nam' : 'Nữ',
-							attendance: attendanceRecord ? attendanceRecord.status : 'absent',
+							attendance: isSlotDone
+								? attendanceRecord
+									? attendanceRecord.status
+									: 'absent'
+								: 'absent',
 							avatar: student.avatar,
 						};
 					})
 				: [];
+			formattedStudents.sort((a, b) => a.fullName.localeCompare(b.fullName));
 			setData(formattedStudents);
 		} catch (error) {
 			setError('Không thể tải danh sách học sinh');
@@ -100,10 +104,15 @@ const FormCheckAttendances: React.FC<FormCheckAttendancesProps> = ({
 	};
 
 	const handleSave = async () => {
-		const attendances: CheckAttendance[] = data.map((student) => ({
-			studentId: student.id,
-			status: student.attendance === 'attended' ? 'attended' : 'absent',
-		}));
+		const attendances: CheckAttendance[] = data.map((student) => {
+			if (!student.id) {
+				console.error('Student ID is missing for:', student);
+			}
+			return {
+				student: student.id,
+				status: student.attendance === 'attended' ? 'attended' : 'absent',
+			};
+		});
 
 		try {
 			const response = await checkAttendances(slotId, attendances);
