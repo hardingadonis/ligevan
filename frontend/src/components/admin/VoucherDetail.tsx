@@ -1,18 +1,19 @@
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import { Button, Col, Form, Input, Modal, Row, Spin, message } from 'antd';
+import { Col, Form, Input, Row, Spin } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 import ButtonGoBack from '@/components/commons/ButtonGoback';
 import { Voucher } from '@/schemas/voucher.schema';
-import { deleteVoucher, getVoucherById } from '@/services/api/voucher';
+import { getVoucherById } from '@/services/api/voucher';
+import { selectCenterID } from '@/slices/center';
 import { formatDateToVietnamTimezone } from '@/utils/dateFormat';
 
 const VoucherDetail: React.FC = () => {
 	const { id } = useParams<{ id: string }>();
 	const [voucher, setVoucher] = useState<Voucher | null>(null);
 	const [loading, setLoading] = useState<boolean>(true);
-	const navigate = useNavigate();
+	const centerID = useSelector(selectCenterID);
 
 	useEffect(() => {
 		const fetchVoucher = async () => {
@@ -32,30 +33,6 @@ const VoucherDetail: React.FC = () => {
 		}
 	}, [id]);
 
-	const handleEdit = (id: string) => {
-		navigate(`/admin/vouchers/${id}/edit`);
-	};
-
-	const handleDelete = async (id: string) => {
-		Modal.confirm({
-			title: 'Xác nhận xóa',
-			content: 'Bạn có chắc chắn muốn xóa mã giảm giá này?',
-			okText: 'Xóa',
-			cancelText: 'Hủy',
-			centered: true,
-			onOk: async () => {
-				try {
-					await deleteVoucher(id);
-					message.success('Mã giảm giá đã được xóa thành công!', 3);
-					navigate(`/admin/vouchers`);
-				} catch (error) {
-					console.error('Lỗi khi xóa mã giảm giá:', error);
-					message.error('Lỗi: Đã xảy ra lỗi khi xóa mã giảm giá!', 3);
-				}
-			},
-		});
-	};
-
 	if (loading) {
 		return (
 			<div style={{ textAlign: 'center', padding: '20px' }}>
@@ -72,7 +49,7 @@ const VoucherDetail: React.FC = () => {
 		<div style={{ paddingLeft: '270px' }}>
 			<div style={{ textAlign: 'center', marginBottom: 20 }}>
 				<div style={{ textAlign: 'left' }}>
-					<ButtonGoBack link="/admin/vouchers" />
+					<ButtonGoBack link={`/admin/centers/${centerID}/vouchers`} />
 				</div>
 				<h2>Chi tiết mã giảm giá</h2>
 			</div>
@@ -168,31 +145,7 @@ const VoucherDetail: React.FC = () => {
 							<Form.Item
 								wrapperCol={{ span: 24 }}
 								style={{ textAlign: 'right' }}
-							>
-								<>
-									<Button
-										style={{
-											backgroundColor: '#ffae00',
-											color: 'white',
-											marginRight: 8,
-										}}
-										icon={<EditOutlined />}
-										onClick={() => id && handleEdit(id)}
-									>
-										Chỉnh sửa
-									</Button>
-									<Button
-										style={{
-											backgroundColor: '#ff2121',
-											color: 'white',
-										}}
-										icon={<DeleteOutlined />}
-										onClick={() => id && handleDelete(id)}
-									>
-										Xóa
-									</Button>
-								</>
-							</Form.Item>
+							></Form.Item>
 						</Form>
 					</Col>
 				</Row>
