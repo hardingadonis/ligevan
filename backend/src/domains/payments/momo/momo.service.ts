@@ -16,9 +16,8 @@ export class MomoService {
 	) {}
 
 	async create(dto: CreateMomoOrderDto) {
-		const { accessKey, secretKey } = this.config;
+		const { accessKey, secretKey, partnerCode } = this.config;
 		const orderInfo = 'Pay with MoMo';
-		const partnerCode = 'MOMO';
 		const redirectUrl = `${process.env.FRONTEND_URL}/student/payment-history/${dto.id}`;
 		const ipnUrl = process.env.MOMO_CALLBACK;
 		const requestType = 'payWithMethod';
