@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+import { Slot } from '@/schemas/slot.schema';
 import { Student } from '@/schemas/student.schema';
 import { apiBaseUrl } from '@/utils/apiBase';
 
@@ -47,6 +48,24 @@ export const getStudentByID = async (id: string): Promise<Student> => {
 		return response.data;
 	} catch (error) {
 		console.error('Error fetching student:', error);
+		throw error;
+	}
+};
+
+export const getStudentBySlotId = async (slotId: string): Promise<Student> => {
+	try {
+		const response = await axios.get(`${apiBaseUrl}/api/slots/${slotId}`);
+		const slot: Slot = response.data;
+
+		const studentId = slot.class?.students?.[0]?._id;
+
+		if (studentId) {
+			return await getStudentByID(studentId);
+		} else {
+			throw new Error('No students found in the specified slot.');
+		}
+	} catch (error) {
+		console.error('Error fetching student by slot ID:', error);
 		throw error;
 	}
 };
