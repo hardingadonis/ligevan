@@ -92,4 +92,8 @@ export class MomoService {
 
 		return result.data;
 	}
+
+	async callback(body: any) {
+		this.logger.debug('Callback body', body);
+	}
 }

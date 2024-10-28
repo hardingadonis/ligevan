@@ -14,6 +14,7 @@ import {
 	CreatePaymentDto,
 	UpdatePaymentDto,
 } from '@/domains/payments/dto/payment.dto';
+import { MomoService } from '@/domains/payments/momo/momo.service';
 import { PaymentsService } from '@/domains/payments/payments.service';
 import { ZalopayService } from '@/domains/payments/zalopay/zalopay.service';
 
@@ -23,6 +24,7 @@ export class PaymentsController {
 	constructor(
 		private readonly paymentsService: PaymentsService,
 		private readonly zalopayService: ZalopayService,
+		private readonly momoService: MomoService,
 	) {}
 
 	@HttpCode(HttpStatus.OK)
@@ -56,5 +58,11 @@ export class PaymentsController {
 	@Post('zalopay/callback')
 	async zalopayCallback(@Body() body: any) {
 		return await this.zalopayService.callback(body);
+	}
+
+	@HttpCode(HttpStatus.OK)
+	@Post('momo/callback')
+	async momoCallback(@Body() body: any) {
+		return await this.momoService.callback(body);
 	}
 }
