@@ -58,17 +58,19 @@ const FormCheckAttendances: React.FC<FormCheckAttendancesProps> = ({
 								attendance.student.toString() === studentId,
 						);
 						console.log('Attendance record:', attendanceRecord); // Debug log
+						const attendanceStatus = isSlotDone
+							? attendanceRecord
+								? attendanceRecord.status
+								: 'absent'
+							: 'absent';
+
 						return {
 							key: (index + 1).toString(),
 							id: studentId,
 							fullName: student.fullName,
 							phone: student.phone,
 							gender: student.gender === 'male' ? 'Nam' : 'Nữ',
-							attendance: isSlotDone
-								? attendanceRecord
-									? attendanceRecord.status
-									: 'absent'
-								: 'absent',
+							attendance: attendanceStatus,
 							avatar: student.avatar,
 						};
 					})

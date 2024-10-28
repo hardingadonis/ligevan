@@ -20,7 +20,7 @@ const CheckAttendances: React.FC = () => {
 	const [isMounted, setIsMounted] = useState(false);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const { slotId: slotId } = useParams<{ slotId: string }>();
+	const { slotId } = useParams<{ slotId: string }>();
 
 	useEffect(() => {
 		if (!token) {
