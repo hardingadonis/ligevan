@@ -1,5 +1,4 @@
 import {
-	DeleteOutlined,
 	EyeOutlined,
 	PlusOutlined,
 	SearchOutlined,
@@ -81,15 +80,6 @@ const ListClassOfCenter: React.FC = () => {
 			>
 				Chi tiết
 			</Button>
-			<Button
-				color="default"
-				variant="solid"
-				type="primary"
-				icon={<DeleteOutlined />}
-				style={{ marginRight: 8, backgroundColor: '#ff2121', color: 'white' }}
-			>
-				Xóa
-			</Button>
 		</div>
 	);
 
@@ -146,7 +136,7 @@ const ListClassOfCenter: React.FC = () => {
 			title: <div style={{ textAlign: 'center' }}>Thao tác</div>,
 			dataIndex: 'actions',
 			align: 'center',
-			width: '20%',
+			width: '10%',
 		},
 	];
 
