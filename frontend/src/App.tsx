@@ -50,6 +50,9 @@ const ListTeacherOfCenter = lazy(
 );
 const ClassDetailForAdmin = lazy(() => import('@/pages/admin/ClassDetail'));
 const ListClass = lazy(() => import('@/pages/admin/ListClass'));
+const AdminSalariesManagement = lazy(
+	() => import('@/pages/admin/SalariesManagement'),
+);
 
 // Teacher lazy load
 const LoginTeacher = lazy(() => import('@/pages/teacher/Login'));
@@ -366,6 +369,17 @@ const App: React.FC = () => {
 								tokenName="accessToken"
 							>
 								<AdminSchedulesManagement />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="/admin/salaries"
+						element={
+							<ProtectedRoute
+								redirectPath="/admin/login"
+								tokenName="accessToken"
+							>
+								<AdminSalariesManagement />
 							</ProtectedRoute>
 						}
 					/>
