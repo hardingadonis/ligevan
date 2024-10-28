@@ -6,11 +6,13 @@ import { updateCenter } from '@/services/api/center';
 interface CenterState {
 	loading: boolean;
 	error: string | null;
+	centerID: string | null;
 }
 
 const initialState: CenterState = {
 	loading: false,
 	error: null,
+	centerID: null,
 };
 
 export const updateCenterById = createAsyncThunk(
@@ -36,6 +38,12 @@ export const centerSlice = createSlice({
 			state.loading = false;
 			state.error = action.payload;
 		},
+		// 	setCenterID: (state, action) => {
+		// 		state.centerID = action.payload;
+		// },
+		setCenterID: (state, action: PayloadAction<string>) => {
+			state.centerID = action.payload;
+		},
 	},
 });
 
@@ -43,6 +51,10 @@ export const {
 	updateCenterPending,
 	updateCenterFulfilled,
 	updateCenterRejected,
+	setCenterID,
 } = centerSlice.actions;
+
+export const selectCenterID = (state: { centers: CenterState }) =>
+	state.centers.centerID;
 
 export default centerSlice.reducer;
