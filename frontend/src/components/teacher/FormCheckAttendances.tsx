@@ -49,7 +49,10 @@ const FormCheckAttendances: React.FC<FormCheckAttendancesProps> = ({
 
 			const formattedStudents = students
 				? students.map((student: any, index: number) => {
-						const studentId = student._id.toString();
+						const studentId = student._id ? student._id.toString() : null;
+						if (!studentId) {
+							console.error('Student ID is null:', student); // Debug log
+						}
 						const attendanceRecord = attendances?.find(
 							(attendance: Attendance) =>
 								attendance.student.toString() === studentId,
@@ -144,7 +147,7 @@ const FormCheckAttendances: React.FC<FormCheckAttendancesProps> = ({
 				<img
 					src={text}
 					alt="student"
-					style={{ width: '70px', height: '80px' }}
+					style={{ width: '70px', height: '70px', borderRadius: '50%' }}
 					onError={(e) => {
 						e.currentTarget.src = fallbackImage || 'defaultFallbackImage.jpg';
 					}}
