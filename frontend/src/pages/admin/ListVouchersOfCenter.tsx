@@ -126,17 +126,15 @@ const ListVouchersCenter: React.FC = () => {
 	};
 
 	const renderActions = (voucherId: string): JSX.Element => (
-		<>
-			<Button
-				color="primary"
-				variant="outlined"
-				icon={<EyeOutlined />}
-				onClick={() => handleDetail(voucherId)}
-				style={{ marginRight: 8, backgroundColor: '#4096ff', color: 'white' }}
-			>
-				Chi tiết
-			</Button>
-		</>
+		<Button
+			color="primary"
+			variant="outlined"
+			icon={<EyeOutlined />}
+			onClick={() => handleDetail(voucherId)}
+			style={{ marginRight: 8, backgroundColor: '#4096ff', color: 'white' }}
+		>
+			Chi tiết
+		</Button>
 	);
 
 	const handleDetail = (voucherId: string) => {
