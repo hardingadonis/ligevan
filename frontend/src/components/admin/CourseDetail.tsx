@@ -1,12 +1,10 @@
 import { Card, Col, Input, Row, Typography } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import ButtonGoBack from '@/components/commons/ButtonGoback';
 import { Course } from '@/schemas/course.schema';
 import { getCourseById } from '@/services/api/course';
-import { selectCenterID } from '@/slices/center';
 import { formatPrice } from '@/utils/formatPrice';
 
 const { Title } = Typography;
@@ -14,7 +12,6 @@ const { Title } = Typography;
 const CourseDetail: React.FC = () => {
 	const { id } = useParams<{ id: string }>();
 	const [course, setCourse] = useState<Course | null>(null);
-	const centerID = useSelector(selectCenterID);
 	useEffect(() => {
 		const fetchCourseDetail = async () => {
 			try {
@@ -40,7 +37,7 @@ const CourseDetail: React.FC = () => {
 		<div style={{ paddingLeft: '270px' }}>
 			<div style={{ textAlign: 'center', marginBottom: 20 }}>
 				<div style={{ textAlign: 'left' }}>
-					<ButtonGoBack link={`/admin/centers/${centerID}/courses`} />
+					<ButtonGoBack />
 				</div>
 				<h2>Chi tiết khóa học</h2>
 			</div>
