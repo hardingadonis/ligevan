@@ -126,6 +126,7 @@ export class SlotsService {
 				class: classId,
 				start: { $gte: startDate },
 				end: { $lte: endDate },
+				isDone: true,
 			})
 			.exec();
 	}
