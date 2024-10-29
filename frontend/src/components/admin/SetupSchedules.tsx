@@ -321,7 +321,7 @@ const SetupSchedules: React.FC = () => {
 			<ScheduleComponent
 				ref={scheduleRef}
 				height="650px"
-				startHour="03:00"
+				startHour="07:00"
 				endHour="17:15"
 				eventSettings={{ dataSource: events, template: eventTemplate }}
 				locale="vi"
