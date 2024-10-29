@@ -1,19 +1,16 @@
 import { Col, Form, Input, Row, Spin } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import ButtonGoBack from '@/components/commons/ButtonGoback';
 import { Voucher } from '@/schemas/voucher.schema';
 import { getVoucherById } from '@/services/api/voucher';
-import { selectCenterID } from '@/slices/center';
 import { formatDateToVietnamTimezone } from '@/utils/dateFormat';
 
 const VoucherDetail: React.FC = () => {
 	const { id } = useParams<{ id: string }>();
 	const [voucher, setVoucher] = useState<Voucher | null>(null);
 	const [loading, setLoading] = useState<boolean>(true);
-	const centerID = useSelector(selectCenterID);
 
 	useEffect(() => {
 		const fetchVoucher = async () => {
@@ -49,7 +46,7 @@ const VoucherDetail: React.FC = () => {
 		<div style={{ paddingLeft: '270px' }}>
 			<div style={{ textAlign: 'center', marginBottom: 20 }}>
 				<div style={{ textAlign: 'left' }}>
-					<ButtonGoBack link={`/admin/centers/${centerID}/vouchers`} />
+					<ButtonGoBack />
 				</div>
 				<h2>Chi tiết mã giảm giá</h2>
 			</div>
