@@ -243,7 +243,7 @@ const CustomEditorTemplate: React.FC<CustomEditorTemplateProps> = (props) => {
 					Description: 'Chưa dạy',
 				};
 
-				if (props.scheduleRef && props.scheduleRef.current) {
+				if (props.scheduleRef?.current) {
 					props.scheduleRef.current.addEvent(newEvent);
 				}
 
@@ -306,7 +306,7 @@ const CustomEditorTemplate: React.FC<CustomEditorTemplateProps> = (props) => {
 								EndTime: repeatedSlot.end.toISOString(),
 							};
 
-							if (props.scheduleRef && props.scheduleRef.current) {
+							if (props.scheduleRef?.current) {
 								props.scheduleRef.current.addEvent(repeatedEvent);
 							}
 
