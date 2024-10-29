@@ -8,6 +8,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 import { CreateSlotDto, UpdateSlotDto } from '@/domains/slots/dto/slot.dto';
+import { Class } from '@/schemas/class.schema';
 import { Slot } from '@/schemas/slot.schema';
 
 @Injectable()
@@ -16,6 +17,7 @@ export class SlotsService {
 
 	constructor(
 		@InjectModel(Slot.name) private readonly slotModel: Model<Slot>,
+		@InjectModel(Class.name) private readonly classModel: Model<Class>,
 	) {}
 
 	async create(createSlotDto: CreateSlotDto): Promise<Slot> {
@@ -42,6 +44,12 @@ export class SlotsService {
 
 		this.logger.debug('Slot created', newSlot);
 		this.logger.log('Slot created');
+
+		await this.classModel.findByIdAndUpdate(createSlotDto.class, {
+			$push: { slots: newSlot._id.toString() },
+		});
+
+		this.logger.debug('Slot added to class');
 
 		return newSlot;
 	}
