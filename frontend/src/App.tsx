@@ -37,6 +37,12 @@ const AdminCenterEdit = lazy(() => import('@/pages/admin/CenterEdit'));
 const AdminCourseEdit = lazy(() => import('@/pages/admin/CourseEdit'));
 const AdminVoucherEdit = lazy(() => import('@/pages/admin/VoucherEdit'));
 const CenterDetail = lazy(() => import('@/pages/admin/CenterDetail'));
+const CourseDetailOfCenter = lazy(
+	() => import('@/pages/admin/CourseDetailOfCenter'),
+);
+const VoucherDetailOfCenter = lazy(
+	() => import('@/pages/admin/VoucherDetailOfCenter'),
+);
 const CourseDetail = lazy(() => import('@/pages/admin/CourseDetail'));
 const VoucherDetail = lazy(() => import('@/pages/admin/VoucherDetail'));
 const ListCoursesOfCenter = lazy(
@@ -259,7 +265,7 @@ const App: React.FC = () => {
 								redirectPath="/admin/login"
 								tokenName="accessToken"
 							>
-								<CourseDetail />
+								<CourseDetailOfCenter />
 							</ProtectedRoute>
 						}
 					/>
@@ -314,7 +320,7 @@ const App: React.FC = () => {
 								redirectPath="/admin/login"
 								tokenName="accessToken"
 							>
-								<VoucherDetail />
+								<VoucherDetailOfCenter />
 							</ProtectedRoute>
 						}
 					/>
