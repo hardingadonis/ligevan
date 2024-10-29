@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import { NewSlot, Slot } from '@/schemas/slot.schema';
+import { getClassById } from '@/services/api/class';
 import { getTeacherByEmail } from '@/services/api/teacher';
 import { apiBaseUrl } from '@/utils/apiBase';
 
@@ -10,6 +11,27 @@ export const getAllSlot = async (): Promise<Slot[]> => {
 		return response.data;
 	} catch (error) {
 		console.error('Error fetching slots:', error);
+		throw error;
+	}
+};
+
+export const getSlotById = async (id: string): Promise<Slot> => {
+	try {
+		const response = await axios.get(`${apiBaseUrl}/api/slots/${id}`);
+		return response.data;
+	} catch (error) {
+		console.error('Error fetching slot by id:', error);
+		throw error;
+	}
+};
+
+export const getStudentsInClassBySlotId = async (slotId: string) => {
+	try {
+		const slot = await getSlotById(slotId);
+		const classDetails = await getClassById(slot.class._id);
+		return classDetails.students;
+	} catch (error) {
+		console.error('Error fetching students in slot class:', error);
 		throw error;
 	}
 };
@@ -61,17 +83,6 @@ export const filterSlotsforSchedule = async (
 		return filteredSlots;
 	} catch (error) {
 		console.error('Error filtering slots:', error);
-		throw error;
-	}
-};
-
-export const createSlot = async (slot: NewSlot): Promise<string> => {
-	try {
-		const response = await axios.post(`${apiBaseUrl}/api/slots`, slot);
-		const createdSlot: Slot = response.data;
-		return createdSlot._id;
-	} catch (error) {
-		console.error('Error creating slot:', error);
 		throw error;
 	}
 };
