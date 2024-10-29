@@ -22,3 +22,15 @@ export const getAllClasses = async (): Promise<Class[]> => {
 		throw error;
 	}
 };
+
+export const getAllTeacherByCourseId = async (courseId: string) => {
+	try {
+		const response = await axios.get(
+			`${apiBaseUrl}/api/classes/teachers/${courseId}`,
+		);
+		return response.data;
+	} catch (error) {
+		console.error('Error fetching teachers:', error);
+		throw error;
+	}
+};
