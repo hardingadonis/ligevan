@@ -1,7 +1,7 @@
 import {
 	CheckCircleOutlined,
 	ClockCircleOutlined,
-	ScheduleOutlined,
+	SyncOutlined,
 } from '@ant-design/icons';
 import { L10n, loadCldr } from '@syncfusion/ej2-base';
 import '@syncfusion/ej2-base/styles/material.css';
@@ -22,13 +22,15 @@ import {
 } from '@syncfusion/ej2-react-schedule';
 import '@syncfusion/ej2-react-schedule/styles/material.css';
 import '@syncfusion/ej2-splitbuttons/styles/material.css';
-import { Button, Col, Row, Tag, Typography } from 'antd';
+import { Button, Col, Form, Row, Tag, Typography } from 'antd';
 import * as gregorian from 'cldr-data/main/vi/ca-gregorian.json';
 import * as numberingSystems from 'cldr-data/main/vi/numbers.json';
 import * as timeZoneNames from 'cldr-data/main/vi/timeZoneNames.json';
 import * as weekData from 'cldr-data/supplemental/weekData.json';
+import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
 
+import CustomEditorTemplate from '@/components/admin/CustomEditorTemplate';
 import ButtonGoBack from '@/components/commons/ButtonGoback';
 import DropdownCenter from '@/components/teacher/DropdownCenter';
 import DropdownCourse from '@/components/teacher/DropdownCourse';
@@ -63,6 +65,7 @@ interface ExtendedSlot extends Slot {
 }
 
 const SetupSchedules: React.FC = () => {
+	const [form] = Form.useForm(); // Create a form instance
 	const [slots, setSlots] = useState<ExtendedSlot[]>([]);
 	const [centers, setCenters] = useState<Center[]>([]);
 	const [selectedCenter, setSelectedCenter] = useState<string | undefined>(
@@ -73,6 +76,26 @@ const SetupSchedules: React.FC = () => {
 		'all',
 	);
 	const scheduleRef = useRef<ScheduleComponent>(null);
+
+	const fetchSlots = async () => {
+		try {
+			const allSlots = await getAllSlot();
+			const convertedData: ExtendedSlot[] = await Promise.all(
+				allSlots.map(async (slot) => {
+					const center = await getCenterById(slot.class.center.toString());
+					return {
+						...slot,
+						start: convertToUTC(new Date(slot.start)),
+						end: convertToUTC(new Date(slot.end)),
+						centerName: center.name,
+					};
+				}),
+			);
+			setSlots(convertedData);
+		} catch (error) {
+			console.error('Error fetching slots:', error);
+		}
+	};
 
 	useEffect(() => {
 		const fetchCenters = async () => {
@@ -87,25 +110,6 @@ const SetupSchedules: React.FC = () => {
 	}, []);
 
 	useEffect(() => {
-		const fetchSlots = async () => {
-			try {
-				const allSlots = await getAllSlot();
-				const convertedData: ExtendedSlot[] = await Promise.all(
-					allSlots.map(async (slot) => {
-						const center = await getCenterById(slot.class.center.toString());
-						return {
-							...slot,
-							start: convertToUTC(new Date(slot.start)),
-							end: convertToUTC(new Date(slot.end)),
-							centerName: center.name,
-						};
-					}),
-				);
-				setSlots(convertedData);
-			} catch (error) {
-				console.error('Error fetching slots:', error);
-			}
-		};
 		fetchSlots();
 	}, []);
 
@@ -130,6 +134,10 @@ const SetupSchedules: React.FC = () => {
 		setSelectedCourse(value);
 	};
 
+	const handleRefresh = () => {
+		fetchSlots();
+	};
+
 	const filteredSlots = slots.filter((slot) => {
 		const centerMatch =
 			selectedCenter === 'all' ||
@@ -142,18 +150,16 @@ const SetupSchedules: React.FC = () => {
 
 	const events = filteredSlots.map((slot) => ({
 		Id: slot._id,
-		Subject: `Lớp: ${slot.class.name}`,
+		Subject: slot.class.name,
 		StartTime: slot.start,
 		EndTime: slot.end,
 		Location: slot.room,
 		Description: slot.isDone ? 'Đã dạy' : 'Chưa dạy',
 		IsAllDay: false,
 		CenterName: slot.centerName,
+		classId: slot.class._id,
+		centerId: slot.class.center,
 	}));
-
-	const handleRedirect = (id: string) => {
-		window.location.href = `/teacher/attendance/${id}`;
-	};
 
 	const eventTemplate = (props: {
 		Subject: string;
@@ -166,7 +172,7 @@ const SetupSchedules: React.FC = () => {
 	}) => (
 		<div style={{ padding: '5px' }}>
 			<div>
-				<h3>{props.Subject}</h3>
+				<h4>Lớp: {props.Subject}</h4>
 			</div>
 			<div style={{ marginTop: '7px' }}>
 				{new Date(props.StartTime).toLocaleTimeString([], {
@@ -200,16 +206,69 @@ const SetupSchedules: React.FC = () => {
 					{props.Description}
 				</Tag>
 			</div>
-			<Button
-				type="primary"
-				icon={<ScheduleOutlined />}
-				onClick={() => handleRedirect(props.Id)}
-				style={{ marginTop: '10px' }}
-			>
-				Điểm danh
-			</Button>
 		</div>
 	);
+
+	const onPopupOpen = (args: {
+		type: string;
+		data: Record<string, unknown>;
+		cancel: boolean;
+	}) => {
+		const currentDate = new Date();
+		const titleElement = document.querySelector('.e-title-text');
+		if (args.type === 'QuickInfo' && !('Id' in args.data)) {
+			const startTime = args.data.StartTime as Date;
+			if (startTime.getTime() < currentDate.setHours(0, 0, 0, 0)) {
+				args.cancel = true;
+				return;
+			}
+			args.cancel = true;
+			scheduleRef.current?.openEditor(args.data, 'Add');
+			if (titleElement) {
+				titleElement.textContent = 'Thêm lịch học';
+			}
+		} else if (args.type === 'Editor') {
+			const startTime = args.data.StartTime as Date;
+			if (startTime.getTime() < currentDate.setHours(0, 0, 0, 0)) {
+				args.cancel = true;
+				return;
+			}
+			if (!args.data.Id) {
+				form.resetFields();
+				if (titleElement) {
+					titleElement.textContent = 'Thêm lịch học';
+				}
+			} else {
+				const center = centers.find(
+					(center) => center.name === args.data.CenterName,
+				);
+				const selectedClass = center?.classes?.find(
+					(cls) => cls._id === args.data.classId,
+				);
+				form.setFieldsValue({
+					StartTime: moment(args.data.StartTime as string),
+					EndTime: moment(args.data.EndTime as string),
+					Subject: selectedClass ? selectedClass.name : args.data.Subject,
+					Location: args.data.Location,
+					Center: center ? center._id : undefined,
+				});
+				if (titleElement) {
+					titleElement.textContent = 'Chỉnh sửa lịch học';
+				}
+			}
+		}
+	};
+
+	const onPopupClose = async (args: {
+		type: string;
+		data: Record<string, unknown>;
+		element: HTMLElement;
+		cancel: boolean;
+	}) => {
+		if (args.type === 'Editor' && !args.data.Id && !args.cancel) {
+			args.cancel = true;
+		}
+	};
 
 	return (
 		<div style={{ paddingLeft: '270px' }}>
@@ -223,29 +282,67 @@ const SetupSchedules: React.FC = () => {
 					</Typography.Title>
 				</Col>
 			</Row>
-			<div style={{ display: 'flex', marginTop: '20px' }}>
-				<DropdownCenter
-					centers={centers}
-					selectedCenter={selectedCenter || 'all'}
-					onChange={handleCenterChange}
-				/>
-				{selectedCenter !== 'all' && (
-					<DropdownCourse
-						courses={courses}
-						selectedCourse={selectedCourse || 'all'}
-						onChange={handleCourseChange}
-					/>
-				)}
-			</div>
+			<Row>
+				<Col span={20}>
+					<div style={{ display: 'flex', marginTop: '20px' }}>
+						<DropdownCenter
+							centers={centers}
+							selectedCenter={selectedCenter || 'all'}
+							onChange={handleCenterChange}
+						/>
+						{selectedCenter !== 'all' && (
+							<DropdownCourse
+								courses={courses}
+								selectedCourse={selectedCourse || 'all'}
+								onChange={handleCourseChange}
+							/>
+						)}
+					</div>
+				</Col>
+				<Col span={4}>
+					<div
+						style={{
+							display: 'flex',
+							marginTop: '20px',
+							justifyContent: 'flex-end',
+						}}
+					>
+						<Button
+							type="default"
+							icon={<SyncOutlined />}
+							onClick={handleRefresh}
+							style={{ marginRight: 8 }}
+						>
+							Làm mới
+						</Button>
+					</div>
+				</Col>
+			</Row>
 			<ScheduleComponent
 				ref={scheduleRef}
 				height="650px"
-				startHour="07:00"
-				endHour="17:15"
+				// startHour="03:00"
+				// endHour="17:15"
 				eventSettings={{ dataSource: events, template: eventTemplate }}
 				locale="vi"
 				style={{ marginTop: '15px' }}
 				views={['Day', 'Week', 'WorkWeek', 'Month']}
+				editorTemplate={(props: { [key: string]: unknown }) => (
+					<CustomEditorTemplate
+						{...props}
+						form={form}
+						onSave={() => {
+							scheduleRef.current?.closeEditor();
+							fetchSlots();
+						}}
+						onCancel={() => scheduleRef.current?.closeEditor()}
+						isEditMode={!!props.Id}
+						eventId={props.Id as string}
+					/>
+				)}
+				popupOpen={onPopupOpen}
+				popupClose={onPopupClose}
+				quickInfoTemplates={null}
 			>
 				<Inject services={[Day, Week, WorkWeek, Month]} />
 			</ScheduleComponent>
