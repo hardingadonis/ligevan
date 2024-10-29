@@ -24,7 +24,7 @@ export const deleteSalary = async (id: string): Promise<void> => {
 
 export const calculateSalary = async (
 	payload: CalculateSalary,
-): Promise<void> => {
+): Promise<Salary[]> => {
 	try {
 		const response = await axios.post(
 			`${apiBaseUrl}/api/salaries/calculate`,
