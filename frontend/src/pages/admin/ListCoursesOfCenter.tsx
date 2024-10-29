@@ -135,17 +135,15 @@ const ListCourseCenter: React.FC = () => {
 	};
 
 	const renderActions = (courseId: string): JSX.Element => (
-		<>
-			<Button
-				color="primary"
-				variant="outlined"
-				icon={<EyeOutlined />}
-				onClick={() => handleDetail(courseId)}
-				style={{ marginRight: 8, backgroundColor: '#4096ff', color: 'white' }}
-			>
-				Chi tiết
-			</Button>
-		</>
+		<Button
+			color="primary"
+			variant="outlined"
+			icon={<EyeOutlined />}
+			onClick={() => handleDetail(courseId)}
+			style={{ marginRight: 8, backgroundColor: '#4096ff', color: 'white' }}
+		>
+			Chi tiết
+		</Button>
 	);
 
 	const handleDetail = (courseId: string) => {
