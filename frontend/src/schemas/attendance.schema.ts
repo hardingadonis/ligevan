@@ -9,3 +9,8 @@ export interface Attendance {
 	createdAt?: Date;
 	updatedAt?: Date;
 }
+
+export interface CheckAttendance {
+	student: string;
+	status: string;
+}

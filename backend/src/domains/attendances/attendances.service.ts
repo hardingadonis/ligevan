@@ -8,7 +8,9 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 import { CreateAttendanceDto } from '@/domains/attendances/dto/attendance.dto';
+import { SlotsService } from '@/domains/slots/slots.service';
 import { Attendance } from '@/schemas/attendance.schema';
+import { Slot } from '@/schemas/slot.schema';
 
 @Injectable()
 export class AttendancesService {
@@ -17,6 +19,8 @@ export class AttendancesService {
 	constructor(
 		@InjectModel(Attendance.name)
 		private readonly attendanceModel: Model<Attendance>,
+		@InjectModel(Slot.name) private readonly slotModel: Model<Slot>,
+		private readonly slotsService: SlotsService,
 	) {}
 
 	async create(createAttendanceDto: CreateAttendanceDto) {
@@ -116,5 +120,49 @@ export class AttendancesService {
 		this.logger.log('Attendance updated ');
 
 		return attendance;
+	}
+
+	async createAttendancesForSlot(slotId: string, listStudentId: string[]) {
+		const slot = await this.slotModel.findById(slotId);
+
+		if (!slot) {
+			this.logger.error('Slot not found!');
+			throw new NotFoundException('Slot not found!');
+		}
+
+		const attendanceDocs = listStudentId.map((studentId) => ({
+			student: studentId,
+			slot: slotId,
+		}));
+
+		this.logger.debug('Creating new attendances', attendanceDocs);
+
+		const createdAttendances =
+			await this.attendanceModel.insertMany(attendanceDocs);
+
+		const attendanceIds = createdAttendances.map((attendance) =>
+			attendance._id.toString(),
+		);
+
+		await this.slotsService.update(slotId, { attendances: attendanceIds });
+
+		return createdAttendances;
+	}
+
+	async updateAttendance(
+		slotId: string,
+		attendanceUpdates: { studentId: string; status: string }[],
+	) {
+		const bulkOps = attendanceUpdates.map(({ studentId, status }) => ({
+			updateOne: {
+				filter: { slot: slotId, student: studentId },
+				update: { $set: { status } },
+				upsert: true,
+			},
+		}));
+
+		this.logger.debug('Updating attendances', bulkOps);
+
+		return this.attendanceModel.bulkWrite(bulkOps);
 	}
 }
