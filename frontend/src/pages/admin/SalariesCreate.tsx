@@ -1,12 +1,12 @@
 import React from 'react';
 
-import FormSalariesCalculate from '@/components/admin/FormSalariesCalculate';
+import FormCalculateSalaries from '@/components/admin/FormCalculateSalaries';
 import AdminLayout from '@/layouts/admin';
 
 const AdminSalariesManagement: React.FC = () => {
 	return (
 		<AdminLayout>
-			<FormSalariesCalculate />
+			<FormCalculateSalaries />
 		</AdminLayout>
 	);
 };
