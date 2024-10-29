@@ -1,6 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { PlusOutlined } from '@ant-design/icons';
-import { Button, Col, ConfigProvider, Form, Row, Select, Table } from 'antd';
+import {
+	Button,
+	Col,
+	ConfigProvider,
+	Form,
+	Row,
+	Select,
+	Table,
+	TableColumnsType,
+} from 'antd';
 import locale from 'antd/locale/vi_VN';
 import dayjs from 'dayjs';
 import 'dayjs/locale/vi';
@@ -13,13 +22,23 @@ import { getAllTeacherByCourseId } from '@/services/api/class';
 import { getAllCourse } from '@/services/api/course';
 import { calculateSalary } from '@/services/api/salary';
 import { getTeacherById } from '@/services/api/teacher';
+import { formatPrice } from '@/utils/formatPrice';
+
+interface DataType extends Teacher {
+	key: string;
+	fullName: string;
+	email: string;
+	phone: string;
+	totalSalary: number | null;
+	actions: JSX.Element;
+}
 
 dayjs.locale('vi');
 
 const FormCalculateSalaries: React.FC = () => {
 	const [form] = Form.useForm();
 	const [courses, setCourses] = useState<Course[]>([]);
-	const [teachers, setTeachers] = useState<Teacher[]>([]);
+	const [teachers, setTeachers] = useState<DataType[]>([]);
 	const [selectedMonth, setSelectedMonth] = useState<number | null>(null);
 	const [selectedYear, setSelectedYear] = useState<number | null>(null);
 
@@ -43,7 +62,16 @@ const FormCalculateSalaries: React.FC = () => {
 					return await getTeacherById(teacherId);
 				}),
 			);
-			setTeachers(teacherDetails);
+			const transformedTeachers = teacherDetails.map((teacher) => ({
+				...teacher,
+				key: teacher._id,
+				fullName: teacher.fullName,
+				email: teacher.email,
+				phone: teacher.phone,
+				totalSalary: null,
+				actions: <span>Actions</span>,
+			}));
+			setTeachers(transformedTeachers);
 		} catch (error: any) {
 			if (error.response && error.response.status === 404) {
 				setTeachers([]);
@@ -77,7 +105,7 @@ const FormCalculateSalaries: React.FC = () => {
 
 			try {
 				const response = await calculateSalary({
-					percent: 0,
+					percent: parseInt(import.meta.env.VITE_SALARY_PERCENT) || 1,
 					teachers: teacherIds,
 					start,
 					end,
@@ -85,10 +113,15 @@ const FormCalculateSalaries: React.FC = () => {
 
 				console.log(response);
 
-				const updatedTeachers = teachers.map((teacher) => ({
-					...teacher,
-					totalSalary: 0,
-				}));
+				const updatedTeachers = teachers.map((teacher) => {
+					const salaryData = response.find(
+						(item) => item.teacher.toString() === teacher._id,
+					);
+					return {
+						...teacher,
+						totalSalary: salaryData ? salaryData.finalSalary : 0,
+					};
+				});
 
 				setTeachers(updatedTeachers);
 			} catch (error) {
@@ -97,32 +130,38 @@ const FormCalculateSalaries: React.FC = () => {
 		}
 	};
 
-	const columns = [
+	const columns: TableColumnsType<DataType> = [
 		{
 			title: 'STT',
-			key: 'stt',
+			dataIndex: 'key',
+			width: '5%',
+			align: 'center',
 			render: (_: unknown, __: unknown, index: number) => index + 1,
 		},
 		{
-			title: 'Tên giáo viên',
+			title: <div style={{ textAlign: 'center' }}>Tên giáo viên</div>,
 			dataIndex: 'fullName',
-			key: 'fullName',
+			width: '30%',
 		},
 		{
-			title: 'Email',
+			title: <div style={{ textAlign: 'center' }}>Email</div>,
 			dataIndex: 'email',
-			key: 'email',
+			width: '30%',
 		},
 		{
 			title: 'Số điện thoại',
 			dataIndex: 'phone',
-			key: 'phone',
+			align: 'center',
+			width: '15%',
 		},
 		{
 			title: 'Tổng lương',
 			dataIndex: 'totalSalary',
-			key: 'totalSalary',
-			render: (text: any) => <span>{text}</span>,
+			align: 'center',
+			width: '20%',
+			render: (text: any) => (
+				<span>{text === null ? 'Chưa tính' : formatPrice(text)}</span>
+			),
 		},
 	];
 
@@ -236,7 +275,7 @@ const FormCalculateSalaries: React.FC = () => {
 
 						<Row style={{ marginTop: 20 }}>
 							<Col span={24}>
-								<Table
+								<Table<DataType>
 									dataSource={teachers}
 									columns={columns}
 									rowKey="_id"
@@ -246,18 +285,21 @@ const FormCalculateSalaries: React.FC = () => {
 								/>
 							</Col>
 						</Row>
-							<Form.Item
-								style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 20 }}
+						<Form.Item
+							style={{
+								display: 'flex',
+								justifyContent: 'flex-end',
+								marginTop: 20,
+							}}
+						>
+							<Button
+								style={{ backgroundColor: '#0cd14e', color: 'white' }}
+								icon={<PlusOutlined />}
+								onClick={handleCalculateSalaries}
 							>
-								<Button
-									style={{ backgroundColor: '#0cd14e', color: 'white' }}
-									icon={<PlusOutlined />}
-									onClick={handleCalculateSalaries}
-								>
-									Tính lương
-								</Button>
-							</Form.Item>
-
+								Tính lương
+							</Button>
+						</Form.Item>
 					</div>
 				</div>
 			</div>
