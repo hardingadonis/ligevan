@@ -107,4 +107,18 @@ export class SlotsService {
 
 		return updateSlot;
 	}
+
+	async findSlotsInRange(
+		classId: string,
+		startDate: Date,
+		endDate: Date,
+	): Promise<Slot[]> {
+		return this.slotModel
+			.find({
+				class: classId,
+				start: { $gte: startDate },
+				end: { $lte: endDate },
+			})
+			.exec();
+	}
 }
