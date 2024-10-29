@@ -14,7 +14,7 @@ export interface Slot {
 }
 
 export interface NewSlot {
-	class: Class;
+	class: string;
 	room: string;
 	start: Date;
 	end: Date;

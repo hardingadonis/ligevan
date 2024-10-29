@@ -16,7 +16,7 @@ import React, { useEffect, useState } from 'react';
 
 import { Center } from '@/schemas/center.schema';
 import { Class } from '@/schemas/class.schema';
-import { Slot } from '@/schemas/slot.schema';
+import { NewSlot, Slot } from '@/schemas/slot.schema';
 import { createAllAttendance } from '@/services/api/attendance';
 import { getAllCenter } from '@/services/api/center';
 import { getAllClasses } from '@/services/api/class';
@@ -208,21 +208,15 @@ const CustomEditorTemplate: React.FC<CustomEditorTemplateProps> = (props) => {
 			console.log('Checking for conflicts with existing slots:', existingSlots);
 			if (checkForConflicts(initialSlot.start, initialSlot.end)) {
 				message.error(
-					'Lớp học này đã có lịch học trùng với thời gian bạn chọn',
+					'Lớp học này đã có tiết học trùng với thời gian bạn chọn',
 				);
 				return;
 			}
 
-			const createAndLogSlot = async (slot: {
-				class: string;
-				room: string;
-				start: Date;
-				end: Date;
-				isDone: boolean;
-			}) => {
+			const createAndLogSlot = async (slot: NewSlot) => {
 				const slotId = await createSlot({
 					...slot,
-					class: selectedClass,
+					class: selectedClass._id,
 				});
 				await createAllAttendance(slotId, studentIds);
 				return slotId;
@@ -231,7 +225,7 @@ const CustomEditorTemplate: React.FC<CustomEditorTemplateProps> = (props) => {
 			if (props.isEditMode) {
 				if (props.eventId) {
 					await updateSlot(
-						{ ...initialSlot, class: selectedClass },
+						{ ...initialSlot, class: selectedClass._id },
 						props.eventId,
 					);
 				} else {
