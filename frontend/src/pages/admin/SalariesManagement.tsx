@@ -1,12 +1,12 @@
 import React from 'react';
 
-import SalariesManagement from '@/components/admin/SalariesManagement';
+import ListSalaries from '@/components/admin/ListSalaries';
 import AdminLayout from '@/layouts/admin';
 
 const AdminSalariesManagement: React.FC = () => {
 	return (
 		<AdminLayout>
-			<SalariesManagement />
+			<ListSalaries />
 		</AdminLayout>
 	);
 };
