@@ -95,7 +95,7 @@ const ListSalaries: React.FC = () => {
 	};
 
 	const handleCreateSalary = () => {
-		navigate(`/admin/salaries/create`);
+		navigate(`/admin/salaries/calculate`);
 	};
 
 	const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
