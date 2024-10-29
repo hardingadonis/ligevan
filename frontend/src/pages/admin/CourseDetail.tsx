@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
-import DetailOfCourse from '@/components/admin/CourseDetail';
+import CourseDetail from '@/components/admin/CourseDetail';
 import AdminLayout from '@/layouts/admin';
 
 const CenterDetail: React.FC = () => {
@@ -13,7 +13,7 @@ const CenterDetail: React.FC = () => {
 
 	return (
 		<AdminLayout>
-			<DetailOfCourse />
+			<CourseDetail />
 		</AdminLayout>
 	);
 };
