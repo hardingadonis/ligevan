@@ -12,6 +12,7 @@ import {
 	UpdateClassDto,
 } from '@/domains/classes/dto/class.dto';
 import { Class } from '@/schemas/class.schema';
+import { Teacher } from '@/schemas/teacher.schema';
 
 @Injectable()
 export class ClassesService {
@@ -19,6 +20,7 @@ export class ClassesService {
 
 	constructor(
 		@InjectModel(Class.name) private readonly classModel: Model<Class>,
+		@InjectModel(Teacher.name) private readonly teacherModel: Model<Teacher>,
 	) {}
 
 	async create(createClassDto: CreateClassDto) {
@@ -108,6 +110,20 @@ export class ClassesService {
 		this.logger.log('Retrieved class');
 
 		return getClass;
+	}
+
+	async getTeachersByCourseId(courseId: string) {
+		const classes = await this.classModel.find({ course: courseId }).exec();
+
+		if (!classes || classes.length === 0) {
+			throw new NotFoundException('No classes found for the given course ID');
+		}
+
+		const teacherIds = [
+			...new Set(classes.map((cls) => cls.teacher.toString())),
+		];
+
+		return teacherIds;
 	}
 
 	async update(id: string, updateClassDto: UpdateClassDto) {
