@@ -35,6 +35,11 @@ export class ClassesController {
 		return await this.classesService.getById(id);
 	}
 
+	@Get('teachers/:courseId')
+	async getTeachersByCourseId(@Param('courseId') courseId: string) {
+		return this.classesService.getTeachersByCourseId(courseId);
+	}
+
 	@Put(':id')
 	async update(
 		@Param('id') id: string,
