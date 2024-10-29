@@ -28,7 +28,6 @@ const { Option } = Select;
 interface CustomEditorTemplateProps extends EventSettingsModel {
 	Subject?: string;
 	Location?: string;
-	Description?: string;
 	StartTime?: Date;
 	EndTime?: Date;
 	form: FormInstance;
