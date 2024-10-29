@@ -1,6 +1,7 @@
 import {
 	BankOutlined,
 	BookOutlined,
+	CalculatorOutlined,
 	CalendarOutlined,
 	DashboardOutlined,
 	TagsOutlined,
@@ -20,6 +21,7 @@ const AdminSidebar: React.FC = () => {
 		'/admin/courses': 'courses',
 		'/admin/vouchers': 'vouchers',
 		'/admin/schedules': 'schedules',
+		'/admin/salaries': 'salaries',
 	};
 
 	useEffect(() => {
@@ -57,6 +59,11 @@ const AdminSidebar: React.FC = () => {
 			'schedules',
 			<CalendarOutlined style={{ fontSize: '18px' }} />,
 		),
+		getItem(
+			'Lương giáo viên',
+			'salaries',
+			<CalculatorOutlined style={{ fontSize: '18px' }} />,
+		),
 	];
 
 	const menuConfig = {
@@ -65,6 +72,7 @@ const AdminSidebar: React.FC = () => {
 		courses: '/admin/courses',
 		vouchers: '/admin/vouchers',
 		schedules: '/admin/schedules',
+		salaries: '/admin/salaries',
 	};
 
 	return (

@@ -106,14 +106,14 @@ const Dashboard: React.FC = () => {
 				justify="center"
 				style={{ marginTop: 16, paddingLeft: 180, marginBottom: 90 }}
 			>
-				<Col span={10}>
+				<Col span={12}>
 					<Card title="Thống Kê" bordered>
 						<div style={{ width: '100%', height: '300px' }}>
 							<Pie {...pieConfig} />
 						</div>
 					</Card>
 				</Col>
-				<Col span={6}>
+				<Col span={8}>
 					<Card title="Trung Tâm và Khóa Học" bordered>
 						<div style={{ width: '100%', height: '300px' }}>
 							<Column {...columnConfig} />

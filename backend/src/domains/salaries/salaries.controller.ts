@@ -1,7 +1,16 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import {
+	Body,
+	Controller,
+	Delete,
+	Get,
+	Param,
+	Post,
+	Put,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 import {
+	CalculateSalaryDto,
 	CreateSalaryDto,
 	UpdateSalaryDto,
 } from '@/domains/salaries/dto/salary.dto';
@@ -15,6 +24,11 @@ export class SalariesController {
 	@Post()
 	async create(@Body() createSalaryDto: CreateSalaryDto) {
 		return await this.salariesService.create(createSalaryDto);
+	}
+
+	@Post('calculate')
+	async calculate(@Body() calculateSalaryDto: CalculateSalaryDto) {
+		return await this.salariesService.calculate(calculateSalaryDto);
 	}
 
 	@Get()
@@ -33,5 +47,10 @@ export class SalariesController {
 		@Body() updateSalaryDto: UpdateSalaryDto,
 	) {
 		return await this.salariesService.update(id, updateSalaryDto);
+	}
+
+	@Delete(':id')
+	async delete(@Param('id') id: string) {
+		return await this.salariesService.delete(id);
 	}
 }
