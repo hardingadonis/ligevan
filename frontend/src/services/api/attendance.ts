@@ -19,3 +19,20 @@ export const checkAttendances = async (
 		throw error;
 	}
 };
+
+export const createAllAttendance = async (
+	slotId: string,
+	students: string[],
+) => {
+	try {
+		const response = await axios.post(
+			`${apiBaseUrl}/api/attendances/create-all/${slotId}`,
+			students,
+		);
+
+		return response.data;
+	} catch (error) {
+		console.error('Error creating slot:', error);
+		throw error;
+	}
+};

@@ -86,3 +86,39 @@ export const filterSlotsforSchedule = async (
 		throw error;
 	}
 };
+
+export const createSlot = async (slot: NewSlot): Promise<string> => {
+	try {
+		const response = await axios.post(`${apiBaseUrl}/api/slots`, slot);
+		const createdSlot: Slot = response.data;
+		return createdSlot._id;
+	} catch (error) {
+		console.error('Error creating slot:', error);
+		throw error;
+	}
+};
+
+export const updateSlot = async (slot: NewSlot, id: string): Promise<void> => {
+	try {
+		await axios.put(`${apiBaseUrl}/api/slots/${id}`, slot);
+	} catch (error) {
+		console.error('Error updating slot:', error);
+		throw error;
+	}
+};
+
+export const getSlotByClass = async (classId: string): Promise<Slot[]> => {
+	try {
+		const classData = await getClassById(classId);
+		console.log('classData:', classData);
+		const slotPromises = (classData.slots ?? []).map((slot: Slot) =>
+			getSlotById(slot._id),
+		);
+		console.log('slotPromises:', slotPromises);
+		const slots = await Promise.all(slotPromises);
+		return slots;
+	} catch (error) {
+		console.error('Error fetching slots by class:', error);
+		throw error;
+	}
+};
