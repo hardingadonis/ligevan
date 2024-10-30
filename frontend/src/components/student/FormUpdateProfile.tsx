@@ -281,8 +281,12 @@ const FormUpdate: React.FC = () => {
 							style={{ width: '100%' }}
 						/>
 					</Form.Item>
-					<Form.Item wrapperCol={{ span: 24 }} style={{ textAlign: 'center' }}>
-						<Button type="primary" icon={<SaveOutlined />} htmlType="submit">
+					<Form.Item wrapperCol={{ span: 24 }} style={{ textAlign: 'right' }}>
+						<Button
+							icon={<SaveOutlined />}
+							htmlType="submit"
+							style={{ backgroundColor: '#0cd14e', color: 'white' }}
+						>
 							Lưu Lại
 						</Button>
 					</Form.Item>
