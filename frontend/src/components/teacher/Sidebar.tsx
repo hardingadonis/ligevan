@@ -1,4 +1,8 @@
-import { CalendarOutlined, TeamOutlined } from '@ant-design/icons';
+import {
+	CalendarOutlined,
+	TableOutlined,
+	TeamOutlined,
+} from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
@@ -13,6 +17,8 @@ const StudentSidebar: React.FC = () => {
 			setSelectedKey('classes');
 		} else if (location.pathname.includes('/teacher/schedule')) {
 			setSelectedKey('schedule');
+		} else if (location.pathname.includes('/teacher/salaries')) {
+			setSelectedKey('salaries');
 		}
 	}, [location.pathname]);
 
@@ -27,11 +33,17 @@ const StudentSidebar: React.FC = () => {
 			'schedule',
 			<CalendarOutlined style={{ fontSize: '18px' }} />,
 		),
+		getItem(
+			'Bảng lương',
+			'salaries',
+			<TableOutlined style={{ fontSize: '18px' }} />,
+		),
 	];
 
 	const menuConfig = {
 		classes: '/teacher/classes',
 		schedule: '/teacher/schedule',
+		salaries: '/teacher/salaries',
 	};
 
 	return (
