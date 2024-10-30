@@ -90,3 +90,17 @@ export const updateSlot = async (id: string, slot: Slot) => {
 		throw error;
 	}
 };
+
+export const findSlotsInRange = async (classId: string, start: Date, end: Date) => {
+	try {
+		const response = await axios.post(`${apiBaseUrl}/api/slots/find-list-slot`, {
+			classId,
+			start,
+			end,
+		});
+		return response.data;
+	} catch (error) {
+		console.error('Error finding slots in range:', error);
+		throw error;
+	}
+};

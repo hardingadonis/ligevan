@@ -1,18 +1,9 @@
-import {
-	Alert,
-	Avatar,
-	Col,
-	Empty,
-	Form,
-	Input,
-	Row,
-	Spin,
-	Typography,
-} from 'antd';
+import { Alert, Avatar, Col, Empty, Form, Input, Row, Spin } from 'antd';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
+import ButtonGoBack from '@/components/commons/ButtonGoback';
 import { Student } from '@/schemas/student.schema';
 import { apiBaseUrl } from '@/utils/apiBase';
 import { formatDateToVietnamTimezone } from '@/utils/dateFormat';
@@ -53,7 +44,10 @@ const StudentDetail: React.FC = () => {
 	return (
 		<div style={{ paddingLeft: '270px' }}>
 			<div style={{ textAlign: 'center', marginBottom: 20 }}>
-				<Typography.Title level={2}>THÔNG TIN HỌC SINH</Typography.Title>
+				<div style={{ textAlign: 'left' }}>
+					<ButtonGoBack history={true} />
+				</div>
+				<h2>Thông tin học sinh</h2>
 			</div>
 
 			<div

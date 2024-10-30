@@ -15,6 +15,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import ButtonGoBack from '@/components/commons/ButtonGoback';
 import { Class } from '@/schemas/class.schema';
 import { Student } from '@/schemas/student.schema';
 import { apiBaseUrl } from '@/utils/apiBase';
@@ -86,9 +87,10 @@ const ListStudent: React.FC<ListStudentProps> = ({ classID }) => {
 
 	const renderActions = (id: string): JSX.Element => (
 		<Button
-			color="default"
-			variant="solid"
-			type="primary"
+			style={{
+				backgroundColor: '#4096ff',
+				color: 'white',
+			}}
 			icon={<EyeOutlined />}
 			onClick={() => handleDetail(id)}
 		>
@@ -171,7 +173,10 @@ const ListStudent: React.FC<ListStudentProps> = ({ classID }) => {
 	return (
 		<div style={{ paddingLeft: '270px' }}>
 			<div style={{ textAlign: 'center', marginBottom: 20 }}>
-				<h2>CHI TIẾT LỚP {className.toUpperCase()}</h2>
+				<div style={{ textAlign: 'left' }}>
+					<ButtonGoBack />
+				</div>
+				<h2>Chi tiết lớp {className.toUpperCase()}</h2>
 			</div>
 
 			<Row

@@ -73,6 +73,7 @@ const CheckAttendancesPage = lazy(
 	() => import('@/pages/teacher/CheckAttendances'),
 );
 const TeacherSchedule = lazy(() => import('@/pages/teacher/ScheduleView'));
+const ListSalariesPage = lazy(() => import('@/pages/teacher/ListSalaries'));
 
 // Student lazy load
 const HomepageStudent = lazy(() => import('@/pages/student/Homepage'));
@@ -462,7 +463,19 @@ const App: React.FC = () => {
 					/>
 					<Route
 						path="/teacher/attendance/:slotId"
-						element={<CheckAttendancesPage />}
+						element={
+							<ProtectedRoute redirectPath="/teacher" tokenName="teacherToken">
+								<CheckAttendancesPage />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="/teacher/salaries/"
+						element={
+							<ProtectedRoute redirectPath="/teacher" tokenName="teacherToken">
+								<ListSalariesPage />
+							</ProtectedRoute>
+						}
 					/>
 					<Route path="/teacher/schedule" element={<TeacherSchedule />} />
 

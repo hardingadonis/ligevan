@@ -28,4 +28,15 @@ export class SlotsController {
 	async update(@Param('id') id: string, @Body() updateSlotDto: UpdateSlotDto) {
 		return await this.slotsService.update(id, updateSlotDto);
 	}
+
+	@Post('find-list-slot')
+	async findSlotsInRange(
+		@Body() body: { classId: string; start: Date; end: Date },
+	) {
+		return await this.slotsService.findSlotsInRange(
+			body.classId,
+			body.start,
+			body.end,
+		);
+	}
 }
