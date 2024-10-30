@@ -15,9 +15,11 @@ const Header: React.FC<HeaderProps> = ({ leftComponent, rightComponent }) => {
 			<AntHeader className="site-layout-background">
 				<div className="left-component">{leftComponent}</div>
 				<div className="center-title">
-					<Title level={3} className="title">
-						ligevan
-					</Title>
+					<a href="/">
+						<Title level={3} className="title">
+							ligevan
+						</Title>
+					</a>
 				</div>
 				<div className="right-component">{rightComponent}</div>
 			</AntHeader>

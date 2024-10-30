@@ -115,9 +115,9 @@ const DetailStudent: React.FC = () => {
 								style={{ textAlign: 'right' }}
 							>
 								<Button
-									type="primary"
 									icon={<EditOutlined />}
 									href="/student/profile/edit"
+									style={{ backgroundColor: '#ffae00', color: 'white' }}
 								>
 									Cập nhật
 								</Button>
