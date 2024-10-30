@@ -106,7 +106,6 @@ const SetupSchedules: React.FC = () => {
 			try {
 				const email = (await fetchStudentData()).email;
 				const allSlots = await getSlotsByStudentEmail(email);
-				console.log('all slots:', allSlots);
 				const convertedData: ExtendedSlot[] = await Promise.all(
 					allSlots.map(async (slot) => {
 						const center = await getCenterById(slot.class.center.toString());

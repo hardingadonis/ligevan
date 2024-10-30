@@ -108,13 +108,10 @@ export const getSlotsByStudentEmail = async (
 		const slotIds: string[] = classes.flatMap(
 			(classItem) => classItem.slots?.map((slot) => slot.toString()) || [],
 		);
-		console.log('slotIds:', slotIds);
 
 		const studentSlots: Slot[] = await Promise.all(
 			slotIds.map(async (slotId) => await getSlotById(slotId)),
 		);
-
-		console.log('studentSlots:', studentSlots);
 
 		return studentSlots;
 	} catch (error) {
