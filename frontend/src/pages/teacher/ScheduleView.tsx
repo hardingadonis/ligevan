@@ -1,3 +1,4 @@
+import '../../assets/styles/scheduleStudent.css';
 import { registerLicense } from '@syncfusion/ej2-base';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
