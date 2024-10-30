@@ -88,6 +88,9 @@ const PaymentHistory = lazy(() => import('@/pages/student/PaymentHistory'));
 
 const PaymentDetail = lazy(() => import('@/pages/student/PaymentDetail'));
 const ScheduleView = lazy(() => import('@/pages/student/ScheduleView'));
+const StudentRegisterPage = lazy(
+	() => import('@/pages/student/StudentRegisterPage'),
+);
 
 const App: React.FC = () => {
 	return (
@@ -549,6 +552,14 @@ const App: React.FC = () => {
 						element={
 							<ProtectedRoute redirectPath="/student" tokenName="token">
 								<ScheduleView />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="/student/payment/:courseID/:centerID"
+						element={
+							<ProtectedRoute redirectPath="/student" tokenName="token">
+								<StudentRegisterPage />
 							</ProtectedRoute>
 						}
 					/>
