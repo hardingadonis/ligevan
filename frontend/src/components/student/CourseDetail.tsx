@@ -1,8 +1,4 @@
-import {
-	CheckCircleOutlined,
-	EyeOutlined,
-	SyncOutlined,
-} from '@ant-design/icons';
+import { CheckCircleOutlined, SyncOutlined } from '@ant-design/icons';
 import {
 	Alert,
 	Button,
@@ -110,24 +106,13 @@ const CourseDetail: React.FC = () => {
 	}
 
 	const renderActions = (id: string): JSX.Element => (
-		<div style={{ display: 'flex', justifyContent: 'space-between' }}>
+		<div style={{ display: 'flex', justifyContent: 'center' }}>
 			<Button
-				color="default"
-				variant="solid"
-				type="primary"
 				icon={<CheckCircleOutlined />}
 				onClick={() => handleRegister(id)}
+				style={{ backgroundColor: '#0cd14e', color: 'white' }}
 			>
 				Đăng kí
-			</Button>
-			<Button
-				color="default"
-				variant="solid"
-				type="primary"
-				icon={<EyeOutlined />}
-				onClick={() => handleDetail(id)}
-			>
-				Chi tiết
 			</Button>
 		</div>
 	);
@@ -150,10 +135,6 @@ const CourseDetail: React.FC = () => {
 				state: { classID: id },
 			});
 		}
-	};
-
-	const handleDetail = (id: string) => {
-		navigate(`/student/classes/${id}`);
 	};
 
 	const tableData = classes.map((cls, index) => ({
