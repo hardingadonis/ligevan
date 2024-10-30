@@ -87,6 +87,7 @@ const FormCalculateSalaries: React.FC = () => {
 
 	const handleYearChange = (value: number) => {
 		setSelectedYear(value);
+		setSelectedMonth(null); // Reset selected month when year changes
 	};
 
 	const handleCalculateSalaries = async () => {
@@ -252,17 +253,18 @@ const FormCalculateSalaries: React.FC = () => {
 													<Col span={12}>
 														<Select
 															style={{ width: '100%' }}
-															placeholder="Chọn tháng"
-															options={months}
-															onChange={handleMonthChange}
+															placeholder="Chọn năm"
+															options={years}
+															onChange={handleYearChange}
 														/>
 													</Col>
 													<Col span={12}>
 														<Select
 															style={{ width: '100%' }}
-															placeholder="Chọn năm"
-															options={years}
-															onChange={handleYearChange}
+															placeholder="Chọn tháng"
+															options={months}
+															onChange={handleMonthChange}
+															disabled={!selectedYear}
 														/>
 													</Col>
 												</Row>
