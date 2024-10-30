@@ -27,7 +27,7 @@ export const checkAttendanceStatus = async (
 	slotId: string,
 ): Promise<'attended' | 'absent' | 'not-yet' | null> => {
 	const slot = await getSlotById(slotId);
-	if (!slot || !slot.attendances) {
+	if (!slot?.attendances) {
 		return null;
 	}
 	const student = await getStudentByEmail(studentEmail);
