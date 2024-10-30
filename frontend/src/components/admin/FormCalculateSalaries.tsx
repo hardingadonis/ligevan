@@ -9,6 +9,7 @@ import {
 	Select,
 	Table,
 	TableColumnsType,
+	message,
 } from 'antd';
 import locale from 'antd/locale/vi_VN';
 import dayjs from 'dayjs';
@@ -125,8 +126,13 @@ const FormCalculateSalaries: React.FC = () => {
 				});
 
 				setTeachers(updatedTeachers);
-			} catch (error) {
-				console.error('Error calculating salaries:', error);
+				message.success('Tính lương thành công!');
+			} catch (error: any) {
+				if (error.response && error.response.status === 409) {
+					message.error('Các giáo viên này đã được tính lương!');
+				} else {
+					console.error('Error calculating salaries:', error);
+				}
 			}
 		}
 	};
