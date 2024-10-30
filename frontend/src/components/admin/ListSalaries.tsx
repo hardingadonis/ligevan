@@ -85,7 +85,7 @@ const ListSalaries: React.FC = () => {
 				try {
 					await deleteSalary(id);
 					message.success('Thông tin về lương đã xóa thành công!', 3);
-					navigate(`/admin/salaries`);
+					await fetchData(); // Refresh the list after deletion
 				} catch (error) {
 					console.error('Lỗi xóa thông tin về lương', error);
 					message.error('Lỗi: Lỗi xóa thông tin về lương!', 3);
