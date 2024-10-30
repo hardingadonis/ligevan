@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+import { Class } from '@/schemas/class.schema';
 import { Slot } from '@/schemas/slot.schema';
 import { getStudentByEmail } from '@/services/api/student';
 import { getTeacherByEmail } from '@/services/api/teacher';
@@ -60,33 +61,27 @@ export const filterSlotsforSchedule = async (
 	}
 };
 
-export const getSlotsByStudentEmails = async (
-	emails: string[],
+export const getSlotsByStudentEmail = async (
+	email: string,
 ): Promise<Slot[]> => {
 	try {
-		const students = await Promise.all(
-			emails.map((email) => getStudentByEmail(email)),
-		);
+		const student = await getStudentByEmail(email);
 
-		const validStudents = students.filter((student) => student !== null);
-
-		if (validStudents.length === 0) {
-			throw new Error('No valid students found for the given emails.');
+		if (!student) {
+			throw new Error('No valid student found for the given email.');
 		}
 
-		const studentIds = validStudents.map((student) => student._id.toString());
+		const classes: Class[] = student.classes || [];
 
-		const allSlots = await getAllSlot();
-
-		const studentSlots = allSlots.filter((slot) =>
-			slot.class.students?.some((student) =>
-				studentIds.includes(student._id.toString()),
-			),
+		const studentSlots: Slot[] = classes.flatMap(
+			(classItem) => classItem.slots || [],
 		);
+
+		console.log('studentSlots:', studentSlots);
 
 		return studentSlots;
 	} catch (error) {
-		console.error('Error fetching slots by student emails:', error);
+		console.error('Error fetching slots by student email:', error);
 		throw error;
 	}
 };
@@ -97,7 +92,7 @@ export const filterSlotsForStudentSchedule = async (
 	courseId?: string,
 ): Promise<Slot[]> => {
 	try {
-		const slots = await getSlotsByStudentEmails([studentEmail]);
+		const slots = await getSlotsByStudentEmail(studentEmail);
 
 		let filteredSlots = slots;
 
