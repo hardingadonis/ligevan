@@ -12,3 +12,13 @@
 	background-repeat: no-repeat !important;
 	background-position: center !important;
 }
+
+.e-schedule-dialog .e-footer-content .e-event-save,
+.e-schedule-dialog .e-footer-content .e-event-cancel,
+.e-schedule-dialog .e-footer-content .e-event-delete {
+	display: none;
+}
+
+.e-delete {
+	display: none !important;
+}
