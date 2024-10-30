@@ -236,10 +236,12 @@ const FormUpdate: React.FC = () => {
 								{ required: true, message: 'Vui lòng chọn ngày sinh!' },
 								{
 									validator: (_, value) => {
-										const threeYearsAgo = dayjs().subtract(3, 'year');
-										return value?.isBefore(threeYearsAgo)
+										const twentyYearsAgo = dayjs().subtract(20, 'year');
+										return value?.isBefore(twentyYearsAgo)
 											? Promise.resolve()
-											: Promise.reject(new Error('Ngày sinh không hợp lệ!'));
+											: Promise.reject(
+													new Error('Tuổi của giáo viên phải trên 20!'),
+												);
 									},
 								},
 							]}
