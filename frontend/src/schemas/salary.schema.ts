@@ -9,3 +9,11 @@ export interface Salary {
 	createdAt?: Date;
 	updatedAt?: Date;
 }
+
+
+export interface CalculateSalary {
+	percent: number;
+	teachers: string[];
+	start: string;
+	end: string;
+}

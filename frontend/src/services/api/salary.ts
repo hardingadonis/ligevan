@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { Salary } from '@/schemas/salary.schema';
+import { CalculateSalary, Salary } from '@/schemas/salary.schema';
 import { apiBaseUrl } from '@/utils/apiBase';
 
 export const getAllSalary = async (): Promise<Salary[]> => {
@@ -18,6 +18,21 @@ export const deleteSalary = async (id: string): Promise<void> => {
 		await axios.delete(`${apiBaseUrl}/api/salaries/${id}`);
 	} catch (error) {
 		console.error('Error deleting salary:', error);
+		throw error;
+	}
+};
+
+export const calculateSalary = async (
+	payload: CalculateSalary,
+): Promise<Salary[]> => {
+	try {
+		const response = await axios.post(
+			`${apiBaseUrl}/api/salaries/calculate`,
+			payload,
+		);
+		return response.data;
+	} catch (error) {
+		console.error('Error calculating salary:', error);
 		throw error;
 	}
 };
