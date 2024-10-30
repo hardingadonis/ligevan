@@ -1,7 +1,7 @@
 import {
 	CheckCircleOutlined,
 	ClockCircleOutlined,
-	ScheduleOutlined,
+	CloseCircleOutlined,
 } from '@ant-design/icons';
 import { L10n, loadCldr } from '@syncfusion/ej2-base';
 import '@syncfusion/ej2-base/styles/material.css';
@@ -22,7 +22,7 @@ import {
 } from '@syncfusion/ej2-react-schedule';
 import '@syncfusion/ej2-react-schedule/styles/material.css';
 import '@syncfusion/ej2-splitbuttons/styles/material.css';
-import { Button, Col, Row, Tag, Typography } from 'antd';
+import { Col, Row, Tag, Typography } from 'antd';
 import * as gregorian from 'cldr-data/main/vi/ca-gregorian.json';
 import * as numberingSystems from 'cldr-data/main/vi/numbers.json';
 import * as timeZoneNames from 'cldr-data/main/vi/timeZoneNames.json';
@@ -35,8 +35,10 @@ import DropdownCourse from '@/components/teacher/DropdownCourse';
 import { Center } from '@/schemas/center.schema';
 import { Course } from '@/schemas/course.schema';
 import { Slot } from '@/schemas/slot.schema';
+import { checkAttendanceStatus } from '@/services/api/attendance';
 import { getAllCenter, getCenterById } from '@/services/api/center';
 import { getSlotsByStudentEmail } from '@/services/api/slot';
+import { fetchStudentData } from '@/services/custom/getStudentbyToken';
 import { convertToUTC } from '@/utils/dateFormat';
 import { decodeToken } from '@/utils/jwtDecode';
 
@@ -61,6 +63,7 @@ L10n.load({
 
 interface ExtendedSlot extends Slot {
 	centerName: string;
+	Description: string;
 }
 
 const SetupSchedules: React.FC = () => {
@@ -101,24 +104,26 @@ const SetupSchedules: React.FC = () => {
 	useEffect(() => {
 		const fetchSlots = async () => {
 			try {
-				const token = localStorage.getItem('token');
-				if (!token) {
-					throw new Error('No token found in local storage.');
-				}
-
-				const decodedToken = decodeToken(token);
-				const email = decodedToken.sub;
-				console.log('email:', email);
+				const email = (await fetchStudentData()).email;
 				const allSlots = await getSlotsByStudentEmail(email);
 				console.log('all slots:', allSlots);
 				const convertedData: ExtendedSlot[] = await Promise.all(
 					allSlots.map(async (slot) => {
 						const center = await getCenterById(slot.class.center.toString());
+						const status = await checkAttendanceStatus(email, slot._id);
+						let description = 'Chưa học';
+						if (status === 'attended') {
+							description = 'Đã điểm danh';
+						} else if (status === 'absent') {
+							description = 'Vắng mặt';
+						}
+
 						return {
 							...slot,
 							start: convertToUTC(new Date(slot.start)),
 							end: convertToUTC(new Date(slot.end)),
 							centerName: center.name,
+							Description: description,
 						};
 					}),
 				);
@@ -167,14 +172,10 @@ const SetupSchedules: React.FC = () => {
 		StartTime: slot.start,
 		EndTime: slot.end,
 		Location: slot.room,
-		Description: slot.isDone ? 'Đã dạy' : 'Chưa dạy',
+		Description: slot.Description,
 		IsAllDay: false,
 		CenterName: slot.centerName,
 	}));
-
-	const handleRedirect = (id: string) => {
-		window.location.href = `/teacher/attendance/${id}`;
-	};
 
 	const eventTemplate = (props: {
 		Subject: string;
@@ -210,25 +211,25 @@ const SetupSchedules: React.FC = () => {
 			<div style={{ marginTop: '10px' }}>
 				<Tag
 					icon={
-						props.Description === 'Đã dạy' ? (
+						props.Description === 'Đã điểm danh' ? (
 							<CheckCircleOutlined />
+						) : props.Description === 'Vắng mặt' ? (
+							<CloseCircleOutlined />
 						) : (
 							<ClockCircleOutlined />
 						)
 					}
-					color={props.Description === 'Đã dạy' ? 'success' : 'default'}
+					color={
+						props.Description === 'Đã điểm danh'
+							? 'success'
+							: props.Description === 'Vắng mặt'
+								? 'error'
+								: 'default'
+					}
 				>
 					{props.Description}
 				</Tag>
 			</div>
-			<Button
-				type="primary"
-				icon={<ScheduleOutlined />}
-				onClick={() => handleRedirect(props.Id)}
-				style={{ marginTop: '10px' }}
-			>
-				Điểm danh
-			</Button>
 		</div>
 	);
 
@@ -240,7 +241,7 @@ const SetupSchedules: React.FC = () => {
 				</Col>
 				<Col span={20}>
 					<Typography.Title level={2} style={{ textAlign: 'center' }}>
-						Lịch giảng dạy
+						Lịch Học
 					</Typography.Title>
 				</Col>
 			</Row>
