@@ -146,7 +146,9 @@ const CourseDetail: React.FC = () => {
 				content: `Số lượng học sinh đăng ký đã đạt giới hạn tối đa là ${MAX_STUDENTS} học sinh.`,
 			});
 		} else {
-			navigate(`/student/classes/${id}/register`);
+			navigate(`/student/payment/${courseID}/${centerID}`, {
+				state: { classID: id },
+			});
 		}
 	};
 
