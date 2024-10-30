@@ -296,7 +296,7 @@ const StudentRegister: React.FC = () => {
 									Giá gốc:
 								</Text>
 							</Col>
-							<Col span={16} style={{ fontSize: '25px', textAlign: 'left' }}>
+							<Col span={12} style={{ fontSize: '25px', textAlign: 'right' }}>
 								{originPrice.toLocaleString('vi-VN')}đ
 							</Col>
 							<Col span={8} style={{ fontSize: '25px', textAlign: 'left' }}>
@@ -304,7 +304,7 @@ const StudentRegister: React.FC = () => {
 									Voucher:
 								</Text>
 							</Col>
-							<Col span={16} style={{ fontSize: '25px', textAlign: 'left' }}>
+							<Col span={12} style={{ fontSize: '25px', textAlign: 'right' }}>
 								{voucherPercent}%
 							</Col>
 							<Col span={8} style={{ fontSize: '25px', textAlign: 'left' }}>
@@ -312,7 +312,7 @@ const StudentRegister: React.FC = () => {
 									Tổng:
 								</Text>
 							</Col>
-							<Col span={16} style={{ fontSize: '25px', textAlign: 'left' }}>
+							<Col span={12} style={{ fontSize: '25px', textAlign: 'right' }}>
 								{finalPrice.toLocaleString('vi-VN')}đ
 							</Col>
 						</Row>
