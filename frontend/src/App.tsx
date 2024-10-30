@@ -37,6 +37,12 @@ const AdminCenterEdit = lazy(() => import('@/pages/admin/CenterEdit'));
 const AdminCourseEdit = lazy(() => import('@/pages/admin/CourseEdit'));
 const AdminVoucherEdit = lazy(() => import('@/pages/admin/VoucherEdit'));
 const CenterDetail = lazy(() => import('@/pages/admin/CenterDetail'));
+const CourseDetailOfCenter = lazy(
+	() => import('@/pages/admin/CourseDetailOfCenter'),
+);
+const VoucherDetailOfCenter = lazy(
+	() => import('@/pages/admin/VoucherDetailOfCenter'),
+);
 const CourseDetail = lazy(() => import('@/pages/admin/CourseDetail'));
 const VoucherDetail = lazy(() => import('@/pages/admin/VoucherDetail'));
 const ListCoursesOfCenter = lazy(
@@ -50,6 +56,10 @@ const ListTeacherOfCenter = lazy(
 );
 const ClassDetailForAdmin = lazy(() => import('@/pages/admin/ClassDetail'));
 const ListClass = lazy(() => import('@/pages/admin/ListClass'));
+const AdminSalariesManagement = lazy(
+	() => import('@/pages/admin/SalariesManagement'),
+);
+const AdminSalariesCreate = lazy(() => import('@/pages/admin/SalariesCreate'));
 
 // Teacher lazy load
 const LoginTeacher = lazy(() => import('@/pages/teacher/Login'));
@@ -59,6 +69,9 @@ const StudentDetail = lazy(() => import('@/pages/teacher/StudentDetail'));
 const TeacherProfile = lazy(() => import('@/pages/teacher/Profile'));
 const EditTeacherProfile = lazy(() => import('@/pages/teacher/EditProfile'));
 const ChangePasswordPage = lazy(() => import('@/pages/teacher/ChangePassword'));
+const CheckAttendancesPage = lazy(
+	() => import('@/pages/teacher/CheckAttendances'),
+);
 const TeacherSchedule = lazy(() => import('@/pages/teacher/ScheduleView'));
 
 // Student lazy load
@@ -254,6 +267,17 @@ const App: React.FC = () => {
 						}
 					/>
 					<Route
+						path="/admin/centers/courses/:id"
+						element={
+							<ProtectedRoute
+								redirectPath="/admin/login"
+								tokenName="accessToken"
+							>
+								<CourseDetailOfCenter />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
 						path="/admin/courses/:id"
 						element={
 							<ProtectedRoute
@@ -294,6 +318,17 @@ const App: React.FC = () => {
 								tokenName="accessToken"
 							>
 								<AdminVouchersManagement />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="/admin/centers/vouchers/:id"
+						element={
+							<ProtectedRoute
+								redirectPath="/admin/login"
+								tokenName="accessToken"
+							>
+								<VoucherDetailOfCenter />
 							</ProtectedRoute>
 						}
 					/>
@@ -367,6 +402,28 @@ const App: React.FC = () => {
 							</ProtectedRoute>
 						}
 					/>
+					<Route
+						path="/admin/salaries"
+						element={
+							<ProtectedRoute
+								redirectPath="/admin/login"
+								tokenName="accessToken"
+							>
+								<AdminSalariesManagement />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path="/admin/salaries/calculate"
+						element={
+							<ProtectedRoute
+								redirectPath="/admin/login"
+								tokenName="accessToken"
+							>
+								<AdminSalariesCreate />
+							</ProtectedRoute>
+						}
+					/>
 
 					{/* Teacher Routes */}
 					<Route path="/teacher/login" element={<LoginTeacher />} />
@@ -403,6 +460,10 @@ const App: React.FC = () => {
 								<ChangePasswordPage />
 							</ProtectedRoute>
 						}
+					/>
+					<Route
+						path="/teacher/attendance/:slotId"
+						element={<CheckAttendancesPage />}
 					/>
 					<Route path="/teacher/schedule" element={<TeacherSchedule />} />
 

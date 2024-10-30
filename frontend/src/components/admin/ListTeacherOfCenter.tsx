@@ -1,20 +1,10 @@
 import {
-	DeleteOutlined,
 	EyeOutlined,
 	PlusOutlined,
 	SearchOutlined,
 	SyncOutlined,
 } from '@ant-design/icons';
-import {
-	Alert,
-	Button,
-	Empty,
-	Input,
-	Modal,
-	Spin,
-	Table,
-	notification,
-} from 'antd';
+import { Alert, Button, Empty, Input, Spin, Table } from 'antd';
 import type { TableColumnsType } from 'antd';
 import { TableProps } from 'antd/lib';
 import axios from 'axios';
@@ -24,7 +14,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import ButtonGoBack from '@/components/commons/ButtonGoback';
 import { Center } from '@/schemas/center.schema';
 import { Teacher } from '@/schemas/teacher.schema';
-import { deleteTeacher } from '@/services/api/teacher';
 import { apiBaseUrl } from '@/utils/apiBase';
 
 interface DataType {
@@ -59,7 +48,6 @@ const ListTeacherOfCenter: React.FC = () => {
 			const teacherResponses = await Promise.all(teacherRequests);
 			const fullTeachers = teacherResponses.map((response) => response.data);
 
-			// Log the list of teachers (optional)
 			console.log(JSON.stringify(fullTeachers, null, 2));
 
 			const tableData = fullTeachers.map((tch, index) => ({
@@ -92,49 +80,11 @@ const ListTeacherOfCenter: React.FC = () => {
 			>
 				Chi tiết
 			</Button>
-			<Button
-				color="default"
-				variant="solid"
-				type="primary"
-				icon={<DeleteOutlined />}
-				onClick={() => handleDelete(id)}
-				style={{ marginRight: 8, backgroundColor: '#ff2121', color: 'white' }}
-			>
-				Xóa
-			</Button>
 		</div>
 	);
 
 	const handleDetail = (id: string) => {
 		navigate(`/admin/centers/teachers/${id}`);
-	};
-
-	const handleDelete = async (id: string) => {
-		Modal.confirm({
-			title: 'Xác nhận xóa',
-			content: 'Bạn có chắc chắn muốn xóa giáo viên này?',
-			okText: 'Xóa',
-			cancelText: 'Hủy',
-			centered: true,
-			onOk: async () => {
-				try {
-					await deleteTeacher(id);
-					notification.success({
-						message: 'Xóa thành công',
-						description: 'giáo viên đã được xóa thành công.',
-						duration: 3,
-					});
-					navigate(`/admin/courses`);
-				} catch (error) {
-					console.error('Lỗi khi xóa giáo viên:', error);
-					notification.error({
-						message: 'Lỗi',
-						description: 'Đã xảy ra lỗi khi xóa giáo viên.',
-						duration: 3,
-					});
-				}
-			},
-		});
 	};
 
 	const handleRefresh = () => {
@@ -187,7 +137,7 @@ const ListTeacherOfCenter: React.FC = () => {
 			title: <div style={{ textAlign: 'center' }}>Thao tác</div>,
 			dataIndex: 'actions',
 			align: 'center',
-			width: '20%',
+			width: '10%',
 		},
 	];
 
@@ -218,7 +168,6 @@ const ListTeacherOfCenter: React.FC = () => {
 			>
 				<Button
 					style={{ marginRight: 8, backgroundColor: '#0cd14e', color: 'white' }}
-					// type="primary"
 					icon={<PlusOutlined />}
 					onClick={handleCreateNewTeacher}
 				>
@@ -251,10 +200,8 @@ const ListTeacherOfCenter: React.FC = () => {
 				<div style={{ overflow: 'auto', marginBottom: '60px' }}>
 					<Table<DataType>
 						columns={columns}
-						// dataSource={data}
 						dataSource={filteredData.length ? filteredData : []}
 						onChange={onChange}
-						// locale={{
 						locale={{
 							emptyText: (
 								<Empty
