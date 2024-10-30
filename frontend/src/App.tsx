@@ -59,6 +59,9 @@ const StudentDetail = lazy(() => import('@/pages/teacher/StudentDetail'));
 const TeacherProfile = lazy(() => import('@/pages/teacher/Profile'));
 const EditTeacherProfile = lazy(() => import('@/pages/teacher/EditProfile'));
 const ChangePasswordPage = lazy(() => import('@/pages/teacher/ChangePassword'));
+const CheckAttendancesPage = lazy(
+	() => import('@/pages/teacher/CheckAttendances'),
+);
 const TeacherSchedule = lazy(() => import('@/pages/teacher/ScheduleView'));
 
 // Student lazy load
@@ -402,6 +405,10 @@ const App: React.FC = () => {
 								<ChangePasswordPage />
 							</ProtectedRoute>
 						}
+					/>
+					<Route
+						path="/teacher/attendance/:slotId"
+						element={<CheckAttendancesPage />}
 					/>
 					<Route path="/teacher/schedule" element={<TeacherSchedule />} />
 

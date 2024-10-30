@@ -36,20 +36,20 @@ export class CreateSlotDto {
 
 export class UpdateSlotDto {
 	@ApiPropertyOptional({ description: 'Class offered by the Slot' })
-	class: string;
+	class?: string;
 
 	@ApiPropertyOptional({ description: 'Room of Slot' })
-	room: string;
+	room?: string;
 
 	@ApiPropertyOptional({ description: 'Start time of Slot' })
-	start: Date;
+	start?: Date;
 
 	@ApiPropertyOptional({ description: 'End time of Slot' })
-	end: Date;
+	end?: Date;
 
 	@ApiPropertyOptional({ description: 'Attendances offered by the Slot' })
-	attendances: string[];
+	attendances?: string[];
 
 	@ApiPropertyOptional({ description: 'Confirm teacher have taught this slot' })
-	isDone: boolean;
+	isDone?: boolean;
 }

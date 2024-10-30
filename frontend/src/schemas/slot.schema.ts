@@ -12,3 +12,12 @@ export interface Slot {
 	createdAt?: Date;
 	updatedAt?: Date;
 }
+
+export interface NewSlot {
+	class: string;
+	room: string;
+	start: Date;
+	end: Date;
+	attendances?: Attendance[];
+	isDone: boolean;
+}
