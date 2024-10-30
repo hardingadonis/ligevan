@@ -20,6 +20,7 @@ import { Course } from '@/schemas/course.schema';
 import { Student } from '@/schemas/student.schema';
 import { Voucher } from '@/schemas/voucher.schema';
 import { apiBaseUrl } from '@/utils/apiBase';
+import { formatPrice } from '@/utils/formatPrice';
 import { decodeToken } from '@/utils/jwtDecode';
 
 const { Option } = Select;
@@ -297,7 +298,7 @@ const StudentRegister: React.FC = () => {
 								</Text>
 							</Col>
 							<Col span={12} style={{ fontSize: '25px', textAlign: 'right' }}>
-								{originPrice.toLocaleString('vi-VN')}đ
+								{formatPrice(originPrice)}
 							</Col>
 							<Col span={8} style={{ fontSize: '25px', textAlign: 'left' }}>
 								<Text strong style={{ fontSize: '24px' }}>
@@ -305,7 +306,7 @@ const StudentRegister: React.FC = () => {
 								</Text>
 							</Col>
 							<Col span={12} style={{ fontSize: '25px', textAlign: 'right' }}>
-								{voucherPercent}%
+								{voucherPercent} %
 							</Col>
 							<Col span={8} style={{ fontSize: '25px', textAlign: 'left' }}>
 								<Text strong style={{ fontSize: '24px' }}>
@@ -313,7 +314,7 @@ const StudentRegister: React.FC = () => {
 								</Text>
 							</Col>
 							<Col span={12} style={{ fontSize: '25px', textAlign: 'right' }}>
-								{finalPrice.toLocaleString('vi-VN')}đ
+								{formatPrice(finalPrice)}
 							</Col>
 						</Row>
 						<Button
