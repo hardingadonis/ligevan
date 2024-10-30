@@ -1,3 +1,4 @@
+import '../../assets/styles/schedule.css';
 import { registerLicense } from '@syncfusion/ej2-base';
 import React from 'react';
 
