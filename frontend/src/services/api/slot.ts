@@ -1,7 +1,9 @@
 import axios from 'axios';
 
+import { Class } from '@/schemas/class.schema';
 import { Slot } from '@/schemas/slot.schema';
 import { getClassById } from '@/services/api/class';
+import { getStudentByEmail } from '@/services/api/student';
 import { getTeacherByEmail } from '@/services/api/teacher';
 import { apiBaseUrl } from '@/utils/apiBase';
 
@@ -91,13 +93,76 @@ export const updateSlot = async (id: string, slot: Slot) => {
 	}
 };
 
-export const findSlotsInRange = async (classId: string, start: Date, end: Date) => {
+export const getSlotsByStudentEmail = async (
+	email: string,
+): Promise<Slot[]> => {
 	try {
-		const response = await axios.post(`${apiBaseUrl}/api/slots/find-list-slot`, {
-			classId,
-			start,
-			end,
-		});
+		const student = await getStudentByEmail(email);
+
+		if (!student) {
+			throw new Error('No valid student found for the given email.');
+		}
+
+		const classes: Class[] = student.classes || [];
+
+		const slotIds: string[] = classes.flatMap(
+			(classItem) => classItem.slots?.map((slot) => slot.toString()) || [],
+		);
+
+		const studentSlots: Slot[] = await Promise.all(
+			slotIds.map(async (slotId) => await getSlotById(slotId)),
+		);
+
+		return studentSlots;
+	} catch (error) {
+		console.error('Error fetching slots by student email:', error);
+		throw error;
+	}
+};
+
+export const filterSlotsForStudentSchedule = async (
+	studentEmail: string,
+	centerId?: string,
+	courseId?: string,
+): Promise<Slot[]> => {
+	try {
+		const slots = await getSlotsByStudentEmail(studentEmail);
+
+		let filteredSlots = slots;
+
+		if (centerId && centerId !== 'all') {
+			filteredSlots = filteredSlots.filter(
+				(slot) => slot.class.center.toString() === centerId,
+			);
+		}
+
+		if (courseId && courseId !== 'all') {
+			filteredSlots = filteredSlots.filter(
+				(slot) => slot.class.course.toString() === courseId,
+			);
+		}
+
+		return filteredSlots;
+	} catch (error) {
+		console.error('Error filtering slots for student:', error);
+		throw error;
+	}
+};
+
+export const findSlotsInRange = async (
+	classId: string,
+	start: Date,
+	end: Date,
+) => {
+	try {
+		const response = await axios.post(
+			`${apiBaseUrl}/api/slots/find-list-slot`,
+			{
+				classId,
+				start,
+				end,
+			},
+		);
 		return response.data;
 	} catch (error) {
 		console.error('Error finding slots in range:', error);

@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import { Class } from '@/schemas/class.schema';
+import { getStudentByEmail } from '@/services/api/student';
 import { apiBaseUrl } from '@/utils/apiBase';
 
 export const getClassById = async (id: string): Promise<Class> => {
@@ -31,6 +32,27 @@ export const getAllTeacherByCourseId = async (courseId: string) => {
 		return response.data;
 	} catch (error) {
 		console.error('Error fetching teachers:', error);
+		throw error;
+	}
+};
+
+export const getClassesByStudentEmail = async (
+	email: string,
+): Promise<Class[]> => {
+	try {
+		const student = await getStudentByEmail(email);
+		if (!student) {
+			throw new Error('Student not found');
+		}
+
+		const allClasses = await getAllClasses();
+		const studentClasses = allClasses.filter((classItem) =>
+			classItem.students?.some((s) => s._id === student._id),
+		);
+
+		return studentClasses;
+	} catch (error) {
+		console.error('Error fetching classes by student email:', error);
 		throw error;
 	}
 };
