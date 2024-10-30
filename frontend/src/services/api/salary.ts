@@ -13,6 +13,17 @@ export const getAllSalary = async (): Promise<Salary[]> => {
 	}
 };
 
+export const getSalaryById = async (id: string): Promise<Salary> => {
+	try {
+		const response = await axios.get(`${apiBaseUrl}/api/salaries/${id}`);
+		return response.data;
+	} catch (error) {
+		console.error('Error fetching salary:', error);
+		throw error;
+	}
+}
+
+
 export const deleteSalary = async (id: string): Promise<void> => {
 	try {
 		await axios.delete(`${apiBaseUrl}/api/salaries/${id}`);
