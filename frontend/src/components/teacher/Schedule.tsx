@@ -177,57 +177,69 @@ const Schedule: React.FC = () => {
 		Id: string;
 		Location: string;
 		CenterName: string;
-	}) => (
-		<div
-			style={{
-				padding: '5px',
-			}}
-		>
-			<div>
-				<h3>{props.Subject}</h3>
-			</div>
-			<div style={{ marginTop: '7px' }}>
-				{new Date(props.StartTime).toLocaleTimeString([], {
-					hour: '2-digit',
-					minute: '2-digit',
-				})}{' '}
-				-{' '}
-				{new Date(props.EndTime).toLocaleTimeString([], {
-					hour: '2-digit',
-					minute: '2-digit',
-				})}
-			</div>
-			<div style={{ marginTop: '5px' }}>
-				<strong>{props.CenterName}</strong>
-			</div>
-			<div style={{ marginTop: '5px' }}>
-				<strong>Tại phòng: </strong>
-				{props.Location}
-			</div>
-			<div style={{ marginTop: '10px' }}>
-				<Tag
-					icon={
-						props.Description === 'Đã dạy' ? (
-							<CheckCircleOutlined />
-						) : (
-							<ClockCircleOutlined />
-						)
-					}
-					color={props.Description === 'Đã dạy' ? 'success' : 'default'}
-				>
-					{props.Description}
-				</Tag>
-			</div>
-			<Button
-				type="primary"
-				icon={<ScheduleOutlined />}
-				onClick={() => handleRedirect(props.Id)}
-				style={{ marginTop: '10px' }}
+	}) => {
+		const currentTime = new Date();
+		const slotStartTime = new Date(props.StartTime);
+		const endOfDay = new Date(slotStartTime);
+		endOfDay.setHours(23, 59, 59, 999);
+
+		const isButtonDisabled =
+			// Convert all ">" to "<" when demo
+			currentTime > slotStartTime || currentTime > endOfDay;
+
+		return (
+			<div
+				style={{
+					padding: '5px',
+				}}
 			>
-				Điểm danh
-			</Button>
-		</div>
-	);
+				<div>
+					<h3>{props.Subject}</h3>
+				</div>
+				<div style={{ marginTop: '7px' }}>
+					{new Date(props.StartTime).toLocaleTimeString([], {
+						hour: '2-digit',
+						minute: '2-digit',
+					})}{' '}
+					-{' '}
+					{new Date(props.EndTime).toLocaleTimeString([], {
+						hour: '2-digit',
+						minute: '2-digit',
+					})}
+				</div>
+				<div style={{ marginTop: '5px' }}>
+					<strong>{props.CenterName}</strong>
+				</div>
+				<div style={{ marginTop: '5px' }}>
+					<strong>Tại phòng: </strong>
+					{props.Location}
+				</div>
+				<div style={{ marginTop: '10px' }}>
+					<Tag
+						icon={
+							props.Description === 'Đã dạy' ? (
+								<CheckCircleOutlined />
+							) : (
+								<ClockCircleOutlined />
+							)
+						}
+						color={props.Description === 'Đã dạy' ? 'success' : 'default'}
+					>
+						{props.Description}
+					</Tag>
+				</div>
+				<Button
+					type="primary"
+					icon={<ScheduleOutlined />}
+					onClick={() => handleRedirect(props.Id)}
+					style={{ marginTop: '10px' }}
+					disabled={isButtonDisabled}
+				>
+					Điểm danh
+				</Button>
+			</div>
+		);
+	};
 
 	return (
 		<div style={{ paddingLeft: '270px' }}>

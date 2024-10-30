@@ -1,5 +1,4 @@
-import { DeleteOutlined } from '@ant-design/icons';
-import { Avatar, Button, Col, Form, Input, Row, Spin, Typography } from 'antd';
+import { Avatar, Col, Form, Input, Row, Spin, Typography } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -113,20 +112,7 @@ const TeacherDetailOfCenter: React.FC = () => {
 									display: 'flex',
 									justifyContent: 'flex-end',
 								}}
-							>
-								<Button
-									color="default"
-									variant="solid"
-									type="primary"
-									icon={<DeleteOutlined />}
-									style={{
-										backgroundColor: '#ff2121',
-										color: 'white',
-									}}
-								>
-									Xóa
-								</Button>
-							</div>
+							></div>
 						</Col>
 					</Row>
 				</Form>
