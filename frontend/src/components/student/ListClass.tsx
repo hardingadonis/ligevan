@@ -36,11 +36,9 @@ const ListClass: React.FC = () => {
 	const renderActions = useCallback(
 		(id: string): JSX.Element => (
 			<Button
-				color="primary"
-				variant="outlined"
 				icon={<EyeOutlined />}
 				onClick={() => handleViewDetails(id)}
-				style={{ marginRight: 8 }}
+				style={{ backgroundColor: '#4096ff', color: 'white' }}
 			>
 				Chi tiết
 			</Button>

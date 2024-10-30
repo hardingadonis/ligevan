@@ -123,10 +123,13 @@ const FormCheckAttendances: React.FC<FormCheckAttendancesProps> = ({
 		try {
 			const response = await checkAttendances(slotId, attendances);
 
-			await updateSlot(slotId, {
-				...response.slot,
-				isDone: true,
-			});
+			await updateSlot(
+				{
+					...response.slot,
+					isDone: true,
+				},
+				slotId,
+			);
 
 			message.success('Điểm danh thành công', 2);
 

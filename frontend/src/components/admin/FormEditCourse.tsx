@@ -72,7 +72,7 @@ const FormEditCourse: React.FC = () => {
 		if (!value) {
 			return Promise.reject(new Error('Vui lòng nhập giá khoá học!'));
 		}
-		if (!validateNumber(value)) {
+		if (!validateNumber(value.toString())) {
 			return Promise.reject(new Error('Giá khoá học không hợp lệ!'));
 		}
 		return Promise.resolve();

@@ -1,20 +1,12 @@
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import {
-	Button,
-	Card,
-	Col,
-	Input,
-	Modal,
-	Row,
-	Typography,
-	notification,
-} from 'antd';
+import { Card, Col, Input, Row, Typography } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 import ButtonGoBack from '@/components/commons/ButtonGoback';
 import { Course } from '@/schemas/course.schema';
-import { deleteCourse, getCourseById } from '@/services/api/course';
+import { getCourseById } from '@/services/api/course';
+import { selectCenterID } from '@/slices/center';
 import { formatPrice } from '@/utils/formatPrice';
 
 const { Title } = Typography;
@@ -22,7 +14,7 @@ const { Title } = Typography;
 const CourseDetail: React.FC = () => {
 	const { id } = useParams<{ id: string }>();
 	const [course, setCourse] = useState<Course | null>(null);
-	const navigate = useNavigate();
+	const centerID = useSelector(selectCenterID);
 	useEffect(() => {
 		const fetchCourseDetail = async () => {
 			try {
@@ -43,43 +35,12 @@ const CourseDetail: React.FC = () => {
 	if (!course) {
 		return <div>Loading...</div>;
 	}
-	const handleEdit = () => {
-		navigate(`/admin/courses/edit/${course._id}`);
-	};
-
-	const handleDelete = async () => {
-		Modal.confirm({
-			title: 'Xác nhận xóa',
-			content: 'Bạn có chắc chắn muốn xóa mã giảm giá này?',
-			okText: 'Xóa',
-			cancelText: 'Hủy',
-			centered: true,
-			onOk: async () => {
-				try {
-					await deleteCourse(course._id);
-					notification.success({
-						message: 'Xóa thành công',
-						description: 'Mã giảm giá đã được xóa thành công.',
-						duration: 3,
-					});
-					navigate(`/admin/courses`);
-				} catch (error) {
-					console.error('Lỗi khi xóa mã giảm giá:', error);
-					notification.error({
-						message: 'Lỗi',
-						description: 'Đã xảy ra lỗi khi xóa mã giảm giá.',
-						duration: 3,
-					});
-				}
-			},
-		});
-	};
 
 	return (
 		<div style={{ paddingLeft: '270px' }}>
 			<div style={{ textAlign: 'center', marginBottom: 20 }}>
 				<div style={{ textAlign: 'left' }}>
-					<ButtonGoBack />
+					<ButtonGoBack link={`/admin/centers/${centerID}/courses`} />
 				</div>
 				<h2>Chi tiết khóa học</h2>
 			</div>
@@ -158,32 +119,6 @@ const CourseDetail: React.FC = () => {
 						</Card>
 					</Col>
 				</Row>
-				<div style={{ marginTop: '40px', textAlign: 'right' }}>
-					<Button
-						type="primary"
-						icon={<EditOutlined />}
-						onClick={handleEdit}
-						style={{
-							marginRight: '20px',
-							backgroundColor: '#ffae00',
-							color: 'white',
-						}}
-					>
-						Chỉnh sửa
-					</Button>
-					<Button
-						type="primary"
-						danger
-						icon={<DeleteOutlined />}
-						onClick={handleDelete}
-						style={{
-							backgroundColor: '#ff2121',
-							color: 'white',
-						}}
-					>
-						Xóa
-					</Button>
-				</div>
 			</Card>
 		</div>
 	);

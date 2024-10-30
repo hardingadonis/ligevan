@@ -1,6 +1,7 @@
 import {
 	CheckCircleOutlined,
 	ClockCircleOutlined,
+	CloseCircleOutlined,
 	SyncOutlined,
 } from '@ant-design/icons';
 import { L10n, loadCldr } from '@syncfusion/ej2-base';
@@ -22,24 +23,25 @@ import {
 } from '@syncfusion/ej2-react-schedule';
 import '@syncfusion/ej2-react-schedule/styles/material.css';
 import '@syncfusion/ej2-splitbuttons/styles/material.css';
-import { Button, Col, Form, Row, Tag, Typography } from 'antd';
+import { Button, Col, Row, Tag, Typography } from 'antd';
 import * as gregorian from 'cldr-data/main/vi/ca-gregorian.json';
 import * as numberingSystems from 'cldr-data/main/vi/numbers.json';
 import * as timeZoneNames from 'cldr-data/main/vi/timeZoneNames.json';
 import * as weekData from 'cldr-data/supplemental/weekData.json';
-import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
 
-import CustomEditorTemplate from '@/components/admin/CustomEditorTemplate';
 import ButtonGoBack from '@/components/commons/ButtonGoback';
 import DropdownCenter from '@/components/teacher/DropdownCenter';
 import DropdownCourse from '@/components/teacher/DropdownCourse';
 import { Center } from '@/schemas/center.schema';
 import { Course } from '@/schemas/course.schema';
 import { Slot } from '@/schemas/slot.schema';
+import { checkAttendanceStatus } from '@/services/api/attendance';
 import { getAllCenter, getCenterById } from '@/services/api/center';
-import { getAllSlot } from '@/services/api/slot';
+import { getSlotsByStudentEmail } from '@/services/api/slot';
+import { fetchStudentData } from '@/services/custom/getStudentbyToken';
 import { convertToUTC } from '@/utils/dateFormat';
+import { decodeToken } from '@/utils/jwtDecode';
 
 loadCldr(numberingSystems, gregorian, timeZoneNames, weekData);
 
@@ -62,10 +64,10 @@ L10n.load({
 
 interface ExtendedSlot extends Slot {
 	centerName: string;
+	Description: string;
 }
 
 const SetupSchedules: React.FC = () => {
-	const [form] = Form.useForm(); // Create a form instance
 	const [slots, setSlots] = useState<ExtendedSlot[]>([]);
 	const [centers, setCenters] = useState<Center[]>([]);
 	const [selectedCenter, setSelectedCenter] = useState<string | undefined>(
@@ -76,26 +78,17 @@ const SetupSchedules: React.FC = () => {
 		'all',
 	);
 	const scheduleRef = useRef<ScheduleComponent>(null);
+	const [isReadOnly, setIsReadOnly] = useState<boolean>(false);
 
-	const fetchSlots = async () => {
-		try {
-			const allSlots = await getAllSlot();
-			const convertedData: ExtendedSlot[] = await Promise.all(
-				allSlots.map(async (slot) => {
-					const center = await getCenterById(slot.class.center.toString());
-					return {
-						...slot,
-						start: convertToUTC(new Date(slot.start)),
-						end: convertToUTC(new Date(slot.end)),
-						centerName: center.name,
-					};
-				}),
-			);
-			setSlots(convertedData);
-		} catch (error) {
-			console.error('Error fetching slots:', error);
+	useEffect(() => {
+		const token = localStorage.getItem('token');
+		if (token) {
+			const decoded = decodeToken(token);
+			if (decoded.role !== 'admin') {
+				setIsReadOnly(true);
+			}
 		}
-	};
+	}, []);
 
 	useEffect(() => {
 		const fetchCenters = async () => {
@@ -108,6 +101,36 @@ const SetupSchedules: React.FC = () => {
 		};
 		fetchCenters();
 	}, []);
+
+	const fetchSlots = async () => {
+		try {
+			const email = (await fetchStudentData()).email;
+			const allSlots = await getSlotsByStudentEmail(email);
+			const convertedData: ExtendedSlot[] = await Promise.all(
+				allSlots.map(async (slot) => {
+					const center = await getCenterById(slot.class.center.toString());
+					const status = await checkAttendanceStatus(email, slot._id);
+					let description = 'Chưa học';
+					if (status === 'attended') {
+						description = 'Đã điểm danh';
+					} else if (status === 'absent') {
+						description = 'Vắng mặt';
+					}
+
+					return {
+						...slot,
+						start: convertToUTC(new Date(slot.start)),
+						end: convertToUTC(new Date(slot.end)),
+						centerName: center.name,
+						Description: description,
+					};
+				}),
+			);
+			setSlots(convertedData);
+		} catch (error) {
+			console.error('Error fetching slots:', error);
+		}
+	};
 
 	useEffect(() => {
 		fetchSlots();
@@ -150,15 +173,13 @@ const SetupSchedules: React.FC = () => {
 
 	const events = filteredSlots.map((slot) => ({
 		Id: slot._id,
-		Subject: slot.class.name,
+		Subject: `Lớp: ${slot.class.name}`,
 		StartTime: slot.start,
 		EndTime: slot.end,
 		Location: slot.room,
-		Description: slot.isDone ? 'Đã dạy' : 'Chưa dạy',
+		Description: slot.Description,
 		IsAllDay: false,
 		CenterName: slot.centerName,
-		classId: slot.class._id,
-		centerId: slot.class.center,
 	}));
 
 	const eventTemplate = (props: {
@@ -169,119 +190,66 @@ const SetupSchedules: React.FC = () => {
 		Id: string;
 		Location: string;
 		CenterName: string;
-	}) => (
-		<div style={{ padding: '5px' }}>
-			<div>
-				<h4>Lớp: {props.Subject}</h4>
-			</div>
-			<div style={{ marginTop: '7px' }}>
-				{new Date(props.StartTime).toLocaleTimeString([], {
-					hour: '2-digit',
-					minute: '2-digit',
-				})}{' '}
-				-{' '}
-				{new Date(props.EndTime).toLocaleTimeString([], {
-					hour: '2-digit',
-					minute: '2-digit',
-				})}
-			</div>
-			<div style={{ marginTop: '5px' }}>
-				<strong>{props.CenterName}</strong>
-			</div>
-			<div style={{ marginTop: '5px' }}>
-				<strong>Tại phòng: </strong>
-				{props.Location}
-			</div>
-			<div style={{ marginTop: '10px' }}>
-				<Tag
-					icon={
-						props.Description === 'Đã dạy' ? (
-							<CheckCircleOutlined />
-						) : (
-							<ClockCircleOutlined />
-						)
-					}
-					color={props.Description === 'Đã dạy' ? 'success' : 'default'}
-				>
-					{props.Description}
-				</Tag>
-			</div>
-		</div>
-	);
-
-	const onPopupOpen = (args: {
-		type: string;
-		data: Record<string, unknown>;
-		cancel: boolean;
 	}) => {
-		const currentDate = new Date();
-		const titleElement = document.querySelector('.e-title-text');
-		if (args.type === 'QuickInfo' && !('Id' in args.data)) {
-			const startTime = args.data.StartTime as Date;
-			if (startTime.getTime() < currentDate.setHours(0, 0, 0, 0)) {
-				args.cancel = true;
-				return;
-			}
-			args.cancel = true;
-			scheduleRef.current?.openEditor(args.data, 'Add');
-			if (titleElement) {
-				titleElement.textContent = 'Thêm lịch học';
-			}
-		} else if (args.type === 'Editor') {
-			const startTime = args.data.StartTime as Date;
-			if (startTime.getTime() < currentDate.setHours(0, 0, 0, 0)) {
-				args.cancel = true;
-				return;
-			}
-			if (!args.data.Id) {
-				form.resetFields();
-				if (titleElement) {
-					titleElement.textContent = 'Thêm lịch học';
-				}
-			} else {
-				const center = centers.find(
-					(center) => center.name === args.data.CenterName,
-				);
-				const selectedClass = center?.classes?.find(
-					(cls) => cls._id === args.data.classId,
-				);
-				form.setFieldsValue({
-					StartTime: moment(args.data.StartTime as string),
-					EndTime: moment(args.data.EndTime as string),
-					Subject: selectedClass ? selectedClass.name : args.data.Subject,
-					Location: args.data.Location,
-					Center: center ? center._id : undefined,
-				});
-				if (titleElement) {
-					titleElement.textContent = 'Chỉnh sửa lịch học';
-				}
-			}
-		}
-	};
+		let icon;
+		let color;
 
-	const onPopupClose = async (args: {
-		type: string;
-		data: Record<string, unknown>;
-		element: HTMLElement;
-		cancel: boolean;
-	}) => {
-		if (args.type === 'Editor' && !args.data.Id && !args.cancel) {
-			args.cancel = true;
+		if (props.Description === 'Đã điểm danh') {
+			icon = <CheckCircleOutlined />;
+			color = 'success';
+		} else if (props.Description === 'Vắng mặt') {
+			icon = <CloseCircleOutlined />;
+			color = 'error';
+		} else {
+			icon = <ClockCircleOutlined />;
+			color = 'default';
 		}
+
+		return (
+			<div style={{ padding: '5px' }}>
+				<div>
+					<h3>{props.Subject}</h3>
+				</div>
+				<div style={{ marginTop: '7px' }}>
+					{new Date(props.StartTime).toLocaleTimeString([], {
+						hour: '2-digit',
+						minute: '2-digit',
+					})}{' '}
+					-{' '}
+					{new Date(props.EndTime).toLocaleTimeString([], {
+						hour: '2-digit',
+						minute: '2-digit',
+					})}
+				</div>
+				<div style={{ marginTop: '5px' }}>
+					<strong>{props.CenterName}</strong>
+				</div>
+				<div style={{ marginTop: '5px' }}>
+					<strong>Tại phòng: </strong>
+					{props.Location}
+				</div>
+				<div style={{ marginTop: '10px' }}>
+					<Tag icon={icon} color={color}>
+						{props.Description}
+					</Tag>
+				</div>
+			</div>
+		);
 	};
 
 	return (
-		<div style={{ paddingLeft: '270px' }}>
+		<div>
 			<Row>
 				<Col span={2}>
 					<ButtonGoBack />
 				</Col>
 				<Col span={20}>
 					<Typography.Title level={2} style={{ textAlign: 'center' }}>
-						Lịch giảng dạy
+						Lịch Học
 					</Typography.Title>
 				</Col>
 			</Row>
+
 			<Row>
 				<Col span={20}>
 					<div style={{ display: 'flex', marginTop: '20px' }}>
@@ -300,24 +268,19 @@ const SetupSchedules: React.FC = () => {
 					</div>
 				</Col>
 				<Col span={4}>
-					<div
-						style={{
-							display: 'flex',
-							marginTop: '20px',
-							justifyContent: 'flex-end',
-						}}
-					>
+					<div style={{ marginTop: '20px' }}>
 						<Button
 							type="default"
 							icon={<SyncOutlined />}
 							onClick={handleRefresh}
-							style={{ marginRight: 8 }}
+							style={{ float: 'right' }}
 						>
 							Làm mới
 						</Button>
 					</div>
 				</Col>
 			</Row>
+
 			<ScheduleComponent
 				ref={scheduleRef}
 				height="650px"
@@ -327,22 +290,7 @@ const SetupSchedules: React.FC = () => {
 				locale="vi"
 				style={{ marginTop: '15px' }}
 				views={['Day', 'Week', 'WorkWeek', 'Month']}
-				editorTemplate={(props: { [key: string]: unknown }) => (
-					<CustomEditorTemplate
-						{...props}
-						form={form}
-						onSave={() => {
-							scheduleRef.current?.closeEditor();
-							fetchSlots();
-						}}
-						onCancel={() => scheduleRef.current?.closeEditor()}
-						isEditMode={!!props.Id}
-						eventId={props.Id as string}
-					/>
-				)}
-				popupOpen={onPopupOpen}
-				popupClose={onPopupClose}
-				quickInfoTemplates={null}
+				readonly={isReadOnly}
 			>
 				<Inject services={[Day, Week, WorkWeek, Month]} />
 			</ScheduleComponent>

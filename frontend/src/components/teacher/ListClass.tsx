@@ -69,12 +69,13 @@ const ListClass: React.FC<ListClassProps> = ({ email }) => {
 
 	const renderActions = (id: string): JSX.Element => (
 		<Button
-			color="default"
-			variant="solid"
-			type="primary"
 			icon={<EyeOutlined />}
 			onClick={() => handleDetail(id)}
-			style={{ marginRight: 8 }}
+			style={{
+				backgroundColor: '#4096ff',
+				color: 'white',
+				marginRight: 8,
+			}}
 		>
 			Chi tiết
 		</Button>
