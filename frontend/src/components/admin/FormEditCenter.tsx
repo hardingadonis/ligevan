@@ -36,7 +36,7 @@ const FormEditCenter: React.FC = () => {
 			try {
 				if (id) {
 					const center = await getCenterById(id);
-					if (center.email && center.email.endsWith('@ligevan.edu.vn')) {
+					if (center?.email?.endsWith('@ligevan.edu.vn')) {
 						center.email = center.email.replace('@ligevan.edu.vn', '');
 					}
 
