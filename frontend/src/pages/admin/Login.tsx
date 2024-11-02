@@ -1,5 +1,5 @@
 import { Button, Col, Form, Input, Modal, Row, Typography } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import AdminLayout from '@/layouts/admin';
@@ -17,6 +17,13 @@ const AdminLogin: React.FC = () => {
 	const navigate = useNavigate();
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
+
+	useEffect(() => {
+		const token = localStorage.getItem('accessToken');
+		if (token && token !== 'undefined') {
+			navigate('/admin/dashboard');
+		}
+	}, [navigate]);
 
 	const onFinish = async (values: LoginFormValues) => {
 		setLoading(true);
