@@ -1,5 +1,6 @@
 import { SaveOutlined } from '@ant-design/icons';
 import {
+	Avatar,
 	Button,
 	Col,
 	ConfigProvider,
@@ -117,6 +118,8 @@ const FormUpdate: React.FC = () => {
 		);
 	}
 
+	const avatarUrl = teacher.avatar || import.meta.env.VITE_AVATAR_URL;
+
 	return (
 		<ConfigProvider locale={locale}>
 			<div style={{ paddingLeft: '270px' }}>
@@ -151,118 +154,152 @@ const FormUpdate: React.FC = () => {
 							address: teacher.address,
 							gender: teacher.gender,
 							dob: teacher.dob ? dayjs(teacher.dob) : null,
+							avatar: teacher.avatar,
 						}}
 						onFinish={onFinish}
 						onFinishFailed={onFinishFailed}
 					>
-						<Form.Item
-							label="Tên"
-							labelAlign="left"
-							name="fullName"
-							rules={[
-								{ required: true, message: 'Vui lòng nhập tên của bạn!' },
-								{
-									validator: (_, value) =>
-										validateName(value)
-											? Promise.resolve()
-											: Promise.reject(new Error('Tên không hợp lệ!')),
-								},
-							]}
-						>
-							<Input name="fullName" onChange={handleInputChange} />
-						</Form.Item>
+						<Row>
+							<Col span={7}>
+								<Form.Item labelAlign="left">
+									<Avatar
+										src={avatarUrl}
+										alt="Avatar Preview"
+										size={150}
+										style={{
+											objectFit: 'cover',
+										}}
+									/>
+								</Form.Item>
+							</Col>
 
-						<Form.Item
-							label="Số điện thoại"
-							labelAlign="left"
-							name="phone"
-							rules={[
-								{ required: true, message: 'Vui lòng nhập số điện thoại!' },
-								{
-									validator: (_, value) =>
-										validatePhoneNumber(value)
-											? Promise.resolve()
-											: Promise.reject(
-													new Error('Số điện thoại không hợp lệ!'),
-												),
-								},
-								{
-									validator: (_, value) =>
-										validateVietnamesePhoneNumber(value)
-											? Promise.resolve()
-											: Promise.reject(
-													new Error('Không phải số điện thoại Việt Nam!'),
-												),
-								},
-							]}
-						>
-							<Input name="phone" onChange={handleInputChange} />
-						</Form.Item>
+							<Col span={17}>
+								<Form.Item
+									label="Tên"
+									labelAlign="left"
+									name="fullName"
+									rules={[
+										{ required: true, message: 'Vui lòng nhập tên của bạn!' },
+										{
+											validator: (_, value) =>
+												validateName(value)
+													? Promise.resolve()
+													: Promise.reject(new Error('Tên không hợp lệ!')),
+										},
+									]}
+								>
+									<Input name="fullName" onChange={handleInputChange} />
+								</Form.Item>
 
-						<Form.Item
-							label="Địa chỉ"
-							labelAlign="left"
-							name="address"
-							rules={[
-								{ required: true, message: 'Vui lòng nhập địa chỉ!' },
-								{
-									validator: (_, value) =>
-										validateVietnameseAddress(value)
-											? Promise.resolve()
-											: Promise.reject(new Error('Địa chỉ không hợp lệ!')),
-								},
-							]}
-						>
-							<Input name="address" onChange={handleInputChange} />
-						</Form.Item>
+								<Form.Item
+									label="Số điện thoại"
+									labelAlign="left"
+									name="phone"
+									rules={[
+										{ required: true, message: 'Vui lòng nhập số điện thoại!' },
+										{
+											validator: (_, value) =>
+												validatePhoneNumber(value)
+													? Promise.resolve()
+													: Promise.reject(
+															new Error('Số điện thoại không hợp lệ!'),
+														),
+										},
+										{
+											validator: (_, value) =>
+												validateVietnamesePhoneNumber(value)
+													? Promise.resolve()
+													: Promise.reject(
+															new Error('Không phải số điện thoại Việt Nam!'),
+														),
+										},
+									]}
+								>
+									<Input name="phone" onChange={handleInputChange} />
+								</Form.Item>
 
-						<Form.Item
-							label="Giới tính"
-							labelAlign="left"
-							name="gender"
-							rules={[{ required: true, message: 'Vui lòng chọn giới tính!' }]}
-						>
-							<Select value={teacher.gender} onChange={handleGenderChange}>
-								<Option value="male">Nam</Option>
-								<Option value="female">Nữ</Option>
-							</Select>
-						</Form.Item>
+								<Form.Item
+									label="Địa chỉ"
+									labelAlign="left"
+									name="address"
+									rules={[
+										{ required: true, message: 'Vui lòng nhập địa chỉ!' },
+										{
+											validator: (_, value) =>
+												validateVietnameseAddress(value)
+													? Promise.resolve()
+													: Promise.reject(new Error('Địa chỉ không hợp lệ!')),
+										},
+									]}
+								>
+									<Input name="address" onChange={handleInputChange} />
+								</Form.Item>
 
-						<Form.Item
-							label="Ngày sinh"
-							labelAlign="left"
-							name="dob"
-							rules={[
-								{ required: true, message: 'Vui lòng chọn ngày sinh!' },
-								{
-									validator: (_, value) => {
-										const twentyYearsAgo = dayjs().subtract(20, 'year');
-										return value?.isBefore(twentyYearsAgo)
-											? Promise.resolve()
-											: Promise.reject(
-													new Error('Tuổi của giáo viên phải trên 20!'),
-												);
-									},
-								},
-							]}
-						>
-							<DatePicker
-								onChange={handleDateChange}
-								format="DD/MM/YYYY"
-								style={{ width: '100%' }}
-							/>
-						</Form.Item>
+								<Form.Item
+									label="Giới tính"
+									labelAlign="left"
+									name="gender"
+									rules={[
+										{ required: true, message: 'Vui lòng chọn giới tính!' },
+									]}
+								>
+									<Select value={teacher.gender} onChange={handleGenderChange}>
+										<Option value="male">Nam</Option>
+										<Option value="female">Nữ</Option>
+									</Select>
+								</Form.Item>
 
-						<Form.Item wrapperCol={{ span: 24 }} style={{ textAlign: 'right' }}>
-							<Button
-								type="primary"
-								icon={<SaveOutlined />}
-								htmlType="submit"
-								style={{ backgroundColor: '#0cd14e', color: 'white' }}
-							>
-								Lưu Lại
-							</Button>
-						</Form.Item>
+								<Form.Item
+									label="Ngày sinh"
+									labelAlign="left"
+									name="dob"
+									rules={[
+										{ required: true, message: 'Vui lòng chọn ngày sinh!' },
+										{
+											validator: (_, value) => {
+												const twentyYearsAgo = dayjs().subtract(20, 'year');
+												return value?.isBefore(twentyYearsAgo)
+													? Promise.resolve()
+													: Promise.reject(
+															new Error('Tuổi của giáo viên phải trên 20!'),
+														);
+											},
+										},
+									]}
+								>
+									<DatePicker
+										onChange={handleDateChange}
+										format="DD/MM/YYYY"
+										style={{ width: '100%' }}
+									/>
+								</Form.Item>
+
+								<Form.Item
+									label="Link ảnh hồ sơ"
+									labelAlign="left"
+									name="avatar"
+									rules={[
+										{ required: true, message: 'Vui lòng nhập URL avatar!' },
+									]}
+								>
+									<Input name="avatar" onChange={handleInputChange} />
+								</Form.Item>
+
+								<Form.Item
+									wrapperCol={{ span: 24 }}
+									style={{ textAlign: 'right' }}
+								>
+									<Button
+										type="primary"
+										icon={<SaveOutlined />}
+										htmlType="submit"
+										style={{ backgroundColor: '#0cd14e', color: 'white' }}
+									>
+										Lưu Lại
+									</Button>
+								</Form.Item>
+							</Col>
+						</Row>
 					</Form>
 				</div>
 			</div>
