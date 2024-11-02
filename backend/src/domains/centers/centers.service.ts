@@ -23,7 +23,13 @@ export class CentersService {
 
 	async create(createCenterDto: CreateCenterDto) {
 		const existingCenter = await this.centerModel
-			.findOne({ email: createCenterDto.email })
+			.findOne({
+				$or: [
+					{ email: createCenterDto.email },
+					{ phone: createCenterDto.phone },
+					{ address: createCenterDto.address },
+				],
+			})
 			.exec();
 
 		if (existingCenter) {

@@ -114,7 +114,7 @@ const ListCourseCenter: React.FC = () => {
 			title: <div style={{ textAlign: 'center' }}>Giá</div>,
 			dataIndex: 'price',
 			width: '15%',
-			align: 'center',
+			align: 'right',
 			render: (price) => `${formatPrice(price)}`,
 		},
 		{

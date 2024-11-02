@@ -15,6 +15,7 @@ import {
 } from '@/slices/center';
 import store from '@/store';
 import {
+	validateEmailName,
 	validatePhoneNumber,
 	validateVietnameseAddress,
 	validateVietnamesePhoneNumber,
@@ -35,6 +36,10 @@ const FormEditCenter: React.FC = () => {
 			try {
 				if (id) {
 					const center = await getCenterById(id);
+					if (center.email && center.email.endsWith('@ligevan.edu.vn')) {
+						center.email = center.email.replace('@ligevan.edu.vn', '');
+					}
+
 					form.setFieldsValue(center);
 				} else {
 					message.error('ID trung tâm không hợp lệ');
@@ -48,6 +53,10 @@ const FormEditCenter: React.FC = () => {
 
 	const onFinish = async (values: Partial<Center>) => {
 		if (id) {
+			if (values.email && !values.email.endsWith('@ligevan.edu.vn')) {
+				values.email = values.email + '@ligevan.edu.vn';
+			}
+
 			dispatch(updateCenterPending());
 			dispatch(updateCenterById({ id, values }))
 				.unwrap()
@@ -65,11 +74,19 @@ const FormEditCenter: React.FC = () => {
 		}
 	};
 
+	const validateEmail = (_: unknown, value: string) => {
+		if (!value) {
+			return Promise.reject(new Error('Vui lòng nhập email trung tâm!'));
+		}
+		if (!validateEmailName(value)) {
+			return Promise.reject(new Error('Email không hợp lệ!'));
+		}
+		return Promise.resolve();
+	};
+
 	const validatePhone = (_: unknown, value: string) => {
 		if (!value) {
-			return Promise.reject(
-				new Error('Vui lòng nhập số điện thoại trung tâm!'),
-			);
+			return Promise.resolve();
 		}
 		if (!validatePhoneNumber(value)) {
 			return Promise.reject(new Error('Số điện thoại không hợp lệ!'));
@@ -117,9 +134,8 @@ const FormEditCenter: React.FC = () => {
 						style={{ margin: '15px 20px' }}
 					>
 						<Form.Item
-							style={{ fontWeight: 'bold' }}
 							name="name"
-							label="Tên"
+							label={<span style={{ fontWeight: 'bold' }}>Tên</span>}
 							rules={[
 								{ required: true, message: 'Vui lòng nhập tên trung tâm!' },
 							]}
@@ -127,37 +143,41 @@ const FormEditCenter: React.FC = () => {
 							<Input />
 						</Form.Item>
 						<Form.Item
-							style={{ fontWeight: 'bold' }}
 							name="email"
-							label="Email"
-							rules={[
-								{ required: true, message: 'Vui lòng nhập email trung tâm!' },
-								{ type: 'email', message: 'Email không hợp lệ!' },
-							]}
+							label={<span style={{ fontWeight: 'bold' }}>Email</span>}
+							rules={[{ validator: validateEmail }]}
 						>
-							<Input />
+							<Input addonAfter="@ligevan.edu.vn" />
 						</Form.Item>
 						<Form.Item
-							style={{ fontWeight: 'bold' }}
 							name="address"
-							label="Địa chỉ"
+							label={<span style={{ fontWeight: 'bold' }}>Địa chỉ</span>}
 							rules={[
 								{ required: true, message: 'Vui lòng nhập địa chỉ trung tâm!' },
 								{
-									validator: (_, value) =>
-										validateVietnameseAddress(value)
+									validator: (_, value) => {
+										if (!value) {
+											return Promise.resolve();
+										}
+										return validateVietnameseAddress(value)
 											? Promise.resolve()
-											: Promise.reject(new Error('Địa chỉ không hợp lệ!')),
+											: Promise.reject(new Error('Địa chỉ không hợp lệ!'));
+									},
 								},
 							]}
 						>
 							<Input />
 						</Form.Item>
 						<Form.Item
-							style={{ fontWeight: 'bold' }}
 							name="phone"
-							label="Số điện thoại"
-							rules={[{ required: true }, { validator: validatePhone }]}
+							label={<span style={{ fontWeight: 'bold' }}>Số điện thoại</span>}
+							rules={[
+								{
+									required: true,
+									message: 'Vui lòng nhập số điện thoại trung tâm!',
+								},
+								{ validator: validatePhone },
+							]}
 						>
 							<Input />
 						</Form.Item>

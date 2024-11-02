@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, Col, Form, Input, Row, message } from 'antd';
 import React, { useState } from 'react';
@@ -6,6 +7,7 @@ import ButtonGoBack from '@/components/commons/ButtonGoback';
 import type { Center } from '@/schemas/center.schema';
 import { createCenter } from '@/services/api/center';
 import {
+	validateEmailName,
 	validateName,
 	validatePhoneNumber,
 	validateVietnameseAddress,
@@ -22,14 +24,22 @@ const CenterForm: React.FC<CenterFormProps> = ({ onSuccess }) => {
 	const onFinish = async (values: Partial<Center>) => {
 		setLoading(true);
 		try {
+			if (values.email && !values.email.endsWith('@ligevan.edu.vn')) {
+				values.email = values.email + '@ligevan.edu.vn';
+			}
+
 			const centerData: Center = {
 				...values,
 			} as Center;
 			await createCenter(centerData);
 			message.success('Tạo trung tâm thành công!');
 			onSuccess();
-		} catch (error) {
-			message.error('Không thể tạo trung tâm.');
+		} catch (error: any) {
+			if (error.response && error.response.status === 409) {
+				message.error('Trung tâm đã tồn tại.');
+			} else {
+				message.error('Không thể tạo trung tâm.');
+			}
 			console.error(error);
 		} finally {
 			setLoading(false);
@@ -42,6 +52,13 @@ const CenterForm: React.FC<CenterFormProps> = ({ onSuccess }) => {
 			return Promise.resolve();
 		}
 		return Promise.reject(new Error('Tên trung tâm không hợp lệ!'));
+	};
+
+	const validateEmail = (_: unknown, value: string) => {
+		if (validateEmailName(value)) {
+			return Promise.resolve();
+		}
+		return Promise.reject(new Error('Email không hợp lệ!'));
 	};
 
 	const validateFormPhone = (_: unknown, value: string) => {
@@ -110,12 +127,15 @@ const CenterForm: React.FC<CenterFormProps> = ({ onSuccess }) => {
 									rules={[
 										{
 											required: true,
-											type: 'email',
-											message: 'Vui lòng nhập email hợp lệ!',
+											message: 'Vui lòng nhập email!',
 										},
+										{ validator: validateEmail },
 									]}
 								>
-									<Input placeholder="Nhập email trung tâm" />
+									<Input
+										placeholder="Nhập tên (ví dụ: username)"
+										addonAfter="@ligevan.edu.vn"
+									/>
 								</Form.Item>
 
 								<Form.Item

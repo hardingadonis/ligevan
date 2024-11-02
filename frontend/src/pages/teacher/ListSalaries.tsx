@@ -6,47 +6,47 @@ import { useNavigate } from 'react-router-dom';
 import ListSalaries from '@/components/teacher/ListSalaries';
 import TeacherLayout from '@/layouts/teacher';
 import {
-    selectEmail,
-    selectToken,
-    setAvatar,
-    setFullName,
+	selectEmail,
+	selectToken,
+	setAvatar,
+	setFullName,
 } from '@/slices/teacher';
 import { apiBaseUrl } from '@/utils/apiBase';
 
 const ListSalariesPage: React.FC = () => {
-    const email = useSelector(selectEmail);
-    const token = useSelector(selectToken);
-    const [isMounted, setIsMounted] = useState(false);
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+	const email = useSelector(selectEmail);
+	const token = useSelector(selectToken);
+	const [isMounted, setIsMounted] = useState(false);
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
-    useEffect(() => {
-        if (!token) {
-            navigate('../teacher/login');
-        }
+	useEffect(() => {
+		if (!token) {
+			navigate('../teacher/login');
+		}
 
-        async function fetchMyAPI() {
-            const responseAvatar = await axios.get(
-                apiBaseUrl + `/api/teachers/email/${email}`,
-            );
+		async function fetchMyAPI() {
+			const responseAvatar = await axios.get(
+				apiBaseUrl + `/api/teachers/email/${email}`,
+			);
 
-            if (responseAvatar.data.avatar && responseAvatar.data.fullName) {
-                dispatch(setAvatar(responseAvatar.data.avatar));
-                dispatch(setFullName(responseAvatar.data.fullName));
-            }
-        }
-        fetchMyAPI();
-        setIsMounted(true);
-    }, [token, email, dispatch, navigate]);
+			if (responseAvatar.data.avatar && responseAvatar.data.fullName) {
+				dispatch(setAvatar(responseAvatar.data.avatar));
+				dispatch(setFullName(responseAvatar.data.fullName));
+			}
+		}
+		fetchMyAPI();
+		setIsMounted(true);
+	}, [token, email, dispatch, navigate]);
 
-    if (!isMounted) {
-        return null;
-    } else
-        return (
-            <TeacherLayout>
-                <ListSalaries email={email ?? ''} />
-            </TeacherLayout>
-        );
+	if (!isMounted) {
+		return null;
+	} else
+		return (
+			<TeacherLayout>
+				<ListSalaries email={email ?? ''} />
+			</TeacherLayout>
+		);
 };
 
 export default ListSalariesPage;
