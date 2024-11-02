@@ -15,6 +15,7 @@ import {
 } from '@/slices/center';
 import store from '@/store';
 import {
+	validateEmailName,
 	validatePhoneNumber,
 	validateVietnameseAddress,
 	validateVietnamesePhoneNumber,
@@ -35,6 +36,10 @@ const FormEditCenter: React.FC = () => {
 			try {
 				if (id) {
 					const center = await getCenterById(id);
+					if (center.email && center.email.endsWith('@ligevan.edu.vn')) {
+						center.email = center.email.replace('@ligevan.edu.vn', '');
+					}
+
 					form.setFieldsValue(center);
 				} else {
 					message.error('ID trung tâm không hợp lệ');
@@ -48,6 +53,10 @@ const FormEditCenter: React.FC = () => {
 
 	const onFinish = async (values: Partial<Center>) => {
 		if (id) {
+			if (values.email && !values.email.endsWith('@ligevan.edu.vn')) {
+				values.email = values.email + '@ligevan.edu.vn';
+			}
+
 			dispatch(updateCenterPending());
 			dispatch(updateCenterById({ id, values }))
 				.unwrap()
@@ -63,6 +72,16 @@ const FormEditCenter: React.FC = () => {
 		} else {
 			message.error('ID trung tâm không hợp lệ!');
 		}
+	};
+
+	const validateEmail = (_: unknown, value: string) => {
+		if (!value) {
+			return Promise.reject(new Error('Vui lòng nhập email trung tâm!'));
+		}
+		if (!validateEmailName(value)) {
+			return Promise.reject(new Error('Email không hợp lệ!'));
+		}
+		return Promise.resolve();
 	};
 
 	const validatePhone = (_: unknown, value: string) => {
@@ -126,12 +145,9 @@ const FormEditCenter: React.FC = () => {
 						<Form.Item
 							name="email"
 							label={<span style={{ fontWeight: 'bold' }}>Email</span>}
-							rules={[
-								{ required: true, message: 'Vui lòng nhập email trung tâm!' },
-								{ type: 'email', message: 'Email không hợp lệ!' },
-							]}
+							rules={[{ validator: validateEmail }]}
 						>
-							<Input />
+							<Input addonAfter="@ligevan.edu.vn" />
 						</Form.Item>
 						<Form.Item
 							name="address"
