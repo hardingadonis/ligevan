@@ -6,6 +6,7 @@ import ButtonGoBack from '@/components/commons/ButtonGoback';
 import type { Center } from '@/schemas/center.schema';
 import { createCenter } from '@/services/api/center';
 import {
+	validateEmailName,
 	validateName,
 	validatePhoneNumber,
 	validateVietnameseAddress,
@@ -42,6 +43,13 @@ const CenterForm: React.FC<CenterFormProps> = ({ onSuccess }) => {
 			return Promise.resolve();
 		}
 		return Promise.reject(new Error('Tên trung tâm không hợp lệ!'));
+	};
+
+	const validateEmail = (_: unknown, value: string) => {
+		if (validateEmailName(value)) {
+			return Promise.resolve();
+		}
+		return Promise.reject(new Error('Email không hợp lệ!'));
 	};
 
 	const validateFormPhone = (_: unknown, value: string) => {
@@ -113,9 +121,13 @@ const CenterForm: React.FC<CenterFormProps> = ({ onSuccess }) => {
 											type: 'email',
 											message: 'Vui lòng nhập email hợp lệ!',
 										},
+										{ validator: validateEmail },
 									]}
 								>
-									<Input placeholder="Nhập email trung tâm" />
+									<Input
+										placeholder="Nhập tên (ví dụ: username)"
+										addonAfter="@ligevan.edu.vn"
+									/>
 								</Form.Item>
 
 								<Form.Item
