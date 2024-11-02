@@ -127,6 +127,7 @@ const ListCenters: React.FC = () => {
 			title: <div style={{ textAlign: 'center' }}>STT</div>,
 			dataIndex: 'key',
 			width: '5%',
+			align: 'center',
 			sorter: (a, b) => parseInt(a.key) - parseInt(b.key),
 		},
 		{

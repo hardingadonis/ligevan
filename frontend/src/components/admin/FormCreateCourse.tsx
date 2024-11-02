@@ -13,6 +13,7 @@ interface CourseFormProps {
 
 const CourseForm: React.FC<CourseFormProps> = ({ onSuccess }) => {
 	const [loading, setLoading] = useState(false);
+	const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(null);
 	const [form] = Form.useForm();
 
 	const onFinish = async (values: Course) => {
@@ -27,6 +28,10 @@ const CourseForm: React.FC<CourseFormProps> = ({ onSuccess }) => {
 		} finally {
 			setLoading(false);
 		}
+	};
+
+	const handleThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setThumbnailUrl(e.target.value);
 	};
 
 	return (
@@ -86,9 +91,10 @@ const CourseForm: React.FC<CourseFormProps> = ({ onSuccess }) => {
 									</Form.Item>
 
 									<Form.Item
-										style={{ fontWeight: 'bold' }}
 										name="price"
-										label={<span>Giá khóa học</span>}
+										label={
+											<span style={{ fontWeight: 'bold' }}>Giá khóa học</span>
+										}
 										rules={[{ required: true, message: 'Vui lòng nhập giá!' }]}
 									>
 										<InputNumber<number>
@@ -127,11 +133,26 @@ const CourseForm: React.FC<CourseFormProps> = ({ onSuccess }) => {
 								<Form.Item
 									name="thumbnail"
 									label={
-										<span style={{ fontWeight: 'bold' }}>URL Hình ảnh</span>
+										<span style={{ fontWeight: 'bold' }}>Đường dẫn ảnh</span>
 									}
+									rules={[
+										{ required: true, message: 'Vui lòng nhập đường dẫn ảnh!' },
+									]}
 								>
-									<Input placeholder="Nhập đường dẫn hình ảnh" />
+									<Input
+										placeholder="Nhập đường dẫn hình ảnh"
+										onChange={handleThumbnailChange}
+									/>
 								</Form.Item>
+								{thumbnailUrl && (
+									<Form.Item style={{ fontWeight: 'bold' }} label="Xem trước">
+										<img
+											src={thumbnailUrl}
+											alt="Ảnh xem trước"
+											style={{ maxWidth: '100%', maxHeight: '200px' }}
+										/>
+									</Form.Item>
+								)}
 
 								<Form.Item style={{ marginTop: 24, textAlign: 'right' }}>
 									<Button
