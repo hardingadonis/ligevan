@@ -46,8 +46,21 @@ const ChangePasswordForm: React.FC = () => {
 			localStorage.removeItem('teacherEmail');
 			navigate('/teacher/login');
 		} catch (err) {
-			console.error('Error changing password:', err);
-			message.error('Cập nhật thất bại. Vui lòng thử lại!');
+			if (err && typeof err === 'object' && 'response' in err) {
+				const responseError = err as {
+					response: { data: { message: string } };
+				};
+				const errorMessage = responseError.response.data.message;
+				if (errorMessage === 'Current password is incorrect!') {
+					message.error('Mật khẩu hiện tại không chính xác!');
+				} else {
+					message.error('Cập nhật thất bại. Vui lòng thử lại!');
+				}
+			} else if (err instanceof Error) {
+				message.error(err.message);
+			} else {
+				message.error('Có lỗi xảy ra. Vui lòng thử lại!');
+			}
 		} finally {
 			setLoading(false);
 		}
