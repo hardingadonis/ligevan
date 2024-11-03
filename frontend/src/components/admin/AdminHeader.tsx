@@ -16,7 +16,7 @@ const HeaderAdmin: React.FC = () => {
 	const handleLogout = () => {
 		localStorage.clear();
 		message.success('Đăng xuất thành công');
-		navigate('/admin/login');
+		navigate('/student');
 	};
 
 	const menu = (
