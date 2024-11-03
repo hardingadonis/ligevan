@@ -1,0 +1,252 @@
+[{
+  "_id": {
+    "$oid": "671115ee30c0819ba109d543"
+  },
+  "code": "LIGEVAN-JLPTN5",
+  "title": "Khóa luyện thi cấp tốc JLPT N5",
+  "description": "Luyện thi cấp tốc, đạt chứng chỉ cấp quốc gia!",
+  "thumbnail": "https://raw.githubusercontent.com/hardingadonis/hardingadonis/refs/heads/main/imgs/peaceful-banner.gif",
+  "price": 1000000,
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-10-17T13:49:34.357Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T08:32:13.321Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6711163130c0819ba109d548"
+  },
+  "code": "LIGEVAN-JLPTN4",
+  "title": "Khóa luyện thi cấp tốc JLPT N4",
+  "description": "Luyện thi cấp tốc, đạt chứng chỉ cấp quốc gia!",
+  "thumbnail": "https://raw.githubusercontent.com/hardingadonis/hardingadonis/refs/heads/main/imgs/peaceful-banner.gif",
+  "price": 1500000,
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-10-17T13:50:41.974Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T08:33:22.666Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6711163e30c0819ba109d54b"
+  },
+  "code": "LIGEVAN-JLPTN3",
+  "title": "Khóa luyện thi cấp tốc JLPT N3",
+  "description": "Luyện thi cấp tốc, đạt chứng chỉ cấp quốc gia!",
+  "thumbnail": "https://raw.githubusercontent.com/hardingadonis/hardingadonis/refs/heads/main/imgs/peaceful-banner.gif",
+  "price": 2000000,
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-10-17T13:50:54.143Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T08:33:39.423Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6711164930c0819ba109d54e"
+  },
+  "code": "LIGEVAN-JLPTN2",
+  "title": "Khóa luyện thi cấp tốc JLPT N2",
+  "description": "Luyện thi cấp tốc, đạt chứng chỉ cấp quốc gia!",
+  "thumbnail": "https://raw.githubusercontent.com/hardingadonis/hardingadonis/refs/heads/main/imgs/peaceful-banner.gif",
+  "price": 2500000,
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-10-17T13:51:05.479Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T08:33:51.130Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6711165930c0819ba109d551"
+  },
+  "code": "LIGEVAN-JLPTN1",
+  "title": "Khóa luyện thi cấp tốc JLPT N1",
+  "description": "Luyện thi cấp tốc, đạt chứng chỉ cấp quốc gia!",
+  "thumbnail": "https://raw.githubusercontent.com/hardingadonis/hardingadonis/refs/heads/main/imgs/peaceful-banner.gif",
+  "price": 3000000,
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-10-17T13:51:21.888Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T08:34:01.282Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67273650525d9f80c5682d50"
+  },
+  "code": "LIGEVAN-N5",
+  "title": "Khóa học tiếng Nhật N5",
+  "description": "Khóa học tiếng Nhật N5 cho người mới bắt đầu",
+  "thumbnail": "https://raw.githubusercontent.com/hardingadonis/hardingadonis/refs/heads/main/imgs/peaceful-banner.gif",
+  "price": 1700000,
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-11-03T08:37:36.457Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T08:37:36.457Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67273669525d9f80c5682d5e"
+  },
+  "code": "LIGEVAN-N4",
+  "title": "Khóa học tiếng Nhật N4",
+  "description": "Khóa học tiếng Nhật N4",
+  "thumbnail": "https://raw.githubusercontent.com/hardingadonis/hardingadonis/refs/heads/main/imgs/peaceful-banner.gif",
+  "price": 2000000,
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-11-03T08:38:01.875Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T08:38:01.875Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "672736a3525d9f80c5682d6a"
+  },
+  "code": "LIGEVAN-N3",
+  "title": "Khóa học tiếng Nhật N3",
+  "description": "Khóa học tiếng Nhật N3",
+  "thumbnail": "https://raw.githubusercontent.com/hardingadonis/hardingadonis/refs/heads/main/imgs/peaceful-banner.gif",
+  "price": 3000000,
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-11-03T08:38:59.696Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T08:38:59.696Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "672736b4525d9f80c5682d6f"
+  },
+  "code": "LIGEVAN-N2",
+  "title": "Khóa học tiếng Nhật N2",
+  "description": "Khóa học tiếng Nhật N2",
+  "thumbnail": "https://raw.githubusercontent.com/hardingadonis/hardingadonis/refs/heads/main/imgs/peaceful-banner.gif",
+  "price": 5000000,
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-11-03T08:39:16.598Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T08:39:16.598Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "672736c9525d9f80c5682d74"
+  },
+  "code": "LIGEVAN-N1",
+  "title": "Khóa học tiếng Nhật N1",
+  "description": "Khóa học tiếng Nhật N1",
+  "thumbnail": "https://raw.githubusercontent.com/hardingadonis/hardingadonis/refs/heads/main/imgs/peaceful-banner.gif",
+  "price": 7000000,
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-11-03T08:39:37.712Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T08:39:37.712Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6727376e525d9f80c5682d85"
+  },
+  "code": "LIGEVAN-KAIWA1",
+  "title": "Khóa học giao tiếp tiếng Nhật phổ thông",
+  "description": "Khoá học giao tiếp tiếng Nhật phổ thông với các tình huống đối thoại hàng ngày.",
+  "thumbnail": "https://raw.githubusercontent.com/hardingadonis/hardingadonis/refs/heads/main/imgs/peaceful-banner.gif",
+  "price": 1500000,
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-11-03T08:42:22.022Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T08:42:22.022Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67273797525d9f80c5682d90"
+  },
+  "code": "LIGEVAN-KAIWA2",
+  "title": "Khóa học giao tiếp tiếng Nhật chuyên môn",
+  "description": "Khóa học giao tiếp tiếng Nhật chuyên môn",
+  "thumbnail": "https://raw.githubusercontent.com/hardingadonis/hardingadonis/refs/heads/main/imgs/peaceful-banner.gif",
+  "price": 3000000,
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-11-03T08:43:03.141Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T08:43:03.141Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67273918525d9f80c5682dd2"
+  },
+  "code": "LIGEVAN-JAPANWORK",
+  "title": "Khóa học xuất khẩu lao động",
+  "description": "Khoá học tiếng Nhật để xuất khẩu lao động",
+  "thumbnail": "https://raw.githubusercontent.com/hardingadonis/hardingadonis/refs/heads/main/imgs/peaceful-banner.gif",
+  "price": 3000000,
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-11-03T08:49:28.649Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T08:49:28.649Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67273a0b525d9f80c5682e47"
+  },
+  "code": "LIGEVAN-JAPAN",
+  "title": "Khoá du học Nhật Bản",
+  "description": "Khoá du học Nhật Bản",
+  "thumbnail": "https://raw.githubusercontent.com/hardingadonis/hardingadonis/refs/heads/main/imgs/peaceful-banner.gif",
+  "price": 140000000,
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-11-03T08:53:31.871Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T08:53:31.871Z"
+  },
+  "__v": 0
+}]

@@ -1,0 +1,90 @@
+[{
+  "_id": {
+    "$oid": "6711123430c0819ba109d528"
+  },
+  "fullName": "Minh Vương",
+  "username": "hardingadonis",
+  "hashedPassword": "$argon2id$v=19$m=65536,t=3,p=4$nuZX2cZNQG97iWG2poWKuA$UWlOSfCTTuYuatlsNQtTZ2tFpHTj9bGuh+woeOv9VVE",
+  "createdAt": {
+    "$date": "2024-10-17T13:33:40.192Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-17T13:33:40.192Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6711125930c0819ba109d52b"
+  },
+  "fullName": "Quốc Chương",
+  "username": "bakaqc",
+  "hashedPassword": "$argon2id$v=19$m=65536,t=3,p=4$aCibn++y1LOsW6IYnzu6Bw$Eq1HdzRq2je1ykUYgcG98l+weGfont/x+l7qgnlXha8",
+  "createdAt": {
+    "$date": "2024-10-17T13:34:17.931Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-17T13:34:17.931Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6711126c30c0819ba109d52e"
+  },
+  "fullName": "Trọng Nghĩa",
+  "username": "htnghia1423",
+  "hashedPassword": "$argon2id$v=19$m=65536,t=3,p=4$apIkHQ7ArIoDyRhY/2bzgg$kVZTSediYwtgzvajyjOWX1aSG2Df2DLfsxazv7wGaDo",
+  "createdAt": {
+    "$date": "2024-10-17T13:34:36.334Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-17T13:34:36.334Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6711127e30c0819ba109d531"
+  },
+  "fullName": "Thúy Nguyễn",
+  "username": "yuhtnguyen",
+  "hashedPassword": "$argon2id$v=19$m=65536,t=3,p=4$V06JkhnDrua2Cgk/fYvTlQ$fvUaVVk1E3LoObrdUEb8x7vNr9Jly4gmUf6mF1G7lsE",
+  "createdAt": {
+    "$date": "2024-10-17T13:34:54.095Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-17T13:34:54.095Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6711128d30c0819ba109d534"
+  },
+  "fullName": "Mạnh Hùng",
+  "username": "punhe",
+  "hashedPassword": "$argon2id$v=19$m=65536,t=3,p=4$5fngh8xNVwwr0O4W2tUfsg$UKvg/hWlz1XBfBTWC5JHKnXnKrXew90N5EwhyfhruOM",
+  "createdAt": {
+    "$date": "2024-10-17T13:35:09.077Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-17T13:35:09.077Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "671112a030c0819ba109d537"
+  },
+  "fullName": "Mỹ Linh",
+  "username": "linhlm0210",
+  "hashedPassword": "$argon2id$v=19$m=65536,t=3,p=4$mEBbL+ewHwy/prJfGUeEcA$vzt4L1EdRzxsVZfbIcozEGAAiWP8/6bg8DyCsCygjeQ",
+  "createdAt": {
+    "$date": "2024-10-17T13:35:28.059Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-17T13:35:28.059Z"
+  },
+  "__v": 0
+}]
