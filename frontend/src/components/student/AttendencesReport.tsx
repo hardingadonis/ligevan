@@ -1,7 +1,9 @@
+import ButtonGoBack from '../commons/ButtonGoback';
 import { SyncOutlined } from '@ant-design/icons';
 import {
 	Alert,
 	Button,
+	Col,
 	Empty,
 	Spin,
 	Table,
@@ -189,6 +191,9 @@ const AttendencesReportForStudent: React.FC = () => {
 
 	return (
 		<div>
+			<Col span={2}>
+				<ButtonGoBack />
+			</Col>
 			<div style={{ textAlign: 'center', marginBottom: 20 }}>
 				<Typography.Title level={2}>{classData.name}</Typography.Title>
 			</div>
