@@ -10,7 +10,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Salary } from '@/schemas/salary.schema';
-import { getCenterById } from '@/services/api/center';
+import { getAllCenter, getCenterById } from '@/services/api/center';
 import { deleteSalary, getAllSalary } from '@/services/api/salary';
 import { formatDateToVietnamTimezone } from '@/utils/dateFormat';
 import { formatPrice } from '@/utils/formatPrice';
@@ -31,6 +31,7 @@ const ListSalaries: React.FC = () => {
 	const [selectedCenter, setSelectedCenter] = useState<string | undefined>(
 		undefined,
 	);
+	const [centers, setCenters] = useState<{ _id: string; name: string }[]>([]);
 	const navigate = useNavigate();
 
 	const fetchData = async () => {
@@ -38,7 +39,6 @@ const ListSalaries: React.FC = () => {
 			const salaries: Salary[] = await getAllSalary();
 			const tableData = await Promise.all(
 				salaries.map(async (salary, index) => {
-					console.log(salary.teacher);
 					const center = await getCenterById(salary.teacher.center.toString());
 					return {
 						key: (index + 1).toString(),
@@ -57,8 +57,18 @@ const ListSalaries: React.FC = () => {
 		}
 	};
 
+	const fetchCenters = async () => {
+		try {
+			const centers = await getAllCenter();
+			setCenters(centers);
+		} catch (error) {
+			console.error('Error fetching centers:', error);
+		}
+	};
+
 	useEffect(() => {
 		fetchData();
+		fetchCenters();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -206,9 +216,9 @@ const ListSalaries: React.FC = () => {
 						<Select.Option value="Tất cả trung tâm">
 							Tất cả trung tâm
 						</Select.Option>
-						{[...new Set(data.map((item) => item.center))].map((center) => (
-							<Select.Option key={center} value={center}>
-								{center}
+						{centers.map((center) => (
+							<Select.Option key={center._id} value={center.name}>
+								{center.name}
 							</Select.Option>
 						))}
 					</Select>
@@ -239,8 +249,8 @@ const ListSalaries: React.FC = () => {
 							<Empty
 								description={
 									searchText
-										? 'Không có lương nào khớp với tìm kiếm của bạn'
-										: 'Không có lương nào'
+										? 'Không có thông tin lương nào khớp với tìm kiếm của bạn'
+										: 'Chưa tính lương cho giáo viên của trung tâm này!'
 								}
 							/>
 						),
