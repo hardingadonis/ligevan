@@ -1,0 +1,384 @@
+[{
+  "_id": {
+    "$oid": "67273c6e525d9f80c5683285"
+  },
+  "fullName": "Quoc Chuong",
+  "email": "quocchuong2609@gmail.com",
+  "phone": "0000000000",
+  "address": "Viet Nam",
+  "avatar": "https://lh3.googleusercontent.com/a/ACg8ocLsG3dAfwhsZJYFjEXkBknKq_ZsrYClFwiJieFuhg3Urn6t8fM=s96-c",
+  "gender": "male",
+  "dob": {
+    "$date": "2024-11-03T09:03:42.535Z"
+  },
+  "classes": [
+    "67274590525d9f80c5683e77"
+  ],
+  "payments": [
+    "67274cf64269658483ce054d"
+  ],
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-11-03T09:03:42.542Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T10:14:14.901Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67273cac525d9f80c56832ae"
+  },
+  "fullName": "Le Minh Vuong (K17 QN)",
+  "email": "vuonglmqe170148@fpt.edu.vn",
+  "phone": "0000000000",
+  "address": "Viet Nam",
+  "avatar": "https://lh3.googleusercontent.com/a/ACg8ocI22IBikpHxmWMM6pT0rLxKarIJsbcDCpnE13xAi-ABpHGmZeAO=s96-c",
+  "gender": "male",
+  "dob": {
+    "$date": "2024-11-03T09:04:44.506Z"
+  },
+  "classes": [],
+  "payments": [],
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-11-03T09:04:44.514Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T09:04:44.514Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67273cd6525d9f80c56832bb"
+  },
+  "fullName": "Minh Vương Lê",
+  "email": "vuonglm.work@gmail.com",
+  "phone": "0000000000",
+  "address": "Viet Nam",
+  "avatar": "https://lh3.googleusercontent.com/a/ACg8ocItdj3-9eQVDx-jRFvpmADZ-q2qIc5xAQ7jQ4Xe2Odi2Kl12gw=s96-c",
+  "gender": "male",
+  "dob": {
+    "$date": "2024-11-03T09:05:26.837Z"
+  },
+  "classes": [],
+  "payments": [],
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-11-03T09:05:26.843Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T09:05:26.843Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67274a9a525d9f80c56868cf"
+  },
+  "fullName": "Hồ Trọng Nghĩa",
+  "email": "htn10a2@gmail.com",
+  "phone": "0000000000",
+  "address": "Viet Nam",
+  "avatar": "https://lh3.googleusercontent.com/a/ACg8ocL_sVAHq0IKs2GLo9fPXnMdj4fph_jAfXT1gnlfmqkmH0ibhw=s96-c",
+  "gender": "male",
+  "dob": {
+    "$date": "2024-11-03T10:04:10.975Z"
+  },
+  "classes": [
+    "67274590525d9f80c5683e77"
+  ],
+  "payments": [
+    "67274ce64269658483ce04af"
+  ],
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-11-03T10:04:10.981Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T10:13:58.101Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67274ba34269658483ce00cd"
+  },
+  "fullName": "Dinh Quoc Chuong (K17 QN)",
+  "email": "chuongdqqe170097@fpt.edu.vn",
+  "phone": "0000000000",
+  "address": "Viet Nam",
+  "avatar": "https://lh3.googleusercontent.com/a/ACg8ocK3Gwcxyc7ZJoMiGKAFlNCrVjk8MenF3kbzTGhZg88tnaAzB8lC=s96-c",
+  "gender": "male",
+  "dob": {
+    "$date": "2024-11-03T10:08:35.539Z"
+  },
+  "classes": [
+    "67274590525d9f80c5683e77"
+  ],
+  "payments": [
+    "67274ce34269658483ce04a8"
+  ],
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-11-03T10:08:35.562Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T10:13:55.297Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67274bb24269658483ce00f3"
+  },
+  "fullName": "Nghĩa Hồ",
+  "email": "htnghia12a2@gmail.com",
+  "phone": "0000000000",
+  "address": "Viet Nam",
+  "avatar": "https://lh3.googleusercontent.com/a/ACg8ocJRpgfsWfCqfnv_6lFy4WOAI553lucrqAkut-wpJ8_DbYiALA=s96-c",
+  "gender": "male",
+  "dob": {
+    "$date": "2024-11-03T10:08:50.036Z"
+  },
+  "classes": [
+    "67274590525d9f80c5683e77"
+  ],
+  "payments": [
+    "67274d0c4269658483ce06e9"
+  ],
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-11-03T10:08:50.044Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T10:14:36.295Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67274bd34269658483ce018c"
+  },
+  "fullName": "Quoc Chuong (3K)",
+  "email": "quocchuong3k@gmail.com",
+  "phone": "0000000000",
+  "address": "Viet Nam",
+  "avatar": "https://lh3.googleusercontent.com/a/ACg8ocKGXGFkWTkW162XsRQF_sD3r8l6ycC4rbr3ZuJu1asWl7odfIs=s96-c",
+  "gender": "male",
+  "dob": {
+    "$date": "2024-11-03T10:09:23.615Z"
+  },
+  "classes": [
+    "67274590525d9f80c5683e77"
+  ],
+  "payments": [
+    "67274d234269658483ce0837"
+  ],
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-11-03T10:09:23.622Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T10:14:59.787Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67274be44269658483ce01c8"
+  },
+  "fullName": "Quoc Chuong",
+  "email": "chuongdq26@gmail.com",
+  "phone": "0000000000",
+  "address": "Viet Nam",
+  "avatar": "https://lh3.googleusercontent.com/a/ACg8ocIX60jFoWFKjN1iTqSe4B709gpf_-_N_xmQFi1zlme8KAPIUA=s96-c",
+  "gender": "male",
+  "dob": {
+    "$date": "2024-11-03T10:09:40.739Z"
+  },
+  "classes": [
+    "67274590525d9f80c5683e77"
+  ],
+  "payments": [
+    "67274d014269658483ce05f3"
+  ],
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-11-03T10:09:40.746Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T10:14:25.196Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67274bea4269658483ce01ee"
+  },
+  "fullName": "Trọng Nghĩa Hồ",
+  "email": "htn11a2@gmail.com",
+  "phone": "0000000000",
+  "address": "Viet Nam",
+  "avatar": "https://lh3.googleusercontent.com/a/ACg8ocLf_VtOc8g8SCSThK99q9sJld84JhVi170ldFyVzzefGroqHw=s96-c",
+  "gender": "male",
+  "dob": {
+    "$date": "2024-11-03T10:09:46.870Z"
+  },
+  "classes": [
+    "67274590525d9f80c5683e77"
+  ],
+  "payments": [
+    "67274d1d4269658483ce07a1"
+  ],
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-11-03T10:09:46.877Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T10:14:53.647Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67274bfb4269658483ce0258"
+  },
+  "fullName": "Evora",
+  "email": "evora.17c@gmail.com",
+  "phone": "0000000000",
+  "address": "Viet Nam",
+  "avatar": "https://lh3.googleusercontent.com/a/ACg8ocKYgYvWu7CdQfL6FfqIG2MBBpxuw5Gk5FLvABnB7YY3Vi0dcIs=s96-c",
+  "gender": "male",
+  "dob": {
+    "$date": "2024-11-03T10:10:03.860Z"
+  },
+  "classes": [
+    "67274590525d9f80c5683e77"
+  ],
+  "payments": [
+    "67274d0e4269658483ce06f0"
+  ],
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-11-03T10:10:03.868Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T10:14:38.222Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67274c524269658483ce0296"
+  },
+  "fullName": "Shop xHobbe",
+  "email": "xhobbeshop@gmail.com",
+  "phone": "0000000000",
+  "address": "Viet Nam",
+  "avatar": "https://lh3.googleusercontent.com/a/ACg8ocKKjB8WTDGyPWiTJunRKyj55cEbXWLVQv0Y3Bogozcl3cVEkg=s96-c",
+  "gender": "male",
+  "dob": {
+    "$date": "2024-11-03T10:11:30.695Z"
+  },
+  "classes": [
+    "67274590525d9f80c5683e77"
+  ],
+  "payments": [
+    "67274d2c4269658483ce08de"
+  ],
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-11-03T10:11:30.701Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T10:15:08.019Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67274c774269658483ce02d2"
+  },
+  "fullName": "Nghĩa Hồ",
+  "email": "nghialoventtt@gmail.com",
+  "phone": "0000000000",
+  "address": "Viet Nam",
+  "avatar": "https://lh3.googleusercontent.com/a/ACg8ocLo8ausj-tNYflOw54fu-eh8mR3z_dtAZrfDcdouajkam_eHQ=s96-c",
+  "gender": "male",
+  "dob": {
+    "$date": "2024-11-03T10:12:07.149Z"
+  },
+  "classes": [
+    "67274590525d9f80c5683e77"
+  ],
+  "payments": [
+    "67274d3b4269658483ce0979"
+  ],
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-11-03T10:12:07.162Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T10:15:23.708Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67274c894269658483ce032a"
+  },
+  "fullName": "Hùng Thanh",
+  "email": "tranthanhhung3846@gmail.com",
+  "phone": "0000000000",
+  "address": "Viet Nam",
+  "avatar": "https://lh3.googleusercontent.com/a/ACg8ocI5uPjl7yvrTUfL7uLfojyIQmrWmbEtmX1XyMUFxYFu1StbmQ=s96-c",
+  "gender": "male",
+  "dob": {
+    "$date": "2024-11-03T10:12:25.466Z"
+  },
+  "classes": [
+    "67274590525d9f80c5683e77"
+  ],
+  "payments": [
+    "67274d4a4269658483ce0a14"
+  ],
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-11-03T10:12:25.474Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T10:15:38.519Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67274cfa4269658483ce0555"
+  },
+  "fullName": "Ho Trong Nghia (K17 QN)",
+  "email": "nghiahtqe170173@fpt.edu.vn",
+  "phone": "0000000000",
+  "address": "Viet Nam",
+  "avatar": "https://lh3.googleusercontent.com/a/ACg8ocKF1CJqx1meqe4vdqKlTeFjINLemSeaidUemVkNb9GecPWEofc=s96-c",
+  "gender": "male",
+  "dob": {
+    "$date": "2024-11-03T10:14:18.508Z"
+  },
+  "classes": [
+    "67274590525d9f80c5683e77"
+  ],
+  "payments": [
+    "67274cff4269658483ce05d1"
+  ],
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-11-03T10:14:18.514Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T10:14:23.329Z"
+  },
+  "__v": 0
+}]
