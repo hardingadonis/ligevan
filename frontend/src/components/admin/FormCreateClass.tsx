@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { PlusOutlined } from '@ant-design/icons';
-import { Button, Form, Input, Modal, Select } from 'antd';
+import { Button, Form, Input, Modal, Select, message } from 'antd';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -146,7 +146,7 @@ const ClassForm: React.FC = () => {
 					classes: updatedTeacherClasses,
 				});
 			}
-
+			message.success('Tạo lớp học thành công!');
 			navigate(`/admin/centers/${centerID}/classes`);
 		} catch (error) {
 			console.error('Không thể tạo lớp học mới:', error);

@@ -31,7 +31,6 @@ import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
 
 import CustomEditorTemplate from '@/components/admin/CustomEditorTemplate';
-import ButtonGoBack from '@/components/commons/ButtonGoback';
 import DropdownCenter from '@/components/teacher/DropdownCenter';
 import DropdownCourse from '@/components/teacher/DropdownCourse';
 import { Center } from '@/schemas/center.schema';
@@ -272,16 +271,9 @@ const SetupSchedules: React.FC = () => {
 
 	return (
 		<div style={{ paddingLeft: '270px' }}>
-			<Row>
-				<Col span={2}>
-					<ButtonGoBack />
-				</Col>
-				<Col span={20}>
-					<Typography.Title level={2} style={{ textAlign: 'center' }}>
-						Lịch giảng dạy
-					</Typography.Title>
-				</Col>
-			</Row>
+			<Typography.Title level={2} style={{ textAlign: 'center' }}>
+				Danh sách lịch học
+			</Typography.Title>
 			<Row>
 				<Col span={20}>
 					<div style={{ display: 'flex', marginTop: '20px' }}>

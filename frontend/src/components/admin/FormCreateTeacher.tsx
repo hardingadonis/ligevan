@@ -11,6 +11,7 @@ import {
 	Modal,
 	Row,
 	Select,
+	message,
 } from 'antd';
 import locale from 'antd/locale/vi_VN';
 import axios from 'axios';
@@ -79,6 +80,7 @@ const TeacherForm: React.FC = () => {
 		gender: string;
 		dob: dayjs.Dayjs;
 		avatar: string;
+		classes: string[];
 	}) => {
 		const email = `${values.email}@ligevan.edu.vn`;
 
@@ -116,6 +118,7 @@ const TeacherForm: React.FC = () => {
 				...values,
 				email,
 				dob: values.dob.format('YYYY-MM-DD'),
+				classes: [],
 			};
 
 			const response = await axios.post(`${apiBaseUrl}/api/teachers`, payload);
@@ -131,7 +134,7 @@ const TeacherForm: React.FC = () => {
 				...center,
 				teachers: updatedTeachers,
 			});
-
+			message.success('Tạo giáo viên thành công!');
 			navigate(`/admin/centers/${centerID}/teachers`);
 		} catch (error) {
 			console.error('Unexpected error:', error);
