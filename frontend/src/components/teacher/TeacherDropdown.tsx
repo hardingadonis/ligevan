@@ -19,7 +19,7 @@ const TeacherDropdown: React.FC<TeacherDropdownProps> = ({
 
 	const handleLogout = () => {
 		dispatch(clearInfo());
-		navigate('./');
+		navigate('/student');
 	};
 
 	const menu = (
