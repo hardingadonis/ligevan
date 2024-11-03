@@ -149,9 +149,9 @@ const CourseDetail: React.FC = () => {
 				});
 			}
 		} catch {
-			Modal.error({
-				title: 'Lỗi',
-				content: 'Đã xảy ra lỗi khi kiểm tra thông tin đăng nhập.',
+			Modal.warning({
+				title: 'Vui lòng đăng nhập',
+				content: 'Vui lòng đăng nhập trước khi đăng ký lớp học.',
 			});
 		}
 	};

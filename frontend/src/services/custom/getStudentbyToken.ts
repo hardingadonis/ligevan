@@ -6,7 +6,7 @@ export const fetchStudentData = async () => {
 	try {
 		const token = localStorage.getItem('token');
 		if (!token) {
-			return null;
+			throw new Error('No token found');
 		}
 
 		const decoded = decodeToken(token);
@@ -16,6 +16,6 @@ export const fetchStudentData = async () => {
 		return studentData;
 	} catch (error) {
 		console.error('Error fetching student:', error);
-		return null;
+		throw error;
 	}
 };
