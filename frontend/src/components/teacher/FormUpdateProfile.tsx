@@ -181,10 +181,14 @@ const FormUpdate: React.FC = () => {
 									rules={[
 										{ required: true, message: 'Vui lòng nhập tên của bạn!' },
 										{
-											validator: (_, value) =>
-												validateName(value)
+											validator: (_, value) => {
+												if (!value) {
+													return Promise.resolve();
+												}
+												return validateName(value)
 													? Promise.resolve()
-													: Promise.reject(new Error('Tên không hợp lệ!')),
+													: Promise.reject(new Error('Tên không hợp lệ!'));
+											},
 										},
 									]}
 								>
@@ -198,20 +202,22 @@ const FormUpdate: React.FC = () => {
 									rules={[
 										{ required: true, message: 'Vui lòng nhập số điện thoại!' },
 										{
-											validator: (_, value) =>
-												validatePhoneNumber(value)
-													? Promise.resolve()
-													: Promise.reject(
-															new Error('Số điện thoại không hợp lệ!'),
-														),
-										},
-										{
-											validator: (_, value) =>
-												validateVietnamesePhoneNumber(value)
-													? Promise.resolve()
-													: Promise.reject(
-															new Error('Không phải số điện thoại Việt Nam!'),
-														),
+											validator: (_, value) => {
+												if (!value) {
+													return Promise.resolve();
+												}
+												if (!validatePhoneNumber(value)) {
+													return Promise.reject(
+														new Error('Số điện thoại không hợp lệ!'),
+													);
+												}
+												if (!validateVietnamesePhoneNumber(value)) {
+													return Promise.reject(
+														new Error('Không phải số điện thoại Việt Nam!'),
+													);
+												}
+												return Promise.resolve();
+											},
 										},
 									]}
 								>
@@ -225,10 +231,14 @@ const FormUpdate: React.FC = () => {
 									rules={[
 										{ required: true, message: 'Vui lòng nhập địa chỉ!' },
 										{
-											validator: (_, value) =>
-												validateVietnameseAddress(value)
+											validator: (_, value) => {
+												if (!value) {
+													return Promise.resolve();
+												}
+												return validateVietnameseAddress(value)
 													? Promise.resolve()
-													: Promise.reject(new Error('Địa chỉ không hợp lệ!')),
+													: Promise.reject(new Error('Địa chỉ không hợp lệ!'));
+											},
 										},
 									]}
 								>
@@ -257,8 +267,11 @@ const FormUpdate: React.FC = () => {
 										{ required: true, message: 'Vui lòng chọn ngày sinh!' },
 										{
 											validator: (_, value) => {
+												if (!value) {
+													return Promise.resolve();
+												}
 												const twentyYearsAgo = dayjs().subtract(20, 'year');
-												return value?.isBefore(twentyYearsAgo)
+												return value.isBefore(twentyYearsAgo)
 													? Promise.resolve()
 													: Promise.reject(
 															new Error('Tuổi của giáo viên phải trên 20!'),
