@@ -239,18 +239,11 @@ const StudentRegister: React.FC = () => {
 
 			<Row gutter={[16, 16]} justify="center">
 				<Col xs={24} sm={12}>
-					<Card
-						style={{
-							border: '1px dashed black',
-							padding: '20px',
-							minHeight: '300px',
-							height: '100%',
-						}}
-					>
+					<Card style={{ border: '1px dashed black', padding: '20px' }}>
 						<Text strong>Tên khóa học:</Text> {course.title}
 						<br />
 						<Text strong>Tên lớp học:</Text> {className}
-						<Form
+						<Form<PaymentFormValues>
 							id="payment-form"
 							form={form}
 							layout="vertical"
@@ -292,108 +285,53 @@ const StudentRegister: React.FC = () => {
 						style={{
 							border: '1px dashed black',
 							padding: '20px',
-							minHeight: '300px',
-							height: '100%',
-							position: 'relative',
+							display: 'flex',
+							flexDirection: 'column',
+							justifyContent: 'space-between',
+							height: '99%',
 						}}
 					>
-						{/* Container for price details */}
-						<div
+						<Row gutter={16} style={{ paddingLeft: '80px' }}>
+							<Col span={8} style={{ fontSize: '25px', textAlign: 'left' }}>
+								<Text strong style={{ fontSize: '24px' }}>
+									Giá gốc:
+								</Text>
+							</Col>
+							<Col span={12} style={{ fontSize: '25px', textAlign: 'right' }}>
+								{formatPrice(originPrice)}
+							</Col>
+							<Col span={8} style={{ fontSize: '25px', textAlign: 'left' }}>
+								<Text strong style={{ fontSize: '24px' }}>
+									Voucher:
+								</Text>
+							</Col>
+							<Col span={12} style={{ fontSize: '25px', textAlign: 'right' }}>
+								{voucherPercent} %
+							</Col>
+							<Col span={8} style={{ fontSize: '25px', textAlign: 'left' }}>
+								<Text strong style={{ fontSize: '24px' }}>
+									Tổng:
+								</Text>
+							</Col>
+							<Col span={12} style={{ fontSize: '25px', textAlign: 'right' }}>
+								{formatPrice(finalPrice)}
+							</Col>
+						</Row>
+						<Button
+							type="primary"
+							size="large"
 							style={{
-								maxWidth: '100%',
-								overflow: 'hidden',
+								alignSelf: 'flex-end',
+								marginTop: '62px',
+								marginLeft: '350px',
 							}}
+							htmlType="submit"
+							form="payment-form"
+							icon={<WalletOutlined />}
+							loading={loading}
 						>
-							<Row style={{ marginBottom: '16px' }}>
-								<Col span={12}>
-									<Text
-										strong
-										style={{ fontSize: '24px', whiteSpace: 'nowrap' }}
-									>
-										Giá gốc:
-									</Text>
-								</Col>
-								<Col
-									span={12}
-									style={{
-										textAlign: 'right',
-										fontSize: '25px',
-										whiteSpace: 'nowrap',
-										overflow: 'hidden',
-										textOverflow: 'ellipsis',
-									}}
-								>
-									{formatPrice(originPrice)}
-								</Col>
-							</Row>
-
-							<Row style={{ marginBottom: '16px' }}>
-								<Col span={12}>
-									<Text
-										strong
-										style={{ fontSize: '24px', whiteSpace: 'nowrap' }}
-									>
-										Voucher:
-									</Text>
-								</Col>
-								<Col
-									span={12}
-									style={{
-										textAlign: 'right',
-										fontSize: '25px',
-										whiteSpace: 'nowrap',
-										overflow: 'hidden',
-										textOverflow: 'ellipsis',
-									}}
-								>
-									{voucherPercent} %
-								</Col>
-							</Row>
-
-							<Row>
-								<Col span={12}>
-									<Text
-										strong
-										style={{ fontSize: '24px', whiteSpace: 'nowrap' }}
-									>
-										Tổng:
-									</Text>
-								</Col>
-								<Col
-									span={12}
-									style={{
-										textAlign: 'right',
-										fontSize: '25px',
-										whiteSpace: 'nowrap',
-										overflow: 'hidden',
-										textOverflow: 'ellipsis',
-									}}
-								>
-									{formatPrice(finalPrice)}
-								</Col>
-							</Row>
-						</div>
-
-						{/* Container for the payment button */}
-						<div
-							style={{
-								position: 'absolute',
-								bottom: '20px',
-								right: '20px',
-								width: 'auto',
-							}}
-						>
-							<Button
-								type="primary"
-								size="large"
-								htmlType="submit"
-								form="payment-form"
-								icon={<WalletOutlined />}
-								loading={loading}
-							>
-								Thanh toán
-							</Button>
-						</div>
+							Thanh toán
+						</Button>
 					</Card>
 				</Col>
 			</Row>
