@@ -71,17 +71,17 @@ const AddVoucherForm: React.FC = () => {
 				? center?.teachers.map((teacherObj) => teacherObj._id)
 				: [];
 
-			const updatedClasses = existingClasses;
-			const updatedCourses = existingCourses;
-			const updatedVouchers = [...existingVouchers, selectedVoucher?._id];
-			const updatedTeachers = existingTeachers;
+			const updatedVouchers = [
+				...existingVouchers,
+				selectedVoucher?._id,
+			].filter(Boolean);
 
 			await axios.put(`${apiBaseUrl}/api/centers/${centerID}`, {
 				...center,
-				classes: updatedClasses,
-				courses: updatedCourses,
+				classes: existingClasses,
+				courses: existingCourses,
 				vouchers: updatedVouchers,
-				teachers: updatedTeachers,
+				teachers: existingTeachers,
 			});
 
 			navigate(`/admin/centers/${centerID}/vouchers`);
@@ -90,11 +90,12 @@ const AddVoucherForm: React.FC = () => {
 		}
 	};
 
-	const existingVoucherIds =
-		center?.vouchers?.map((voucher) => voucher._id) || [];
-	const filteredVouchers = vouchers.filter(
-		(voucher) => !existingVoucherIds.includes(voucher._id),
-	);
+	const currentDate = new Date();
+	const filteredVouchers = vouchers.filter((voucher) => {
+		const startDate = new Date(voucher.start);
+		const endDate = new Date(voucher.end);
+		return currentDate >= startDate && currentDate <= endDate;
+	});
 
 	return (
 		<div style={{ paddingLeft: '270px' }}>
