@@ -1,0 +1,298 @@
+[{
+  "_id": {
+    "$oid": "67274590525d9f80c5683e77"
+  },
+  "name": "LIGEVAN-JLPTN5-QN",
+  "center": "67272f37525d9f80c5682c3b",
+  "course": "671115ee30c0819ba109d543",
+  "teacher": "67273d29525d9f80c56832be",
+  "students": [
+    "67274ba34269658483ce00cd",
+    "67274a9a525d9f80c56868cf",
+    "67273c6e525d9f80c5683285",
+    "67274cfa4269658483ce0555",
+    "67274be44269658483ce01c8",
+    "67274bb24269658483ce00f3",
+    "67274bfb4269658483ce0258",
+    "67274bea4269658483ce01ee",
+    "67274bd34269658483ce018c",
+    "67274c524269658483ce0296",
+    "67274c774269658483ce02d2",
+    "67274c894269658483ce032a"
+  ],
+  "slots": [],
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-11-03T09:42:40.830Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T10:15:38.527Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6727459c525d9f80c5683e98"
+  },
+  "name": "LIGEVAN-JLPTN4-QN",
+  "center": "67272f37525d9f80c5682c3b",
+  "course": "6711163130c0819ba109d548",
+  "teacher": "67273d70525d9f80c56832f2",
+  "students": [],
+  "slots": [],
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-11-03T09:42:52.445Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T09:42:52.445Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6727459e525d9f80c5683ebe"
+  },
+  "name": "LIGEVAN-N5-HCM",
+  "center": "6727309d525d9f80c5682c66",
+  "course": "67273650525d9f80c5682d50",
+  "teacher": "67273ca1525d9f80c568328f",
+  "students": [],
+  "slots": [],
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-11-03T09:42:54.406Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T09:42:54.406Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "672745a6525d9f80c5683ee2"
+  },
+  "name": "LIGEVAN-JLPTN3-QN",
+  "center": "67272f37525d9f80c5682c3b",
+  "course": "6711163e30c0819ba109d54b",
+  "teacher": "67273dcc525d9f80c5683321",
+  "students": [],
+  "slots": [],
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-11-03T09:43:02.197Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T09:43:02.197Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "672745bd525d9f80c5683f31"
+  },
+  "name": "LIGEVAN-N4-HCM",
+  "center": "6727309d525d9f80c5682c66",
+  "course": "67273669525d9f80c5682d5e",
+  "teacher": "67273d54525d9f80c56832d0",
+  "students": [],
+  "slots": [],
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-11-03T09:43:25.005Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T09:43:25.005Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "672745c0525d9f80c5683f5a"
+  },
+  "name": "LIGEVAN-N5-AN",
+  "center": "67272f58525d9f80c5682c3f",
+  "course": "67273650525d9f80c5682d50",
+  "teacher": "67273e66525d9f80c5683384",
+  "students": [],
+  "slots": [],
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-11-03T09:43:28.694Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T09:43:28.694Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "672745cc525d9f80c5683f7b"
+  },
+  "name": "LIGEVAN-N3-HCM",
+  "center": "6727309d525d9f80c5682c66",
+  "course": "672736a3525d9f80c5682d6a",
+  "teacher": "67273e5b525d9f80c568336a",
+  "students": [],
+  "slots": [],
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-11-03T09:43:40.233Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T09:43:40.233Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "672745ce525d9f80c5683f93"
+  },
+  "name": "LIGEVAN-N4-AN",
+  "center": "67272f58525d9f80c5682c3f",
+  "course": "67273669525d9f80c5682d5e",
+  "teacher": "67273ef5525d9f80c56833d2",
+  "students": [],
+  "slots": [],
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-11-03T09:43:42.307Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T09:43:42.307Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "672745db525d9f80c5683fce"
+  },
+  "name": "LIGEVAN-N3-AN",
+  "center": "67272f58525d9f80c5682c3f",
+  "course": "672736a3525d9f80c5682d6a",
+  "teacher": "67273f55525d9f80c56833fc",
+  "students": [],
+  "slots": [],
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-11-03T09:43:55.054Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T09:43:55.054Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67274626525d9f80c568406a"
+  },
+  "name": "LIGEVAN-JLPTN5-HN",
+  "center": "67273049525d9f80c5682c61",
+  "course": "671115ee30c0819ba109d543",
+  "teacher": "67273ee1525d9f80c56833b4",
+  "students": [],
+  "slots": [],
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-11-03T09:45:10.350Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T09:45:10.350Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6727463e525d9f80c56840a2"
+  },
+  "name": "LIGEVAN-JLPTN4-HN",
+  "center": "67273049525d9f80c5682c61",
+  "course": "6711163130c0819ba109d548",
+  "teacher": "67273f3e525d9f80c56833e2",
+  "students": [],
+  "slots": [],
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-11-03T09:45:34.727Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T09:45:34.727Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67274644525d9f80c56840c9"
+  },
+  "name": "LIGEVAN-KAIWA1-PP",
+  "center": "67272fa9525d9f80c5682c43",
+  "course": "6727376e525d9f80c5682d85",
+  "teacher": "67273fa6525d9f80c5683458",
+  "students": [],
+  "slots": [],
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-11-03T09:45:40.723Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T09:45:40.723Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6727464f525d9f80c56840e9"
+  },
+  "name": "LIGEVAN-KAIWA2-PP",
+  "center": "67272fa9525d9f80c5682c43",
+  "course": "67273797525d9f80c5682d90",
+  "teacher": "6727403b525d9f80c56834fb",
+  "students": [],
+  "slots": [],
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-11-03T09:45:51.040Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T09:45:51.040Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67274650525d9f80c56840fd"
+  },
+  "name": "LIGEVAN-JAPANWORK-HN",
+  "center": "67273049525d9f80c5682c61",
+  "course": "67273918525d9f80c5682dd2",
+  "teacher": "67273f7d525d9f80c5683421",
+  "students": [],
+  "slots": [],
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-11-03T09:45:52.713Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T09:45:52.713Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67274664525d9f80c5684135"
+  },
+  "name": "LIGEVAN-JAPANWORK-PP",
+  "center": "67272fa9525d9f80c5682c43",
+  "course": "67273918525d9f80c5682dd2",
+  "teacher": "672740b7525d9f80c5683540",
+  "students": [],
+  "slots": [],
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-11-03T09:46:12.718Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T09:46:12.718Z"
+  },
+  "__v": 0
+}]

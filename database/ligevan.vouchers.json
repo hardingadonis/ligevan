@@ -1,0 +1,161 @@
+[{
+  "_id": {
+    "$oid": "671114c530c0819ba109d53d"
+  },
+  "code": "LIGEVANKHAITRUONG",
+  "title": "Ưu đãi khai trương",
+  "description": "Ưu đãi dành cho tân học viên!",
+  "value": 50,
+  "start": {
+    "$date": "2024-10-20T00:00:00.000Z"
+  },
+  "end": {
+    "$date": "2024-12-31T00:00:00.000Z"
+  },
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-10-17T13:44:37.926Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-17T13:44:37.926Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6711152930c0819ba109d540"
+  },
+  "code": "LIGEVANTET2025",
+  "title": "Ưu đãi đầu năm mới 2025",
+  "description": "Ưu đãi dành cho tân học viên vào đầu năm Ất Tỵ 2025!",
+  "value": 30,
+  "start": {
+    "$date": "2025-01-01T00:00:00.000Z"
+  },
+  "end": {
+    "$date": "2025-02-01T00:00:00.000Z"
+  },
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-10-17T13:46:17.829Z"
+  },
+  "updatedAt": {
+    "$date": "2024-10-17T13:46:17.829Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6727368f525d9f80c5682d65"
+  },
+  "code": "LIGEVANWEEKEND",
+  "title": "Ưu đãi cuối tuần",
+  "description": "Ưu đãi 20% cho các khóa học khi đăng ký vào cuối tuần!",
+  "value": 10,
+  "start": {
+    "$date": "2024-11-08T17:00:00.000Z"
+  },
+  "end": {
+    "$date": "2024-11-09T17:00:00.000Z"
+  },
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-11-03T08:38:39.832Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T08:38:39.832Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "672736ca525d9f80c5682d7c"
+  },
+  "code": "LIGEVANBLACKFRIDAY",
+  "title": "Ưu đãi Black Friday",
+  "description": "Giảm giá lớn 20% chỉ trong ngày Black Friday!",
+  "value": 20,
+  "start": {
+    "$date": "2024-11-06T17:00:00.000Z"
+  },
+  "end": {
+    "$date": "2024-11-08T17:00:00.000Z"
+  },
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-11-03T08:39:38.272Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T08:39:38.272Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67273775525d9f80c5682d8b"
+  },
+  "code": "LIGEVANCHRISTMAS",
+  "title": "Ưu đãi Giáng Sinh",
+  "description": "Giảm giá 35% cho tất cả khóa học mừng Giáng Sinh!",
+  "value": 35,
+  "start": {
+    "$date": "2024-12-19T17:00:00.000Z"
+  },
+  "end": {
+    "$date": "2024-12-29T17:00:00.000Z"
+  },
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-11-03T08:42:29.337Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T08:42:29.337Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "672737dc525d9f80c5682d96"
+  },
+  "code": "LIGEVANBACKTOSCHOOL25",
+  "title": "Chào mừng mùa tựu trường",
+  "description": "Nhận ngay ưu đãi giảm 25% cho học viên đăng ký khóa học mới trong mùa tựu trường!",
+  "value": 25,
+  "start": {
+    "$date": "2025-07-31T17:00:00.000Z"
+  },
+  "end": {
+    "$date": "2025-09-30T17:00:00.000Z"
+  },
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-11-03T08:44:12.543Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T08:44:12.543Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6727384e525d9f80c5682da0"
+  },
+  "code": "LIGEVANSINGLES",
+  "title": "Ưu đãi Ngày Độc Thân",
+  "description": "Nhận ưu đãi 33% khi đăng ký vào Ngày Độc Thân 11/11!",
+  "value": 33,
+  "start": {
+    "$date": "2024-11-03T17:00:00.000Z"
+  },
+  "end": {
+    "$date": "2024-11-11T17:00:00.000Z"
+  },
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-11-03T08:46:06.041Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T08:46:06.041Z"
+  },
+  "__v": 0
+}]

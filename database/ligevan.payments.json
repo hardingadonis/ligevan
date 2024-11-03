@@ -1,0 +1,228 @@
+[{
+  "_id": {
+    "$oid": "67274ce34269658483ce04a8"
+  },
+  "student": "67274ba34269658483ce00cd",
+  "course": "671115ee30c0819ba109d543",
+  "class": "67274590525d9f80c5683e77",
+  "voucher": "671114c530c0819ba109d53d",
+  "originPrice": 1000000,
+  "finalPrice": 500000,
+  "method": "momo",
+  "createdAt": {
+    "$date": "2024-11-03T10:13:55.321Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T10:13:55.321Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67274ce64269658483ce04af"
+  },
+  "student": "67274a9a525d9f80c56868cf",
+  "course": "671115ee30c0819ba109d543",
+  "class": "67274590525d9f80c5683e77",
+  "voucher": "671114c530c0819ba109d53d",
+  "originPrice": 1000000,
+  "finalPrice": 500000,
+  "method": "momo",
+  "createdAt": {
+    "$date": "2024-11-03T10:13:58.125Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T10:13:58.125Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67274cf64269658483ce054d"
+  },
+  "student": "67273c6e525d9f80c5683285",
+  "course": "671115ee30c0819ba109d543",
+  "class": "67274590525d9f80c5683e77",
+  "voucher": null,
+  "originPrice": 1000000,
+  "finalPrice": 1000000,
+  "method": "momo",
+  "createdAt": {
+    "$date": "2024-11-03T10:14:14.920Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T10:14:14.920Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67274cff4269658483ce05d1"
+  },
+  "student": "67274cfa4269658483ce0555",
+  "course": "671115ee30c0819ba109d543",
+  "class": "67274590525d9f80c5683e77",
+  "voucher": null,
+  "originPrice": 1000000,
+  "finalPrice": 1000000,
+  "method": "momo",
+  "createdAt": {
+    "$date": "2024-11-03T10:14:23.345Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T10:14:23.345Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67274d014269658483ce05f3"
+  },
+  "student": "67274be44269658483ce01c8",
+  "course": "671115ee30c0819ba109d543",
+  "class": "67274590525d9f80c5683e77",
+  "voucher": null,
+  "originPrice": 1000000,
+  "finalPrice": 1000000,
+  "method": "momo",
+  "createdAt": {
+    "$date": "2024-11-03T10:14:25.214Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T10:14:25.214Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67274d0c4269658483ce06e9"
+  },
+  "student": "67274bb24269658483ce00f3",
+  "course": "671115ee30c0819ba109d543",
+  "class": "67274590525d9f80c5683e77",
+  "voucher": "671114c530c0819ba109d53d",
+  "originPrice": 1000000,
+  "finalPrice": 500000,
+  "method": "momo",
+  "createdAt": {
+    "$date": "2024-11-03T10:14:36.312Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T10:14:36.312Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67274d0e4269658483ce06f0"
+  },
+  "student": "67274bfb4269658483ce0258",
+  "course": "671115ee30c0819ba109d543",
+  "class": "67274590525d9f80c5683e77",
+  "voucher": "671114c530c0819ba109d53d",
+  "originPrice": 1000000,
+  "finalPrice": 500000,
+  "method": "momo",
+  "createdAt": {
+    "$date": "2024-11-03T10:14:38.240Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T10:14:38.240Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67274d1d4269658483ce07a1"
+  },
+  "student": "67274bea4269658483ce01ee",
+  "course": "671115ee30c0819ba109d543",
+  "class": "67274590525d9f80c5683e77",
+  "voucher": null,
+  "originPrice": 1000000,
+  "finalPrice": 1000000,
+  "method": "momo",
+  "createdAt": {
+    "$date": "2024-11-03T10:14:53.665Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T10:14:53.665Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67274d234269658483ce0837"
+  },
+  "student": "67274bd34269658483ce018c",
+  "course": "671115ee30c0819ba109d543",
+  "class": "67274590525d9f80c5683e77",
+  "voucher": null,
+  "originPrice": 1000000,
+  "finalPrice": 1000000,
+  "method": "momo",
+  "createdAt": {
+    "$date": "2024-11-03T10:14:59.813Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T10:14:59.813Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67274d2c4269658483ce08de"
+  },
+  "student": "67274c524269658483ce0296",
+  "course": "671115ee30c0819ba109d543",
+  "class": "67274590525d9f80c5683e77",
+  "voucher": "671114c530c0819ba109d53d",
+  "originPrice": 1000000,
+  "finalPrice": 500000,
+  "method": "momo",
+  "createdAt": {
+    "$date": "2024-11-03T10:15:08.036Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T10:15:08.036Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67274d3b4269658483ce0979"
+  },
+  "student": "67274c774269658483ce02d2",
+  "course": "671115ee30c0819ba109d543",
+  "class": "67274590525d9f80c5683e77",
+  "voucher": null,
+  "originPrice": 1000000,
+  "finalPrice": 1000000,
+  "method": "momo",
+  "createdAt": {
+    "$date": "2024-11-03T10:15:23.726Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T10:15:23.726Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67274d4a4269658483ce0a14"
+  },
+  "student": "67274c894269658483ce032a",
+  "course": "671115ee30c0819ba109d543",
+  "class": "67274590525d9f80c5683e77",
+  "voucher": null,
+  "originPrice": 1000000,
+  "finalPrice": 1000000,
+  "method": "momo",
+  "createdAt": {
+    "$date": "2024-11-03T10:15:38.536Z"
+  },
+  "updatedAt": {
+    "$date": "2024-11-03T10:15:38.536Z"
+  },
+  "__v": 0
+}]
