@@ -152,6 +152,7 @@ const CourseDetail: React.FC = () => {
 			Modal.warning({
 				title: 'Vui lòng đăng nhập',
 				content: 'Vui lòng đăng nhập trước khi đăng ký lớp học.',
+				centered: true,
 			});
 		}
 	};
