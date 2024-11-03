@@ -12,6 +12,7 @@ import {
 	CreateTeacherDto,
 	UpdateTeacherDto,
 } from '@/domains/teachers/dto/teacher.dto';
+import { Center } from '@/schemas/center.schema';
 import { Teacher } from '@/schemas/teacher.schema';
 import { hash, verify } from '@/utils/hash.util';
 
@@ -21,6 +22,7 @@ export class TeachersService {
 
 	constructor(
 		@InjectModel(Teacher.name) private readonly teacherModel: Model<Teacher>,
+		@InjectModel(Center.name) private readonly centerModel: Model<Center>,
 	) {}
 
 	async create(createTeacherDto: CreateTeacherDto): Promise<Teacher> {
@@ -44,6 +46,10 @@ export class TeachersService {
 		await createTeacher.save();
 
 		this.logger.log('Teacher created successfully!');
+
+		await this.centerModel.findByIdAndUpdate(createTeacherDto.center, {
+			$push: { teachers: createTeacher._id },
+		});
 
 		const teacherObject = createTeacher.toObject();
 		delete teacherObject.hashedPassword;

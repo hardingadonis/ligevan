@@ -1,3 +1,4 @@
+import { SearchOutlined } from '@ant-design/icons';
 import { Alert, Col, Empty, Input, Pagination, Row, Spin } from 'antd';
 import React, { useEffect, useState } from 'react';
 
@@ -6,7 +7,7 @@ import { Center } from '@/schemas/center.schema';
 import { Course } from '@/schemas/course.schema';
 import { getAllCourse } from '@/services/api/course';
 
-const { Search } = Input;
+// const { Search } = Input;
 
 interface ListCourseProps {
 	selectedCenter: Center | null;
@@ -92,12 +93,19 @@ const ListCourse: React.FC<ListCourseProps> = ({ selectedCenter }) => {
 	return (
 		<>
 			<div className="search-container">
-				<Search
+				{/* <Search
 					placeholder="Tìm kiếm khoá học"
 					value={searchValue}
 					onSearch={handleSearch}
 					onChange={(e) => handleSearch(e.target.value)}
 					className="search-input"
+				/> */}
+				<Input
+					placeholder="Tìm kiếm khoá học"
+					value={searchValue}
+					onChange={(e) => handleSearch(e.target.value)}
+					className="search-input"
+					prefix={<SearchOutlined />}
 				/>
 			</div>
 			{filteredCourses.length === 0 ? (

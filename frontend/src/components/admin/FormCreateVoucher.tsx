@@ -101,8 +101,9 @@ const VoucherForm: React.FC = () => {
 										}}
 									>
 										<Form.Item
-											style={{ fontWeight: 'bold' }}
-											label="Mã giảm giá"
+											label={
+												<span style={{ fontWeight: 'bold' }}>Mã giảm giá</span>
+											}
 											labelAlign="left"
 											name="code"
 											rules={[
@@ -136,10 +137,11 @@ const VoucherForm: React.FC = () => {
 											]}
 										>
 											<Input placeholder="Nhập mã giảm giá" />
-										</Form.Item>{' '}
+										</Form.Item>
 										<Form.Item
-											style={{ fontWeight: 'bold' }}
-											label="Giá trị"
+											label={
+												<span style={{ fontWeight: 'bold' }}>Giá trị</span>
+											}
 											labelAlign="left"
 											name="value"
 											rules={[
@@ -173,8 +175,7 @@ const VoucherForm: React.FC = () => {
 										</Form.Item>
 									</div>
 									<Form.Item
-										style={{ fontWeight: 'bold' }}
-										label="Tiêu đề"
+										label={<span style={{ fontWeight: 'bold' }}>Tiêu đề</span>}
 										labelAlign="left"
 										name="title"
 										rules={[
@@ -184,8 +185,7 @@ const VoucherForm: React.FC = () => {
 										<Input placeholder="Nhập tiêu đề" />
 									</Form.Item>
 									<Form.Item
-										style={{ fontWeight: 'bold' }}
-										label="Mô tả"
+										label={<span style={{ fontWeight: 'bold' }}>Mô tả</span>}
 										labelAlign="left"
 										name="description"
 									>
@@ -200,7 +200,11 @@ const VoucherForm: React.FC = () => {
 										}}
 									>
 										<Form.Item
-											label="Thời gian bắt đầu"
+											label={
+												<span style={{ fontWeight: 'bold' }}>
+													Thời gian bắt đầu
+												</span>
+											}
 											labelAlign="left"
 											name="start"
 											rules={[
@@ -224,7 +228,7 @@ const VoucherForm: React.FC = () => {
 													},
 												},
 											]}
-											style={{ marginBottom: '30px', fontWeight: 'bold' }}
+											style={{ marginBottom: '30px' }}
 										>
 											<DatePicker
 												name="start"
@@ -232,9 +236,13 @@ const VoucherForm: React.FC = () => {
 												format="DD/MM/YYYY"
 												style={{ width: '100%' }}
 											/>
-										</Form.Item>{' '}
+										</Form.Item>
 										<Form.Item
-											label="Thời gian kết thúc"
+											label={
+												<span style={{ fontWeight: 'bold' }}>
+													Thời gian kết thúc
+												</span>
+											}
 											labelAlign="left"
 											name="end"
 											rules={[
@@ -265,7 +273,7 @@ const VoucherForm: React.FC = () => {
 													},
 												},
 											]}
-											style={{ marginBottom: '30px', fontWeight: 'bold' }}
+											style={{ marginBottom: '30px' }}
 										>
 											<DatePicker
 												name="end"

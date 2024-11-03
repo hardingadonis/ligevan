@@ -11,6 +11,7 @@ import {
 	Modal,
 	Row,
 	Select,
+	message,
 } from 'antd';
 import locale from 'antd/locale/vi_VN';
 import axios from 'axios';
@@ -67,7 +68,7 @@ const TeacherForm: React.FC = () => {
 	}, [centerID]);
 
 	const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setAvatarUrl(e.target.value);
+		setAvatarUrl(e.target.value || import.meta.env.VITE_AVATAR_URL);
 	};
 
 	const handleSubmit = async (values: {
@@ -79,6 +80,7 @@ const TeacherForm: React.FC = () => {
 		gender: string;
 		dob: dayjs.Dayjs;
 		avatar: string;
+		classes: string[];
 	}) => {
 		const email = `${values.email}@ligevan.edu.vn`;
 
@@ -108,7 +110,7 @@ const TeacherForm: React.FC = () => {
 			return;
 		}
 
-		setAvatarUrl(values.avatar);
+		setAvatarUrl(values.avatar || import.meta.env.VITE_AVATAR_URL);
 
 		try {
 			const payload = {
@@ -116,6 +118,7 @@ const TeacherForm: React.FC = () => {
 				...values,
 				email,
 				dob: values.dob.format('YYYY-MM-DD'),
+				classes: [],
 			};
 
 			const response = await axios.post(`${apiBaseUrl}/api/teachers`, payload);
@@ -131,7 +134,7 @@ const TeacherForm: React.FC = () => {
 				...center,
 				teachers: updatedTeachers,
 			});
-
+			message.success('Tạo giáo viên thành công!');
 			navigate(`/admin/centers/${centerID}/teachers`);
 		} catch (error) {
 			console.error('Unexpected error:', error);
@@ -174,7 +177,10 @@ const TeacherForm: React.FC = () => {
 				>
 					<Row gutter={16}>
 						<Col span={7} style={{ textAlign: 'center' }}>
-							{avatarUrl && <Avatar src={avatarUrl} size={150} />}
+							<Avatar
+								src={avatarUrl || import.meta.env.VITE_AVATAR_URL}
+								size={150}
+							/>
 						</Col>
 						<Col span={17}>
 							<Form

@@ -262,12 +262,10 @@ const FormUpdate: React.FC = () => {
 									if (!value) {
 										return Promise.resolve();
 									}
-									const threeYearsAgo = dayjs().subtract(3, 'year');
+									const threeYearsAgo = dayjs().subtract(10, 'year');
 									return value.isBefore(threeYearsAgo)
 										? Promise.resolve()
-										: Promise.reject(
-												new Error('Ngày sinh phải cách đây ít nhất 3 năm!'),
-											);
+										: Promise.reject(new Error('Học sinh phải trên 10 tuổi!'));
 								},
 							},
 						]}

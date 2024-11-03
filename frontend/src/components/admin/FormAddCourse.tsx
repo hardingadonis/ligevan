@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { PlusOutlined } from '@ant-design/icons';
-import { Button, Form, Input, Select } from 'antd';
+import { Button, Form, Input, Select, message } from 'antd';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -82,7 +82,7 @@ const AddCourseForm: React.FC = () => {
 				vouchers: updatedVouchers,
 				teachers: updatedTeachers,
 			});
-
+			message.success('Thêm khóa học thành công!');
 			navigate(`/admin/centers/${centerID}/courses`);
 		} catch (error) {
 			console.error('Không thể cập nhật trung tâm:', error);
