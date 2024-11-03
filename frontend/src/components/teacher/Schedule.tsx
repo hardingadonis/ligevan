@@ -185,7 +185,7 @@ const Schedule: React.FC = () => {
 
 		const isButtonDisabled =
 			// Convert all ">" to "<" when demo
-			currentTime < slotStartTime || currentTime < endOfDay;
+			currentTime < slotStartTime || currentTime > endOfDay;
 
 		return (
 			<div
