@@ -18,6 +18,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Center } from '@/schemas/center.schema';
 import { Class } from '@/schemas/class.schema';
 import { Course } from '@/schemas/course.schema';
+import { fetchStudentData } from '@/services/custom/getStudentbyToken';
 import { apiBaseUrl } from '@/utils/apiBase';
 
 const MAX_STUDENTS = parseInt(
@@ -32,6 +33,7 @@ interface DataType {
 	students: string;
 	actions: JSX.Element;
 }
+
 const CourseDetail: React.FC = () => {
 	const { courseID } = useParams<{ courseID: string }>();
 	const { centerID } = useParams<{ centerID: string }>();
@@ -121,18 +123,35 @@ const CourseDetail: React.FC = () => {
 		fetchClasses();
 	};
 
-	const handleRegister = (id: string) => {
-		const selectedClass = classes.find((cls) => cls._id === id);
-		const currentStudentCount = selectedClass?.students?.length ?? 0;
+	const handleRegister = async (id: string) => {
+		try {
+			const student = await fetchStudentData();
+			console.log('student' + student);
+			if (!student) {
+				Modal.warning({
+					title: 'Vui lòng đăng nhập',
+					content: 'Vui lòng đăng nhập trước khi đăng ký lớp học.',
+				});
+				return;
+			}
 
-		if (currentStudentCount >= MAX_STUDENTS) {
-			Modal.warning({
-				title: 'Lớp học đã đầy',
-				content: `Số lượng học sinh đăng ký đã đạt giới hạn tối đa là ${MAX_STUDENTS} học sinh.`,
-			});
-		} else {
-			navigate(`/student/payment/${courseID}/${centerID}`, {
-				state: { classID: id },
+			const selectedClass = classes.find((cls) => cls._id === id);
+			const currentStudentCount = selectedClass?.students?.length ?? 0;
+
+			if (currentStudentCount >= MAX_STUDENTS) {
+				Modal.warning({
+					title: 'Lớp học đã đầy',
+					content: `Số lượng học sinh đăng ký đã đạt giới hạn tối đa là ${MAX_STUDENTS} học sinh.`,
+				});
+			} else {
+				navigate(`/student/payment/${courseID}/${centerID}`, {
+					state: { classID: id },
+				});
+			}
+		} catch {
+			Modal.error({
+				title: 'Lỗi',
+				content: 'Đã xảy ra lỗi khi kiểm tra thông tin đăng nhập.',
 			});
 		}
 	};
