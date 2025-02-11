@@ -8,6 +8,12 @@
 
 > 「学び、練習し、成功する」
 
+## 📢 Advertisement
+
+<img src="https://raw.githubusercontent.com/fptqnk17/.github/refs/heads/main/images/banner-bao-thu.png" alt="Advertisement" />
+
+---
+
 ## Contributing
 
 - See [CONTRIBUTING.md](docs/CONTRIBUTING.md) for more informations.
